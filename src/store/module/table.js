@@ -1,36 +1,38 @@
 import {
-  //getTableView,
-  getTableColumns,
+  // getTableView,
+  getTableColumns
 } from '@/api/view'
+import COLUMNS from '@/assets/data/columns' // 引入列表信息
 import {
   getDataByParams
 } from '@/api/handle'
 
 import {
-  getParams2,
+//  getParams2,
   toJson
-} from "@/libs/util"
+} from '@/libs/util'
 export default {
   state: {
     tablesInfo: {},
-    tableData:{}
+    tableData: {}
   },
   mutations: {
-    setTableInfo(state, tableInfo) {
+    setTableInfo (state, tableInfo) {
       state.tablesInfo[tableInfo.id] = tableInfo
     },
-    setTableData(state,tableData)
-    {
-      state.tableData=tableData;
+    setTableData (state, tableData) {
+      state.tableData = tableData
     }
   },
   getters: {
-    getTableInfoById:(state, getters) => (id)  => {
-      return state.tablesInfo[id];
+    getTableInfoById: (state, getters) => (id) => {
+      return state.tablesInfo[id]
     }
   },
   actions: {
-    getTableColumns({commit},option){
+    getTableColumns ({
+      commit
+    }, option) {
       return new Promise((resolve, reject) => {
         // getDataByParams(option).then(res => {
         //   // const data = JSON.parse(res.data)
@@ -41,8 +43,9 @@ export default {
         // })
       })
     },
-    getCheckOnly({commit},option){
-
+    getCheckOnly ({
+      commit
+    }, option) {
       return new Promise((resolve, reject) => {
         getDataByParams(option).then(res => {
           // const data = JSON.parse(res.data)
@@ -53,7 +56,9 @@ export default {
         })
       })
     },
-    editTableData({commit},option){
+    editTableData ({
+      commit
+    }, option) {
       return new Promise((resolve, reject) => {
         getDataByParams(option).then(res => {
           // const data = JSON.parse(res.data)
@@ -64,7 +69,9 @@ export default {
         })
       })
     },
-    deleteTableData({commit},option){
+    deleteTableData ({
+      commit
+    }, option) {
       return new Promise((resolve, reject) => {
         getDataByParams(option).then(res => {
           // const data = JSON.parse(res.data)
@@ -75,7 +82,9 @@ export default {
         })
       })
     },
-    addTableData({commit},option){
+    addTableData ({
+      commit
+    }, option) {
       return new Promise((resolve, reject) => {
         getDataByParams(option).then(res => {
           // const data = JSON.parse(res.data)
@@ -86,10 +95,14 @@ export default {
         })
       })
     },
-    getTableData({commit},option){
+    getTableData ({
+      commit
+    }, option) {
       return new Promise((resolve, reject) => {
         getDataByParams(option).then(res => {
-          const data = JSON.parse(res.data)
+          var data = res.data
+          console.log()
+          // const data = JSON.parse(res.data)
           commit('setTableData', data)
           resolve(data)
         }).catch(err => {
@@ -97,19 +110,25 @@ export default {
         })
       })
     },
-    handleTablesInfo({
+    handleTablesInfo ({
       commit
     },
-      tableId
+    tableId
     ) {
       return new Promise((resolve, reject) => {
-        getTableColumns(tableId).then(res => {
-          const data = toJson(res.data)
+        if (tableId === 124 || tableId === 125) {
+          const data = COLUMNS['C' + tableId]
           commit('setTableInfo', data)
           resolve(data)
-        }).catch(err => {
-          reject(err)
-        })
+        } else {
+          getTableColumns(tableId).then(res => {
+            const data = toJson(res.data)
+            commit('setTableInfo', data)
+            resolve(data)
+          }).catch(err => {
+            reject(err)
+          })
+        }
       })
     }
   }

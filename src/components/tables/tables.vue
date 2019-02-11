@@ -40,7 +40,7 @@
     <slot name="footer" slot="footer"></slot>
     <slot name="loading" slot="loading"></slot>
   </Table>
-  <div class="search-con search-con-top">
+  <div class="search-con search-con-top" v-if="isPage">
     <Page :total="total" :current="current" :page-size="pageSize" @on-change="pageChange" @on-page-size-change="pageSizeChange" show-elevator show-sizer></Page>
   </div>
   <!-- <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
@@ -68,6 +68,12 @@ export default {
     searchExpand
   },
   props: {
+    isPage: {
+      type: Boolean,
+      default () {
+        return true
+      }
+    },
     permit: {
       type: Object,
       default () {
@@ -77,14 +83,14 @@ export default {
     buttons: {
       type: Array,
       default () {
-        return [];
+        return []
       }
     },
     addTemplete: {},
     pageSize: {
       type: Number,
       default () {
-        return 10;
+        return 10
       }
     },
     total: {
@@ -186,7 +192,7 @@ export default {
    * @on-cancel-edit 返回值 {Object} 同上
    * @on-save-edit 返回值 {Object} ：除上面三个参数外，还有一个value: 修改后的数据
    */
-  data() {
+  data () {
     return {
       insideColumns: [],
       searchColumns: [],
@@ -200,11 +206,10 @@ export default {
   },
 
   methods: {
-    showAndhideExpand() {
-      this.expandValue = !this.expandValue;
+    showAndhideExpand () {
+      this.expandValue = !this.expandValue
     },
-    suportEdit(item, index) {
-      var that = this;
+    suportEdit (item, index) {
       item.renderSearch = (h, params) => {
         return h(search, {
           props: {
@@ -218,18 +223,15 @@ export default {
           },
           on: {
             'on-search-edit': (params) => {
-
               this.$emit('on-search-edit', params)
             },
             'input': (val, params) => {
               this.edittingText = val
 
-              this.searchValues[params.column.key] = val;
-              //this.searchColumns[]["searchValue"]=
-
+              this.searchValues[params.column.key] = val
+              // this.searchColumns[]["searchValue"]=
             },
             'on-start-edit': (params) => {
-
               this.$emit('on-start-edit', params)
             },
             'on-cancel-edit': (params) => {
@@ -254,7 +256,7 @@ export default {
             props: {
               params: params,
               value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',
-              allEdit: this.insideTableData[params.index]["isNew"] ? this.insideTableData[params.index]["isNew"] : false,
+              allEdit: this.insideTableData[params.index]['isNew'] ? this.insideTableData[params.index]['isNew'] : false,
               edittingCellId: this.edittingCellId,
               editable: this.editable,
               editType: this.editable ? params.column.editType ? params.column.editType : 'text' : 'text',
@@ -262,7 +264,6 @@ export default {
             },
             on: {
               'on-search-edit': (params) => {
-
                 this.$emit('on-search-edit', params)
               },
               'input': (val, params) => {
@@ -294,7 +295,7 @@ export default {
       }
       return item
     },
-    surportHandle(item) {
+    surportHandle (item) {
       let options = item.options || []
       let insideBtns = []
       options.forEach(item => {
@@ -307,12 +308,12 @@ export default {
       }
       return item
     },
-    handleColumns(columns) {
+    handleColumns (columns) {
       this.insideColumns = columns.filter((item, index) => {
         if (item.isHide) {
-          return false;
+          return false
         } else {
-          return true;
+          return true
         }
       })
       this.insideColumns = this.insideColumns.map((item, index) => {
@@ -322,31 +323,29 @@ export default {
         return res
       })
       this.searchColumns = columns.filter((item, index) => {
-        let res = item;
-        let render = function() {
-          return '';
-        };
-        if (item.isSearch) { //是否作为查询条件显示
-          if (!item.renderSearch)
-            item.renderSearch = render;
+        // let res = item
+        let render = function () {
+          return ''
+        }
+        if (item.isSearch) { // 是否作为查询条件显示
+          if (!item.renderSearch) { item.renderSearch = render }
           return true
         }
       })
-
     },
-    createButtons(h, params) {
-      params.permit = this.permit;
-      params.tableData = this.value;
+    createButtons (h, params) {
+      params.permit = this.permit
+      params.tableData = this.value
       return this.buttons.map(item => item(h, params, this))
     },
-    setDefaultSearchKey() {
-      this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
+    setDefaultSearchKey () {
+      // this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
     },
-    handleClear(e) {
+    handleClear (e) {
       if (e.target.value === '') this.insideTableData = this.value
     },
-    handleSearch() {
-      console.log("handleSearch")
+    handleSearch () {
+      console.log('handleSearch')
       // if (this.value) {}
       //  this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
       this.$emit('on-search', this.searchValues)
@@ -354,73 +353,71 @@ export default {
     // handleAdd() { //新增一行
     //   this.$emit('on-Add')
     // },
-    handleTableData() {
-      this.insideTableData = this.value.map((item, index) => {
-        let res = item
-        res.initRowIndex = index
-        return res
-      })
+    handleTableData () {
+      if (this.value) {
+        this.insideTableData = this.value.map((item, index) => {
+          let res = item
+          res.initRowIndex = index
+          return res
+        })
+      }
     },
-    exportCsv(params) {
+    exportCsv (params) {
       this.$refs.tablesMain.exportCsv(params)
     },
-    clearCurrentRow() {
+    clearCurrentRow () {
       this.$refs.talbesMain.clearCurrentRow()
     },
-    //页码改变时调用
-    pageChange(pageIndex, page) {
+    // 页码改变时调用
+    pageChange (pageIndex, page) {
       this.$emit('on-page-change', pageIndex)
     },
-    pageSizeChange(pageSize) { //页面大小改变触发事件
-
+    pageSizeChange (pageSize) { // 页面大小改变触发事件
       this.$emit('on-pageSize-change', pageSize)
     },
-    onCurrentChange(currentRow, oldCurrentRow) {
-
+    onCurrentChange (currentRow, oldCurrentRow) {
       this.$emit('on-current-change', currentRow, oldCurrentRow)
     },
-    onSelect(selection, row) {
+    onSelect (selection, row) {
       this.$emit('on-select', selection, row)
     },
-    onSelectCancel(selection, row) {
+    onSelectCancel (selection, row) {
       this.$emit('on-select-cancel', selection, row)
     },
-    onSelectAll(selection) {
-
+    onSelectAll (selection) {
       this.$emit('on-select-all', selection)
     },
-    onSelectionChange(selection) {
-
+    onSelectionChange (selection) {
       this.$emit('on-selection-change', selection)
     },
-    onSortChange(column, key, order) {
+    onSortChange (column, key, order) {
       this.$emit('on-sort-change', column, key, order)
     },
-    onFilterChange(row) {
+    onFilterChange (row) {
       this.$emit('on-filter-change', row)
     },
-    onRowClick(row, index) {
+    onRowClick (row, index) {
       this.$emit('on-row-click', row, index)
     },
-    onRowDblclick(row, index) {
+    onRowDblclick (row, index) {
       this.$emit('on-row-dblclick', row, index)
     },
-    onExpand(row, status) {
+    onExpand (row, status) {
       this.$emit('on-expand', row, status)
     }
 
   },
   watch: {
-    columns(columns) {
+    columns (columns) {
       this.handleColumns(columns)
       this.setDefaultSearchKey()
     },
-    value(val) {
+    value (val) {
       this.handleTableData()
-      //if (this.searchable) this.handleSearch()
+      // if (this.searchable) this.handleSearch()
     }
   },
-  mounted() {
+  mounted () {
     this.handleColumns(this.columns)
     this.setDefaultSearchKey()
     this.handleTableData()

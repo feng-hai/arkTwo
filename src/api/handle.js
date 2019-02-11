@@ -11,6 +11,6 @@ export const getDataByParams = (option) => {
 export const getAllQuery = (functions) => {
   return axios.all(functions)
 }
-export const getQuery=(option)=>{
+export const getQuery = (option) => {
   return axios.get(option)
 }

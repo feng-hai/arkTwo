@@ -4,7 +4,7 @@ const btns = {
       props: {
         confirm: true,
         title: '你确定要删除吗?',
-        transfer: true,
+        transfer: true
       },
       on: {
         'on-ok': () => {
@@ -29,7 +29,7 @@ const btns = {
       ])
     ])
   },
-  eidt: (h, params, vm) => {
+  edit: (h, params, vm) => {
     return h('span', {
       props: {
         confirm: false,
@@ -38,8 +38,8 @@ const btns = {
       },
       on: {
         'click': () => {
-          vm.$emit('on-delete', params)
-          vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
+          vm.$emit('on-edit', params, vm)
+          // vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
         }
       }
     }, [
@@ -51,7 +51,7 @@ const btns = {
       }, [
         h('Icon', {
           props: {
-            type: 'md-trash',
+            type: 'md-create',
             size: 18,
             color: '#000000'
           }

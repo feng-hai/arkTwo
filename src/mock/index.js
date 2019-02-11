@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 import { login, logout, getUserInfo } from './login'
-import { getTableData,getTableView,addTableView,getItemInfo,editTableView,deleteTableView,getTableColumns, getDragList, uploadImage, getOrgData } from './data'
+import { getTableData, getTableView, addTableView, getItemInfo, editTableView, deleteTableView, getTableColumns, getDragList, uploadImage, getOrgData } from './data'
 import { getMessageInit, getContentByMsgId, hasRead, removeReaded, restoreTrash, messageCount } from './user'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
@@ -13,7 +13,7 @@ Mock.mock(/\/login/, login)
 Mock.mock(/\/get_info/, getUserInfo)
 Mock.mock(/\/logout/, logout)
 Mock.mock(/\/get_table_data/, getTableData)
-Mock.mock(/\/get_table_view/, getTableView)
+Mock.mock(/\/bigger\/grid\//, getTableView)
 Mock.mock(/\/add_table_view/, addTableView)
 Mock.mock(/\/delete_table_view/, deleteTableView)
 Mock.mock(/\/edit_table_view/, editTableView)
