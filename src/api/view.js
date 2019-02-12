@@ -9,7 +9,7 @@ export const getTableView = (params) => {
   })
 }
 export const getTableColumns = (id) => {
-  //console.log(id);
+  // console.log(id);
   return axios.request({
     url: '/bigger/grid/' + id,
     method: 'get'

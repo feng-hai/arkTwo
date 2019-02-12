@@ -34,15 +34,15 @@
 // } from '@/api/handle'
 export default {
   name: 'TablesEdit',
-  data() {
+  data () {
     return {
       isLoading: false
     }
   },
   props: {
-    value: [String, Number,Boolean],
+    value: [String, Number, Boolean],
     edittingCellId: String,
-    allEdit:Boolean,
+    allEdit: Boolean,
     params: Object,
     editable: Boolean,
     editType: String,
@@ -53,50 +53,52 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
-      return this.editType === "text"
+    isEditType () {
+      return this.editType === 'text'
     },
-    isEditting() {
-      return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}`||this.allEdit
+    isEditting () {
+      return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
-
-      if (this.editType == "text") {
+    getSelectListText () {
+      if (this.editType == 'text') {
+        if(this.value=="")
+        {
+          return "空"
+        }
         return this.value
       } else {
-        let text = "没有匹配项目"
+        let text = '没有匹配项目'
         for (var index in this.selectList) {
-          var item = this.selectList[index];
+          var item = this.selectList[index]
           if (this.value == item.value) {
-            text = item.label;
-            break;
+            text = item.label
+            break
           }
         }
-        return text;
+        return text
       }
     }
   },
   methods: {
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
-      this.$emit('input', val,this.params)
+    handleInput (val) {
+      this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
-
+    saveEdit () {
       this.$emit('on-save-edit', this.params)
-      //this.getSelectListText
+      // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   }

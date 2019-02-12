@@ -4,7 +4,7 @@ import user from './module/user'
 import app from './module/app'
 import table from './module/table'
 import addRoutes from './dynamicRouter/addRoutes'
-
+import publicResource from './module/publicResource'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -21,6 +21,7 @@ export default new Vuex.Store({
     user,
     app,
     addRoutes,
+    publicResource,
     table
   }
 })

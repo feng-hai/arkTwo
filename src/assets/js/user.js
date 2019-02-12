@@ -129,24 +129,24 @@ const USER01 = {
         component: 'tables/template'
       },
       {
-      path: 'userManagement/123',
-      name: 'userManagement',
-      meta: {
-        title: `用户管理`,
-        notCache: false
+        path: 'userManagement/123',
+        name: 'userManagement',
+        meta: {
+          title: `用户管理`,
+          notCache: false
+        },
+        component: 'tables/template'
       },
-      component: 'tables/template'
-    },
-    {
-      path: 'roleManagement/124',
-      name: 'roleManagement',
+      {
+        path: 'roleManagement/124',
+        name: 'roleManagement',
 
-      meta: {
-        title: `用户管理`,
-        notCache: false
-      },
-      component: 'tables/template'
-    }
+        meta: {
+          title: `用户管理`,
+          notCache: false
+        },
+        component: 'tables/template'
+      }
     ]
   }
   ]

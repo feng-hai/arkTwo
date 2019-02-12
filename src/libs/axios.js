@@ -20,28 +20,27 @@ const addErrorLog = errorInfo => {
 }
 
 class HttpRequest {
-
-  constructor(baseUrl = baseURL) {
+  constructor (baseUrl = baseURL) {
     this.baseUrl = baseUrl
     this.queue = {}
   }
-  getInsideConfig() {
+  getInsideConfig () {
     const config = {
       baseURL: this.baseUrl,
       headers: {
         //
-        "Authorization":'bearer '+ getToken()
+        'Authorization': 'bearer ' + getToken()
       }
     }
     return config
   }
-  destroy(url) {
+  destroy (url) {
     delete this.queue[url]
     if (!Object.keys(this.queue).length) {
       // Spin.hide()
     }
   }
-  interceptors(instance, url) {
+  interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
       // 添加全局的loading...
@@ -83,20 +82,20 @@ class HttpRequest {
           }
         }
       }
-      //addErrorLog(errorInfo)
+      // addErrorLog(errorInfo)
       return Promise.reject(error)
     })
   }
-  request(options) {
+  request (options) {
     options = Object.assign(this.getInsideConfig(), options)
     const instance = axios.create()
     this.interceptors(instance, options.url)
     return instance(options)
   }
-  all(options) {
+  all (options) {
     return axios.all(options)
   }
-  get(options) {
+  get (options) {
     options = Object.assign(this.getInsideConfig(), options)
     return axios.get(options.url, options.params)
   }

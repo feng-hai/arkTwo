@@ -40,7 +40,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getTableInfoById'
+      'getTableInfoById',
+      "getOrganizationInfo"
     ])
   },
   props: {
@@ -117,7 +118,6 @@ export default {
     ]),
 
     onSelect(selection, row) {
-
 
     },
     onSelectCancel(selection, row) {
@@ -279,11 +279,27 @@ export default {
           handle['isHide'] = true // 该多选项隐藏
         }
       }
-
-
       for (var i = 0; i < jsonObject.columns.length; i++) {
-        var item = jsonObject.columns[i];
-        if (item['selectList'] && typeof item['selectList'] == 'string') {
+        var item = jsonObject.columns[i]
+
+
+        if (item['selectListFun'] && item['selectListFun'] == "org") { //判断是否从外部或取数据
+          var orgs = this.getOrganizationInfo.map(item => {
+            item.value = item.unid;
+            item.label = item.name;
+            return item;
+          })
+          jsonObject.columns[i].selectList = orgs;
+
+        } else if (item['selectListFun'] && item['selectListFun'] == "menu") {
+          var menus = this.getMenusInfo.map(item => {
+            item.value = item.unid;
+            item.label = item.name;
+            return item;
+          })
+          jsonObject.columns[i].selectList = orgs;
+
+        } else if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
         }
       }
@@ -298,7 +314,7 @@ export default {
         }
       }
       this.columns = jsonObject.columns
-      console.log("columns", this.columns)
+      console.log('columns', this.columns)
       this.buttons = jsonObject.buttons
       this.ruleValidate = json.ruleValidate
       if (this.permit.addPermit && json.itemDefault.length > 0) {
@@ -320,33 +336,32 @@ export default {
         })
       }
     },
-    getTableDatas(options) {
+    setInitData(fun) {
 
+
+
+    },
+    getTableDatas(options) {
       var option = {
         url: options.url,
         method: 'get'
-
       }
       if (this.isPage) {
-
-        option["params"] = Object.assign({}, {
+        option['params'] = Object.assign({}, {
           page_id: this.current,
           page_size: this.pageSize
-        }, this.searchParams);
+        }, this.searchParams)
       } else {
-        option["params"] = Object.assign({}, this.searchParams);
+        option['params'] = Object.assign({}, this.searchParams)
       }
 
       option.params = Object.assign({}, option.params, this.searchParams)
       this.getTableData(option).then(res => {
-
-
-
         this.tableData = this.handleFunction(res)
-        console.log("菜单管理", this.tableData)
+        console.log('菜单管理', this.tableData)
 
         if (!this.isRemote) {
-          this.backTableData = Object.assign([], this.tableData);
+          this.backTableData = Object.assign([], this.tableData)
           console.log(this.backTableData)
         }
 
@@ -421,7 +436,7 @@ export default {
         var search = {}
         for (var key in searchParams) {
           if (searchParams[key].length > 0) {
-            search[key] = searchParams[key];
+            search[key] = searchParams[key]
           }
         }
         if (Object.keys(search).length == 0) {
@@ -431,7 +446,7 @@ export default {
             for (var key in search) {
               return item[key].indexOf(search[key]) > -1
             }
-            return false;
+            return false
           })
         }
       }
@@ -464,7 +479,7 @@ export default {
         })
       } else {
         this.tableData = this.tableData.filter((item) => {
-          return item.unid != params.row.unid;
+          return item.unid != params.row.unid
         })
       }
     },

@@ -97,7 +97,7 @@ export default {
       'getTableInfoById'
     ])
   },
-  data() {
+  data () {
     return {
       handleFunction: (res) => {
         this.formValidate.name = res.name
@@ -109,20 +109,19 @@ export default {
         if (column) {
           this.tableData = column
           this.selectData = column.filter((item) => {
-            return item._checked;
+            return item._checked
           })
         }
-        column = column.map(item => {
-
-          if (!item.index) {
-            item["index"] = "0";
-          }
-          if (!item.code) {
-            item["code"] = '没有匹配项'
-          }
-          console.log(item)
-          return item;
-        })
+        // column = column.map(item => {
+        //   if (!item.index) {
+        //     item['index'] = '0'
+        //   }
+        //   if (!item.code) {
+        //     item['code'] = '没有匹配项'
+        //   }
+        //
+        //   return item
+        // })
         return column
       },
       addPermits: [{
@@ -155,10 +154,10 @@ export default {
           trigger: 'blur'
         }],
         desc: [{
-            required: true,
-            message: '请输入列表描述信息，尽量详细',
-            trigger: 'blur'
-          }
+          required: true,
+          message: '请输入列表描述信息，尽量详细',
+          trigger: 'blur'
+        }
 
         ]
       },
@@ -182,7 +181,7 @@ export default {
       'editTableData',
       'getCheckOnly'
     ]),
-    close() {
+    close () {
       /**
        * 如果是调用closeTag方法，普通的页面传入的对象参数只需要写name字段即可
        * 如果是动态路由和带参路由，需要传入query或params字段，用来区别关闭的是参数为多少的页面
@@ -192,14 +191,14 @@ export default {
         params: this.$route.params
       })
     },
-    selectedData(data) {
+    selectedData (data) {
       data.map(item => {
-        item._checked = true;
-        return item;
+        item._checked = true
+        return item
       })
       this.selectedData = data
     },
-    handleUpdateSubmit(name) {
+    handleUpdateSubmit (name) {
       var urlInfo = window.location.href
       var id = getParams2(urlInfo)
       var qs = require('qs')
@@ -207,13 +206,13 @@ export default {
 
       this.$refs[name].validate((valid) => {
         this.selectedData = this.selectedData.map(item => {
-          item.key = item.field;
-          if (item.editType == "select") {
-            //item.selectList = toJson(item.selectList)
+          item.key = item.field
+          if (item.editType == 'select') {
+            // item.selectList = toJson(item.selectList)
           }
-          return item;
-        });
-        console.log("select",this.selectedData)
+          return item
+        })
+        console.log('select', this.selectedData)
 
         if (valid) {
           that.addTableData({
@@ -229,13 +228,12 @@ export default {
           }).then(res => {
             this.$Message.success('update Success!')
           })
-
         } else {
           this.$Message.error('Fail!')
         }
       })
     },
-    handleSubmit(name) {
+    handleSubmit (name) {
       var qs = require('qs')
       var that = this
       this.$refs[name].validate((valid) => {
@@ -253,23 +251,22 @@ export default {
           }).then(res => {
             this.$Message.success('Success!')
           })
-
         } else {
           this.$Message.error('Fail!')
         }
       })
     },
-    handleReset(name) {
+    handleReset (name) {
       this.$refs[name].resetFields()
     },
-    saveTableDetail() {
+    saveTableDetail () {
 
     },
-    reload() {
+    reload () {
 
     }
   },
-  mounted() {
+  mounted () {
 
   }
 }
