@@ -84,7 +84,7 @@ const viewManagement = {
             }
           }
         }
-      }, '新增01')
+      }, '新增')
     }
   }, (h, params, vm) => {
     let permit = params.permit
@@ -187,7 +187,7 @@ const viewDetailManagement = {
             }
           }
         }
-      }, '新增01')
+      }, '新增')
     }
   }, (h, params, vm) => {
     let permit = params.permit

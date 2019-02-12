@@ -2,8 +2,8 @@
 <div>
   <Card style="margin-top:20px">
     <tables :height="400" :total="total" :permit="permit" @on-saveRow="saveRow" :buttons="buttons" :current="current" :pageSize="pageSize" @on-page-change="pageChange" @on-pageSize-change="pageSizeChange" :loading="isLoading" ref="tables" @on-add="addItem"
-      :isPage="isPage" @on-all-delete="deleteItems" @on-edit="editPage" @on-selection-change="handleSelectRow" @on-search="search" @on-search-edit="searchP" @on-save-edit="editCell" editable searchable search-place="top" v-model="tableData" :columns="columns"
-      @on-delete="handleDelete" />
+      @on-select="onSelect" @on-select-cancel="onSelectCancel" @on-select-all="onSelectAll" @on-select-all-cancel="onSelectAllCancel" :isPage="isPage" @on-all-delete="deleteItems" @on-edit="editPage" @on-selection-change="handleSelectRow" @on-search="search"
+      @on-search-edit="searchP" @on-save-edit="editCell" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" />
     <!-- <Button style="margin: 10px 0;" type="primary" @click="exportExcel">导出为Csv文件</Button> -->
   </Card>
   <!-- </Card> -->
@@ -69,9 +69,10 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       tableData: [],
+      backTableData: [],
       selectData: [], // 列表中选择的行
       columns: [{
         key: 'ee'
@@ -101,7 +102,7 @@ export default {
       ruleValidate: {} // 新增修改时验证
     }
   },
-  created () {
+  created() {
 
   },
   methods: {
@@ -114,11 +115,25 @@ export default {
       'editTableData',
       'getCheckOnly'
     ]),
-    handleSelectRow (selection) {
+
+    onSelect(selection, row) {
+
+
+    },
+    onSelectCancel(selection, row) {
+
+    },
+    onSelectAll(selection) {
+
+    },
+    onSelectAllCancel(selection) {
+
+    },
+    handleSelectRow(selection) {
       this.selectData = selection
       this.$emit('selected', this.selectData)
     },
-    valueValidate (params, fun) {
+    valueValidate(params, fun) {
       let that = this
       var funArray = []
       var messages = []
@@ -172,7 +187,7 @@ export default {
           getAllQuery(funArray).then((resArr) => {
             let leng = resArr.length
             let len = 0
-            resArr.forEach(function (res) {
+            resArr.forEach(function(res) {
               if (res.status === 200) { // 修改对应的返回值
                 that.$Notice.warning({
                   title: '数据不规范提醒',
@@ -204,13 +219,13 @@ export default {
       //  }
       return true
     },
-    saveRow (params) { // 新增一行保存
+    saveRow(params) { // 新增一行保存
       let that = this
       let row = this.tableData[params.index]
       //  console.log(this.ruleValidate)
       this.valueValidate({
         'name': '11'
-      }, function () {
+      }, function() {
         let option = {
           url: that.addUrl,
           data: that.tableData[params.index],
@@ -225,17 +240,17 @@ export default {
         })
       })
     },
-    pageChange (pageIndex) {
+    pageChange(pageIndex) {
       this.isLoading = true
       this.current = pageIndex
       this.getTableInfo()
     },
-    pageSizeChange (pageSize) {
+    pageSizeChange(pageSize) {
       this.isLoading = true
       this.pageSize = pageSize
       this.getTableInfo()
     },
-    setColumnInfo (json) {
+    setColumnInfo(json) {
       var jsonObject = Object.assign({}, json)
       if (jsonObject.url.indexOf('{id}') > 0) {
         var urlInfo = window.location.href
@@ -265,6 +280,13 @@ export default {
         }
       }
 
+
+      for (var i = 0; i < jsonObject.columns.length; i++) {
+        var item = jsonObject.columns[i];
+        if (item['selectList'] && typeof item['selectList'] == 'string') {
+          jsonObject.columns[i].selectList = toJson(item.selectList)
+        }
+      }
       let select = jsonObject.columns.find((item) => {
         return item.type == 'selection'
       })
@@ -275,14 +297,15 @@ export default {
           select['isHide'] = true // 该多选项隐藏
         }
       }
-      this.columns = json.columns
-      this.buttons = json.buttons
+      this.columns = jsonObject.columns
+      console.log("columns", this.columns)
+      this.buttons = jsonObject.buttons
       this.ruleValidate = json.ruleValidate
       if (this.permit.addPermit && json.itemDefault.length > 0) {
         this.itemDefault = toJson(json.itemDefault)
       }
     },
-    createColumns () {
+    createColumns() {
       var urlInfo = window.location.href
       var id = getParams2(urlInfo)
       if (this.viewId != '') {
@@ -297,27 +320,40 @@ export default {
         })
       }
     },
-    getTableDatas (options) {
-      if (this.isRemote) { // 远程调用
-        var option = {
-          url: options.url,
-          method: 'get',
-          params: {
-            current: this.current,
-            pageSize: this.pageSize
-          }
-        }
-        option.params = Object.assign({}, option.params, this.searchParams)
-        this.getTableData(option).then(res => {
-          if (typeof this.handleFunction === 'function') {
-            this.tableData = this.handleFunction(res)
-          } else {
-            this.tableData = res
-          }
-          this.total = 100
-          this.isLoading = false
-        })
+    getTableDatas(options) {
+
+      var option = {
+        url: options.url,
+        method: 'get'
+
       }
+      if (this.isPage) {
+
+        option["params"] = Object.assign({}, {
+          page_id: this.current,
+          page_size: this.pageSize
+        }, this.searchParams);
+      } else {
+        option["params"] = Object.assign({}, this.searchParams);
+      }
+
+      option.params = Object.assign({}, option.params, this.searchParams)
+      this.getTableData(option).then(res => {
+
+
+
+        this.tableData = this.handleFunction(res)
+        console.log("菜单管理", this.tableData)
+
+        if (!this.isRemote) {
+          this.backTableData = Object.assign([], this.tableData);
+          console.log(this.backTableData)
+        }
+
+        this.total = 100
+        this.isLoading = false
+      })
+
       // getTableView({
       //   current: this.current,
       //   pageSize: this.pageSize
@@ -327,24 +363,26 @@ export default {
       //   this.isLoading = false;
       // })
     },
-    getTableInfo () {
+    getTableInfo() {
       this.isLoading = true
       this.createColumns() // 表头部分
       // this.getTableDatas(); //数据部分
     },
-    deleteItems () { // 批量删除
-      this.deleteTableData({
-        url: this.deleteUrl,
-        method: 'delete'
-        // params: this.selectData
-      }).then(res => {
-        this.$Notice.success({
-          title: '删除提示提示',
-          desc: '删除信息成功'
+    deleteItems() { // 批量删除
+      if (this.isRemote) {
+        this.deleteTableData({
+          url: this.deleteUrl,
+          method: 'delete'
+          // params: this.selectData
+        }).then(res => {
+          this.$Notice.success({
+            title: '删除提示提示',
+            desc: '删除信息成功'
+          })
         })
-      })
+      }
     },
-    editPage (params, vm) {
+    editPage(params, vm) {
       const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
       const route = {
         name: 'view',
@@ -358,7 +396,7 @@ export default {
       }
       this.$router.push(route)
     },
-    addItem () {
+    addItem() {
       this.tableData.unshift(Object.assign({}, this.itemDefault))
       // const id = parseInt(Math.random() * 1000000000000000000000)
       // const route = {
@@ -374,41 +412,68 @@ export default {
       // this.$router.push(route)
     },
 
-    searchP (params) {},
-    search (searchParams) { // 搜索按钮
+    searchP(params) {},
+    search(searchParams) { // 搜索按钮
       this.searchParams = searchParams
-      this.getTableInfo()
+      if (this.isRemote) {
+        this.getTableInfo()
+      } else {
+        var search = {}
+        for (var key in searchParams) {
+          if (searchParams[key].length > 0) {
+            search[key] = searchParams[key];
+          }
+        }
+        if (Object.keys(search).length == 0) {
+          this.tableData = Object.assign([], this.backTableData)
+        } else {
+          this.tableData = this.backTableData.filter(item => {
+            for (var key in search) {
+              return item[key].indexOf(search[key]) > -1
+            }
+            return false;
+          })
+        }
+      }
     },
-    editCell (params) {
-      this.editTableData({
-        url: this.editUrl,
-        method: 'put',
-        params: params
-      }).then(res => {
-        this.$Notice.success({
-          title: '修改提示提示',
-          desc: '修改信息成功'
+    editCell(params) {
+      if (this.isRemote) {
+        this.editTableData({
+          url: this.editUrl.replace('{id}', params.row.unid),
+          method: 'put',
+          data: params
+        }).then(res => {
+          this.$Notice.success({
+            title: '修改提示提示',
+            desc: '修改信息成功'
+          })
         })
-      })
+      }
     },
-    handleDelete (params) { // 删除数据
-      this.deleteTableData({
-        url: this.deleteUrl.replace('{id}', params.row.unid),
-        method: 'delete'
-        //  params: params
-      }).then(res => {
-        this.$Notice.success({
-          title: '删除提示提示',
-          desc: '删除一条信息成功'
+    handleDelete(params) { // 删除数据
+      if (this.isRemote) {
+        this.deleteTableData({
+          url: this.deleteUrl.replace('{id}', params.row.unid),
+          method: 'delete'
+          //  params: params
+        }).then(res => {
+          this.$Notice.success({
+            title: '删除提示提示',
+            desc: '删除一条信息成功'
+          })
         })
-      })
+      } else {
+        this.tableData = this.tableData.filter((item) => {
+          return item.unid != params.row.unid;
+        })
+      }
     },
-    exportExcel () {
+    exportExcel() {
       this.$refs.tables.exportCsv({
         filename: `table-${(new Date()).valueOf()}.csv`
       })
     },
-    initParams () {
+    initParams() {
       this.tableData = []
       this.selectData = [] // 列表中选择的行
       this.columns = []
@@ -425,7 +490,7 @@ export default {
       this.searchParams = {}
     }
   },
-  mounted () {
+  mounted() {
     this.initParams()
     this.getTableInfo()
   },

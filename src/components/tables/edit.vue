@@ -40,7 +40,7 @@ export default {
     }
   },
   props: {
-    value: [String, Number],
+    value: [String, Number,Boolean],
     edittingCellId: String,
     allEdit:Boolean,
     params: Object,
@@ -92,7 +92,7 @@ export default {
       this.$emit('on-start-edit', this.params)
     },
     saveEdit() {
-    
+
       this.$emit('on-save-edit', this.params)
       //this.getSelectListText
     },

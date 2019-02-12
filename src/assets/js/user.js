@@ -118,7 +118,17 @@ const USER01 = {
       title: '系统管理'
     },
     component: 'main',
-    children: [{
+    children: [
+      {
+        path: 'menu/EC93684BFCBA4513A6C20DFB65A42C19',
+        name: 'menu',
+        meta: {
+          title: '菜单管理',
+          notCache: false
+        },
+        component: 'tables/template'
+      },
+      {
       path: 'userManagement/123',
       name: 'userManagement',
       meta: {
