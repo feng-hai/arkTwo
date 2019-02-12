@@ -36,11 +36,11 @@ import {
   ChartBar
 } from '_c/charts'
 import Example from './example.vue'
-import {
-  mapActions,
-  mapGetters,
-  mapState
-} from 'vuex'
+// import {
+//   mapActions,
+//   mapGetters,
+//   mapState
+// } from 'vuex'
 export default {
   name: 'home',
   components: {
@@ -123,14 +123,14 @@ export default {
   },
   methods: {
     // 在首页初始化公共数据
-    ...mapActions([
-      "getOrgInfoAction",
-      'getMenuInfoAction'
-    ]),
+    // ...mapActions([
+    //   "getOrgInfoAction",
+    //   'getMenuInfoAction'
+    // ]),
   },
   mounted() {
-    this.getOrgInfoAction();
-    this.getMenuInfoAction();
+    // this.getOrgInfoAction();
+    // this.getMenuInfoAction();
   }
 }
 </script>

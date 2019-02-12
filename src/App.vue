@@ -5,8 +5,24 @@
 </template>
 
 <script>
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
 export default {
-  name: 'App'
+  name: 'App',
+  methods: {
+    // 在首页初始化公共数据
+    ...mapActions([
+      "getOrgInfoAction",
+      'getMenuInfoAction'
+    ]),
+  },
+  mounted() {
+    this.getOrgInfoAction();
+    this.getMenuInfoAction();
+  }
 }
 </script>
 

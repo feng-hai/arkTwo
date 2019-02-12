@@ -41,7 +41,8 @@ export default {
   computed: {
     ...mapGetters([
       'getTableInfoById',
-      "getOrganizationInfo"
+      "getOrganizationInfo",
+      "getMenusInfo"
     ])
   },
   props: {
@@ -297,8 +298,8 @@ export default {
             item.label = item.name;
             return item;
           })
-          jsonObject.columns[i].selectList = orgs;
-
+          console.log("menus",menus)
+          jsonObject.columns[i].selectList = menus;
         } else if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
         }
@@ -314,7 +315,6 @@ export default {
         }
       }
       this.columns = jsonObject.columns
-      console.log('columns', this.columns)
       this.buttons = jsonObject.buttons
       this.ruleValidate = json.ruleValidate
       if (this.permit.addPermit && json.itemDefault.length > 0) {

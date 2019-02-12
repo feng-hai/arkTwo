@@ -35,8 +35,9 @@ export default {
       return new Promise((resolve, reject) => {
         getMenuInfo({
           page_id: 0,
-          pageSize: 1000
+          page_size: 1000
         }).then((res) => {
+        
           commit('setMenusList', res.data)
           resolve(res.data)
         }).catch(error => {
@@ -52,7 +53,7 @@ export default {
       return new Promise((resolve, reject) => {
         getOrganizationInfo({
           page_id: 0,
-          pageSize: 1000
+          page_size: 1000
         }).then((res) => {
           commit('setOrganization', res.data)
           resolve(res.data)
