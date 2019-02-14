@@ -52,5 +52,6 @@ export default {
   roleManagement: '角色管理',
   systemManager: '系统管理',
   viewManagement: '视图管理',
-  menu:'菜单管理'
+  menu:'菜单管理',
+  button:'按钮管理'
 }

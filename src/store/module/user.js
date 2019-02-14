@@ -110,9 +110,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         login(option).then(res => {
-          console.log(res)
           const data = res.data
-          console.log(data)
           commit('setToken', data.split('=')[1].split('&')[0])
           // commit('setToken', data.token)
           resolve()
@@ -160,9 +158,6 @@ export default {
     }) {
       return new Promise((resolve, reject) => {
         try {
-          // getUserInfo(state.token).then(res => {
-          //   const data = res.data
-          console.log(user.USER01)
           const data = user.USER01
           commit('setAvator', data.avator)
           commit('setUserName', data.name)

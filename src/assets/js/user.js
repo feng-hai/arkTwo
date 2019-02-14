@@ -53,7 +53,7 @@ const USER01 = {
       name: 'viewManagement',
       meta: {
         title: `视图管理`,
-        notCache: false
+        notCache: true
       },
       component: 'tables/template'
     },
@@ -120,13 +120,22 @@ const USER01 = {
     component: 'main',
     children: [
       {
+        path: 'button/D3E75ACC25C645DD9F97F2A2127797F6',
+        name: 'button',
+        meta: {
+          title: '按钮管理',
+          notCache: false
+        },
+        component: 'tables/template'
+      },
+      {
         path: 'menu/EC93684BFCBA4513A6C20DFB65A42C19',
         name: 'menu',
         meta: {
           title: '菜单管理',
           notCache: false
         },
-        component: 'tables/template'
+        component: 'systemManagement/menu'
       },
       {
         path: 'userManagement/123',

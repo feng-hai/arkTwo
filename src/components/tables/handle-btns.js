@@ -29,6 +29,27 @@ const btns = {
       ])
     ])
   },
+  save: (h, params, vm) => {
+    // 新增还显示内容
+    if (params.row['isNew']) {
+      return h('Poptip', {
+        props: {
+          confirm: true,
+          title: '你确定要保存吗?',
+          placement: 'top',
+          transfer: true
+        },
+        on: {
+          'on-ok': () => {
+            vm.$emit('on-saveRow', params)
+          }
+        }
+      }, [
+        h('Button', '保存')
+      ])
+    }
+
+  },
   edit: (h, params, vm) => {
     return h('span', {
       props: {

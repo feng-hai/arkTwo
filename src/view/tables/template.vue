@@ -34,7 +34,7 @@ import {
 
 import handle from '@/api/handle'
 export default {
-  name: 'tablesPage',
+  name: 'button',
   components: {
     Tables
   },
@@ -105,6 +105,7 @@ export default {
     }
   },
   created() {
+    console.log("created");
 
   },
   methods: {
@@ -139,50 +140,44 @@ export default {
       var funArray = []
       var messages = []
       let isTure = true
-      for (var param in params) {
-        let key = param
-        let value = params[key]
-        let rule = this.ruleValidate[key]
-        for (var j in rule) {
-          if ('required' in rule[j]) {
-            if (!value) {
-              this.$Notice.warning({
-                title: '数据不规范提醒',
-                desc: rule[j].message ? rule[j].message : '必填项'
-              })
-              isTure = false
-              break
-            }
-          }
-          if ('remote' in rule[j]) {
+      //console.log("params", typeof this.ruleValidate, this.ruleValidate)
+
+      for (var key in this.ruleValidate) {
+
+        if (params[key] && params[key].length > 0) {
+          if ('required' in this.ruleValidate[key]) {
             let initData = () => {
-              //  return axios.get('get_item_info')
               return this.getCheckOnly({
                 url: rule[j]['remote'],
                 method: 'get',
                 params: {
-                  key: value
+                  key: params[key]
                 }
               })
             }
-
-            // let initData = () => {
-            //   return getQuery({
-            //     url: 'get_item_info',//rule[j]["remote"],
-            //     method: 'get',
-            //     params: {
-            //       key: value
-            //     }
-            //   })
-            // }
-            // initData().then(res=>{
-            //   console.log(res)
-            // })
             funArray.push(initData())
-            messages.push(rule[j].message)
+            messages.push(this.ruleValidate[key].message)
+          }
+        } else {
+
+          //  console.log('required' in this.ruleValidate[key], this.ruleValidate[key])
+          for (var index in this.ruleValidate[key]) {
+            if ('required' in this.ruleValidate[key][index]) {
+              if (this.ruleValidate[key][index]['required']) {
+                this.$Notice.warning({
+                  title: '数据不规范提醒',
+                  desc: (this.ruleValidate[key][index].message ? this.ruleValidate[key][index].message : '必填项')
+                })
+                return;
+                isTure = false;
+              }
+            }
           }
         }
       }
+
+
+
       if (isTure) {
         if (funArray.length > 0) {
           getAllQuery(funArray).then((resArr) => {
@@ -224,12 +219,13 @@ export default {
       let that = this
       let row = this.tableData[params.index]
       //  console.log(this.ruleValidate)
-      this.valueValidate({
-        'name': '11'
-      }, function() {
+      this.valueValidate(params.row, function() {
+        var item = Object.assign({}, that.tableData[params.index])
+        delete item["isNew"]
+        delete item["initRowIndex"]
         let option = {
           url: that.addUrl,
-          data: that.tableData[params.index],
+          data: item,
           method: 'post'
         }
         that.addTableData(option).then(res => {
@@ -238,6 +234,7 @@ export default {
             title: '新增提示',
             desc: '新增一条信息成功'
           })
+          this.getTableInfo();
         })
       })
     },
@@ -266,10 +263,12 @@ export default {
       this.addUrl = jsonObject.addUrl
 
       this.deleteUrl = jsonObject.deleteUrl
+      this.editUrl = jsonObject.editUrl
       this.permit.addPermit = jsonObject.addPermit
       this.permit.deletePermit = jsonObject.deletePermit
       this.permit.editPermit = jsonObject.editPermit
       this.permit.isRouter = jsonObject.isRouter
+      this.ruleValidate = jsonObject.ruleValidate
       let handle = jsonObject.columns.find((item) => {
         return item.key == 'handle'
       })
@@ -278,6 +277,12 @@ export default {
           handle['isHide'] = false // 该多选项不隐藏
         } else {
           handle['isHide'] = true // 该多选项隐藏
+        }
+        //console.log("handle",handle)
+        if (handle["options"] && typeof handle["options"] == "string") {
+          //console.log("options",toJson(handle["options"]))
+          handle["options"] = toJson(handle["options"])
+          //  console.log("testOption",handle["option"])
         }
       }
       for (var i = 0; i < jsonObject.columns.length; i++) {
@@ -298,7 +303,7 @@ export default {
             item.label = item.name;
             return item;
           })
-          console.log("menus",menus)
+          //console.log("menus", menus)
           jsonObject.columns[i].selectList = menus;
         } else if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
@@ -315,8 +320,15 @@ export default {
         }
       }
       this.columns = jsonObject.columns
-      this.buttons = jsonObject.buttons
-      this.ruleValidate = json.ruleValidate
+      if (jsonObject.buttons && jsonObject.buttons != "[]") {
+        this.buttons = jsonObject.buttons
+      }
+      if (typeof json.ruleValidate == "string") {
+        this.ruleValidate = toJson(json.ruleValidate)
+      } else {
+        this.ruleValidate = json.ruleValidate
+      }
+
       if (this.permit.addPermit && json.itemDefault.length > 0) {
         this.itemDefault = toJson(json.itemDefault)
       }
@@ -336,11 +348,7 @@ export default {
         })
       }
     },
-    setInitData(fun) {
 
-
-
-    },
     getTableDatas(options) {
       var option = {
         url: options.url,
@@ -348,7 +356,7 @@ export default {
       }
       if (this.isPage) {
         option['params'] = Object.assign({}, {
-          page_id: this.current,
+          page_id: this.current - 1,
           page_size: this.pageSize
         }, this.searchParams)
       } else {
@@ -357,15 +365,13 @@ export default {
 
       option.params = Object.assign({}, option.params, this.searchParams)
       this.getTableData(option).then(res => {
-        this.tableData = this.handleFunction(res)
-        console.log('菜单管理', this.tableData)
-
+        this.tableData = this.handleFunction(res.data)
+        //  console.log('菜单管理', this.tableData)
+        this.total = res.count;
         if (!this.isRemote) {
           this.backTableData = Object.assign([], this.tableData)
-          console.log(this.backTableData)
+          //  console.log(this.backTableData)
         }
-
-        this.total = 100
         this.isLoading = false
       })
 
@@ -385,16 +391,19 @@ export default {
     },
     deleteItems() { // 批量删除
       if (this.isRemote) {
-        this.deleteTableData({
-          url: this.deleteUrl,
-          method: 'delete'
-          // params: this.selectData
-        }).then(res => {
-          this.$Notice.success({
-            title: '删除提示提示',
-            desc: '删除信息成功'
+        for (var index in this.selectData) {
+          this.deleteTableData({
+            url: this.deleteUrl.replace('{id}', this.selectData[index].unid),
+            method: 'delete'
+            // params: this.selectData
+          }).then(res => {
+            this.$Notice.success({
+              title: '删除提示提示',
+              desc: '删除信息成功'
+            })
+            this.getTableInfo();
           })
-        })
+        }
       }
     },
     editPage(params, vm) {
@@ -453,10 +462,11 @@ export default {
     },
     editCell(params) {
       if (this.isRemote) {
+        params.row[params.column.key] = params.value
         this.editTableData({
           url: this.editUrl.replace('{id}', params.row.unid),
           method: 'put',
-          data: params
+          data: params.row
         }).then(res => {
           this.$Notice.success({
             title: '修改提示提示',
@@ -476,6 +486,7 @@ export default {
             title: '删除提示提示',
             desc: '删除一条信息成功'
           })
+          this.getTableInfo();
         })
       } else {
         this.tableData = this.tableData.filter((item) => {
@@ -506,14 +517,15 @@ export default {
     }
   },
   mounted() {
+        console.log("mounted");
     this.initParams()
     this.getTableInfo()
   },
   watch: {
-    '$route' (to, from) {
-      this.initParams()
-      this.getTableInfo()
-    }
+    // '$route' (to, from) {
+    //   this.initParams()
+    //   this.getTableInfo()
+    // }
   }
 }
 </script>

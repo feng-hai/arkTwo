@@ -15,13 +15,19 @@
       <FormItem label="新增URL" prop="addUrl">
         <Input v-model="formValidate.addUrl" placeholder="输入新增路径，用于新增数据，如果为空默认是视图URL"></Input>
       </FormItem>
+      <FormItem label="修改URL" prop="editUrl">
+        <Input v-model="formValidate.editUrl" placeholder="输入修改路径，用于修改数据，"></Input>
+      </FormItem>
       <FormItem label="删除URL" prop="deleteUrl">
-        <Input v-model="formValidate.deleteUrl" placeholder="输入删除路径，用于删除数据，如果为空默认是视图URL"></Input>
+        <Input v-model="formValidate.deleteUrl" placeholder="输入删除路径，用于删除数据，"></Input>
       </FormItem>
       <FormItem label="新增按钮权限" prop="addPermit">
         <Select v-model="formValidate.addPermit" style="width:200px">
         <Option v-for="item in addPermits" :value="item.value" :key="item.value">{{ item.label }}</Option>
     </Select>
+      </FormItem>
+      <FormItem label="按钮集合" v-if="formValidate.addPermit=='true'" prop="itemDefault">
+        <Input v-model="formValidate.buttons" type="textarea" :autosize="{minRows: 2}" placeholder="定义查询后按钮事件，json字符串"></Input>
       </FormItem>
       <FormItem label="新增默认值" v-if="formValidate.addPermit=='true'" prop="itemDefault">
         <Input v-model="formValidate.itemDefault" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入新增一行的默认值，json字符串"></Input>
@@ -97,11 +103,14 @@ export default {
       'getTableInfoById'
     ])
   },
-  data () {
+  data() {
     return {
       handleFunction: (res) => {
+
         this.formValidate.name = res.name
-        var columnObject = toJson(res.grid_column)
+
+        var columnObject = JSON.parse(res.grid_column)
+
         var column = columnObject.columnField
         if (columnObject.fields) {
           this.formValidate = columnObject.fields
@@ -139,7 +148,9 @@ export default {
         itemDefault: '',
         rule: '', // 新增或修改項目需要验证的规则
         addUrl: '',
-        deleteUrl: ''
+        deleteUrl: '',
+        editUrl: '',
+        buttons: ''
 
       },
       ruleValidate: {
@@ -154,10 +165,10 @@ export default {
           trigger: 'blur'
         }],
         desc: [{
-          required: true,
-          message: '请输入列表描述信息，尽量详细',
-          trigger: 'blur'
-        }
+            required: true,
+            message: '请输入列表描述信息，尽量详细',
+            trigger: 'blur'
+          }
 
         ]
       },
@@ -181,7 +192,7 @@ export default {
       'editTableData',
       'getCheckOnly'
     ]),
-    close () {
+    close() {
       /**
        * 如果是调用closeTag方法，普通的页面传入的对象参数只需要写name字段即可
        * 如果是动态路由和带参路由，需要传入query或params字段，用来区别关闭的是参数为多少的页面
@@ -191,40 +202,54 @@ export default {
         params: this.$route.params
       })
     },
-    selectedData (data) {
+    selectedData(data) {
       data.map(item => {
         item._checked = true
         return item
       })
       this.selectedData = data
     },
-    handleUpdateSubmit (name) {
+    handleUpdateSubmit(name) {
       var urlInfo = window.location.href
       var id = getParams2(urlInfo)
-      var qs = require('qs')
+
       var that = this
 
       this.$refs[name].validate((valid) => {
-        this.selectedData = this.selectedData.map(item => {
-          item.key = item.field
-          if (item.editType == 'select') {
-            // item.selectList = toJson(item.selectList)
-          }
-          return item
-        })
-        console.log('select', this.selectedData)
 
         if (valid) {
+
+          this.selectedData = this.selectedData.map(item => {
+            item.key = item.field
+            if (item.width) {
+              item.width = item.width * 1;
+            }
+            if (item.editType == 'select') {
+              // item.selectList = toJson(item.selectList)
+            }
+            return item
+          })
+
+          // 指定排序的比较函数
+          function compare(property) {
+            return function(obj1, obj2) {
+              var value1 = obj1[property];
+              var value2 = obj2[property];
+              return value1 - value2; // 升序
+            }
+          }
+          this.selectedData.sort(compare("index"));
+
           that.addTableData({
             url: '/bigger/grid/' + id,
             method: 'put',
-            data: qs.stringify({
+            data: {
               name: that.formValidate.name,
               grid_column: JSON.stringify({
                 columnField: this.selectedData,
                 fields: that.formValidate
               })
-            })
+            }
           }).then(res => {
             this.$Message.success('update Success!')
           })
@@ -233,21 +258,37 @@ export default {
         }
       })
     },
-    handleSubmit (name) {
-      var qs = require('qs')
+    handleSubmit(name) {
       var that = this
       this.$refs[name].validate((valid) => {
+        this.selectedData = this.selectedData.map(item => {
+          item.key = item.field
+          if (item.editType == 'select') {
+            // item.selectList = toJson(item.selectList)
+          }
+          return item
+        })
+
+        // 指定排序的比较函数
+        function compare(property) {
+          return function(obj1, obj2) {
+            var value1 = obj1[property];
+            var value2 = obj2[property];
+            return value1 - value2; // 升序
+          }
+        }
+        this.selectedData.sort(compare("index"));
         if (valid) {
           that.addTableData({
             url: '/bigger/grid',
             method: 'post',
-            data: qs.stringify({
+            data: {
               name: that.formValidate.name,
               grid_column: JSON.stringify({
                 columnField: this.selectedData,
                 fields: that.formValidate
               })
-            })
+            }
           }).then(res => {
             this.$Message.success('Success!')
           })
@@ -256,17 +297,17 @@ export default {
         }
       })
     },
-    handleReset (name) {
+    handleReset(name) {
       this.$refs[name].resetFields()
     },
-    saveTableDetail () {
+    saveTableDetail() {
 
     },
-    reload () {
+    reload() {
 
     }
   },
-  mounted () {
+  mounted() {
 
   }
 }

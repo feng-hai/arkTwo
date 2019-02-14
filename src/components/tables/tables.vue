@@ -192,7 +192,7 @@ export default {
    * @on-cancel-edit 返回值 {Object} 同上
    * @on-save-edit 返回值 {Object} ：除上面三个参数外，还有一个value: 修改后的数据
    */
-  data () {
+  data() {
     return {
       insideColumns: [],
       searchColumns: [],
@@ -206,10 +206,10 @@ export default {
   },
 
   methods: {
-    showAndhideExpand () {
+    showAndhideExpand() {
       this.expandValue = !this.expandValue
     },
-    suportEdit (item, index) {
+    suportEdit(item, index) {
       item.renderSearch = (h, params) => {
         return h(search, {
           props: {
@@ -297,7 +297,7 @@ export default {
       }
       return item
     },
-    surportHandle (item) {
+    surportHandle(item) {
       let options = item.options || []
       let insideBtns = []
       options.forEach(item => {
@@ -310,7 +310,7 @@ export default {
       }
       return item
     },
-    handleColumns (columns) {
+    handleColumns(columns) {
       this.insideColumns = columns.filter((item, index) => {
         if (item.isHide) {
           return false
@@ -326,27 +326,31 @@ export default {
       })
       this.searchColumns = columns.filter((item, index) => {
         // let res = item
-        let render = function () {
+        let render = function() {
           return ''
         }
         if (item.isSearch) { // 是否作为查询条件显示
-          if (!item.renderSearch) { item.renderSearch = render }
+          if (!item.renderSearch) {
+            item.renderSearch = render
+          }
           return true
         }
       })
     },
-    createButtons (h, params) {
+    createButtons(h, params) {
       params.permit = this.permit
       params.tableData = this.value
-      return this.buttons.map(item => item(h, params, this))
+      if (this.buttons.length > 0&&this.buttons!="[]") {
+        return this.buttons.map(item => item(h, params, this))
+      }
     },
-    setDefaultSearchKey () {
+    setDefaultSearchKey() {
       // this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
     },
-    handleClear (e) {
+    handleClear(e) {
       if (e.target.value === '') this.insideTableData = this.value
     },
-    handleSearch () {
+    handleSearch() {
       // if (this.value) {}
       //  this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
       this.$emit('on-search', this.searchValues)
@@ -354,7 +358,7 @@ export default {
     // handleAdd() { //新增一行
     //   this.$emit('on-Add')
     // },
-    handleTableData () {
+    handleTableData() {
       if (this.value) {
         this.insideTableData = this.value.map((item, index) => {
           let res = item
@@ -363,62 +367,62 @@ export default {
         })
       }
     },
-    exportCsv (params) {
+    exportCsv(params) {
       this.$refs.tablesMain.exportCsv(params)
     },
-    clearCurrentRow () {
+    clearCurrentRow() {
       this.$refs.talbesMain.clearCurrentRow()
     },
     // 页码改变时调用
-    pageChange (pageIndex, page) {
+    pageChange(pageIndex, page) {
       this.$emit('on-page-change', pageIndex)
     },
-    pageSizeChange (pageSize) { // 页面大小改变触发事件
+    pageSizeChange(pageSize) { // 页面大小改变触发事件
       this.$emit('on-pageSize-change', pageSize)
     },
-    onCurrentChange (currentRow, oldCurrentRow) {
+    onCurrentChange(currentRow, oldCurrentRow) {
       this.$emit('on-current-change', currentRow, oldCurrentRow)
     },
-    onSelect (selection, row) {
+    onSelect(selection, row) {
       this.$emit('on-select', selection, row)
     },
-    onSelectCancel (selection, row) {
+    onSelectCancel(selection, row) {
       this.$emit('on-select-cancel', selection, row)
     },
-    onSelectAll (selection) {
+    onSelectAll(selection) {
       this.$emit('on-select-all', selection)
     },
-    onSelectionChange (selection) {
+    onSelectionChange(selection) {
       this.$emit('on-selection-change', selection)
     },
-    onSortChange (column, key, order) {
+    onSortChange(column, key, order) {
       this.$emit('on-sort-change', column, key, order)
     },
-    onFilterChange (row) {
+    onFilterChange(row) {
       this.$emit('on-filter-change', row)
     },
-    onRowClick (row, index) {
+    onRowClick(row, index) {
       this.$emit('on-row-click', row, index)
     },
-    onRowDblclick (row, index) {
+    onRowDblclick(row, index) {
       this.$emit('on-row-dblclick', row, index)
     },
-    onExpand (row, status) {
+    onExpand(row, status) {
       this.$emit('on-expand', row, status)
     }
 
   },
   watch: {
-    columns (columns) {
+    columns(columns) {
       this.handleColumns(columns)
       this.setDefaultSearchKey()
     },
-    value (val) {
+    value(val) {
       this.handleTableData()
       // if (this.searchable) this.handleSearch()
     }
   },
-  mounted () {
+  mounted() {
     this.handleColumns(this.columns)
     this.setDefaultSearchKey()
     this.handleTableData()

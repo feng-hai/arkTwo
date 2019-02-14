@@ -372,16 +372,16 @@ export default [{
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: true,
-      notCache: true
+      hideInMenu: false,
+      notCache: false
     },
     children: [{
       path: '/home',
       name: 'home',
       meta: {
-        hideInMenu: true,
+        hideInMenu: false,
         title: '首页',
-        notCache: true,
+        notCache: false,
         icon: 'md-home'
       },
       component: () =>

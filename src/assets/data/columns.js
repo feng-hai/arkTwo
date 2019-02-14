@@ -2,7 +2,7 @@ import view_collumn from '@/assets/js/view_collumn'
 const viewManagement = {
   id: '125',
   name: '测试',
-  url: '/bigger/grid/',
+  url: '/bigger/grid',
   addUrl: '/bigger/grid',
   deleteUrl: '/bigger/grid/{id}',
   des: '',
@@ -29,27 +29,27 @@ const viewManagement = {
       message: '更新有问题02'
     }],
     url: [{
-      required: true,
-      message: 'Mailbox cannot be empty',
-      trigger: 'blur'
-    },
-    {
-      type: 'email',
-      message: 'Incorrect email format',
-      trigger: 'blur'
-    }
+        required: true,
+        message: 'Mailbox cannot be empty',
+        trigger: 'blur'
+      },
+      {
+        type: 'email',
+        message: 'Incorrect email format',
+        trigger: 'blur'
+      }
     ],
     desc: [{
-      required: true,
-      message: 'Please enter a personal introduction',
-      trigger: 'blur'
-    },
-    {
-      type: 'string',
-      min: 20,
-      message: 'Introduce no less than 20 words',
-      trigger: 'blur'
-    }
+        required: true,
+        message: 'Please enter a personal introduction',
+        trigger: 'blur'
+      },
+      {
+        type: 'string',
+        min: 20,
+        message: 'Introduce no less than 20 words',
+        trigger: 'blur'
+      }
     ]
   },
   buttons: [(h, params, vm) => {
@@ -107,6 +107,8 @@ const viewManagement = {
     }
   }]
 }
+
+
 const viewDetailManagement = {
   id: '124',
   name: '测试',
@@ -119,7 +121,7 @@ const viewDetailManagement = {
   editPermit: true, // 修改按钮
   itemDefault: JSON.stringify(view_collumn.DATAITEM), // 现在一行默认值，json字符串
   columns: view_collumn.FIELDS,
-  ruleValidate: {
+  ruleValidate: JSON.stringify({
     name: [{
       required: true,
       message: 'The name cannot be empty',
@@ -132,29 +134,29 @@ const viewDetailManagement = {
       message: '更新有问题02'
     }],
     url: [{
-      required: true,
-      message: 'Mailbox cannot be empty',
-      trigger: 'blur'
-    },
-    {
-      type: 'email',
-      message: 'Incorrect email format',
-      trigger: 'blur'
-    }
+        required: true,
+        message: 'Mailbox cannot be empty',
+        trigger: 'blur'
+      },
+      {
+        type: 'email',
+        message: 'Incorrect email format',
+        trigger: 'blur'
+      }
     ],
     desc: [{
-      required: true,
-      message: 'Please enter a personal introduction',
-      trigger: 'blur'
-    },
-    {
-      type: 'string',
-      min: 20,
-      message: 'Introduce no less than 20 words',
-      trigger: 'blur'
-    }
+        required: true,
+        message: 'Please enter a personal introduction',
+        trigger: 'blur'
+      },
+      {
+        type: 'string',
+        min: 20,
+        message: 'Introduce no less than 20 words',
+        trigger: 'blur'
+      }
     ]
-  },
+  }),
   buttons: [(h, params, vm) => {
     let permit = params.permit
     if (permit.addPermit) {
