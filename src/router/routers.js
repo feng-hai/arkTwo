@@ -347,7 +347,7 @@ export default [{
         meta: {
           icon: 'md-flower',
           title: route => `{{ view }}-${route.params.id}`,
-          notCache: false,
+          notCache: true,
           beforeCloseName: 'before_close_normal'
         },
         component: () =>

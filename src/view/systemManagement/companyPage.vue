@@ -6,13 +6,13 @@
 <script>
 import tablesPage from '@/view/tables/template'
 export default {
-  name: 'menu',
+  name: 'companyPage',
   components: {
     tablesPage
   },
   data() {
     return {
-      viewId: 'EC93684BFCBA4513A6C20DFB65A42C19'
+      viewId: 'C28D3EB8D7394DFC99971B00B1A500DC'
     }
   }
 }

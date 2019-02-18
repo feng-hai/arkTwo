@@ -48,10 +48,11 @@ export default {
   tools_json: 'json工具',
   tools_time: '时间转换工具',
   tools: '工具箱',
-  userManagement: '用户管理',
-  roleManagement: '角色管理',
+  userPage: '用户管理',
+  rolePage: '角色管理',
   systemManager: '系统管理',
   viewManagement: '视图管理',
-  menu:'菜单管理',
-  button:'按钮管理'
+  menuPage:'菜单管理',
+  buttonPage:'按钮管理',
+  companyPage:'机构管理'
 }

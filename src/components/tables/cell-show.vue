@@ -2,9 +2,9 @@
 <div class="tables-edit-outer">
   <div v-if="!isEditting" class="tables-edit-con">
     <span class="value-con">{{getSelectListText}}</span>
-    <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button>
+    <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
   </div>
-  <div v-else class="tables-editting-con">
+  <!-- <div v-else class="tables-editting-con">
     <div v-if="isEditType" class="tables-editting-con" style="float:left">
       <Input :value="value" @input="handleInput" style="width:150px" class="tables-edit-input" />
     </div>
@@ -24,7 +24,7 @@
     <Button @click="saveEdit" style="padding: 6px 4px;" type="text"><Icon type="md-checkmark"></Icon></Button>
     <Button @click="canceltEdit" style="padding: 6px 4px;" type="text"><Icon type="md-close"></Icon></Button>
   </span>
-  </div>
+  </div> -->
 </div>
 </template>
 

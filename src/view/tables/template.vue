@@ -24,7 +24,8 @@ import {
 } from '@/api/handle.js'
 import {
   getParams2,
-  toJson
+  toJson,
+  toStr
 } from '@/libs/util'
 import {
   mapActions,
@@ -42,7 +43,8 @@ export default {
     ...mapGetters([
       'getTableInfoById',
       "getOrganizationInfo",
-      "getMenusInfo"
+      "getMenusInfo",
+      "getRolesInfo"
     ])
   },
   props: {
@@ -303,8 +305,15 @@ export default {
             item.label = item.name;
             return item;
           })
-          //console.log("menus", menus)
           jsonObject.columns[i].selectList = menus;
+
+        } else if (item['selectListFun'] && item['selectListFun'] == "role") {
+          var roles = this.getRolesInfo.map(item => {
+            item.value = item.unid;
+            item.label = item.name;
+            return item;
+          })
+          jsonObject.columns[i].selectList = roles;
         } else if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
         }
@@ -319,6 +328,7 @@ export default {
           select['isHide'] = true // 该多选项隐藏
         }
       }
+
       this.columns = jsonObject.columns
       if (jsonObject.buttons && jsonObject.buttons != "[]") {
         this.buttons = jsonObject.buttons
@@ -517,7 +527,7 @@ export default {
     }
   },
   mounted() {
-        console.log("mounted");
+    console.log("mounted");
     this.initParams()
     this.getTableInfo()
   },

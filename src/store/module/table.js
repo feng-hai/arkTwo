@@ -145,7 +145,7 @@ export default {
 
             var columnObject = toJson(data.grid_column)
             var columns = columnObject.columnField
-          
+
             var fields = columnObject.fields
             // fields.buttons.map(item => {
             //   console.log(item,typeof eval(item));

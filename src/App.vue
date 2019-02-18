@@ -16,12 +16,14 @@ export default {
     // 在首页初始化公共数据
     ...mapActions([
       "getOrgInfoAction",
-      'getMenuInfoAction'
+      'getMenuInfoAction',
+      'getRolesInfoAction'
     ]),
   },
   mounted() {
     this.getOrgInfoAction();
     this.getMenuInfoAction();
+    this.getRolesInfoAction();
   }
 }
 </script>

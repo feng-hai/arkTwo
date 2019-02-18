@@ -67,7 +67,7 @@
       <Button style="margin-left: 10px;" @click="reload">重新加载</Button>
     </div>
     <Divider />
-    <tablesPage @selected="selectedData" :viewId="'124'" :isRemote="false" :isPage="isPage" :handleFunction="handleFunction"></tablesPage>
+    <tablesPage ref="table" @selected="selectedData" :viewId="'124'" :isRemote="false" :isPage="isPage" :handleFunction="handleFunction"></tablesPage>
     <!-- <tables border ref="tables" @on-saveRow="saveRow" @on-Add="addItem" @on-search="search" @on-search-edit="searchP" @on-save-edit="editCell" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" /> -->
     <!-- <Button style="margin: 10px 0;" type="primary" @click="exportExcel">导出为Csv文件</Button> -->
     <Divider />
@@ -309,6 +309,12 @@ export default {
   },
   mounted() {
 
+  },
+  watch: {
+    '$route' (to, from) {
+      this.$refs.table.initParams()
+      this.$refs.table.getTableInfo()
+    }
   }
 }
 </script>

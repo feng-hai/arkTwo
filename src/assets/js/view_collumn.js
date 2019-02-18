@@ -187,9 +187,8 @@ const FIELDS = [{
     width: 250,
     sortable: false,
     editable: true,
-
     editType: 'select',
-    isServer: true,
+    isServer: false,
     isSearch: true,
     serverUrl: 'login',
     selectList: [{
@@ -274,8 +273,18 @@ const FIELDS = [{
 
   },
   {
-    title: '按钮操作',
+    title: '按钮操作（静态）',
     key: 'options',
+    sortable: false,
+    align: 'center',
+    editable: true,
+    isSearch: false,
+    minWidth: 250,
+    editType: 'text'
+  },
+  {
+    title: '按钮操作（函数添加）',
+    key: 'button',
     sortable: false,
     align: 'center',
     editable: true,

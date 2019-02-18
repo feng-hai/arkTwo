@@ -14,3 +14,10 @@ export const getMenuInfo = (option) => {
     method: 'get'
   })
 }
+export const getRolesInfo = (option) => {
+  return axios.request({
+    url: 'bigger/security/privilege',
+    params: option,
+    method: 'get'
+  })
+}

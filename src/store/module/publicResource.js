@@ -1,7 +1,11 @@
 import {
   getOrganizationInfo,
-  getMenuInfo
+  getMenuInfo,
+  getRolesInfo
 } from '@/api/publicResource'
+import {
+  translateDataToTree
+} from "@/libs/util.js"
 // import {
 //   setToken,
 //   getToken
@@ -11,14 +15,20 @@ import {
 export default {
   state: {
     organizationList: [],
-    menusList: []
+    orgTree: [],
+    menusList: [],
+    roles: []
   },
   mutations: {
     setOrganization(state, orgInfo) {
+      state.orgTree = translateDataToTree(orgInfo)
       state.organizationList = orgInfo
     },
     setMenusList(state, menuInfo) {
       state.menusList = menuInfo;
+    },
+    setRolesList(state, rolesInfo) {
+      state.roles = rolesInfo;
     }
   },
   getters: {
@@ -26,7 +36,9 @@ export default {
     //   return state.tablesInfo[id]
     // }
     getOrganizationInfo: state => state.organizationList,
-    getMenusInfo: state => state.menusList
+    getMenusInfo: state => state.menusList,
+    getRolesInfo: state => state.roles,
+    getOrgTreeInfo: state => state.orgTree
   },
   actions: {
     getMenuInfoAction({
@@ -37,8 +49,24 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-        
+
           commit('setMenusList', res.data)
+          resolve(res.data)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    getRolesInfoAction({
+      commit
+    }) {
+      return new Promise((resolve, reject) => {
+        getRolesInfo({
+          page_id: 0,
+          page_size: 1000
+        }).then((res) => {
+
+          commit('setRolesList', res.data)
           resolve(res.data)
         }).catch(error => {
           reject(error)

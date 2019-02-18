@@ -78,7 +78,7 @@ const USER01 = {
         icon: 'md-funnel',
         title: '二级-3'
       },
-      component: 'multilevel_level-2-3'
+      component: 'components/tree-select/index'
     },
     {
       path: 'viewList',
@@ -120,41 +120,49 @@ const USER01 = {
     component: 'main',
     children: [
       {
-        path: 'button/D3E75ACC25C645DD9F97F2A2127797F6',
-        name: 'button',
+        path: 'button',
+        name: 'buttonPage',
         meta: {
           title: '按钮管理',
           notCache: false
         },
-        component: 'tables/template'
+        component: 'systemManagement/buttonPage'
       },
       {
-        path: 'menu/EC93684BFCBA4513A6C20DFB65A42C19',
-        name: 'menu',
+        path: 'company',
+        name: 'companyPage',
+        meta: {
+          title: '机构管理',
+          notCache: false
+        },
+        component: 'systemManagement/companyPage'
+      },
+      {
+        path: 'menu',
+        name: 'menuPage',
         meta: {
           title: '菜单管理',
           notCache: false
         },
-        component: 'systemManagement/menu'
+        component: 'systemManagement/menuPage'
       },
       {
-        path: 'userManagement/123',
-        name: 'userManagement',
+        path: 'userManagement',
+        name: 'userPage',
         meta: {
           title: `用户管理`,
           notCache: false
         },
-        component: 'tables/template'
+        component: 'systemManagement/userPage'
       },
       {
-        path: 'roleManagement/124',
-        name: 'roleManagement',
-
+        path: 'roleManagement',
+        name: 'rolePage',
         meta: {
-          title: `用户管理`,
+          title: `角色管理`,
           notCache: false
         },
-        component: 'tables/template'
+        component: 'systemManagement/rolePage'
       }
     ]
   }

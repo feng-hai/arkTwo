@@ -56,6 +56,7 @@
 
 <script>
 import TablesEdit from './edit.vue'
+import cellShow from './cell-show.vue'
 import search from './search.vue'
 import searchExpand from './expand.js'
 import handleBtns from './handle-btns'
@@ -209,7 +210,7 @@ export default {
     showAndhideExpand() {
       this.expandValue = !this.expandValue
     },
-    suportEdit(item, index) {
+    suportSearch(item, index) {
       item.renderSearch = (h, params) => {
         return h(search, {
           props: {
@@ -248,52 +249,73 @@ export default {
           }
         })
       }
+    },
+    suportShow(item, index) {
 
-      if (this.permit.editPermit) {
-        item.render = (h, params) => {
-          return h(TablesEdit, {
-            props: {
-              params: params,
-              value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',
-              allEdit: this.insideTableData[params.index]['isNew'] ? this.insideTableData[params.index]['isNew'] : false,
-              edittingCellId: this.edittingCellId,
-              editable: this.editable,
-              editType: this.editable ? params.column.editType ? params.column.editType : 'text' : 'text',
-              selectList: params.column.selectList ? params.column.selectList : []
+      item.render = (h, params) => {
+      
+        return h(cellShow, {
+          props: {
+            params: params,
+            value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',
+            allEdit: this.insideTableData[params.index]['isNew'] ? this.insideTableData[params.index]['isNew'] : false,
+            edittingCellId: this.edittingCellId,
+            editable: this.editable,
+            editType: params.column.editType ? params.column.editType : 'text', //默认是text类型
+            selectList: params.column.selectList ? params.column.selectList : []
+          }
+        })
+        //}
+      }
+      return item
+    },
+    suportEdit(item, index) {
+      //  if (this.permit.editPermit) {
+      item.render = (h, params) => {
+        return h(TablesEdit, {
+
+          props: {
+            params: params,
+            value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',
+            allEdit: this.insideTableData[params.index]['isNew'] ? this.insideTableData[params.index]['isNew'] : false,
+            edittingCellId: this.edittingCellId,
+            editable: this.editable,
+            editType: params.column.editType ? params.column.editType : 'text', //默认是text类型
+            selectList: params.column.selectList ? params.column.selectList : []
+          },
+          on: {
+            'on-search-edit': (params) => {
+              this.$emit('on-search-edit', params)
             },
-            on: {
-              'on-search-edit': (params) => {
-                this.$emit('on-search-edit', params)
-              },
-              'input': (val, params) => {
-                this.edittingText = val
-                if (params.row.isNew) {
-                  this.value[params.row.initRowIndex][params.column.key] = this.edittingText
-                  this.$emit('input', this.value)
-                }
-              },
-              'on-start-edit': (params) => {
-                this.edittingCellId = `editting-${params.index}-${params.column.key}`
-                this.$emit('on-start-edit', params)
-              },
-              'on-cancel-edit': (params) => {
-                this.edittingCellId = ''
-                this.$emit('on-cancel-edit', params)
-              },
-              'on-save-edit': (params) => {
+            'input': (val, params) => {
+              this.edittingText = val
+              if (params.row.isNew) {
                 this.value[params.row.initRowIndex][params.column.key] = this.edittingText
-
                 this.$emit('input', this.value)
-
-                this.$emit('on-save-edit', Object.assign(params, {
-                  value: this.edittingText
-                }))
-
-                this.edittingCellId = ''
               }
+            },
+            'on-start-edit': (params) => {
+              this.edittingCellId = `editting-${params.index}-${params.column.key}`
+              this.$emit('on-start-edit', params)
+            },
+            'on-cancel-edit': (params) => {
+              this.edittingCellId = ''
+              this.$emit('on-cancel-edit', params)
+            },
+            'on-save-edit': (params) => {
+              this.value[params.row.initRowIndex][params.column.key] = this.edittingText
+
+              this.$emit('input', this.value)
+
+              this.$emit('on-save-edit', Object.assign(params, {
+                value: this.edittingText
+              }))
+
+              this.edittingCellId = ''
             }
-          })
-        }
+          }
+        })
+        //}
       }
       return item
     },
@@ -311,6 +333,21 @@ export default {
       return item
     },
     handleColumns(columns) {
+
+      this.searchColumns = columns.filter((item, index) => {
+        // let res = item
+        let render = function() {
+          return ''
+        }
+        if (item.isSearch) { // 是否作为查询条件显示
+          this.suportSearch(item, index);
+          if (!item.renderSearch) {
+            item.renderSearch = render
+          }
+          return true
+        }
+      })
+
       this.insideColumns = columns.filter((item, index) => {
         if (item.isHide) {
           return false
@@ -320,27 +357,21 @@ export default {
       })
       this.insideColumns = this.insideColumns.map((item, index) => {
         let res = item
-        if (res.editable) res = this.suportEdit(res, index)
+        if (res.editable)
+          res = this.suportEdit(res, index)
+        else
+          res = this.suportShow(res, index)
+
+
         if (res.key === 'handle') res = this.surportHandle(res)
         return res
       })
-      this.searchColumns = columns.filter((item, index) => {
-        // let res = item
-        let render = function() {
-          return ''
-        }
-        if (item.isSearch) { // 是否作为查询条件显示
-          if (!item.renderSearch) {
-            item.renderSearch = render
-          }
-          return true
-        }
-      })
+
     },
     createButtons(h, params) {
       params.permit = this.permit
       params.tableData = this.value
-      if (this.buttons.length > 0&&this.buttons!="[]") {
+      if (this.buttons.length > 0 && this.buttons != "[]") {
         return this.buttons.map(item => item(h, params, this))
       }
     },
