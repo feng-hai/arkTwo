@@ -230,7 +230,7 @@ export default {
 
               this.edittingText = val
               this.searchValues[params.column.key] = val
-              console.log("search",this.searchValues)
+              console.log("search", this.searchValues)
               // this.searchColumns[]["searchValue"]=
             },
             'on-start-edit': (params) => {
@@ -350,12 +350,12 @@ export default {
       })
 
       this.insideColumns = columns.filter((item, index) => {
-        if (item.isHide) {
-          return false
-        } else {
+        if (item.visible) {
           return true
         }
+        return false;
       })
+      console.log("columns", this.insideColumns)
       this.insideColumns = this.insideColumns.map((item, index) => {
         let res = item
         if (res.editable)

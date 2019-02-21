@@ -1,6 +1,7 @@
 const VIEWFIELD = [{
     type: 'selection',
     width: 60,
+      visible:true,
     align: 'center'
     // fixed: 'left',
 
@@ -12,6 +13,7 @@ const VIEWFIELD = [{
     width: 100,
     sortable: false,
     editable: false,
+      visible:true,
     editType: 'text'
 
   },
@@ -19,6 +21,7 @@ const VIEWFIELD = [{
     title: '视图名称',
     key: 'name',
     align: 'center',
+      visible:true,
     isSearch: true, // 该字段是否可以查询 true为可以查询，false不作为查询条件
     isSearchFront: true, // 放在搜索按钮前面，false放在更多里面
     sortable: false,
@@ -30,6 +33,7 @@ const VIEWFIELD = [{
     title: 'UNID',
     key: 'unid',
     align: 'center',
+      visible:true,
     isSearch: false, // 该字段是否可以查询 true为可以查询，false不作为查询条件
     isSearchFront: true, // 放在搜索按钮前面，false放在更多里面
     sortable: false,
@@ -42,6 +46,7 @@ const VIEWFIELD = [{
     key: 'des',
     align: 'center',
     sortable: false,
+      visible:true,
     editable: true,
     editType: 'text'
 
@@ -50,6 +55,7 @@ const VIEWFIELD = [{
   {
     title: '操作',
     key: 'handle',
+      visible:true,
     isHide: false, // 默认为false 设为true时隐藏此列
     align: 'center',
     options: ['edit', 'delete'],
@@ -83,6 +89,7 @@ const FIELDS = [{
     type: 'selection',
     width: 60,
     align: 'center',
+      visible:true,
     fixed: 'left',
       key: 'index1'
 
@@ -92,6 +99,7 @@ const FIELDS = [{
       key : 'type',
       width: 120,
       align: 'center',
+        visible:true,
       editable: true,
       editType: 'text'
 
@@ -101,6 +109,7 @@ const FIELDS = [{
     key: 'index',
     width: 100,
     align: 'center',
+      visible:true,
     sortable: true,
     editable: true,
     editType: 'text'
@@ -113,6 +122,7 @@ const FIELDS = [{
     align: 'center',
     width: 250,
     sortable: false,
+      visible:true,
     editable: true,
     editType: 'text'
 
@@ -124,6 +134,7 @@ const FIELDS = [{
     width: 250,
     sortable: false,
     isSearch: true,
+      visible:true,
     isSearchFront: true,
     editable: true,
     editType: 'text',
@@ -135,6 +146,7 @@ const FIELDS = [{
     width: 250,
     sortable: false,
     isSearch: true,
+      visible:true,
     isSearchFront: false,
     editable: true,
     editType: 'select',
@@ -154,6 +166,7 @@ const FIELDS = [{
     align: 'center',
     width: 250,
     sortable: false,
+      visible:true,
     isSearch: true,
     isSearchFront: false,
     editable: true,
@@ -173,6 +186,7 @@ const FIELDS = [{
     // fixed: 'left',
     key: 'code',
     align: 'center',
+      visible:true,
     width: 250,
     isSearch: true,
     isSearchFront: true,
@@ -189,6 +203,7 @@ const FIELDS = [{
     editable: true,
     editType: 'select',
     isServer: false,
+      visible:true,
     isSearch: true,
     serverUrl: 'login',
     selectList: [{
@@ -211,11 +226,14 @@ const FIELDS = [{
     width: 250,
     sortable: false,
     editable: true,
+      visible:true,
     editType: 'text'
+
   },
   {
     title: '是否可见',
     key: 'visible',
+    visible:true,
     sortable: false,
     align: 'center',
     editable: true,
@@ -235,6 +253,7 @@ const FIELDS = [{
     title: '数据类型',
     key: 'editType',
     sortable: false,
+      visible:true,
     align: 'center',
     editable: true,
     isSearch: true,
@@ -260,6 +279,7 @@ const FIELDS = [{
     sortable: false,
     align: 'center',
     editable: true,
+      visible:true,
     isSearch: true,
     minWidth: 250,
     editType: 'text'
@@ -270,6 +290,7 @@ const FIELDS = [{
     key: 'selectListFun',
     sortable: false,
     align: 'center',
+      visible:true,
     editable: true,
     isSearch: true,
     minWidth: 250,
@@ -282,6 +303,7 @@ const FIELDS = [{
     sortable: false,
     align: 'center',
     editable: true,
+      visible:true,
     isSearch: false,
     minWidth: 250,
     editType: 'text'
@@ -292,6 +314,7 @@ const FIELDS = [{
     sortable: false,
     align: 'center',
     editable: true,
+      visible:true,
     isSearch: false,
     minWidth: 250,
     editType: 'text'
@@ -302,6 +325,7 @@ const FIELDS = [{
     sortable: false,
     align: 'center',
     editable: true,
+      visible:true,
     minWidth: 250,
     editType: 'select',
     selectList: [{
@@ -318,6 +342,7 @@ const FIELDS = [{
     title: '是否排序',
     key: 'sortable',
     editable: true,
+      visible:true,
     editType: 'select',
     align: 'center',
     minWidth: 250,
@@ -339,6 +364,7 @@ const FIELDS = [{
     key: 'tooltip',
     align: 'center',
     editable: true,
+      visible:true,
     editType: 'select',
     minWidth: 250,
     selectList: [{
@@ -355,6 +381,7 @@ const FIELDS = [{
     title: '是否是固定列',
     key: 'fixed',
     editable: true,
+      visible:true,
     align: 'center',
     minWidth: 250,
     editType: 'select',
@@ -376,6 +403,7 @@ const FIELDS = [{
     title: '操作',
     key: 'handle',
     isHide: false, // 默认为false 设为true时隐藏此列
+      visible:true,
     align: 'center',
     width: 150,
     minWidth: 150,
@@ -417,6 +445,7 @@ const DATAITEM = {
   visible: true,
   editable: true,
   sortable: false,
+  visible:true,
   minWidth: 120,
   //_checked: true,
   fixed: 'left',
@@ -432,6 +461,7 @@ const VIEWCOLLUMN = [{
   },
   {
     title: '视图名称',
+      visible:true,
     key: 'field',
     align: 'center',
     width: 250,
@@ -444,6 +474,7 @@ const VIEWCOLLUMN = [{
     key: 'title',
     align: 'center',
     sortable: false,
+      visible:true,
     editable: false,
     editType: 'text'
   },
@@ -451,6 +482,7 @@ const VIEWCOLLUMN = [{
     title: '操作',
     key: 'handle',
     align: 'center',
+      visible:true,
     width: 250,
     minWidth: 100,
     options: ['delete', 'eidt'],
