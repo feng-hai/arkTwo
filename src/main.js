@@ -14,6 +14,11 @@ import {
 import installPlugin from '@/plugin'
 import './index.less'
 import '@/assets/icons/iconfont.css'
+import 'vue-tree-halower/dist/halower-tree.min.css' // you can customize the style of the tree
+import{VTree,VSelectTree} from 'vue-tree-halower'
+
+Vue.use(VTree)
+ Vue.use(VSelectTree)
 // import TreeTable from 'tree-table-vue'
 // import VOrgTree from 'v-org-tree'
 // import 'v-org-tree/dist/v-org-tree.css'

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <tree-select v-model="treeSelected" style="width:200px;" check-strictly :expand-all="true" :load-data="loadData" @on-change="handleTreeSelectChange" @on-toggle-expand="handleTreeSelectExpand" @on-check-change="handleTreeSelectCheckChange" @on-select-change="handleTreeSelectClick"
+  <tree-select v-model="treeSelected" style="width: 300px;" check-strictly :expand-all="true" :load-data="loadData" @on-change="handleTreeSelectChange" @on-toggle-expand="handleTreeSelectExpand" @on-check-change="handleTreeSelectCheckChange" @on-select-change="handleTreeSelectClick"
     :data="treeData"></tree-select>
   <Button @click="changeTreeSelectData">更新选中数据</Button>
   <Button @click="changeTreeData">更新树数据</Button>
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      treeSelected: "336D5DEAE3E14FCDAD2128292C1EDD3E",
+      treeSelected: [112, 113],
       treeData: []
     }
   },
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     changeTreeSelectData() {
-      this.treeSelected =["336D5DEAE3E14FCDAD2128292C1EDD3E"]
+      this.treeSelected = [111, 114]
     },
     changeTreeData() {
       this.treeData = newTreeData

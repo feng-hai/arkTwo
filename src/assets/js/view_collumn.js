@@ -247,6 +247,10 @@ const FIELDS = [{
       {
         value: 'select',
         label: '下拉选择'
+      },
+      {
+        value: 'selectTree',
+        label: '树形结构'
       }
     ]
   },

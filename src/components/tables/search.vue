@@ -1,9 +1,13 @@
 <template>
 <div style="float:left">
-  <div v-if="isEditType" class="tables-editting-con"  style="margin-right:5px">
-    <Input :value="value" @input="handleInput" :placeholder="params.column.title "class="tables-edit-input" />
+  <div v-if="isEditType=='text'" class="tables-editting-con" style="margin-right:5px">
+    <Input :value="value" @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
   </div>
-  <div v-else class="tables-editting-con"  style="margin-right:5px">
+  <div v-else-if="isEditType=='selectTree'">
+    <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
+     <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
+  </div>
+  <div v-else class="tables-editting-con" style="margin-right:5px">
     <span v-if="isServer">
       <Select :value="value" :placeholder="params.column.title "   filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
               <Option v-for="(option, index) in selectList" :value="option.value" :key="index">{{option.label}}</Option>
@@ -22,11 +26,16 @@
 // import {
 //   getDataByParams
 // } from '@/api/handle'
+import TreeSelect from '_c/tree-select'
 export default {
   name: 'search',
+  components: {
+    TreeSelect
+  },
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      treeValue: ""
     }
   },
   props: {
@@ -34,9 +43,12 @@ export default {
     edittingCellId: String,
     allEdit: Boolean,
     params: Object,
-    selectList:{type:Array,default(){
-      return []
-    }}
+    selectList: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
 
   },
   computed: {
@@ -44,7 +56,7 @@ export default {
       return this.params.column.isServer
     },
     isEditType() {
-      return this.params.column.editType === "text"
+      return this.params.column.editType
     },
     isEditting() {
       //return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
@@ -73,6 +85,7 @@ export default {
       }
     },
     handleInput(val) {
+      console.log("input", val);
       this.$emit('input', val, this.params)
     },
     startEdit() {

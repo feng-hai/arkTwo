@@ -227,8 +227,10 @@ export default {
               this.$emit('on-search-edit', params)
             },
             'input': (val, params) => {
+
               this.edittingText = val
               this.searchValues[params.column.key] = val
+              console.log("search",this.searchValues)
               // this.searchColumns[]["searchValue"]=
             },
             'on-start-edit': (params) => {
@@ -253,7 +255,7 @@ export default {
     suportShow(item, index) {
 
       item.render = (h, params) => {
-      
+
         return h(cellShow, {
           props: {
             params: params,
@@ -273,7 +275,6 @@ export default {
       //  if (this.permit.editPermit) {
       item.render = (h, params) => {
         return h(TablesEdit, {
-
           props: {
             params: params,
             value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',

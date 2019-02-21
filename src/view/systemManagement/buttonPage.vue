@@ -1,14 +1,23 @@
 <template>
 <div>
-  <tablesPage :viewId="viewId"></tablesPage>
+  <Row>
+    <Col span="6">  <tree style="margin-right:10px"></tree></Col>
+  <Col span="18">  <tablesPage :viewId="viewId"></tablesPage></Col>
+
+</Row>
+
+
+
 </div>
 </template>
 <script>
 import tablesPage from '@/view/tables/template'
+import tree from '@/view/tree'
 export default {
   name: 'buttonPage',
   components: {
-    tablesPage
+    tablesPage,
+    tree
   },
   data() {
     return {

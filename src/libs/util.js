@@ -509,34 +509,47 @@ export const toJson = (str) => {
  * 返回一个树形结构的数组
  */
 export const translateDataToTree = (data) => {
-  //没有父节点的数据
-  let parents = data.filter(value => value.super_unid == 'undefined' || value.super_unid == null || value.super_unid == "852B63AA0EC74839B7229309AC01CC82")
-  parents = parents.map(item => {
-    item.id = item.unid;
-    item.title = item.name;
-    return item;
+
+  var data = data.map(item => {
+    return {
+      id: item.unid,
+      title: item.name,
+      expanded: true,
+      parent: item.super_unid
+    }
   })
+  //没有父节点的数据
+  let parents = data.filter(value => value.parent == 'undefined' || value.parent == null || value.parent == "852B63AA0EC74839B7229309AC01CC82")
+  // parents = parents.map(item => {
+  //   var temp = {
+  //     id: item.unid,
+  //     title: item.name,
+  //     expanded: true
+  //   }
+  //   return temp;
+  // })
 
   //有父节点的数据
-  let childrens = data.filter(value => value.super_unid !== 'undefined' && value.super_unid != null && value.super_unid != "852B63AA0EC74839B7229309AC01CC82")
+  let childrens = data.filter(value => value.parent !== 'undefined' && value.parent != null && value.parent != "852B63AA0EC74839B7229309AC01CC82")
 
   //定义转换方法的具体实现
-  let translator = (parents, childrens) => {
+  let translator = (parents, childrens, level) => {
     //遍历父节点数据
     parents.forEach((parent) => {
       //遍历子节点数据
       childrens.forEach((current, index) => {
 
         //此时找到父节点对应的一个子节点
-        if (current.super_unid === parent.unid) {
-          current.id = current.unid;
-          current.title = current.name;
+        if (current.parent === parent.id) {
           //对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
           let temp = Object.assign([], childrens)
           //让当前子节点从temp中移除，temp作为新的子节点数据，这里是为了让递归时，子节点的遍历次数更少，如果父子关系的层级越多，越有利
           temp.splice(index, 1)
           //让当前子节点作为唯一的父节点，去递归查找其对应的子节点
-          translator([current], temp)
+          translator([current], temp, level++)
+          if (level > 2) {
+            current.expanded = false;
+          }
           //把找到子节点放入父节点的childrens属性中
           typeof parent.children !== 'undefined' ? parent.children.push(current) : parent.children = [current]
         }
@@ -545,8 +558,28 @@ export const translateDataToTree = (data) => {
   }
 
   //调用转换方法
-  translator(parents, childrens)
+  translator(parents, childrens, 1)
 
   //返回最终的结果
   return parents
+}
+/**
+ * @param {Array} tree  树形结构数组
+ * @param {Array} id     要查询的节点
+ *该方法用于根据节点id获取树形数组中节点信息
+ *
+ */
+export const breadthQuery = (tree, id) => {
+  var stark = [];
+  stark = stark.concat(tree);
+
+  while (stark.length) {
+    var temp = stark.shift();
+    if (temp.children) {
+      stark = stark.concat(temp.children);
+    }
+    if (temp.id === id) {
+      return temp;
+    }
+  }
 }

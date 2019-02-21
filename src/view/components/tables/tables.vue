@@ -103,9 +103,9 @@ export default {
     }
   },
   mounted() {
-    getTableData().then(res => {
-      this.tableData = res.data
-    })
+    // getTableData().then(res => {
+    //   this.tableData = res.data
+    // })
   }
 }
 </script>

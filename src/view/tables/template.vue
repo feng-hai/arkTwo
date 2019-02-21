@@ -35,7 +35,7 @@ import {
 
 import handle from '@/api/handle'
 export default {
-  name: 'button',
+  name: 'tablesPage',
   components: {
     Tables
   },
@@ -44,7 +44,8 @@ export default {
       'getTableInfoById',
       "getOrganizationInfo",
       "getMenusInfo",
-      "getRolesInfo"
+      "getRolesInfo",
+      "getOrgTreeInfo"
     ])
   },
   props: {
@@ -107,7 +108,7 @@ export default {
     }
   },
   created() {
-    console.log("created");
+
 
   },
   methods: {
@@ -297,6 +298,14 @@ export default {
             item.label = item.name;
             return item;
           })
+          jsonObject.columns[i].selectList = orgs;
+
+        } if (item['selectListFun'] && item['selectListFun'] == "orgTree") { //判断是否从外部或取数据
+          var orgs = this.getOrgTreeInfo.map(item => {
+            item.value = item.unid;
+            item.label = item.name;
+            return item;
+          });
           jsonObject.columns[i].selectList = orgs;
 
         } else if (item['selectListFun'] && item['selectListFun'] == "menu") {
@@ -527,7 +536,6 @@ export default {
     }
   },
   mounted() {
-    console.log("mounted");
     this.initParams()
     this.getTableInfo()
   },
