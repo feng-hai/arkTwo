@@ -1,7 +1,7 @@
 <template>
 <div class="tables-edit-outer">
   <div v-if="!isEditting" class="tables-edit-con">
-    <span class="value-con">{{getSelectListText}}</span>
+    <span class="value-con">{{label}}</span>
     <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
   </div>
   <!-- <div v-else class="tables-editting-con">
@@ -29,14 +29,18 @@
 </template>
 
 <script>
-// import {
-//   getDataByParams
-// } from '@/api/handle'
+import {
+  getDataByParams
+} from '@/api/handle'
+import {
+  breadthQuery
+} from '@/libs/util'
 export default {
   name: 'TablesEdit',
-  data () {
+  data() {
     return {
-      isLoading: false
+      isLoading: false,
+      label: ""
     }
   },
   props: {
@@ -46,31 +50,38 @@ export default {
     params: Object,
     editable: Boolean,
     editType: String,
-    selectList: Array
+    selectList: Array,
+
+  },
+  mounted() {
+
+    this.getSelectListText()
+
   },
   computed: {
     // isLoading(){
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer () {
+    isServer() {
       return this.params.column.isServer
     },
-    isEditType () {
+    isEditType() {
       return this.editType === 'text'
     },
-    isEditting () {
+    isEditting() {
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText () {
 
+  },
+  methods: {
+    getSelectListText() {
       if (this.editType == 'text') {
-        if(this.value=="")
-        {
+        if (this.value == "") {
           return "空"
         }
-        return this.value
-      } else {
+        this.label = this.value
+      } else if (this.editType == "select") {
         let text = '没有匹配项目'
         for (var index in this.selectList) {
           var item = this.selectList[index]
@@ -79,27 +90,42 @@ export default {
             break
           }
         }
-        return text
+        this.label = text
+      } else if (this.editType == "selectTree") {
+        let text = '没有匹配项目'
+        var node = breadthQuery(this.selectList, this.value)
+        if (node) {
+          text = node.title;
+        }
+        this.label = text
+      } else if (this.editType == "fun") {
+        var that = this;
+        if (this.params.column.selectListFun && typeof(this.params.column.selectListFun) == "function") {
+          this.params.column.selectListFun(getDataByParams, this.params, function(item) {
+            that.label = item
+          }, this)
+        }
       }
-    }
-  },
-  methods: {
-    remoteMethod (val) {
+    },
+    getData() {
+      return getDataByParams;
+    },
+    remoteMethod(val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput (val) {
+    handleInput(val) {
       this.$emit('input', val, this.params)
     },
-    startEdit () {
+    startEdit() {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit () {
+    saveEdit() {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit () {
+    canceltEdit() {
       this.$emit('on-cancel-edit', this.params)
     }
   }

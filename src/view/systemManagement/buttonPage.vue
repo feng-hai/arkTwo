@@ -1,12 +1,12 @@
 <template>
 <div>
-  <Row>
+  <!-- <Row>
     <Col span="6">  <tree style="margin-right:10px"></tree></Col>
-  <Col span="18">  <tablesPage :viewId="viewId"></tablesPage></Col>
+  <Col span="18">  </Col>
 
-</Row>
+</Row> -->
 
-
+<tablesPage :viewId="viewId"></tablesPage>
 
 </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      viewId: 'EC93684BFCBA4513A6C20DFB65A42C19'
+      viewId: 'D3E75ACC25C645DD9F97F2A2127797F6'
     }
   }
 }
