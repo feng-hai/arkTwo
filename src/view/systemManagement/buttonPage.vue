@@ -19,7 +19,7 @@ export default {
     tablesPage,
     tree
   },
-  data() {
+  data () {
     return {
       viewId: 'D3E75ACC25C645DD9F97F2A2127797F6'
     }

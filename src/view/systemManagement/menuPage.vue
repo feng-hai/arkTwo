@@ -10,7 +10,7 @@ export default {
   components: {
     tablesPage
   },
-  data() {
+  data () {
     return {
       viewId: 'EC93684BFCBA4513A6C20DFB65A42C19'
     }

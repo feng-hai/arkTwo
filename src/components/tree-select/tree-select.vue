@@ -30,7 +30,7 @@ export default {
       default: () => []
     }
   },
-  data() {
+  data () {
     return {
       inputValue: '',
       isShowList: false,
@@ -45,43 +45,42 @@ export default {
   //   }
   // },
   methods: {
-    search() {
+    search () {
       this.$refs.tree.searchNodes(this.searchword)
     },
-    openEvent() {
-      this.isShowList = true;
-      this.icon = "ios-arrow-up"
+    openEvent () {
+      this.isShowList = true
+      this.icon = 'ios-arrow-up'
     },
-    dropdownEvent() {
-      this.isShowList = !this.isShowList;
+    dropdownEvent () {
+      this.isShowList = !this.isShowList
       if (this.isShowList) {
-        this.icon = "ios-arrow-up"
+        this.icon = 'ios-arrow-up'
       } else {
-        this.icon = "ios-arrow-down"
-          this.setTitle(this.selected)
+        this.icon = 'ios-arrow-down'
+        this.setTitle(this.selected)
       }
-
     },
 
-    handleTreeSelected(node) {
+    handleTreeSelected (node) {
       this.$emit('on-change', node.id)
       //  this.$refs["treeInput"].value=node.title;
-      this.inputValue = node.title;
-      this.selected = node.id;
-      this.close();
+      this.inputValue = node.title
+      this.selected = node.id
+      this.close()
     },
-    close() {
+    close () {
       this.isShowList = false
-      this.icon = "ios-arrow-down"
+      this.icon = 'ios-arrow-down'
       this.setTitle(this.selected)
     },
-    setTitle(value) {
+    setTitle (value) {
       if (value) {
         var node = breadthQuery(this.data, value)
         if (node) {
-          this.inputValue = node.title;
+          this.inputValue = node.title
         } else {
-          this.inputValue = "";
+          this.inputValue = ''
         }
       }
     }
@@ -98,15 +97,14 @@ export default {
     //   }
     // }
   },
-  mounted() {
-    var that = this;
+  mounted () {
+    var that = this
     document.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
-        this.close();
-
+        this.close()
       }
     })
-    this.selected = this.value;
+    this.selected = this.value
     this.setTitle(this.value)
   }
 }
