@@ -17,23 +17,23 @@ export default {
     setItem: {
       type: Object,
       default () {
-        return {};
+        return {}
       }
     },
     columns: {
       type: Array,
       default () {
-        return [];
+        return []
       }
     },
     rows: {
       type: Array,
       default () {
-        return [];
+        return []
       }
-    },
+    }
   },
-  data() {
+  data () {
     this.typeArr = ['line', 'histogram', 'pie', 'bar', 'ring', 'waterfall', 'funnel', 'radar']
     return {
       editWidth: true,
@@ -43,7 +43,7 @@ export default {
         scale: [true, true],
         digit: 10
       },
-      chartExtend: { //线平滑化
+      chartExtend: { // 线平滑化
         series: {
           smooth: false
         }
@@ -57,28 +57,27 @@ export default {
     }
   },
   methods: {
-    //设置chart的属性 index代表图表类型 isRoom表示是否需要DataZoom
-    setChart(index, isZoom) {
-
-      this.dataZoom = [];
-      isZoom = false;
-      this.chartData.columns = this.columns;
+    // 设置chart的属性 index代表图表类型 isRoom表示是否需要DataZoom
+    setChart (index, isZoom) {
+      this.dataZoom = []
+      isZoom = false
+      this.chartData.columns = this.columns
 
       if (index == 0 || index == 1 || index == 3) {
-        isZoom = true;
+        isZoom = true
         this.dataZoom = [{
           type: 'slider',
-          filterMode: 'weakFilter',
+          filterMode: 'weakFilter'
         }, {
           type: 'inside',
-          filterMode: 'weakFilter',
+          filterMode: 'weakFilter'
         }]
       }
-      var labels = {};
+      var labels = {}
       if (this.setItem.yArrayObject) {
         this.setItem.yArrayObject.forEach(item => {
-          labels[item.id] = item.name;
-          this.labels[item.name] = item.id;
+          labels[item.id] = item.name
+          this.labels[item.name] = item.id
         })
       }
       if (this.setItem.xArrayObject) {
@@ -89,16 +88,16 @@ export default {
           showDataZoom: isZoom,
           labelMap: labels,
           dimension: this.setItem.xArrayObject.map(item => {
-            return item.id;
+            return item.id
           }),
           metrics: this.setItem.yArrayObject.map(item => {
-            return item.id;
+            return item.id
           }),
           xAxisType: this.setItem.xAxisType
         }
       }
     },
-    handleResize(event) {
+    handleResize (event) {
       const {
         atMin
       } = event

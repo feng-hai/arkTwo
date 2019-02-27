@@ -107,16 +107,16 @@ const USER01 = {
       },
       component: 'tools/tools_json'
 
-    } , {
-        path: 'drag_drawer_page',
-        name: 'drag_drawer_page',
-        meta: {
-          icon: 'md-list',
-          title: '可拖拽抽屉'
-        },
-        component: () =>
-          import ('@/view/components/drag-drawer')
-      }
+    }, {
+      path: 'drag_drawer_page',
+      name: 'drag_drawer_page',
+      meta: {
+        icon: 'md-list',
+        title: '可拖拽抽屉'
+      },
+      component: () =>
+          import('@/view/components/drag-drawer')
+    }
     ]
   },
   {

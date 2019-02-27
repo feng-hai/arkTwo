@@ -3,7 +3,6 @@ import {
   getVehicleHistory
 } from '@/api/vehicle.js'
 
-
 export default {
   state: {
     // organizationList: [],
@@ -33,7 +32,7 @@ export default {
     // getOrgTreeInfo: state => state.orgTree
   },
   actions: {
-    getVehicleInfoAction({
+    getVehicleInfoAction ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -44,7 +43,7 @@ export default {
         reject(error)
       })
     },
-    getVehicleHistoryAction({
+    getVehicleHistoryAction ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {

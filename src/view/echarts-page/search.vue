@@ -45,29 +45,29 @@ export default {
     vehicleIDP: {
       type: String,
       default () {
-        return "";
+        return ''
       }
     },
     setItem: {
       type: Object,
       default () {
-        return {};
+        return {}
       }
-    },
+    }
   },
-  data() {
+  data () {
     return {
       historyData: [],
-      pageId: "echartsTemplate",
+      pageId: 'echartsTemplate',
       dateS: [],
       loading2: false,
       pageSize: 1000,
-      maxSize: 5000, //最大获取数据条数
+      maxSize: 5000, // 最大获取数据条数
       options2: [],
       vehicleID: '',
 
       vin: '',
-      count: 0, //当前已经获取的条数
+      count: 0, // 当前已经获取的条数
       isMore: false,
       pageSizeList: [{
         value: 1000,
@@ -89,83 +89,83 @@ export default {
     }
   },
   computed: {
-    selectedShow() {
-      if (this.vehicleIDP == "") {
-        return true;
+    selectedShow () {
+      if (this.vehicleIDP == '') {
+        return true
       } else {
-        return false;
+        return false
       }
     },
 
     ...mapGetters([
       'getTableInfoById',
-      "getOrganizationInfo",
-      "getMenusInfo",
-      "getRolesInfo",
-      "getOrgTreeInfo"
+      'getOrganizationInfo',
+      'getMenusInfo',
+      'getRolesInfo',
+      'getOrgTreeInfo'
     ])
   },
   methods: {
-    showMore() {
-      this.isMore = !this.isMore;
+    showMore () {
+      this.isMore = !this.isMore
     },
-    changeVehicle(value) {
-      setCookies(this.pageId + "vehicleID", value);
-      setCookies(this.pageId + "vehicleID-option", this.options2);
+    changeVehicle (value) {
+      setCookies(this.pageId + 'vehicleID', value)
+      setCookies(this.pageId + 'vehicleID-option', this.options2)
     },
-    changeDate(selected, d) {
-      setCookies(this.pageId + "times", selected);
-      this.start = selected[0].replace(" ", "T");
-      this.end = selected[1].replace(" ", "T");
+    changeDate (selected, d) {
+      setCookies(this.pageId + 'times', selected)
+      this.start = selected[0].replace(' ', 'T')
+      this.end = selected[1].replace(' ', 'T')
     },
-    remoteMethod2(query) {
+    remoteMethod2 (query) {
       if (query !== '') {
-        this.loading2 = true;
+        this.loading2 = true
         this.getVehicleInfoAction({
-          order: "asc",
+          order: 'asc',
           page_id: 0,
           page_size: 5,
           q: query
         }).then(res => {
           const list = res.map(item => {
-            this.loading2 = false;
+            this.loading2 = false
             return {
               value: item.unid,
               label: item.vin
-            };
-          });
-          this.options2 = list;
+            }
+          })
+          this.options2 = list
         })
       } else {
-        this.options2 = [];
+        this.options2 = []
       }
     },
-    getChartsData() {
-      var that = this;
-      that.count = 0;
-      that.historyData = [];
-      var fields = ['TIMES', 'DATIME_RX']; //接口bug，必须传Times才能查到对应的值
-      var columns = [];
+    getChartsData () {
+      var that = this
+      that.count = 0
+      that.historyData = []
+      var fields = ['TIMES', 'DATIME_RX'] // 接口bug，必须传Times才能查到对应的值
+      var columns = []
       this.setItem.xArrayObject.forEach(item => {
-        if (item.id != "DATIME_RX") {
-          fields.push(item.id);
+        if (item.id != 'DATIME_RX') {
+          fields.push(item.id)
         }
-        columns.push(item.name);
+        columns.push(item.name)
       })
       this.setItem.yArrayObject.forEach(item => {
-        if (item.id != "DATIME_RX") {
-          fields.push(item.id);
+        if (item.id != 'DATIME_RX') {
+          fields.push(item.id)
         }
-        columns.push(item.name);
+        columns.push(item.name)
       })
-      var tempDate = toDate(this.start);
+      var tempDate = toDate(this.start)
       var tempTimes = tempDate == null ? 0 : tempDate.getTime()
-      var url=that.setItem.url + "/" +(that.vehicleIDP==""? that.vehicleID:that.vehicleIDP);
-      var vehicleInfos = function(end) {
+      var url = that.setItem.url + '/' + (that.vehicleIDP == '' ? that.vehicleID : that.vehicleIDP)
+      var vehicleInfos = function (end) {
         that.getVehicleHistoryAction({
           url: url,
           params: {
-            order: "asc",
+            order: 'asc',
             // page_id: that.pagination.currentPage - 1,
             number: that.pageSize,
             date_from: that.start,
@@ -175,19 +175,19 @@ export default {
             field: fields.join(',')
           }
         }).then(res => {
-          that.count = that.count + res.rows.length - 1;
-          var current = res.rows[res.rows.length - 1].column[0];
+          that.count = that.count + res.rows.length - 1
+          var current = res.rows[res.rows.length - 1].column[0]
           var tempids = that.setItem.yArrayObject.map(item => {
-            return item.id;
-          });
+            return item.id
+          })
           var temp = formatHistoryData(res.rows)
 
-          that.historyData = that.historyData.concat(temp);
-          if (current * 1 > tempTimes && res.rows.length == 1001 && res.hasNext == "true" && that.maxSize > that.count) {
-            vehicleInfos(res.rows[res.rows.length - 1].column[2].replace(" ", "T"));
+          that.historyData = that.historyData.concat(temp)
+          if (current * 1 > tempTimes && res.rows.length == 1001 && res.hasNext == 'true' && that.maxSize > that.count) {
+            vehicleInfos(res.rows[res.rows.length - 1].column[2].replace(' ', 'T'))
           } else {
-            var formateDatas = formatData(tempids, that.historyData,that.setItem.zeroFields);
-            that.$emit("formateData", formateDatas);
+            var formateDatas = formatData(tempids, that.historyData, that.setItem.zeroFields)
+            that.$emit('formateData', formateDatas)
             that.$Notice.success({
               title: '数据加载提示',
               desc: '数据加载完成'
@@ -195,31 +195,31 @@ export default {
           }
         })
       }
-      vehicleInfos(this.end);
+      vehicleInfos(this.end)
     },
-    open() {
-      this.$emit("open");
+    open () {
+      this.$emit('open')
     },
 
     // ...mapState (['menus']),
     ...mapActions([
       'getVehicleInfoAction',
       'getVehicleHistoryAction'
-    ]),
+    ])
   },
-  mounted() {
-    this.options2 = toJson(getCookiesValueByKey(this.pageId + "vehicleID-option"))
-    this.setting = toJson(getCookiesValueByKey(this.pageId + "setting"));
-    this.dateS = toJson(getCookiesValueByKey(this.pageId + "times"));
-    this.start = this.dateS[0].replace(" ", "T");
-    this.end = this.dateS[1].replace(" ", "T");
-    var that = this;
-    this.$nextTick(function() {
-      var temp = toJson(getCookiesValueByKey(that.pageId + "vehicleID"));
-      that.vin = temp.label;
-      that.$refs["agency"].query = temp.label;
-      that.loading2 = false;
-      that.vehicleID = temp.value;
+  mounted () {
+    this.options2 = toJson(getCookiesValueByKey(this.pageId + 'vehicleID-option'))
+    this.setting = toJson(getCookiesValueByKey(this.pageId + 'setting'))
+    this.dateS = toJson(getCookiesValueByKey(this.pageId + 'times'))
+    this.start = this.dateS[0].replace(' ', 'T')
+    this.end = this.dateS[1].replace(' ', 'T')
+    var that = this
+    this.$nextTick(function () {
+      var temp = toJson(getCookiesValueByKey(that.pageId + 'vehicleID'))
+      that.vin = temp.label
+      that.$refs['agency'].query = temp.label
+      that.loading2 = false
+      that.vehicleID = temp.value
     })
   }
 }

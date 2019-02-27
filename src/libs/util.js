@@ -283,7 +283,7 @@ export const getArrayFromFile = (file) => {
     let reader = new FileReader()
     reader.readAsText(file) // 以文本格式读取
     let arr = []
-    reader.onload = function(evt) {
+    reader.onload = function (evt) {
       let data = evt.target.result // 读到的数据
       let pasteData = data.trim()
       arr = pasteData.split((/[\n\u0085\u2028\u2029]|\r\n?/g)).map(row => {
@@ -406,7 +406,7 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
-      function(callback) {
+      function (callback) {
         return window.setTimeout(callback, 1000 / 60)
       }
     )
@@ -446,19 +446,19 @@ export const setTitle = (routeItem, vm) => {
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title
   window.document.title = resTitle
 }
-var DATE_REGEXP = new RegExp("(\\d{4})-(\\d{2})-(\\d{2})([T\\s](\\d{2}):(\\d{2}):(\\d{2})(\\.(\\d{3}))?)?.*");
+var DATE_REGEXP = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})([T\\s](\\d{2}):(\\d{2}):(\\d{2})(\\.(\\d{3}))?)?.*')
 export const toDate = (dateString) => {
   if (DATE_REGEXP.test(dateString)) {
-    var timestamp = dateString.replace(DATE_REGEXP, function($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
-      var date = new Date($year, $month - 1, $day, $hour || "00", $minute || "00", $second || "00", $milliscond || "00");
-      return date.getTime();
-    });
-    var date = new Date();
+    var timestamp = dateString.replace(DATE_REGEXP, function ($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
+      var date = new Date($year, $month - 1, $day, $hour || '00', $minute || '00', $second || '00', $milliscond || '00')
+      return date.getTime()
+    })
+    var date = new Date()
 
-    date.setTime(timestamp);
-    return date;
+    date.setTime(timestamp)
+    return date
   }
-  return null;
+  return null
 }
 /**
  * 对Date的扩展，将 Date 转化为指定格式的String
@@ -508,7 +508,7 @@ export const formateDate = (date, fmt) => {
  *  (json) :json对象
  */
 export const toStr = (json) => {
-  var str = JSON.stringify(json, function(key, val) {
+  var str = JSON.stringify(json, function (key, val) {
     if (typeof val === 'function') {
       return val + ''
     }
@@ -521,7 +521,7 @@ export const toStr = (json) => {
  */
 export const toJson = (str) => {
   // json字符串转换成对象
-  let json = JSON.parse(str, function(k, v) {
+  let json = JSON.parse(str, function (k, v) {
     if (v.indexOf && v.indexOf('function') > -1) {
       return eval('(function(){return ' + v + ' })()')
     }
@@ -610,39 +610,32 @@ export const breadthQuery = (tree, id) => {
   }
 }
 export const formatHistoryData = (datas) => {
-  var filds = datas[0].column;
-  var tempDatas = [];
+  var filds = datas[0].column
+  var tempDatas = []
   for (var i = 1; i < datas.length; i++) {
-    var item = {};
-    var itemdata = datas[i].column;
+    var item = {}
+    var itemdata = datas[i].column
     for (var j = 0; j < itemdata.length; j++) {
-      var fieldValue = itemdata[j];
-      var fieldCode = filds[j];
-      item[fieldCode] = fieldValue;
-
+      var fieldValue = itemdata[j]
+      var fieldCode = filds[j]
+      item[fieldCode] = fieldValue
     }
-    tempDatas.push(item);
+    tempDatas.push(item)
   }
-  return tempDatas;
+  return tempDatas
 }
 
-
-
-Array.prototype.contains = function(val)
-{
-     for (var i = 0; i < this.length; i++)
-    {
-       if (this[i] == val)
-      {
-       return true;
-      }
+Array.prototype.contains = function (val) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == val) {
+      return true
     }
-     return false;
-};
-
+  }
+  return false
+}
 
 export const formatData = (code, items, formates) => {
-  var codeObject = {};
+  var codeObject = {}
   for (var i = 0; i < code.length; i++) {
     codeObject[code[i]] = {
       max: -100000,
@@ -650,25 +643,25 @@ export const formatData = (code, items, formates) => {
     }
   }
   if (!formates) {
-    formates = [];
+    formates = []
   }
   for (var index in items) {
     for (var i = 0; i < code.length; i++) {
-      var fieldCode = code[i];
-      var fieldValue = items[index][fieldCode];
+      var fieldCode = code[i]
+      var fieldValue = items[index][fieldCode]
       if (!isNaN(fieldValue)) {
-        fieldValue = fieldValue * 1;
-        if (fieldValue == 0 && formates&&formates.contains(fieldCode)) {
-          items[index][fieldCode] = null;
+        fieldValue = fieldValue * 1
+        if (fieldValue == 0 && formates && formates.contains(fieldCode)) {
+          items[index][fieldCode] = null
         } else {
           if (fieldValue > codeObject[fieldCode].max) {
-            codeObject[fieldCode].max = fieldValue;
+            codeObject[fieldCode].max = fieldValue
             if (codeObject[fieldCode].min == -100000) {
-              codeObject[fieldCode].min = fieldValue;
+              codeObject[fieldCode].min = fieldValue
             }
           }
           if (fieldValue < codeObject[fieldCode].min) {
-            codeObject[fieldCode].min = fieldValue;
+            codeObject[fieldCode].min = fieldValue
           }
         }
       }
@@ -676,20 +669,20 @@ export const formatData = (code, items, formates) => {
   }
   for (var index in items) {
     for (var i = 0; i < code.length; i++) {
-      var fieldCode = code[i];
-      var fieldValue = items[index][fieldCode];
+      var fieldCode = code[i]
+      var fieldValue = items[index][fieldCode]
 
       if (fieldValue != null && !isNaN(fieldValue)) {
-        fieldValue = fieldValue * 1;
-        items[index][fieldCode + "_base"] = fieldValue;
+        fieldValue = fieldValue * 1
+        items[index][fieldCode + '_base'] = fieldValue
         if (codeObject[fieldCode].min == codeObject[fieldCode].max) {
-          items[index][fieldCode] = 1;
+          items[index][fieldCode] = 1
         } else {
-          items[index][fieldCode] = (fieldValue - codeObject[fieldCode].min) * 1.0 / (codeObject[fieldCode].max - codeObject[fieldCode].min);
+          items[index][fieldCode] = (fieldValue - codeObject[fieldCode].min) * 1.0 / (codeObject[fieldCode].max - codeObject[fieldCode].min)
         }
-        items[index]["item" + fieldCode] = codeObject[fieldCode];
+        items[index]['item' + fieldCode] = codeObject[fieldCode]
       }
     }
   }
-  return items;
+  return items
 }

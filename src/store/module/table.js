@@ -1,5 +1,5 @@
 import {
-   getTableView,
+  getTableView,
   getTableColumns
 
 } from '@/api/view'
@@ -20,10 +20,10 @@ export default {
     tableData: {}
   },
   mutations: {
-    setTableInfo(state, tableInfo) {
+    setTableInfo (state, tableInfo) {
       state.tablesInfo[tableInfo.id] = tableInfo
     },
-    setTableData(state, tableData) {
+    setTableData (state, tableData) {
       state.tableData = tableData
     }
   },
@@ -33,12 +33,11 @@ export default {
     }
   },
   actions: {
-    getAlltableInfo({
+    getAlltableInfo ({
       commit
-    }){
+    }) {
       return new Promise((resolve, reject) => {
         getTableView().then(res => {
-        
           // const data = JSON.parse(res.data)
           // commit('setTableData', data)
           resolve(res)
@@ -48,7 +47,7 @@ export default {
       })
     },
 
-    getCheckOnly({
+    getCheckOnly ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -61,7 +60,7 @@ export default {
         })
       })
     },
-    editTableData({
+    editTableData ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -74,7 +73,7 @@ export default {
         })
       })
     },
-    deleteTableData({
+    deleteTableData ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -87,10 +86,9 @@ export default {
         })
       })
     },
-    addTableData({
+    addTableData ({
       commit
     }, option) {
-
       return new Promise((resolve, reject) => {
         getDataByParams(option).then(res => {
           // const data = JSON.parse(res.data)
@@ -101,14 +99,14 @@ export default {
         })
       })
     },
-    getTableData({
+    getTableData ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
         console.log(option)
-        if ("page_id" in option.params) {
+        if ('page_id' in option.params) {
           getDataByParamsForSearch(option).then(res => {
-            var data = res //{data:array,count:number}
+            var data = res // {data:array,count:number}
             commit('setTableData', data)
             resolve(data)
           }).catch(err => {
@@ -129,17 +127,16 @@ export default {
       })
     },
 
-    handleTablesInfo({
-        commit
-      },
-      tableId
+    handleTablesInfo ({
+      commit
+    },
+    tableId
     ) {
       var that = this
       return new Promise((resolve, reject) => {
         if (tableId == 124 || tableId == 125) {
-
           const data = COLUMNS['C' + tableId]
-          //console.log("buttons", toStr(data.buttons));
+          // console.log("buttons", toStr(data.buttons));
           commit('setTableInfo', data)
           resolve(data)
         } else {

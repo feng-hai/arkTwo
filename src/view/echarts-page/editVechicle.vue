@@ -75,12 +75,12 @@ export default {
     showContainerBDrawers: {
       type: Boolean,
       default () {
-        return false;
+        return false
       }
     }
 
   },
-  data() {
+  data () {
     return {
       // showWindowBDrawer: false,
       showContainerBDrawer: false,
@@ -94,20 +94,20 @@ export default {
         name: '企标'
       }],
       xAxisTypes: [{
-          name: '类别',
-          id: 'category'
-        }, {
-          name: '数值',
-          id: 'value'
-        },
-        {
-          name: '时间',
-          id: 'time'
-        },
-        {
-          name: 'log',
-          id: 'log'
-        }
+        name: '类别',
+        id: 'category'
+      }, {
+        name: '数值',
+        id: 'value'
+      },
+      {
+        name: '时间',
+        id: 'time'
+      },
+      {
+        name: 'log',
+        id: 'log'
+      }
       ],
       // showBDrawer3: false,
       // width1: 300,
@@ -121,7 +121,7 @@ export default {
         y: [],
         xArrayObject: [],
         x: [],
-        direction: '',
+        direction: ''
         // input: '',
         // select: '',
         // radio: 'male',
@@ -135,29 +135,29 @@ export default {
       chartData: {
         columns: ['date', 'PV'],
         rows: [{
-            'date': '01-01',
-            'PV': 1231
-          },
-          {
-            'date': '01-02',
-            'PV': 1223
-          },
-          {
-            'date': '01-03',
-            'PV': 2123
-          },
-          {
-            'date': '01-04',
-            'PV': 4123
-          },
-          {
-            'date': '01-05',
-            'PV': 3123
-          },
-          {
-            'date': '01-06',
-            'PV': 7123
-          }
+          'date': '01-01',
+          'PV': 1231
+        },
+        {
+          'date': '01-02',
+          'PV': 1223
+        },
+        {
+          'date': '01-03',
+          'PV': 2123
+        },
+        {
+          'date': '01-04',
+          'PV': 4123
+        },
+        {
+          'date': '01-05',
+          'PV': 3123
+        },
+        {
+          'date': '01-06',
+          'PV': 7123
+        }
         ]
       }
     }
@@ -165,40 +165,39 @@ export default {
   computed: {
     ...mapGetters([
       'getTableInfoById',
-      "getOrganizationInfo",
-      "getMenusInfo",
-      "getRolesInfo",
-      "getOrgTreeInfo"
+      'getOrganizationInfo',
+      'getMenusInfo',
+      'getRolesInfo',
+      'getOrgTreeInfo'
     ]),
-    placementComputed() {
+    placementComputed () {
       return this.placement ? 'left' : 'right'
     }
   },
   methods: {
-    xChange(value) {
-      var temp = [];
+    xChange (value) {
+      var temp = []
       value.forEach(item => {
         temp.push({
           id: item.split('|')[0],
           name: item.split('|')[1]
         })
       })
-      this.formItem.xArrayObject = temp;
+      this.formItem.xArrayObject = temp
     },
-    yChange(value) {
-      var temp = [];
+    yChange (value) {
+      var temp = []
       value.forEach(item => {
         temp.push({
           id: item.split('|')[0],
           name: item.split('|')[1]
         })
       })
-      this.formItem.yArrayObject = temp;
+      this.formItem.yArrayObject = temp
     },
-    resourceChange(value) {
+    resourceChange (value) {
       this.handleTablesInfo(value).then(res => {
-        if (res.columns)
-          this.functionsItems = res.columns
+        if (res.columns) { this.functionsItems = res.columns }
       })
     },
     // ...mapState (['menus']),
@@ -206,7 +205,7 @@ export default {
       'getAlltableInfo',
       'handleTablesInfo'
     ]),
-    handleResize(event) {
+    handleResize (event) {
       const {
         atMin
       } = event

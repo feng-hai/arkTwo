@@ -76,32 +76,32 @@ export default {
     showContainerBDrawers: {
       type: Boolean,
       default () {
-        return false;
+        return false
       }
     }
 
   },
-  data() {
+  data () {
     return {
       // showWindowBDrawer: false,
       showContainerBDrawer: false,
       functionsItems: [],
       functions: [],
       xAxisTypes: [{
-          name: '类别',
-          id: 'category'
-        }, {
-          name: '数值',
-          id: 'value'
-        },
-        {
-          name: '时间',
-          id: 'time'
-        },
-        {
-          name: 'log',
-          id: 'log'
-        }
+        name: '类别',
+        id: 'category'
+      }, {
+        name: '数值',
+        id: 'value'
+      },
+      {
+        name: '时间',
+        id: 'time'
+      },
+      {
+        name: 'log',
+        id: 'log'
+      }
       ],
       // showBDrawer3: false,
       // width1: 300,
@@ -118,72 +118,71 @@ export default {
         direction: '',
         xAxisType: '',
         url: '',
-        chartType:0
+        chartType: 0
       }
     }
   },
   computed: {
     ...mapGetters([
       'getTableInfoById',
-      "getOrganizationInfo",
-      "getMenusInfo",
-      "getRolesInfo",
-      "getOrgTreeInfo"
+      'getOrganizationInfo',
+      'getMenusInfo',
+      'getRolesInfo',
+      'getOrgTreeInfo'
     ]),
 
-    placementComputed() {
+    placementComputed () {
       return this.placement ? 'left' : 'right'
     }
   },
   methods: {
-    open(setting) {
-
-      this.showContainerBDrawer = true;
-      this.formItem = setting;
+    open (setting) {
+      this.showContainerBDrawer = true
+      this.formItem = setting
       this.handleTablesInfo(this.formItem.resource).then(res => {
         if (res.columns) {
-          this.formItem.url = res.url;
+          this.formItem.url = res.url
           this.functionsItems = res.columns
         }
         console.log(this.url)
       })
     },
-    submit() {
-      this.$emit("input", this.formItem);
-      this.showContainerBDrawer = false;
+    submit () {
+      this.$emit('input', this.formItem)
+      this.showContainerBDrawer = false
     },
-    close() {
-      this.showContainerBDrawer = false;
+    close () {
+      this.showContainerBDrawer = false
     },
-    xChange(value) {
-      var temp = [];
+    xChange (value) {
+      var temp = []
       value.forEach(item => {
         temp.push({
           id: item.split('|')[0],
           name: item.split('|')[1]
         })
       })
-      this.formItem.xArrayObject = temp;
+      this.formItem.xArrayObject = temp
     },
-    yChange(value) {
-      var temp = [];
+    yChange (value) {
+      var temp = []
       value.forEach(item => {
         temp.push({
           id: item.split('|')[0],
           name: item.split('|')[1]
         })
       })
-      this.formItem.yArrayObject = temp;
+      this.formItem.yArrayObject = temp
     },
-    resourceChange(value) {
-      this.formItem.x = [];
-      this.formItem.y = [];
-      this.formItem.yArrayObject = [];
-      this.formItem.xArrayObject = [];
+    resourceChange (value) {
+      this.formItem.x = []
+      this.formItem.y = []
+      this.formItem.yArrayObject = []
+      this.formItem.xArrayObject = []
       this.formItem.xAxisType = ''
       this.handleTablesInfo(value).then(res => {
         if (res.columns) {
-          this.formItem.url = res.url;
+          this.formItem.url = res.url
           this.functionsItems = res.columns
         }
         console.log(this.url)
@@ -194,7 +193,7 @@ export default {
       'getAlltableInfo',
       'handleTablesInfo'
     ]),
-    handleResize(event) {
+    handleResize (event) {
       const {
         atMin
       } = event

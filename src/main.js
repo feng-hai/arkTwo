@@ -16,15 +16,15 @@ import './index.less'
 import '@/assets/icons/iconfont.css'
 import 'vue-tree-halower/dist/halower-tree.min.css' // you can customize the style of the tree
 
-import VCharts from 'v-charts'/*全部引入，后续需要优化*/
+import VCharts from 'v-charts'
+
+import 'v-charts/lib/style.css'
+import { VTree, VSelectTree } from 'vue-tree-halower'/* 全部引入，后续需要优化 */
 
 Vue.use(VCharts)
 
-import 'v-charts/lib/style.css'
-import{VTree,VSelectTree} from 'vue-tree-halower'
-
 Vue.use(VTree)
- Vue.use(VSelectTree)
+Vue.use(VSelectTree)
 // import TreeTable from 'tree-table-vue'
 // import VOrgTree from 'v-org-tree'
 // import 'v-org-tree/dist/v-org-tree.css'
