@@ -107,7 +107,16 @@ const USER01 = {
       },
       component: 'tools/tools_json'
 
-    }
+    } , {
+        path: 'drag_drawer_page',
+        name: 'drag_drawer_page',
+        meta: {
+          icon: 'md-list',
+          title: '可拖拽抽屉'
+        },
+        component: () =>
+          import ('@/view/components/drag-drawer')
+      }
     ]
   },
   {
@@ -164,6 +173,72 @@ const USER01 = {
         },
         component: 'systemManagement/rolePage'
       }
+    ]
+  },
+  {
+    path: '/reportManagement',
+    name: 'reportManagement',
+    meta: {
+      icon: 'md-menu',
+      title: '报表管理'
+    },
+    component: 'main',
+    children: [
+      {
+        path: 'echartsTempate',
+        name: 'echartsTempate',
+        meta: {
+          title: '自定义数据模板',
+          notCache: false
+        },
+        component: 'echarts-page/template'
+      },
+      {
+        path: 'echartsTempateV',
+        name: 'echartsTempateV',
+        meta: {
+          title: '车辆图标模板',
+          notCache: false
+        },
+        component: 'echarts-page/templateVehicle'
+      }
+      // ,
+      // {
+      //   path: 'company',
+      //   name: 'companyPage',
+      //   meta: {
+      //     title: '机构管理',
+      //     notCache: false
+      //   },
+      //   component: 'systemManagement/companyPage'
+      // },
+      // {
+      //   path: 'menu',
+      //   name: 'menuPage',
+      //   meta: {
+      //     title: '菜单管理',
+      //     notCache: false
+      //   },
+      //   component: 'systemManagement/menuPage'
+      // },
+      // {
+      //   path: 'userManagement',
+      //   name: 'userPage',
+      //   meta: {
+      //     title: `用户管理`,
+      //     notCache: false
+      //   },
+      //   component: 'systemManagement/userPage'
+      // },
+      // {
+      //   path: 'roleManagement',
+      //   name: 'rolePage',
+      //   meta: {
+      //     title: `角色管理`,
+      //     notCache: false
+      //   },
+      //   component: 'systemManagement/rolePage'
+      // }
     ]
   }
   ]

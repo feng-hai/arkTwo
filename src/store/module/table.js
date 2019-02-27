@@ -1,6 +1,7 @@
 import {
-  // getTableView,
+   getTableView,
   getTableColumns
+
 } from '@/api/view'
 import COLUMNS from '@/assets/data/columns' // 引入列表信息
 import {
@@ -32,19 +33,21 @@ export default {
     }
   },
   actions: {
-    getTableColumns({
+    getAlltableInfo({
       commit
-    }, option) {
+    }){
       return new Promise((resolve, reject) => {
-        // getDataByParams(option).then(res => {
-        //   // const data = JSON.parse(res.data)
-        //   // commit('setTableData', data)
-        //   resolve(res)
-        // }).catch(err => {
-        //   reject(err)
-        // })
+        getTableView().then(res => {
+        
+          // const data = JSON.parse(res.data)
+          // commit('setTableData', data)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
       })
     },
+
     getCheckOnly({
       commit
     }, option) {

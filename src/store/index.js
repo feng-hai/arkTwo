@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './module/user'
 import app from './module/app'
 import table from './module/table'
+import vehicle from './module/vehicle'
 import addRoutes from './dynamicRouter/addRoutes'
 import publicResource from './module/publicResource'
 Vue.use(Vuex)
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     app,
     addRoutes,
     publicResource,
-    table
+    table,
+    vehicle
   }
 })

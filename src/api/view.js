@@ -3,7 +3,7 @@ import axios from '@/libs/api.request'
 export const getTableView = (params) => {
 //  console.log(params)
   return axios.request({
-    url: 'get_table_view',
+    url: '/bigger/grid',
     method: 'get',
     params: params
   })
