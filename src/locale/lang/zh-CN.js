@@ -54,5 +54,11 @@ export default {
   viewManagement: '视图管理',
   menuPage:'菜单管理',
   buttonPage:'按钮管理',
-  companyPage:'机构管理'
+  companyPage:'机构管理',
+  baseInfoManagement:'基础信息',
+  deviceManagement:'设备管理',
+  assetManagement:'资产管理',
+  videoManagement:'视频管理',
+  deviceType:'设备类型',
+  deviceModel:'设备型号'
 }

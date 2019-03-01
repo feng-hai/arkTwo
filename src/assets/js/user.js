@@ -174,7 +174,62 @@ const USER01 = {
         component: 'systemManagement/rolePage'
       }
     ]
-  },
+  },  {
+      path: '/baseInfoManagement',
+      name: 'baseInfoManagement',
+      meta: {
+        icon: 'md-menu',
+        title: '基础信息'
+      },
+      component: 'main',
+      children: [
+        {
+          path: 'asset',
+          name: 'assetManagement',
+          meta: {
+            title: '资产管理',
+            notCache: false
+          },
+          component: 'baseInfoManagement/assetManagement'
+        },
+        {
+          path: 'device',
+          name: 'deviceManagement',
+          meta: {
+            title: '设备管理',
+            notCache: false
+          },
+          component: 'baseInfoManagement/deviceManagement'
+        },
+        {
+          path: 'video',
+          name: 'videoManagement',
+          meta: {
+            title: '视频管理',
+            notCache: false
+          },
+          component: 'baseInfoManagement/videoManagement'
+        },
+        {
+          path: 'deviceType',
+          name: 'deviceType',
+          meta: {
+            title: `设备类型`,
+            notCache: false
+          },
+          component: 'baseInfoManagement/deviceType'
+        },
+        {
+          path: 'deviceModel',
+          name: 'deviceModel',
+          meta: {
+            title: `设备型号`,
+            notCache: false
+          },
+          component: 'baseInfoManagement/deviceModel'
+        }
+      ]
+    },
   {
     path: '/reportManagement',
     name: 'reportManagement',
