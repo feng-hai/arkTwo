@@ -10,9 +10,9 @@ export default {
   components: {
     tablesPage
   },
-  data() {
+  data () {
     return {
-      viewId: '411AAFC098F047A68593FFE3EA3F2DE0'
+      viewId: '342FA2327026480A903B019902CBC24D'
     }
   }
 }

@@ -23,7 +23,7 @@
     </div>
     <div v-else-if="isEditType=='selectTree'" style="float:left">
       <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true"/> -->
-      <tree-select :placeholder="params.column.title " :value="value" style="width:150px;" check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
+      <tree-select :placeholder="params.column.title " :value="value" style="width:200px;" check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
     </div>
     <span v-if="!allEdit">
     <Button @click="saveEdit" style="padding: 6px 4px;" type="text"><Icon type="md-checkmark"></Icon></Button>
@@ -46,7 +46,7 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
       treeValue: ''
@@ -66,22 +66,22 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.editType
     },
-    isEditting() {
+    isEditting () {
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
+    getSelectListText () {
       if (this.editType == 'text') {
-        if (this.value == "") {
-          return "空"
+        if (this.value == '') {
+          return '空'
         }
         return this.value
-      } else if (this.editType == "select") {
+      } else if (this.editType == 'select') {
         let text = '没有匹配项目'
         for (var index in this.selectList) {
           var item = this.selectList[index]
@@ -91,33 +91,33 @@ export default {
           }
         }
         return text
-      } else if (this.editType == "selectTree") {
+      } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
         var node = breadthQuery(this.selectList, this.value)
         if (node) {
-          text = node.title;
+          text = node.title
         }
         return text
       }
     }
   },
   methods: {
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
+    handleInput (val) {
       this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
+    saveEdit () {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   },

@@ -101,22 +101,35 @@ export default {
     },
     getTableData ({
       commit
-    }, option) {
+    }, options) {
+      var option = options.options
       return new Promise((resolve, reject) => {
-        console.log(option)
-        if ('page_id' in option.params) {
-          getDataByParamsForSearch(option).then(res => {
-            var data = res // {data:array,count:number}
-            commit('setTableData', data)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
+        if (options.isCount) {
+          if ('page_id' in option.params) {
+            getDataByParamsForSearch(option).then(res => {
+              var data = res // {data:array,count:number}
+              commit('setTableData', data)
+              resolve(data)
+            }).catch(err => {
+              reject(err)
+            })
+          } else {
+            getDataByParams(option).then(res => {
+              var data = {
+                data: res.data,
+                count: 0
+              }
+              commit('setTableData', data)
+              resolve(data)
+            }).catch(err => {
+              reject(err)
+            })
+          }
         } else {
           getDataByParams(option).then(res => {
             var data = {
-              data: res.data,
-              count: 0
+              data: res.data.collection,
+              count: res.data.count
             }
             commit('setTableData', data)
             resolve(data)
@@ -173,6 +186,7 @@ export default {
               deleteUrl: fields.deleteUrl,
               editUrl: fields.editUrl,
               des: fields.des,
+              isCount: fields.isCount,
               addPermit: true, // 新增按钮是否有权限
               isRouter: { // 新增按钮显示时， 设置为true，跳转到url对应的页面，否则在当前页面新增
                 isTrue: true,

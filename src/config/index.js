@@ -17,8 +17,8 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'https://shangqi.wlwltech.com', // 'https://shuchi.wlwltech.com:20443',//'https://newnetcom.com',
-    pro: 'https://produce.com'
+    dev: 'https://api.renxingzuche.com', // 'https://shuchi.wlwltech.com:20443',//'https://newnetcom.com',
+    pro: 'https://api.renxingzuche.com'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

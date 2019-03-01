@@ -21,6 +21,11 @@
       <FormItem label="删除URL" prop="deleteUrl">
         <Input v-model="formValidate.deleteUrl" placeholder="输入删除路径，用于删除数据，"></Input>
       </FormItem>
+      <FormItem label="有count查询" prop="isCount">
+        <Select v-model="formValidate.isCount" style="width:200px">
+        <Option v-for="item in isCounts" :value="item.value" :key="item.value">{{ item.label }}</Option>
+        </Select>
+      </FormItem>
       <FormItem label="新增按钮权限" prop="addPermit">
         <Select v-model="formValidate.addPermit" style="width:200px">
         <Option v-for="item in addPermits" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -103,9 +108,10 @@ export default {
       'getTableInfoById'
     ])
   },
-  data() {
+  data () {
     return {
       handleFunction: (res) => {
+        console.log('res', res)
 
         this.formValidate.name = res.name
 
@@ -150,9 +156,17 @@ export default {
         addUrl: '',
         deleteUrl: '',
         editUrl: '',
-        buttons: ''
+        buttons: '',
+        isCount: 'true'
 
       },
+      isCounts: [{
+        value: 'true',
+        label: '有'
+      }, {
+        value: 'false',
+        label: '无'
+      }],
       ruleValidate: {
         name: [{
           required: true,
@@ -165,10 +179,10 @@ export default {
           trigger: 'blur'
         }],
         desc: [{
-            required: true,
-            message: '请输入列表描述信息，尽量详细',
-            trigger: 'blur'
-          }
+          required: true,
+          message: '请输入列表描述信息，尽量详细',
+          trigger: 'blur'
+        }
 
         ]
       },
@@ -192,7 +206,7 @@ export default {
       'editTableData',
       'getCheckOnly'
     ]),
-    close() {
+    close () {
       /**
        * 如果是调用closeTag方法，普通的页面传入的对象参数只需要写name字段即可
        * 如果是动态路由和带参路由，需要传入query或params字段，用来区别关闭的是参数为多少的页面
@@ -202,27 +216,25 @@ export default {
         params: this.$route.params
       })
     },
-    selectedData(data) {
+    selectedData (data) {
       data.map(item => {
         item._checked = true
         return item
       })
       this.selectedData = data
     },
-    handleUpdateSubmit(name) {
+    handleUpdateSubmit (name) {
       var urlInfo = window.location.href
       var id = getParams2(urlInfo)
 
       var that = this
 
       this.$refs[name].validate((valid) => {
-
         if (valid) {
-
           this.selectedData = this.selectedData.map(item => {
             item.key = item.field
             if (item.width) {
-              item.width = item.width * 1;
+              item.width = item.width * 1
             }
             if (item.editType == 'select') {
               // item.selectList = toJson(item.selectList)
@@ -231,14 +243,14 @@ export default {
           })
 
           // 指定排序的比较函数
-          function compare(property) {
-            return function(obj1, obj2) {
-              var value1 = obj1[property];
-              var value2 = obj2[property];
-              return value1 - value2; // 升序
+          function compare (property) {
+            return function (obj1, obj2) {
+              var value1 = obj1[property]
+              var value2 = obj2[property]
+              return value1 - value2 // 升序
             }
           }
-          this.selectedData.sort(compare("index"));
+          this.selectedData.sort(compare('index'))
 
           that.addTableData({
             url: '/bigger/grid/' + id,
@@ -258,7 +270,7 @@ export default {
         }
       })
     },
-    handleSubmit(name) {
+    handleSubmit (name) {
       var that = this
       this.$refs[name].validate((valid) => {
         this.selectedData = this.selectedData.map(item => {
@@ -270,14 +282,14 @@ export default {
         })
 
         // 指定排序的比较函数
-        function compare(property) {
-          return function(obj1, obj2) {
-            var value1 = obj1[property];
-            var value2 = obj2[property];
-            return value1 - value2; // 升序
+        function compare (property) {
+          return function (obj1, obj2) {
+            var value1 = obj1[property]
+            var value2 = obj2[property]
+            return value1 - value2 // 升序
           }
         }
-        this.selectedData.sort(compare("index"));
+        this.selectedData.sort(compare('index'))
         if (valid) {
           that.addTableData({
             url: '/bigger/grid',
@@ -297,17 +309,17 @@ export default {
         }
       })
     },
-    handleReset(name) {
+    handleReset (name) {
       this.$refs[name].resetFields()
     },
-    saveTableDetail() {
+    saveTableDetail () {
 
     },
-    reload() {
+    reload () {
 
     }
   },
-  mounted() {
+  mounted () {
 
   },
   watch: {

@@ -3,9 +3,9 @@
   <div v-if="isEditType=='text'" class="tables-editting-con" style="margin-right:5px">
     <Input :value="value" @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
   </div>
-  <div v-else-if="isEditType=='selectTree'">
+  <div v-else-if="isEditType=='selectTree'" style="margin-right:5px" >
     <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
-     <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
+     <tree-select  v-model="treeValue"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
   </div>
   <div v-else class="tables-editting-con" style="margin-right:5px">
     <span v-if="isServer">
@@ -32,10 +32,10 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
-      treeValue: ""
+      treeValue: ''
     }
   },
   props: {
@@ -52,51 +52,50 @@ export default {
 
   },
   computed: {
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.params.column.editType
     },
-    isEditting() {
-      //return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
+    isEditting () {
+      // return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
-
-      if (this.params.column.editType == "text") {
+    getSelectListText () {
+      if (this.params.column.editType == 'text') {
         return this.value
       } else {
-        let text = "没有匹配项目"
+        let text = '没有匹配项目'
         for (var index in this.selectList) {
-          var item = this.selectList[index];
+          var item = this.selectList[index]
           if (this.value == item.value) {
-            text = item.label;
-            break;
+            text = item.label
+            break
           }
         }
-        return text;
+        return text
       }
     }
   },
   methods: {
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
-      console.log("input", val);
+    handleInput (val) {
+      console.log('input', val)
       this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
-      console.log("value", this.value)
+    saveEdit () {
+      console.log('value', this.value)
       this.$emit('on-save-edit', this.params)
-      //this.getSelectListText
+      // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   }

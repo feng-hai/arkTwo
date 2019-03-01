@@ -5,7 +5,7 @@ import {
 } from '@/api/publicResource'
 import {
   translateDataToTree
-} from "@/libs/util.js"
+} from '@/libs/util.js'
 // import {
 //   setToken,
 //   getToken
@@ -20,15 +20,15 @@ export default {
     roles: []
   },
   mutations: {
-    setOrganization(state, orgInfo) {
+    setOrganization (state, orgInfo) {
       state.orgTree = translateDataToTree(orgInfo)
       state.organizationList = orgInfo
     },
-    setMenusList(state, menuInfo) {
-      state.menusList = menuInfo;
+    setMenusList (state, menuInfo) {
+      state.menusList = menuInfo
     },
-    setRolesList(state, rolesInfo) {
-      state.roles = rolesInfo;
+    setRolesList (state, rolesInfo) {
+      state.roles = rolesInfo
     }
   },
   getters: {
@@ -41,7 +41,7 @@ export default {
     getOrgTreeInfo: state => state.orgTree
   },
   actions: {
-    getMenuInfoAction({
+    getMenuInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -49,15 +49,14 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-
-          commit('setMenusList', res.data)
-          resolve(res.data)
+          commit('setMenusList', res.data.collection)
+          resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
       })
     },
-    getRolesInfoAction({
+    getRolesInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -65,16 +64,15 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-
-          commit('setRolesList', res.data)
-          resolve(res.data)
+          commit('setRolesList', res.data.collection)
+          resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
       })
     },
     // 分组信息
-    getOrgInfoAction({
+    getOrgInfoAction ({
       state,
       commit
     }, option) {
@@ -83,13 +81,12 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-          commit('setOrganization', res.data)
-          resolve(res.data)
+          commit('setOrganization', res.data.collection)
+          resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
       })
-
     }
   }
 }
