@@ -15,7 +15,7 @@ const resolve = dir => {
 const BASE_URL = process.env.NODE_ENV === 'production'
   ? '/'
   : '/'
-
+var webpack = require('webpack')
 module.exports = {
 
   // Project deployment base
@@ -26,6 +26,15 @@ module.exports = {
   // https://www.foobar.com/my-app/
   // then change this to '/my-app/'
   baseUrl: BASE_URL,
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'windows.jQuery': 'jquery'
+      })
+    ]
+  },
   // tweak internal webpack configuration.
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   // 如果你不需要使用eslint，把lintOnSave设为false即可
@@ -35,7 +44,7 @@ module.exports = {
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
     config.entry('index')
-     .add('babel-polyfill')
+      .add('babel-polyfill')
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false

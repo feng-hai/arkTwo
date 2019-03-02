@@ -115,7 +115,7 @@ const USER01 = {
         title: '可拖拽抽屉'
       },
       component: () =>
-          import('@/view/components/drag-drawer')
+            import('@/view/components/drag-drawer')
     }
     ]
   },
@@ -127,109 +127,116 @@ const USER01 = {
       title: '系统管理'
     },
     component: 'main',
-    children: [
-      {
-        path: 'button',
-        name: 'buttonPage',
-        meta: {
-          title: '按钮管理',
-          notCache: false
-        },
-        component: 'systemManagement/buttonPage'
-      },
-      {
-        path: 'company',
-        name: 'companyPage',
-        meta: {
-          title: '机构管理',
-          notCache: false
-        },
-        component: 'systemManagement/companyPage'
-      },
-      {
-        path: 'menu',
-        name: 'menuPage',
-        meta: {
-          title: '菜单管理',
-          notCache: false
-        },
-        component: 'systemManagement/menuPage'
-      },
-      {
-        path: 'userManagement',
-        name: 'userPage',
-        meta: {
-          title: `用户管理`,
-          notCache: false
-        },
-        component: 'systemManagement/userPage'
-      },
-      {
-        path: 'roleManagement',
-        name: 'rolePage',
-        meta: {
-          title: `角色管理`,
-          notCache: false
-        },
-        component: 'systemManagement/rolePage'
-      }
-    ]
-  },  {
-      path: '/baseInfoManagement',
-      name: 'baseInfoManagement',
+    children: [{
+      path: 'button',
+      name: 'buttonPage',
       meta: {
-        icon: 'md-menu',
-        title: '基础信息'
+        title: '按钮管理',
+        notCache: false
       },
-      component: 'main',
-      children: [
-        {
-          path: 'asset',
-          name: 'assetManagement',
-          meta: {
-            title: '资产管理',
-            notCache: false
-          },
-          component: 'baseInfoManagement/assetManagement'
-        },
-        {
-          path: 'device',
-          name: 'deviceManagement',
-          meta: {
-            title: '设备管理',
-            notCache: false
-          },
-          component: 'baseInfoManagement/deviceManagement'
-        },
-        {
-          path: 'video',
-          name: 'videoManagement',
-          meta: {
-            title: '视频管理',
-            notCache: false
-          },
-          component: 'baseInfoManagement/videoManagement'
-        },
-        {
-          path: 'deviceType',
-          name: 'deviceType',
-          meta: {
-            title: `设备类型`,
-            notCache: false
-          },
-          component: 'baseInfoManagement/deviceType'
-        },
-        {
-          path: 'deviceModel',
-          name: 'deviceModel',
-          meta: {
-            title: `设备型号`,
-            notCache: false
-          },
-          component: 'baseInfoManagement/deviceModel'
-        }
-      ]
+      component: 'systemManagement/buttonPage'
     },
+    {
+      path: 'company',
+      name: 'companyPage',
+      meta: {
+        title: '机构管理',
+        notCache: false
+      },
+      component: 'systemManagement/companyPage'
+    },
+    {
+      path: 'menu',
+      name: 'menuPage',
+      meta: {
+        title: '菜单管理',
+        notCache: false
+      },
+      component: 'systemManagement/menuPage'
+    },
+    {
+      path: 'userManagement',
+      name: 'userPage',
+      meta: {
+        title: `用户管理`,
+        notCache: false
+      },
+      component: 'systemManagement/userPage'
+    },
+    {
+      path: 'roleManagement',
+      name: 'rolePage',
+      meta: {
+        title: `角色管理`,
+        notCache: false
+      },
+      component: 'systemManagement/rolePage'
+    }
+    ]
+  }, {
+    path: '/baseInfoManagement',
+    name: 'baseInfoManagement',
+    meta: {
+      icon: 'md-menu',
+      title: '基础信息'
+    },
+    component: 'main',
+    children: [{
+      path: 'asset',
+      name: 'assetManagement',
+      meta: {
+        title: '资产管理',
+        notCache: false
+      },
+      component: 'baseInfoManagement/assetManagement'
+    },
+    {
+      path: 'setIconInlayer',
+      name: 'setIconInlayer',
+      meta: {
+        title: '资产管理',
+        notCache: false
+      },
+      component: 'layers/Icons_Annotation'
+    },
+    {
+      path: 'device',
+      name: 'deviceManagement',
+      meta: {
+        title: '设备管理',
+        notCache: false
+      },
+      component: 'baseInfoManagement/deviceManagement'
+    },
+    {
+      path: 'video',
+      name: 'videoManagement',
+      meta: {
+        title: '视频管理',
+        notCache: false
+      },
+      component: 'baseInfoManagement/videoManagement'
+    },
+    {
+      path: 'deviceType',
+      name: 'deviceType',
+      meta: {
+        title: `设备类型`,
+        notCache: false
+      },
+      component: 'baseInfoManagement/deviceType'
+    },
+    {
+      path: 'deviceModel',
+      name: 'deviceModel',
+      meta: {
+        title: `设备型号`,
+        notCache: false
+      },
+      component: 'baseInfoManagement/deviceModel'
+    }
+    ]
+  },
   {
     path: '/reportManagement',
     name: 'reportManagement',
@@ -238,25 +245,24 @@ const USER01 = {
       title: '报表管理'
     },
     component: 'main',
-    children: [
-      {
-        path: 'echartsTempate',
-        name: 'echartsTempate',
-        meta: {
-          title: '自定义数据模板',
-          notCache: false
-        },
-        component: 'echarts-page/template'
+    children: [{
+      path: 'echartsTempate',
+      name: 'echartsTempate',
+      meta: {
+        title: '自定义数据模板',
+        notCache: false
       },
-      {
-        path: 'echartsTempateV',
-        name: 'echartsTempateV',
-        meta: {
-          title: '车辆图标模板',
-          notCache: false
-        },
-        component: 'echarts-page/templateVehicle'
-      }
+      component: 'echarts-page/template'
+    },
+    {
+      path: 'echartsTempateV',
+      name: 'echartsTempateV',
+      meta: {
+        title: '车辆图标模板',
+        notCache: false
+      },
+      component: 'echarts-page/templateVehicle'
+    }
       // ,
       // {
       //   path: 'company',
