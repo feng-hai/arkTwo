@@ -450,7 +450,7 @@ const DATAITEM = {
   sortable: false,
   minWidth: 120,
   // _checked: true,
-  fixed: 'left',
+  fixed: '',
   tooltip: false
   //,
   //  createTime: '@date',

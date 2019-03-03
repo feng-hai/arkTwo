@@ -60,5 +60,16 @@ export default {
   assetManagement:'资产管理',
   videoManagement:'视频管理',
   deviceType:'设备类型',
-  deviceModel:'设备型号'
+  deviceModel:'设备型号',
+  contingencyPlan:'应急预案',
+  emergencySquad:'应急小组',
+  contingencyManagement:'应急管理',
+  troubleManagement:'隐患管理',
+  trouble:'隐患管理',
+  setIconInlayer:'平面图标注',
+  infoShow:'信息展示',
+  pandect:'总览',
+  alarmInfo:'报警监控',
+  hostManagement:'主机管理'
+
 }

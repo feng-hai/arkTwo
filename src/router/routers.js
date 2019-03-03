@@ -354,6 +354,18 @@ export default [{
           import ('@/view/tools/view/tools_views.vue')
       },
       {
+        path: 'contingencePlanDetail/:id',
+        name: 'contingencePlanDetail',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ contingencePlanDetail }}-${route.params.id}`,
+          notCache: true,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () =>
+          import ('@/view/contingencyManagement/contingencePlanDetail')
+      },
+      {
         path: 'query',
         name: 'query',
         meta: {
@@ -372,7 +384,7 @@ export default [{
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: false,
+      hideInMenu: true,
       notCache: false
     },
     children: [{

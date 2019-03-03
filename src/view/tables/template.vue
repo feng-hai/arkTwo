@@ -433,18 +433,19 @@ export default {
       }
     },
     editPage(params, vm) {
-      const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
-      const route = {
-        name: 'view',
-        params: {
-          id: id
-        },
-        meta: {
-          title: `动态路由-${id}`,
-          notCache: false
-        }
-      }
-      this.$router.push(route)
+      // const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
+      // const route = {
+      //   name: 'view',
+      //   params: {
+      //     id: id
+      //   },
+      //   meta: {
+      //     title: `动态路由-${id}`,
+      //     notCache: false
+      //   }
+      // }
+      // this.$router.push(route)
+      this.$emit("on-edit", params, vm)
     },
     addItem() {
       this.tableData.unshift(Object.assign({}, this.itemDefault))
