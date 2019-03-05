@@ -24,8 +24,8 @@ export default {
       },
       data: {
         slider: 1,
-        width: 670, // 画布宽度
-        height: 400, // 画布高度
+        width: 1000, // 画布宽度
+        height: 800, // 画布高度
         pageTop: 144, // 画布据页面距离
         pageLeft: 243, // 画布距页面左边距离
         zoom: {},
@@ -37,8 +37,8 @@ export default {
         type: 0,
         dataContent: [{
           id: 1,
-          x: 200,
-          y: 340,
+          x: 100,
+          y: 79,
           type: 1,
           name: 'test01',
           content: 'test Content',
@@ -51,6 +51,11 @@ export default {
   },
   mounted () {
     var that = this
+    console.log("layering",$("#layering").width())
+    if($("#layering").width()>1000)
+    {
+  //  this.data.width=  $("#layering").width()
+    }
     // 通过$refs获取dom元素
     // console.log(document.querySelectorAll(".el-main").length)
     // this.box = document.querySelectorAll(".el-main")[0];

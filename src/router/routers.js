@@ -46,7 +46,6 @@ export default [{
         import ('@/view/single-page/message/index.vue')
     }]
   },
-
   {
     path: '/update',
     name: 'update',
@@ -77,7 +76,6 @@ export default [{
       }
     ]
   },
-
   {
     path: '/components',
     name: 'components',

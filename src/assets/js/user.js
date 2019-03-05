@@ -14,23 +14,41 @@ const USER01 = {
       }
     },
     {
-      path: '/join',
+      path: '/bigerScreen',
       name: 'join',
-      component: 'main',
+      component: 'parentView',
       meta: {
         icon: 'md-menu',
         title: '多级菜单'
       },
       children: [{
-        path: 'join_page',
-        name: 'join_page',
+        path: 'homeForBigger',
+        name: 'homeForBigger',
         meta: {
           icon: '_qq',
-          title: 'QQç¾¤'
+          title: '大屏展示'
         },
-        component: 'join_page'
+        component: 'single-page/home/home'
 
-      }]
+      },{
+        path: 'tools_json',
+        name: 'tools_json',
+        meta: {
+          icon: '_qq',
+          title: 'Json工具'
+        },
+        component: 'tools/tools_json'
+
+      },
+      {
+        path: 'setIconInlayerforBig',
+        name: 'setIconInlayerforBig',
+        meta: {
+          title: '打点',
+          notCache: false
+        },
+        component: 'layers/Icons_Annotation'
+      },]
     }, {
       path: '/tools',
       name: 'tools',
