@@ -229,25 +229,25 @@ export default [{
       }
     ]
   },
-  {
-    path: '/map_echarts',
-    name: 'map_echarts',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [{
-      path: 'map_echarts_page',
-      name: 'map_echarts_page',
-      meta: {
-        icon: 'ios-hammer',
-        title: '地图',
-        beforeCloseName: 'before_close_normal'
-      },
-      component: () =>
-        import ('@/view/map_echarts/map_echarts.vue')
-    }]
-  },
+  // {
+  //   path: '/map_echarts',
+  //   name: 'map_echarts',
+  //   meta: {
+  //     hideInBread: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'map_echarts_page',
+  //     name: 'map_echarts_page',
+  //     meta: {
+  //       icon: 'ios-hammer',
+  //       title: '地图',
+  //       beforeCloseName: 'before_close_normal'
+  //     },
+  //     component: () =>
+  //       import ('@/view/map_echarts/map_echarts.vue')
+  //   }]
+  // },
   {
     path: '/tools_methods',
     name: 'tools_methods',
