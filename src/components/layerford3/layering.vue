@@ -19,7 +19,7 @@ export default {
   components: {
     tips: vueTips
   },
-  data () {
+  data() {
     return {
       srcM: require('../../assets/images/svg.svg'),
       tipTitle: '',
@@ -53,22 +53,22 @@ export default {
       //  slider: this.dataParent.slider,
     }
   },
-  mounted () {
+  mounted() {
     var that = this
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       this.initPage()
     })
   },
   props: [
     'dataParent'
   ],
-  handleScroll: function () {
+  handleScroll: function() {
     var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
     console.log(scrollTop)
   },
   watch: {
     dataParent: { // 监控父页面数据变化
-      handler: function (val, oldValue) {
+      handler: function(val, oldValue) {
         // console.log("b变化" + val.scrollTop);
         var that = this
         //  this.dataParent.width = val.width || 400; //画布宽度
@@ -88,24 +88,24 @@ export default {
       },
       deep: true // 监控对象需要设置的属性
     },
-    pointValue (val) { // 子页面变化，提交到父页面
+    pointValue(val) { // 子页面变化，提交到父页面
       this.$emit('layerPoint', val) // 提交数据到父页面
     }
   },
   methods: {
     // 监听从组件内传递出来的事件
-    yes (args) {
+    yes(args) {
       this.$emit('openModel', this.dataContent)
     },
     // 显示tips
-    showtips () {
+    showtips() {
       // console.log( this.$refs );
       this.$refs.dialog.showTips()
     },
-    closetips () {
+    closetips() {
       this.$refs.dialog.closeTips()
     },
-    clearCircle: function () {
+    clearCircle: function() {
       var that = this
       if (that.dataParent.circle && typeof that.dataParent.circle.remove === 'function') {
         that.dataParent.circle.remove()
@@ -114,12 +114,14 @@ export default {
         that.dataParent.circle1.remove()
       }
     },
-    initPage: function () {
+    initPage: function() {
       var that = this
 
       var divId = that.dataParent.divId || 'layering'
       // 初始化比例尺
       var width = that.dataParent.width || $('#' + divId).parent().width()
+
+      //根据真实容器宽度和地图真实宽度计算比例尺
       var scale = width / that.dataParent.containerWidth
       // 初始化画布
       that.dataParent.svg = d3.select('#' + divId).append('svg')
@@ -129,7 +131,7 @@ export default {
         .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.right + ')')
       // .call(zoom);
       that.dataParent.container = that.dataParent.svg.append('g')
-      console.log(that.dataParent, d3)
+
       that.dataParent.zoom = d3.behavior.zoom()
         .scaleExtent([0, 10])
         .on('zoom', that.zoomed)
@@ -137,7 +139,7 @@ export default {
       // 添加背景图
       that.createBg()
       that.drag = d3.behavior.drag()
-        .origin(function (d) {
+        .origin(function(d) {
           return d
         })
         .on('dragstart', that.dragstarted)
@@ -150,11 +152,11 @@ export default {
           .selectAll('line')
           .data(d3.range(0, that.containerWidth, 10))
           .enter().append('line')
-          .attr('x1', function (d) {
+          .attr('x1', function(d) {
             return d
           })
           .attr('y1', 0)
-          .attr('x2', function (d) {
+          .attr('x2', function(d) {
             return d
           })
           .attr('y2', that.containerHight)
@@ -164,15 +166,15 @@ export default {
           .data(d3.range(0, that.containerHight, 10))
           .enter().append('line')
           .attr('x1', 0)
-          .attr('y1', function (d) {
+          .attr('y1', function(d) {
             return d
           })
           .attr('x2', that.containerWidth)
-          .attr('y2', function (d) {
+          .attr('y2', function(d) {
             return d
           })
         var isClicking = false
-        that.dataParent.svg.on('click', function () {
+        that.dataParent.svg.on('click', function() {
           that.clearCircle()
           // console.log("测试");
           var matrix = this.getScreenCTM()
@@ -199,7 +201,7 @@ export default {
               .append('circle')
               .attr('cx', xV)
               .attr('cy', yV) // 将圆心放到svg高度中间
-              .attr('r', function (d) {
+              .attr('r', function(d) {
                 return 40
               })
               .attr('fill', 'yellow') // 给各圆填充黄色
@@ -218,7 +220,7 @@ export default {
       that.dataParent.zoom.scale(scale)
       that.dataParent.zoom.event(that.dataParent.svg.transition().duration(200))
     },
-    createBg: function () {
+    createBg: function() {
       var that = this
       var divId = that.dataParent.divId || 'layering'
       var width = that.dataParent.width || $('#' + divId).parent().width()
@@ -242,7 +244,7 @@ export default {
         that.dataParent.zoom.event(that.dataParent.svg.transition().duration(200))
       }
     },
-    initPoint: function () {
+    initPoint: function() {
       var that = this
       var temp = that.dataParent.container.selectAll('.dot1')
       temp.remove()
@@ -257,18 +259,19 @@ export default {
         .data(that.dataParent.dataContent)
         .enter()
         .append('image')
-        .attr('xlink:href', function (d) {
+        .attr('xlink:href', function(d) {
           return d.pointImage
         })
-        .attr('x', function (d) {
+        .attr('x', function(d) {
           return d.x - RECT_W / 2 + offset_x
         })
-        .attr('y', function (d) {
+        .attr('y', function(d) {
           return d.y - RECT_H + 2 + offset_y
         })
         .attr('width', RECT_W)
         .attr('height', RECT_H)
-        .on('click', function (d) {
+        .on('click', function(d, i) {
+          console.log(i);
           that.openModel(d)
         })
 
@@ -284,7 +287,7 @@ export default {
       }) ; */
     },
 
-    openModel: function (d) {
+    openModel: function(d) {
       var that = this
 
       that.dataContent = d
@@ -294,15 +297,15 @@ export default {
       var offset_x = 0,
         offset_y = 0
 
-      // console.log(that.translate);
-      that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1] - 130) + 'px'
-      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0] - 100 - 10) + 'px'
+      console.log(d, $("#Sider").width());
+      that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1]) + 'px'
+      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0]+ $("#Sider").width())   + 'px'
       that.tipsOptions.title = d.name
       that.tipContent = d.content
       that.showtips()
       // that.addDialogFormVisible = true;
     },
-    getScrollTop: function () {
+    getScrollTop: function() {
       var scrollPos
       if (window.pageYOffset) {
         scrollPos = window.pageYOffset
@@ -315,7 +318,7 @@ export default {
       return scrollPos
     },
 
-    zoomed: function () {
+    zoomed: function() {
       var that = this
       that.dataParent.translate = d3.event.translate
       that.dataParent.scale = d3.event.scale
@@ -326,14 +329,14 @@ export default {
       }
     },
 
-    dragstarted: function (d) {
+    dragstarted: function(d) {
       d3.event.sourceEvent.stopPropagation()
       d3.select(this).classed('dragging', true)
     },
-    dragged: function (d) {
+    dragged: function(d) {
       d3.select(this).attr('cx', d.x = d3.event.x).attr('cy', d.y = d3.event.y)
     },
-    dragended: function (d) {
+    dragended: function(d) {
       d3.select(this).classed('dragging', false)
     }
 

@@ -23,14 +23,14 @@ export default {
         left: '10px'
       },
       data: {
-        slider: 1,
-        width: 1000, // 画布宽度
+        slider: 1,//图标放大缩小比例
+      //  width: 1000, // 画布宽度
         height: 800, // 画布高度
-        pageTop: 144, // 画布据页面距离
-        pageLeft: 243, // 画布距页面左边距离
+        pageTop: 0, // 画布据页面距离
+        pageLeft: 0, // 画布距页面左边距离
         zoom: {},
-        containerHight: 144, // 底图高度
-        containerWidth: 243, // 底图宽度
+        containerHight: 144, // 底图真实高度
+        containerWidth: 243, // 底图真实宽度
         pointImage: require('../../assets/img/t3.png'), // 点的背景图
         backgroudImage: require('../../assets/img/bg.png'), // 画布的备件图
         scrollTop: 0,
@@ -40,6 +40,15 @@ export default {
           x: 100,
           y: 79,
           type: 1,
+          name: 'test01',
+          content: 'test Content',
+          pointImage: require('../../assets/img/t3.png')
+        },
+        {
+          id: 1,
+          x: 100,
+          y: 79,
+          type: 4,
           name: 'test01',
           content: 'test Content',
           pointImage: require('../../assets/img/t3.png')
