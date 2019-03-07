@@ -24,12 +24,12 @@
         <Radio label="50">散点图</Radio> -->
       </RadioGroup>
     </FormItem>
-    <FormItem label="数据方向">
+    <!-- <FormItem label="数据方向">
       <RadioGroup v-model="formItem.direction">
         <Radio label="1">按行展示</Radio>
         <Radio label="2">按列展示</Radio>
       </RadioGroup>
-    </FormItem>
+    </FormItem> -->
     <FormItem label="x轴">
       <Select multiple v-model="formItem.x" filterable @on-change="xChange">
               <Option v-for="item in functionsItems" :key="item.key" :label="item.title" :value="item.key+'|'+item.title"></Option>

@@ -377,10 +377,6 @@ export default [{
         name: 'query',
         meta: {
           icon: 'md-flower',
-
-          title: route => `{{ view }}-${route.params.id}`,
-          notCache: true,
-
           title: route => `{{ query }}-${route.query.id}`,
           notCache: true
         },

@@ -7,7 +7,7 @@
   <Form :model="formItem" :label-width="80">
     <FormItem label="数据源">
       <Select v-model="formItem.resource" filterable @on-change="resourceChange">
-            <Option  v-for="item in dataType" :key="item.id" :label="item.name" :value="item.id"></Option>
+            <Option  v-for="item in functions" :key="item.unid" :label="item.name" :value="item.unid"></Option>
     </Select>
     </FormItem>
     <FormItem label="图表类型">
@@ -16,20 +16,20 @@
         <Radio label="2">饼状图</Radio>
         <Radio label="1">柱状图</Radio>
         <Radio label="3">条形图</Radio>
-        <Radio label="4">环形图</Radio>
+        <!-- <Radio label="4">环形图</Radio>
         <Radio label="5">瀑布图</Radio>
         <Radio label="6">漏斗图</Radio>
         <Radio label="7">雷达图</Radio>
         <Radio label="40">热力图</Radio>
-        <Radio label="50">散点图</Radio>
+        <Radio label="50">散点图</Radio> -->
       </RadioGroup>
     </FormItem>
-    <FormItem label="数据方向">
+    <!-- <FormItem label="数据方向">
       <RadioGroup v-model="formItem.direction">
         <Radio label="1">按行展示</Radio>
         <Radio label="2">按列展示</Radio>
       </RadioGroup>
-    </FormItem>
+    </FormItem> -->
     <FormItem label="x轴">
       <Select multiple v-model="formItem.x" filterable @on-change="xChange">
               <Option v-for="item in functionsItems" :key="item.key" :label="item.title" :value="item.key+'|'+item.title"></Option>
@@ -44,7 +44,6 @@
     <FormItem label="y轴">
       <Select multiple filterable v-model="formItem.y" @on-change="yChange">
               <Option v-for="item in functionsItems"  :key="item.key" :label="item.title" :value="item.key+'|'+item.title"></Option>
-
     </Select>
     </FormItem>
     <FormItem label="y轴规整零" filterable>
@@ -54,8 +53,8 @@
     </FormItem>
   </Form>
   <div slot="footer">
-    <Button type="primary">Submit</Button>
-    <Button style="margin-left: 8px">Cancel</Button>
+    <Button type="primary" @click="submit">提交</Button>
+    <Button style="margin-left: 8px" @click="close">取消</Button>
   </div>
 </drag-drawer>
 </template>
@@ -68,46 +67,47 @@ import {
 import DragDrawer from '_c/drag-drawer'
 export default {
   components: {
+
     DragDrawer
+
   },
-  name: 'editVechicle',
+  name: 'edit',
   props: {
     showContainerBDrawers: {
       type: Boolean,
       default () {
         return false
       }
+    },
+    vehicleID: {
+      type: String,
+      default () {
+        return '';
+      }
     }
 
   },
-  data () {
+  data() {
     return {
       // showWindowBDrawer: false,
       showContainerBDrawer: false,
       functionsItems: [],
       functions: [],
-      dataType: [{
-        id: '1',
-        name: '国标'
-      }, {
-        id: '2',
-        name: '企标'
-      }],
       xAxisTypes: [{
-        name: '类别',
-        id: 'category'
-      }, {
-        name: '数值',
-        id: 'value'
-      },
-      {
-        name: '时间',
-        id: 'time'
-      },
-      {
-        name: 'log',
-        id: 'log'
-      }
+          name: '类别',
+          id: 'category'
+        }, {
+          name: '数值',
+          id: 'value'
+        },
+        {
+          name: '时间',
+          id: 'time'
+        },
+        {
+          name: 'log',
+          id: 'log'
+        }
       ],
       // showBDrawer3: false,
       // width1: 300,
@@ -121,44 +121,10 @@ export default {
         y: [],
         xArrayObject: [],
         x: [],
-        direction: ''
-        // input: '',
-        // select: '',
-        // radio: 'male',
-        // checkbox: [],
-        // switch: true,
-        // date: '',
-        // time: '',
-        // slider: [20, 50],
-        // textarea: ''
-      },
-      chartData: {
-        columns: ['date', 'PV'],
-        rows: [{
-          'date': '01-01',
-          'PV': 1231
-        },
-        {
-          'date': '01-02',
-          'PV': 1223
-        },
-        {
-          'date': '01-03',
-          'PV': 2123
-        },
-        {
-          'date': '01-04',
-          'PV': 4123
-        },
-        {
-          'date': '01-05',
-          'PV': 3123
-        },
-        {
-          'date': '01-06',
-          'PV': 7123
-        }
-        ]
+        direction: '',
+        xAxisType: '',
+        url: '',
+        chartType: 0
       }
     }
   },
@@ -170,12 +136,31 @@ export default {
       'getRolesInfo',
       'getOrgTreeInfo'
     ]),
-    placementComputed () {
+
+    placementComputed() {
       return this.placement ? 'left' : 'right'
     }
   },
   methods: {
-    xChange (value) {
+    open(setting) {
+      this.showContainerBDrawer = true
+      this.formItem = setting
+      this.handleTablesInfo(this.formItem.resource).then(res => {
+        if (res.columns) {
+          this.formItem.url = res.url
+          this.functionsItems = res.columns
+        }
+        console.log(this.url)
+      })
+    },
+    submit() {
+      this.$emit('input', this.formItem)
+      this.showContainerBDrawer = false
+    },
+    close() {
+      this.showContainerBDrawer = false
+    },
+    xChange(value) {
       var temp = []
       value.forEach(item => {
         temp.push({
@@ -185,7 +170,7 @@ export default {
       })
       this.formItem.xArrayObject = temp
     },
-    yChange (value) {
+    yChange(value) {
       var temp = []
       value.forEach(item => {
         temp.push({
@@ -195,9 +180,18 @@ export default {
       })
       this.formItem.yArrayObject = temp
     },
-    resourceChange (value) {
+    resourceChange(value) {
+      this.formItem.x = []
+      this.formItem.y = []
+      this.formItem.yArrayObject = []
+      this.formItem.xArrayObject = []
+      this.formItem.xAxisType = ''
       this.handleTablesInfo(value).then(res => {
-        if (res.columns) { this.functionsItems = res.columns }
+        if (res.columns) {
+          this.formItem.url = res.url
+          this.functionsItems = res.columns
+        }
+        console.log(this.url)
       })
     },
     // ...mapState (['menus']),
@@ -205,7 +199,7 @@ export default {
       'getAlltableInfo',
       'handleTablesInfo'
     ]),
-    handleResize (event) {
+    handleResize(event) {
       const {
         atMin
       } = event
@@ -216,15 +210,13 @@ export default {
   },
   mounted() {
 
-    this.getAlltableInfo().then(res => {
-      if (res.data && res.data.length > 0)
-        this.functions = res.data
-    })
+    // this.getAlltableInfo().then(res => {
+    //   if (res.data && res.data.length > 0)
+    //     this.functions = res.data
+    // })
   },
   watch: {
-    showContainerBDrawers(value) {
-      this.showContainerBDrawer = value;
-    }
+
   }
 }
 </script>

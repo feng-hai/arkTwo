@@ -7,8 +7,7 @@ import {
   hasRead,
   removeReaded,
   restoreTrash,
-  getUnreadCount,
-  getUserOpenid
+  getUnreadCount
 } from '@/api/user'
 import {
   setToken,
@@ -29,14 +28,9 @@ export default {
     messageReadedList: [],
     messageTrashList: [],
     menus: [],
-    messageContentStore: {},
-    domainId: getToken(),
+    messageContentStore: {}
   },
   mutations: {
-    userIdNew(state, data){
-      state.domainId = data;
-      setToken(data)
-    },
     setAvator (state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
@@ -92,17 +86,9 @@ export default {
     messageUnreadCount: state => state.messageUnreadList.length,
     messageReadedCount: state => state.messageReadedList.length,
     messageTrashCount: state => state.messageTrashList.length,
-    getMenus: state => state.menus,
-    getdomainId: state => state.domainId
+    getMenus: state => state.menus
   },
   actions: {
-    // 获取用户信息
-    getUserId({state, commit}){
-      getUserOpenid(state.domainId).then(res=>{
-        let domain = res.data.collection[0].domain_unid;
-        commit('userIdNew', domain);
-      })
-    },
     // 登录
     handleLogin ({
       commit
@@ -114,7 +100,7 @@ export default {
       userName = userName.trim()
       var client_id = '597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com'
       var option = qs.stringify({
-        scope: '/openid /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /bigger/openid /sensor/vehicle_history /bigger/realtime_data /bigger/alarm_setup /bigger/model /bigger/vehicle /sensor/vehicle/cluster /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra',
+        scope: '/bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra',
         client_secret: 'daf2333dd314xfd',
         client_id: client_id, // "597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.csrzic.com",//"597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com",
         grant_type: 'password',
@@ -124,11 +110,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         login(option).then(res => {
-          console.log(res, '点击登录信息')
           const data = res.data
-          // console.log(data, 'data')
-          let unid = data.split('=')[2].split('&')[0];
-          commit('userIdNew', unid);
           commit('setToken', data.split('=')[1].split('&')[0])
           // commit('setToken', data.token)
           resolve()

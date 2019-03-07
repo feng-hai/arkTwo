@@ -230,25 +230,6 @@ export default [{
     ]
   },
   {
-    path: '/map_echarts',
-    name: 'map_echarts',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [{
-      path: 'map_echarts_page',
-      name: 'map_echarts_page',
-      meta: {
-        icon: 'ios-hammer',
-        title: '地图',
-        beforeCloseName: 'before_close_normal'
-      },
-      component: () =>
-        import ('@/view/map_echarts/map_echarts.vue')
-    }]
-  },
-  {
     path: '/tools_methods',
     name: 'tools_methods',
     meta: {
@@ -360,70 +341,29 @@ export default [{
         component: () =>
           import ('@/view/argu-page/params.vue')
       },
-      // {
-      //   path: 'view/:id',
-      //   name: 'view',
-      //   meta: {
-      //     icon: 'md-flower',
-      //     title: route => `{{ view }}-${route.params.id}`,
-      //     notCache: false,
-      //     beforeCloseName: 'before_close_normal'
-      //   },
-      //   component: () =>
-      //     import ('@/view/tools/view/tools_views.vue')
-      // },
+      {
+        path: 'view/:id',
+        name: 'view',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ view }}-${route.params.id}`,
+          notCache: false,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () =>
+          import ('@/view/tools/view/tools_views.vue')
+      },
       {
         path: 'query',
         name: 'query',
         meta: {
           icon: 'md-flower',
-
-          title: route => `{{ view }}-${route.params.id}`,
-          notCache: true,
-
           title: route => `{{ query }}-${route.query.id}`,
           notCache: true
         },
         component: () =>
           import ('@/view/argu-page/query.vue')
-      },
-      // {
-      //   path: 'map',
-      //   name: 'map',
-      //   meta: {
-      //     icon: 'md-flower',
-      //     title: route => `{{ map }}-${route.query.id}`,
-      //     notCache: true
-      //   },
-      //   component: () =>
-      //     import ('@/view/argu-page/map.vue')
-      // },
-      {
-        path: 'map_component/:id',
-        name: 'map_component',
-        meta: {
-          icon: 'md-flower',
-          // -${route.params.id}
-          title: route => `{{ map_info }}`,
-          notCache: true,
-          beforeCloseName: 'before_close_normal'
-        },
-        component: () =>
-          import ('@/view/argu-page/map.vue')
-      },
-      {
-        path: 'data_anlaysis/:id',
-        name: 'data_anlaysis',
-        meta: {
-          icon: 'md-flower',
-          // -${route.params.id}
-          title: route => `{{ data_anlaysis }}`,
-          notCache: true,
-          beforeCloseName: 'before_close_normal'
-        },
-        component: () =>
-          import ('@/view/argu-page/data_anlaysis.vue')
-      },
+      }
     ]
   },
   {

@@ -26,6 +26,7 @@ export default {
   'upload-excel': 'Upload Excel',
   'export-excel': 'Export Excel',
   tools_methods_page: 'Tools Methods',
+  map_echarts_page: 'map echarts',
   drag_list_page: 'Drag-list',
   i18n_page: 'Internationalization',
   modalTitle: 'Modal Title',

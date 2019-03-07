@@ -12,6 +12,14 @@ import axios from '@/libs/api.request'
 //     method: 'post'
 //   })
 // }
+//用户名信息
+export const getUserOpenid = (params) => {
+  return axios.request({
+    url: '/bigger/openid/' + params,
+    params: params,
+    method: 'get'
+  })
+}
 export const login = (option) => {
 
   return axios.request({
