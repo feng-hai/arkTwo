@@ -15,7 +15,7 @@ const {
   useI18n
 } = config
 
-export const TOKEN_KEY = 'token'
+export const TOKEN_KEY = 'token_ark'
 
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {
@@ -283,7 +283,7 @@ export const getArrayFromFile = (file) => {
     let reader = new FileReader()
     reader.readAsText(file) // 以文本格式读取
     let arr = []
-    reader.onload = function (evt) {
+    reader.onload = function(evt) {
       let data = evt.target.result // 读到的数据
       let pasteData = data.trim()
       arr = pasteData.split((/[\n\u0085\u2028\u2029]|\r\n?/g)).map(row => {
@@ -406,7 +406,7 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
-      function (callback) {
+      function(callback) {
         return window.setTimeout(callback, 1000 / 60)
       }
     )
@@ -449,7 +449,7 @@ export const setTitle = (routeItem, vm) => {
 var DATE_REGEXP = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})([T\\s](\\d{2}):(\\d{2}):(\\d{2})(\\.(\\d{3}))?)?.*')
 export const toDate = (dateString) => {
   if (DATE_REGEXP.test(dateString)) {
-    var timestamp = dateString.replace(DATE_REGEXP, function ($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
+    var timestamp = dateString.replace(DATE_REGEXP, function($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
       var date = new Date($year, $month - 1, $day, $hour || '00', $minute || '00', $second || '00', $milliscond || '00')
       return date.getTime()
     })
@@ -508,7 +508,7 @@ export const formateDate = (date, fmt) => {
  *  (json) :json对象
  */
 export const toStr = (json) => {
-  var str = JSON.stringify(json, function (key, val) {
+  var str = JSON.stringify(json, function(key, val) {
     if (typeof val === 'function') {
       return val + ''
     }
@@ -521,7 +521,7 @@ export const toStr = (json) => {
  */
 export const toJson = (str) => {
   // json字符串转换成对象
-  let json = JSON.parse(str, function (k, v) {
+  let json = JSON.parse(str, function(k, v) {
     if (v.indexOf && v.indexOf('function') > -1) {
       return eval('(function(){return ' + v + ' })()')
     }
@@ -536,7 +536,8 @@ export const toJson = (str) => {
  * 接收一个具有父子关系的数组作为参数
  * 返回一个树形结构的数组
  */
-export const translateDataToTree = (data) => {
+export const translateDataToTree = (data, rootid) => {
+
   var data = data.map(item => {
     return {
       id: item.unid,
@@ -545,19 +546,12 @@ export const translateDataToTree = (data) => {
       parent: item.super_unid
     }
   })
-  // 没有父节点的数据
-  let parents = data.filter(value => value.parent == 'undefined' || value.parent == null || value.parent == '852B63AA0EC74839B7229309AC01CC82')
-  // parents = parents.map(item => {
-  //   var temp = {
-  //     id: item.unid,
-  //     title: item.name,
-  //     expanded: true
-  //   }
-  //   return temp;
-  // })
-
+  // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
+  let parents = data.filter(value => {
+    return value.id == rootid
+  })
   // 有父节点的数据
-  let childrens = data.filter(value => value.parent !== 'undefined' && value.parent != null && value.parent != '852B63AA0EC74839B7229309AC01CC82')
+  let childrens = data.filter(value => value.id != rootid)
 
   // 定义转换方法的具体实现
   let translator = (parents, childrens, level) => {
@@ -625,7 +619,7 @@ export const formatHistoryData = (datas) => {
   return tempDatas
 }
 
-Array.prototype.contains = function (val) {
+Array.prototype.contains = function(val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] == val) {
       return true

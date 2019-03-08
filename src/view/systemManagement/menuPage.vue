@@ -12,7 +12,7 @@ export default {
   },
   data () {
     return {
-      viewId: 'EC93684BFCBA4513A6C20DFB65A42C19'
+      viewId: '41728E0D3F2F44598D47B964B07B116D'
     }
   }
 }

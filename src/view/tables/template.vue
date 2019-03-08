@@ -104,7 +104,8 @@ export default {
       addUrl: 'add_table_view', // 新增url
       deleteUrl: 'delete_table_view', // 删除的url
       editUrl: 'edit_table_view', // 修改的url
-      ruleValidate: {} // 新增修改时验证
+      ruleValidate: {}, // 新增修改时验证
+      isCount: true
     }
   },
   created() {
@@ -238,6 +239,7 @@ export default {
             desc: '新增一条信息成功'
           })
           this.getTableInfo();
+          this.$emit("on-saveRow", params.row)
         })
       })
     },
@@ -261,17 +263,16 @@ export default {
       let options = {
         url: jsonObject.url
       }
-      this.getTableDatas(options)
-
       this.addUrl = jsonObject.addUrl
-
       this.deleteUrl = jsonObject.deleteUrl
       this.editUrl = jsonObject.editUrl
+      this.isCount = jsonObject.isCount == undefined ? true : jsonObject.isCount == "true" ? true : false;
       this.permit.addPermit = jsonObject.addPermit
       this.permit.deletePermit = jsonObject.deletePermit
       this.permit.editPermit = jsonObject.editPermit
       this.permit.isRouter = jsonObject.isRouter
       this.ruleValidate = jsonObject.ruleValidate
+
       let handle = jsonObject.columns.find((item) => {
         return item.key == 'handle'
       })
@@ -300,7 +301,8 @@ export default {
           })
           jsonObject.columns[i].selectList = orgs;
 
-        } if (item['selectListFun'] && item['selectListFun'] == "orgTree") { //判断是否从外部或取数据
+        }
+        if (item['selectListFun'] && item['selectListFun'] == "orgTree") { //判断是否从外部或取数据
           var orgs = this.getOrgTreeInfo.map(item => {
             item.value = item.unid;
             item.label = item.name;
@@ -317,11 +319,14 @@ export default {
           jsonObject.columns[i].selectList = menus;
 
         } else if (item['selectListFun'] && item['selectListFun'] == "role") {
-          var roles = this.getRolesInfo.map(item => {
-            item.value = item.unid;
-            item.label = item.name;
-            return item;
-          })
+
+          if (this.getRolesInfo) {
+            var roles = this.getRolesInfo.map(item => {
+              item.value = item.unid;
+              item.label = item.name;
+              return item;
+            })
+          }
           jsonObject.columns[i].selectList = roles;
         } else if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
@@ -351,6 +356,7 @@ export default {
       if (this.permit.addPermit && json.itemDefault.length > 0) {
         this.itemDefault = toJson(json.itemDefault)
       }
+      this.getTableDatas(options)
     },
     createColumns() {
       var urlInfo = window.location.href
@@ -359,6 +365,7 @@ export default {
         id = this.viewId
       }
       let columnInfo = this.getTableInfoById(id)
+
       if (columnInfo) {
         this.setColumnInfo(columnInfo)
       } else {
@@ -381,9 +388,11 @@ export default {
       } else {
         option['params'] = Object.assign({}, this.searchParams)
       }
-
       option.params = Object.assign({}, option.params, this.searchParams)
-      this.getTableData(option).then(res => {
+      this.getTableData({
+        isCount: this.isCount,
+        options: option
+      }).then(res => {
         this.tableData = this.handleFunction(res.data)
         //  console.log('菜单管理', this.tableData)
         this.total = res.count;
@@ -391,6 +400,8 @@ export default {
           this.backTableData = Object.assign([], this.tableData)
           //  console.log(this.backTableData)
         }
+        this.isLoading = false
+      }).catch(err => {
         this.isLoading = false
       })
 
@@ -421,23 +432,25 @@ export default {
               desc: '删除信息成功'
             })
             this.getTableInfo();
+            this.$emit("on-delete", this.selectData[index])
           })
         }
       }
     },
     editPage(params, vm) {
-      const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
-      const route = {
-        name: 'view',
-        params: {
-          id: id
-        },
-        meta: {
-          title: `动态路由-${id}`,
-          notCache: false
-        }
-      }
-      this.$router.push(route)
+      // const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
+      // const route = {
+      //   name: 'view',
+      //   params: {
+      //     id: id
+      //   },
+      //   meta: {
+      //     title: `动态路由-${id}`,
+      //     notCache: false
+      //   }
+      // }
+      // this.$router.push(route)
+      this.$emit("on-edit", params, vm)
     },
     addItem() {
       this.tableData.unshift(Object.assign({}, this.itemDefault))
@@ -491,6 +504,7 @@ export default {
             title: '修改提示提示',
             desc: '修改信息成功'
           })
+          this.$emit("on-save-edit", params)
         })
       }
     },
@@ -506,6 +520,8 @@ export default {
             desc: '删除一条信息成功'
           })
           this.getTableInfo();
+
+          this.$emit("on-delete", params)
         })
       } else {
         this.tableData = this.tableData.filter((item) => {
@@ -538,6 +554,7 @@ export default {
   mounted() {
     this.initParams()
     this.getTableInfo()
+  //  console.log($(document).height());
   },
   watch: {
     // '$route' (to, from) {

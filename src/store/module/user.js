@@ -12,7 +12,9 @@ import {
 } from '@/api/user'
 import {
   setToken,
-  getToken
+  getToken,
+  setCookies,
+  getCookiesValueByKey
 } from '@/libs/util'
 import user from '@/assets/js/user'
 
@@ -30,54 +32,53 @@ export default {
     messageTrashList: [],
     menus: [],
     messageContentStore: {},
-    domainId: getToken(),
+    domainId: '',
   },
   mutations: {
-    userIdNew(state, data){
+    userIdNew(state, data) {
       state.domainId = data;
-      setToken(data)
     },
-    setAvator (state, avatorPath) {
+    setAvator(state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId (state, id) {
+    setUserId(state, id) {
       state.userId = id
     },
-    setUserName (state, name) {
+    setUserName(state, name) {
       state.userName = name
     },
-    setAccess (state, access) {
+    setAccess(state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setToken(state, token) {
       state.token = token
       setToken(token)
     },
-    setMenus (state, menus) {
+    setMenus(state, menus) {
       state.menus = menus
     },
-    setHasGetInfo (state, status) {
+    setHasGetInfo(state, status) {
       state.hasGetInfo = status
     },
-    setMessageCount (state, count) {
+    setMessageCount(state, count) {
       state.unreadCount = count
     },
-    setMessageUnreadList (state, list) {
+    setMessageUnreadList(state, list) {
       state.messageUnreadList = list
     },
-    setMessageReadedList (state, list) {
+    setMessageReadedList(state, list) {
       state.messageReadedList = list
     },
-    setMessageTrashList (state, list) {
+    setMessageTrashList(state, list) {
       state.messageTrashList = list
     },
-    updateMessageContentStore (state, {
+    updateMessageContentStore(state, {
       msg_id,
       content
     }) {
       state.messageContentStore[msg_id] = content
     },
-    moveMsg (state, {
+    moveMsg(state, {
       from,
       to,
       msg_id
@@ -97,14 +98,17 @@ export default {
   },
   actions: {
     // 获取用户信息
-    getUserId({state, commit}){
-      getUserOpenid(state.domainId).then(res=>{
+    getUserId({
+      state,
+      commit
+    }) {
+      getUserOpenid(state.userId).then(res => {
         let domain = res.data.collection[0].domain_unid;
         commit('userIdNew', domain);
       })
     },
     // 登录
-    handleLogin ({
+    handleLogin({
       commit
     }, {
       userName,
@@ -114,7 +118,7 @@ export default {
       userName = userName.trim()
       var client_id = '597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com'
       var option = qs.stringify({
-        scope: '/openid /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /bigger/openid /sensor/vehicle_history /bigger/realtime_data /bigger/alarm_setup /bigger/model /bigger/vehicle /sensor/vehicle/cluster /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra',
+        scope: '/bigger/openid /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /bigger/openid /sensor/vehicle_history /bigger/realtime_data /bigger/alarm_setup /bigger/model /bigger/vehicle /sensor/vehicle/cluster /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra',
         client_secret: 'daf2333dd314xfd',
         client_id: client_id, // "597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.csrzic.com",//"597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com",
         grant_type: 'password',
@@ -124,53 +128,43 @@ export default {
 
       return new Promise((resolve, reject) => {
         login(option).then(res => {
-          console.log(res, '点击登录信息')
           const data = res.data
-          // console.log(data, 'data')
+          commit('setToken', data.split('=')[1].split('&')[0]);
           let unid = data.split('=')[2].split('&')[0];
-          commit('userIdNew', unid);
-          commit('setToken', data.split('=')[1].split('&')[0])
-          // commit('setToken', data.token)
-          resolve()
+          commit('setUserId', unid);
+          getUserOpenid(unid).then(res => {
+            let domain = res.data.domain_unid;
+            setCookies("domainId", domain);
+            commit('userIdNew', domain);
+            resolve()
+          })
         }).catch(err => {
           reject(err)
         })
-        // login({
-        //   userName,
-        //   password
-        // }).then(res => {
-        //   const data = res.data
-        //   commit('setToken', data.token)
-        //   resolve()
-        // }).catch(err => {
-        //   reject(err)
-        // })
       })
     },
     // 退出登录
-    handleLogOut ({
+    handleLogOut({
       state,
       commit
     }) {
       return new Promise((resolve, reject) => {
-      //  logout(state.token).then(() => {
+        //  logout(state.token).then(() => {
         commit('setToken', '')
         commit('setAccess', [])
         commit('setMenus', [])
-
         resolve()
-
-      //  }).catch(err => {
+        //  }).catch(err => {
         //  reject(err)
         // })
         // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
         // commit('setToken', '')
         // commit('setAccess', [])
-        // resolve()
+
       })
     },
     // 获取用户相关信息
-    getUserInfo ({
+    getUserInfo({
       state,
       commit
     }) {
@@ -193,7 +187,7 @@ export default {
       })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
-    getUnreadMessageCount ({
+    getUnreadMessageCount({
       state,
       commit
     }) {
@@ -205,7 +199,7 @@ export default {
       // })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
-    getMessageList ({
+    getMessageList({
       state,
       commit
     }) {
@@ -232,7 +226,7 @@ export default {
       })
     },
     // 根据当前点击的消息的id获取内容
-    getContentByMsgId ({
+    getContentByMsgId({
       state,
       commit
     }, {
@@ -255,7 +249,7 @@ export default {
       })
     },
     // 把一个未读消息标记为已读
-    hasRead ({
+    hasRead({
       state,
       commit
     }, {
@@ -276,7 +270,7 @@ export default {
       })
     },
     // 删除一个已读消息到回收站
-    removeReaded ({
+    removeReaded({
       commit
     }, {
       msg_id
@@ -295,7 +289,7 @@ export default {
       })
     },
     // 还原一个已删除消息到已读消息
-    restoreTrash ({
+    restoreTrash({
       commit
     }, {
       msg_id

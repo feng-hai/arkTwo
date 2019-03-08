@@ -86,8 +86,7 @@ export default [{
       title: '组件'
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'count_to_page',
         name: 'count_to_page',
         meta: {
@@ -348,7 +347,9 @@ export default [{
       hideInMenu: true
     },
     component: Main,
-    children: [{
+    children: [
+
+      {
         path: 'params/:id',
         name: 'params',
         meta: {
@@ -360,6 +361,19 @@ export default [{
         component: () =>
           import ('@/view/argu-page/params.vue')
       },
+      {
+        path: 'view/:id',
+        name: 'view',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ view }}-${route.params.id}`,
+          notCache: true,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () =>
+          import ('@/view/tools/view/tools_views.vue')
+      },
+
       // {
       //   path: 'view/:id',
       //   name: 'view',

@@ -24,6 +24,7 @@ export default {
    * @description 默认打开的首页的路由name值，默认为home
    */
   homeName: 'home',
+  login: 'login',
   /**
    * @description 需要加载的插件
    */

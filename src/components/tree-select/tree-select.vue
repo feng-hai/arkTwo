@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Input ref="treeInput" v-model="inputValue" :icon="icon" style="width: auto" v-bind="$attrs" @on-focus="openEvent" @on-click="dropdownEvent" />
+  <Input ref="treeInput" v-model="inputValue" :icon="icon" style="width: auto;" v-bind="$attrs" @on-focus="openEvent" @on-click="dropdownEvent" />
   <Card v-show="isShowList" style="width: auto; position:absolute; z-index: 100; max-height:300px;  overflow-y: auto;     min-width: 200px;">
     <Input search suffix="ios-search" placeholder="分组名称" style="width: auto" @on-search="search" v-model.lazy="searchword" />
     <v-tree slot ref='tree' :data='data' label="test" :radio="true" :multiple="false" :halfcheck='true' @node-click="handleTreeSelected" />

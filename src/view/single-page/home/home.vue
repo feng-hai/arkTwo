@@ -36,11 +36,11 @@ import {
   ChartBar
 } from '_c/charts'
 import Example from './example.vue'
-// import {
-//   mapActions,
-//   mapGetters,
-//   mapState
-// } from 'vuex'
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
 export default {
   name: 'home',
   components: {

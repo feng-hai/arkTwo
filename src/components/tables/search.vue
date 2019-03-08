@@ -3,7 +3,7 @@
   <div v-if="isEditType=='text'" class="tables-editting-con" style="margin-right:5px">
     <Input :value="value" @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
   </div>
-  <div v-else-if="isEditType=='selectTree'">
+  <div v-else-if="isEditType=='selectTree'"  style="margin-right:5px">
     <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
      <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
   </div>

@@ -65,6 +65,7 @@ if (sessionStorage.getItem('menuData') && sessionStorage.getItem('menuData').len
   }
 }
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -6,10 +6,9 @@ import {
 import {
   translateDataToTree
 } from "@/libs/util.js"
-// import {
-//   setToken,
-//   getToken
-// } from '@/libs/util'
+import {
+  getCookiesValueByKey
+} from '@/libs/util'
 // import user from '@/assets/js/user'
 
 export default {
@@ -21,7 +20,11 @@ export default {
   },
   mutations: {
     setOrganization(state, orgInfo) {
-      state.orgTree = translateDataToTree(orgInfo)
+      var rootId = getCookiesValueByKey("domainId")
+      console.log(orgInfo)
+
+      state.orgTree = translateDataToTree(orgInfo, rootId)
+
       state.organizationList = orgInfo
     },
     setMenusList(state, menuInfo) {
@@ -66,7 +69,7 @@ export default {
           page_size: 1000
         }).then((res) => {
 
-          commit('setRolesList', res.data)
+          commit('setRolesList', res.data.collection)
           resolve(res.data)
         }).catch(error => {
           reject(error)
@@ -77,13 +80,14 @@ export default {
     getOrgInfoAction({
       state,
       commit
-    }, option) {
+    }) {
+
       return new Promise((resolve, reject) => {
         getOrganizationInfo({
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-          commit('setOrganization', res.data)
+          commit('setOrganization', res.data.collection)
           resolve(res.data)
         }).catch(error => {
           reject(error)
