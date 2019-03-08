@@ -11,19 +11,19 @@
     <div v-else-if="isEditType=='select'" class="tables-editting-con" style="float:left">
       <span v-if="isServer">
         <Select :value="value"  filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
-                <Option v-for="(option, index) in selectList" :value="option.value" :key="index">{{option.label}}</Option>
+                <Option v-for="(option, index) in selectListData" :value="option.value" :key="index">{{option.label}}</Option>
         </Select>
       </span>
 
       <span v-else>
           <Select :value="value"   filterable   style="width:150px" @on-change="handleInput">
-            <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in selectListData" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
       </span>
     </div>
     <div v-else-if="isEditType=='selectTree'" style="float:left">
       <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true"/> -->
-      <tree-select :placeholder="params.column.title " :value="value" style="width:150px;" check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
+      <tree-select :placeholder="params.column.title " :value="value" style="width:150px;" check-strictly :expand-all="true" @on-change="handleInput" :data="selectListData"></tree-select>
     </div>
     <div v-else-if="isEditType=='fun'" style="float:left">
       <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true"/> -->
@@ -59,7 +59,7 @@ export default {
   components: {
     TreeSelect
   },
-  data () {
+  data() {
     return {
       isLoading: false,
       treeValue: '',
@@ -77,11 +77,13 @@ export default {
     editable: Boolean,
     editType: String,
 
-    selectList: Array
+    selectList: Array,
+    dataType: String
 
   },
   computed: {
-    selectListData () {
+    selectListData() {
+      console.log(this.dataType)
       if (this.dataType) {
         return this.$store.getters.getInfo(this.dataType)
       } else {
@@ -93,13 +95,14 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer () {
+    isServer() {
       return this.params.column.isServer
     },
-    isEditType () {
+    isEditType() {
       return this.editType
     },
-    isEditting () {
+    isEditting() {
+
       var that = this
       if (this.editType == 'fun' && this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}`) {
         this.$nextTick(() => {
@@ -108,16 +111,19 @@ export default {
         })
       }
 
+
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText () {
+    getSelectListText() {
       if (this.editType == 'text') {
         if (this.value == '') {
+
           this.label = '空'
           return
         }
 
         this.label = this.value
+
       } else if (this.editType == 'select') {
         let text = '没有匹配项目'
         for (var index in this.selectList) {
@@ -128,66 +134,65 @@ export default {
           }
         }
 
+
         this.label = text
+
       } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
-        var node = breadthQuery(this.selectList, this.value)
+        var node = breadthQuery(this.selectListData, this.value)
         if (node) {
           text = node.title
+
         }
         this.label = text
       } else if (this.editType == 'fun') {
         var that = this
-        if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
-          this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
+        if (this.params.column.selectListFunText && typeof(this.params.column.selectListFunText) === 'function') {
+          this.params.column.selectListFunText(getDataByParams, this.params, function(item) {
             that.label = item
           }, this)
+
         }
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getSelectListText
   },
   methods: {
-    remoteMethod (val) {
+    remoteMethod(val) {
+
       var that = this
-      if (this.params.column.selectListFun && typeof (this.params.column.selectListFun) === 'function') {
-        this.params.column.selectListFun(getDataByParams, val, function (item) {
+      if (this.params.column.selectListFun && typeof(this.params.column.selectListFun) === 'function') {
+        this.params.column.selectListFun(getDataByParams, val, function(item) {
           that.dataList = item
         }, this)
+
       }
       // if (val != this.value) {
       //   this.$emit('on-search-edit', val)
       // }
     },
-    handleInput (val) {
+    handleInput(val) {
       this.$emit('input', val, this.params)
     },
-    startEdit () {
-      // var that = this;
-      //
-      // if (this.editType == 'fun') {
-      //
-      //   this.$nextTick(() => {
-      //     console.log(that.$refs['agency'])
-      //     that.$refs['agency'].query = this.label;
-      //   })
-      // }
+    startEdit() {
 
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit () {
+    saveEdit() {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit () {
+    canceltEdit() {
       this.$emit('on-cancel-edit', this.params)
     }
   },
   watch: {
-    value (nv, no) {
-      if (nv != nv) { this.funValue = nv }
+    value(nv, no) {
+      if (nv != nv) {
+        this.funValue = nv
+      }
       this.getSelectListText
       // this.treeValue = val;
       // console.log("watch", val)

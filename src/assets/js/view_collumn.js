@@ -93,6 +93,7 @@ const FIELDS = [{
   fixed: 'left',
   key: 'index1'
 
+
 },
 {
   title: '类型',
@@ -163,10 +164,12 @@ const FIELDS = [{
 }, {
   title: '条件前置',
   key: 'isSearchFront',
+
   align: 'center',
   width: 250,
   sortable: false,
   visible: true,
+
   isSearch: true,
   isSearchFront: false,
   editable: true,
@@ -285,12 +288,42 @@ const FIELDS = [{
   visible: true,
   isSearch: true,
   minWidth: 250,
+
   editType: 'text'
 
 },
 {
-  title: '数据函数（后台数据）',
-  key: 'selectListFun',
+
+  title: '数据函数（固定函数）',
+  key: 'dataType',
+  sortable: false,
+  align: 'center',
+  visible: true,
+
+  editable: true,
+  isSearch: true,
+  minWidth: 250,
+  editType: 'select',
+  selectList: [{
+    value: 'org',
+    label: '分组列表'
+  },
+  {
+    value: 'orgTree',
+    label: '分组树'
+  },
+  {
+    value: 'menu',
+    label: '菜单列表'
+  }, {
+    value: 'role',
+    label: '角色列表'
+  }
+  ]
+},
+{
+  title: '数据函数（根据id获取对应的text）',
+  key: 'selectListFunText',
   sortable: false,
   align: 'center',
   visible: true,
@@ -298,11 +331,10 @@ const FIELDS = [{
   isSearch: true,
   minWidth: 250,
   editType: 'text'
-
 },
 {
-  title: '数据函数（根据id获取text显示内容）',
-  key: 'selectListFunText',
+  title: '数据函数（后台数据）',
+  key: 'selectListFun',
   sortable: false,
   align: 'center',
   visible: true,
@@ -349,6 +381,7 @@ const FIELDS = [{
   {
     value: false,
     label: '不允许'
+
   }
   ]
 },
@@ -404,6 +437,7 @@ const FIELDS = [{
     label: '不固定'
   },
   {
+
     value: 'left',
     label: '靠左固定'
   },

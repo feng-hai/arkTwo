@@ -44,12 +44,15 @@ export default {
     }
   },
   props: {
-    value: [String, Number, Boolean],
+    value: [String, Number, Boolean,Object],
     edittingCellId: String,
     allEdit: Boolean,
     params: Object,
     editable: Boolean,
     editType: String,
+
+    dataType: String,
+
     selectList: Array
 
   },
@@ -57,6 +60,15 @@ export default {
     this.getSelectListText()
   },
   computed: {
+
+    selectListData () {
+      if (this.dataType) {
+        this.$store.getters.getInfo(this.dataType)
+      } else {
+        return selectList
+      }
+    },
+
     // isLoading(){
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false

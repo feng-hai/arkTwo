@@ -4,12 +4,11 @@ import {
   getRolesInfo
 } from '@/api/publicResource'
 import {
-  translateDataToTree
-} from "@/libs/util.js"
-import {
+  translateDataToTree,
   getCookiesValueByKey
-} from '@/libs/util'
-// import user from '@/assets/js/user'
+
+} from "@/libs/util.js"
+
 
 export default {
   state: {
@@ -22,16 +21,14 @@ export default {
     setOrganization(state, orgInfo) {
       var rootId = getCookiesValueByKey("domainId")
       console.log(orgInfo)
-
       state.orgTree = translateDataToTree(orgInfo, rootId)
-
       state.organizationList = orgInfo
     },
     setMenusList(state, menuInfo) {
-      state.menusList = menuInfo;
+      state.menusList = menuInfo
     },
     setRolesList(state, rolesInfo) {
-      state.roles = rolesInfo;
+      state.roles = rolesInfo
     }
   },
   getters: {
@@ -41,9 +38,26 @@ export default {
     getOrganizationInfo: state => state.organizationList,
     getMenusInfo: state => state.menusList,
     getRolesInfo: state => state.roles,
-    getOrgTreeInfo: state => state.orgTree
+    getOrgTreeInfo: state => state.orgTree,
+    getInfo: state => (type) => {
+      if (type == 'orgTree') {
+        return state.orgTree
+      } else if (type == 'org') {
+        return state.organizationList
+      } else if (type == 'menu') {
+        return state.menusList
+      } else if (type == 'role') {
+        return state.roles
+      }
+    }
   },
   actions: {
+    updateData({
+      commit
+    }) {
+      console.log('updateData')
+      commit('setOrganization', [])
+    },
     getMenuInfoAction({
       commit
     }) {
@@ -52,7 +66,6 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-
           commit('setMenusList', res.data)
           resolve(res.data)
         }).catch(error => {
@@ -70,7 +83,9 @@ export default {
         }).then((res) => {
 
           commit('setRolesList', res.data.collection)
-          resolve(res.data)
+
+
+            resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
@@ -93,7 +108,6 @@ export default {
           reject(error)
         })
       })
-
     }
   }
 }

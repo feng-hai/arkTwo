@@ -5,17 +5,17 @@
   </div>
   <div v-else-if="isEditType=='selectTree'"  style="margin-right:5px">
     <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
-     <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
+     <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectListData"></tree-select>
   </div>
   <div v-else class="tables-editting-con" style="margin-right:5px">
     <span v-if="isServer">
       <Select :value="value" :placeholder="params.column.title "   filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
-              <Option v-for="(option, index) in selectList" :value="option.value" :key="index">{{option.label}}</Option>
+              <Option v-for="(option, index) in selectListData" :value="option.value" :key="index">{{option.label}}</Option>
       </Select>
     </span>
     <span v-else>
         <Select :value="value" :placeholder="params.column.title "   filterable   @on-change="handleInput">
-          <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in selectListData" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
     </span>
   </div>
@@ -32,10 +32,10 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
-      treeValue: ""
+      treeValue: ''
     }
   },
   props: {
@@ -52,23 +52,32 @@ export default {
 
   },
   computed: {
-    isServer() {
+
+    selectListData () {
+      if (this.dataType) {
+        return this.$store.getters.getInfo(this.dataType)
+      } else {
+        return this.selectList
+      }
+    },
+    isServer () {
+
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.params.column.editType
     },
-    isEditting() {
-      //return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
+    isEditting () {
+      // return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
+    getSelectListText () {
 
       if (this.params.column.editType == "text") {
         return this.value
       } else {
         let text = "没有匹配项目"
-        for (var index in this.selectList) {
-          var item = this.selectList[index];
+        for (var index in this.selectListData) {
+          var item = this.selectListData[index];
           if (this.value == item.value) {
             text = item.label;
             break;
@@ -79,24 +88,24 @@ export default {
     }
   },
   methods: {
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
-      console.log("input", val);
+    handleInput (val) {
+      console.log('input', val)
       this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
-      console.log("value", this.value)
+    saveEdit () {
+      console.log('value', this.value)
       this.$emit('on-save-edit', this.params)
-      //this.getSelectListText
+      // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   }
