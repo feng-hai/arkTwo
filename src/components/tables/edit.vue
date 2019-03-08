@@ -46,7 +46,7 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
       treeValue: ''
@@ -63,33 +63,33 @@ export default {
     selectList: Array
   },
   computed: {
-    selectListData() {
+    selectListData () {
       if (this.dataType) {
-        return this.$store.getters.getInfo(this.dataType);
+        return this.$store.getters.getInfo(this.dataType)
       } else {
-        return this.selectList;
+        return this.selectList
       }
     },
     // isLoading(){
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.editType
     },
-    isEditting() {
+    isEditting () {
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
+    getSelectListText () {
       if (this.editType == 'text') {
-        if (this.value == "") {
-          return "空"
+        if (this.value == '') {
+          return '空'
         }
         return this.value
-      } else if (this.editType == "select") {
+      } else if (this.editType == 'select') {
         let text = '没有匹配项目'
         for (var index in this.selectListData) {
           var item = this.selectListData[index]
@@ -99,33 +99,33 @@ export default {
           }
         }
         return text
-      } else if (this.editType == "selectTree") {
+      } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
         var node = breadthQuery(this.selectListData, this.value)
         if (node) {
-          text = node.title;
+          text = node.title
         }
         return text
       }
     }
   },
   methods: {
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
+    handleInput (val) {
       this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
+    saveEdit () {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   },

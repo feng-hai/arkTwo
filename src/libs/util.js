@@ -600,10 +600,10 @@ export const breadthQuery = (tree, id) => {
   stark = stark.concat(tree)
   while (stark.length) {
     var temp = stark.shift()
-    if (temp&&temp.children) {
+    if (temp && temp.children) {
       stark = stark.concat(temp.children)
     }
-    if (temp&&temp.id === id) {
+    if (temp && temp.id === id) {
       return temp
     }
   }

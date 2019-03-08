@@ -32,10 +32,10 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
-      treeValue: ""
+      treeValue: ''
     }
   },
   props: {
@@ -53,23 +53,23 @@ export default {
 
   },
   computed: {
-    selectListData() {
+    selectListData () {
       if (this.dataType) {
-        return this.$store.getters.getInfo(this.dataType);
-      }else{
-        return this.selectList;
+        return this.$store.getters.getInfo(this.dataType)
+      } else {
+        return this.selectList
       }
     },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.params.column.editType
     },
-    isEditting() {
-      //return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
+    isEditting () {
+      // return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
+    getSelectListText () {
 
       // if (this.params.column.editType == "text") {
       //   return this.value
@@ -87,24 +87,24 @@ export default {
     }
   },
   methods: {
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
-      console.log("input", val);
+    handleInput (val) {
+      console.log('input', val)
       this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
-      console.log("value", this.value)
+    saveEdit () {
+      console.log('value', this.value)
       this.$emit('on-save-edit', this.params)
-      //this.getSelectListText
+      // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   }

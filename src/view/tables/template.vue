@@ -42,10 +42,10 @@ export default {
   computed: {
     ...mapGetters([
       'getTableInfoById',
-      "getOrganizationInfo",
-      "getMenusInfo",
-      "getRolesInfo",
-      "getOrgTreeInfo"
+      'getOrganizationInfo',
+      'getMenusInfo',
+      'getRolesInfo',
+      'getOrgTreeInfo'
     ])
   },
   props: {
@@ -74,7 +74,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       tableData: [],
       backTableData: [],
@@ -107,8 +107,7 @@ export default {
       ruleValidate: {} // 新增修改时验证
     }
   },
-  created() {
-
+  created () {
 
   },
   methods: {
@@ -122,31 +121,30 @@ export default {
       'getCheckOnly'
     ]),
 
-    onSelect(selection, row) {
+    onSelect (selection, row) {
 
     },
-    onSelectCancel(selection, row) {
+    onSelectCancel (selection, row) {
 
     },
-    onSelectAll(selection) {
+    onSelectAll (selection) {
 
     },
-    onSelectAllCancel(selection) {
+    onSelectAllCancel (selection) {
 
     },
-    handleSelectRow(selection) {
+    handleSelectRow (selection) {
       this.selectData = selection
       this.$emit('selected', this.selectData)
     },
-    valueValidate(params, fun) {
+    valueValidate (params, fun) {
       let that = this
       var funArray = []
       var messages = []
       let isTure = true
-      //console.log("params", typeof this.ruleValidate, this.ruleValidate)
+      // console.log("params", typeof this.ruleValidate, this.ruleValidate)
 
       for (var key in this.ruleValidate) {
-
         if (params[key] && params[key].length > 0) {
           if ('required' in this.ruleValidate[key]) {
             let initData = () => {
@@ -162,7 +160,6 @@ export default {
             messages.push(this.ruleValidate[key].message)
           }
         } else {
-
           //  console.log('required' in this.ruleValidate[key], this.ruleValidate[key])
           for (var index in this.ruleValidate[key]) {
             if ('required' in this.ruleValidate[key][index]) {
@@ -171,22 +168,20 @@ export default {
                   title: '数据不规范提醒',
                   desc: (this.ruleValidate[key][index].message ? this.ruleValidate[key][index].message : '必填项')
                 })
-                return;
-                isTure = false;
+                return
+                isTure = false
               }
             }
           }
         }
       }
 
-
-
       if (isTure) {
         if (funArray.length > 0) {
           getAllQuery(funArray).then((resArr) => {
             let leng = resArr.length
             let len = 0
-            resArr.forEach(function(res) {
+            resArr.forEach(function (res) {
               if (res.status === 200) { // 修改对应的返回值
                 that.$Notice.warning({
                   title: '数据不规范提醒',
@@ -218,14 +213,14 @@ export default {
       //  }
       return true
     },
-    saveRow(params) { // 新增一行保存
+    saveRow (params) { // 新增一行保存
       let that = this
       let row = this.tableData[params.index]
       //  console.log(this.ruleValidate)
-      this.valueValidate(params.row, function() {
+      this.valueValidate(params.row, function () {
         var item = Object.assign({}, that.tableData[params.index])
-        delete item["isNew"]
-        delete item["initRowIndex"]
+        delete item['isNew']
+        delete item['initRowIndex']
         let option = {
           url: that.addUrl,
           data: item,
@@ -237,21 +232,21 @@ export default {
             title: '新增提示',
             desc: '新增一条信息成功'
           })
-          this.getTableInfo();
+          this.getTableInfo()
         })
       })
     },
-    pageChange(pageIndex) {
+    pageChange (pageIndex) {
       this.isLoading = true
       this.current = pageIndex
       this.getTableInfo()
     },
-    pageSizeChange(pageSize) {
+    pageSizeChange (pageSize) {
       this.isLoading = true
       this.pageSize = pageSize
       this.getTableInfo()
     },
-    setColumnInfo(json) {
+    setColumnInfo (json) {
       var jsonObject = Object.assign({}, json)
       if (jsonObject.url.indexOf('{id}') > 0) {
         var urlInfo = window.location.href
@@ -281,16 +276,16 @@ export default {
         } else {
           handle['isHide'] = true // 该多选项隐藏
         }
-        //console.log("handle",handle)
-        if (handle["options"] && typeof handle["options"] == "string") {
-          //console.log("options",toJson(handle["options"]))
-          handle["options"] = toJson(handle["options"])
+        // console.log("handle",handle)
+        if (handle['options'] && typeof handle['options'] === 'string') {
+          // console.log("options",toJson(handle["options"]))
+          handle['options'] = toJson(handle['options'])
           //  console.log("testOption",handle["option"])
         }
       }
       for (var i = 0; i < jsonObject.columns.length; i++) {
         var item = jsonObject.columns[i]
-        if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
+        if (item['selectList'] && typeof item['selectList'] === 'string') { // 获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
         }
       }
@@ -306,10 +301,10 @@ export default {
       }
 
       this.columns = jsonObject.columns
-      if (jsonObject.buttons && jsonObject.buttons != "[]") {
+      if (jsonObject.buttons && jsonObject.buttons != '[]') {
         this.buttons = jsonObject.buttons
       }
-      if (typeof json.ruleValidate == "string") {
+      if (typeof json.ruleValidate === 'string') {
         this.ruleValidate = toJson(json.ruleValidate)
       } else {
         this.ruleValidate = json.ruleValidate
@@ -319,7 +314,7 @@ export default {
         this.itemDefault = toJson(json.itemDefault)
       }
     },
-    createColumns() {
+    createColumns () {
       var urlInfo = window.location.href
       var id = getParams2(urlInfo)
       if (this.viewId != '') {
@@ -335,7 +330,7 @@ export default {
       }
     },
 
-    getTableDatas(options) {
+    getTableDatas (options) {
       var option = {
         url: options.url,
         method: 'get'
@@ -353,7 +348,7 @@ export default {
       this.getTableData(option).then(res => {
         this.tableData = this.handleFunction(res.data)
         //  console.log('菜单管理', this.tableData)
-        this.total = res.count;
+        this.total = res.count
         if (!this.isRemote) {
           this.backTableData = Object.assign([], this.tableData)
           //  console.log(this.backTableData)
@@ -370,12 +365,12 @@ export default {
       //   this.isLoading = false;
       // })
     },
-    getTableInfo() {
+    getTableInfo () {
       this.isLoading = true
       this.createColumns() // 表头部分
       // this.getTableDatas(); //数据部分
     },
-    deleteItems() { // 批量删除
+    deleteItems () { // 批量删除
       if (this.isRemote) {
         for (var index in this.selectData) {
           this.deleteTableData({
@@ -387,12 +382,12 @@ export default {
               title: '删除提示提示',
               desc: '删除信息成功'
             })
-            this.getTableInfo();
+            this.getTableInfo()
           })
         }
       }
     },
-    editPage(params, vm) {
+    editPage (params, vm) {
       const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
       const route = {
         name: 'view',
@@ -406,7 +401,7 @@ export default {
       }
       this.$router.push(route)
     },
-    addItem() {
+    addItem () {
       this.tableData.unshift(Object.assign({}, this.itemDefault))
       // const id = parseInt(Math.random() * 1000000000000000000000)
       // const route = {
@@ -422,8 +417,8 @@ export default {
       // this.$router.push(route)
     },
 
-    searchP(params) {},
-    search(searchParams) { // 搜索按钮
+    searchP (params) {},
+    search (searchParams) { // 搜索按钮
       this.searchParams = searchParams
       if (this.isRemote) {
         this.getTableInfo()
@@ -446,7 +441,7 @@ export default {
         }
       }
     },
-    editCell(params) {
+    editCell (params) {
       if (this.isRemote) {
         params.row[params.column.key] = params.value
         this.editTableData({
@@ -461,7 +456,7 @@ export default {
         })
       }
     },
-    handleDelete(params) { // 删除数据
+    handleDelete (params) { // 删除数据
       if (this.isRemote) {
         this.deleteTableData({
           url: this.deleteUrl.replace('{id}', params.row.unid),
@@ -472,7 +467,7 @@ export default {
             title: '删除提示提示',
             desc: '删除一条信息成功'
           })
-          this.getTableInfo();
+          this.getTableInfo()
         })
       } else {
         this.tableData = this.tableData.filter((item) => {
@@ -480,12 +475,12 @@ export default {
         })
       }
     },
-    exportExcel() {
+    exportExcel () {
       this.$refs.tables.exportCsv({
         filename: `table-${(new Date()).valueOf()}.csv`
       })
     },
-    initParams() {
+    initParams () {
       this.tableData = []
       this.selectData = [] // 列表中选择的行
       this.columns = []
@@ -502,7 +497,7 @@ export default {
       this.searchParams = {}
     }
   },
-  mounted() {
+  mounted () {
     this.initParams()
     this.getTableInfo()
   },

@@ -29,7 +29,7 @@ export default {
     params: Object,
     editable: Boolean,
     editType: String,
-    dataType:String,
+    dataType: String,
     selectList: Array
 
   },
@@ -37,11 +37,11 @@ export default {
     this.getSelectListText()
   },
   computed: {
-    selectListData() {
+    selectListData () {
       if (this.dataType) {
-        this.$store.getters.getInfo(this.dataType);
-      }else{
-        return selectList;
+        this.$store.getters.getInfo(this.dataType)
+      } else {
+        return selectList
       }
     },
     // isLoading(){

@@ -5,7 +5,7 @@ import {
 } from '@/api/publicResource'
 import {
   translateDataToTree
-} from "@/libs/util.js"
+} from '@/libs/util.js'
 // import {
 //   setToken,
 //   getToken
@@ -20,15 +20,15 @@ export default {
     roles: []
   },
   mutations: {
-    setOrganization(state, orgInfo) {
+    setOrganization (state, orgInfo) {
       state.orgTree = translateDataToTree(orgInfo)
       state.organizationList = orgInfo
     },
-    setMenusList(state, menuInfo) {
-      state.menusList = menuInfo;
+    setMenusList (state, menuInfo) {
+      state.menusList = menuInfo
     },
-    setRolesList(state, rolesInfo) {
-      state.roles = rolesInfo;
+    setRolesList (state, rolesInfo) {
+      state.roles = rolesInfo
     }
   },
   getters: {
@@ -37,23 +37,23 @@ export default {
     getRolesInfo: state => state.roles,
     getOrgTreeInfo: state => state.orgTree,
     getInfo: state => (type) => {
-      if (type == "orgTree") {
+      if (type == 'orgTree') {
         return state.orgTree
-      } else if (type == "org") {
+      } else if (type == 'org') {
         return state.organizationList
-      } else if (type == "menu") {
+      } else if (type == 'menu') {
         return state.menusList
-      } else if (type == "role") {
+      } else if (type == 'role') {
         return state.roles
       }
     }
   },
   actions: {
-    updateData({commit}){
-      console.log("updateData")
-        commit('setOrganization', [])
+    updateData ({ commit }) {
+      console.log('updateData')
+      commit('setOrganization', [])
     },
-    getMenuInfoAction({
+    getMenuInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -61,7 +61,6 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-
           commit('setMenusList', res.data)
           resolve(res.data)
         }).catch(error => {
@@ -69,7 +68,7 @@ export default {
         })
       })
     },
-    getRolesInfoAction({
+    getRolesInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -77,7 +76,6 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-
           commit('setRolesList', res.data)
           resolve(res.data)
         }).catch(error => {
@@ -86,7 +84,7 @@ export default {
       })
     },
     // 分组信息
-    getOrgInfoAction({
+    getOrgInfoAction ({
       state,
       commit
     }, option) {
@@ -101,7 +99,6 @@ export default {
           reject(error)
         })
       })
-
     }
   }
 }
