@@ -290,40 +290,7 @@ export default {
       }
       for (var i = 0; i < jsonObject.columns.length; i++) {
         var item = jsonObject.columns[i]
-
-
-        if (item['selectListFun'] && item['selectListFun'] == "org") { //判断是否从外部或取数据
-          var orgs = this.getOrganizationInfo.map(item => {
-            item.value = item.unid;
-            item.label = item.name;
-            return item;
-          })
-          jsonObject.columns[i].selectList = orgs;
-
-        } if (item['selectListFun'] && item['selectListFun'] == "orgTree") { //判断是否从外部或取数据
-          var orgs = this.getOrgTreeInfo.map(item => {
-            item.value = item.unid;
-            item.label = item.name;
-            return item;
-          });
-          jsonObject.columns[i].selectList = orgs;
-
-        } else if (item['selectListFun'] && item['selectListFun'] == "menu") {
-          var menus = this.getMenusInfo.map(item => {
-            item.value = item.unid;
-            item.label = item.name;
-            return item;
-          })
-          jsonObject.columns[i].selectList = menus;
-
-        } else if (item['selectListFun'] && item['selectListFun'] == "role") {
-          var roles = this.getRolesInfo.map(item => {
-            item.value = item.unid;
-            item.label = item.name;
-            return item;
-          })
-          jsonObject.columns[i].selectList = roles;
-        } else if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
+        if (item['selectList'] && typeof item['selectList'] === 'string') { //获取静态数据
           jsonObject.columns[i].selectList = toJson(item.selectList)
         }
       }

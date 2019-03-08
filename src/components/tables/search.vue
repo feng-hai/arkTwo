@@ -3,19 +3,19 @@
   <div v-if="isEditType=='text'" class="tables-editting-con" style="margin-right:5px">
     <Input :value="value" @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
   </div>
-  <div v-else-if="isEditType=='selectTree'">
+  <div v-else-if="isEditType=='selectTree'" style="margin-right:5px">
     <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
-     <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectList"></tree-select>
+    <tree-select v-model="treeValue" style="width:150px; " :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectListData"></tree-select>
   </div>
   <div v-else class="tables-editting-con" style="margin-right:5px">
     <span v-if="isServer">
       <Select :value="value" :placeholder="params.column.title "   filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
-              <Option v-for="(option, index) in selectList" :value="option.value" :key="index">{{option.label}}</Option>
+              <Option v-for="(option, index) in selectListData" :value="option.value" :key="index">{{option.label}}</Option>
       </Select>
     </span>
     <span v-else>
         <Select :value="value" :placeholder="params.column.title "   filterable   @on-change="handleInput">
-          <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in selectListData" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
     </span>
   </div>
@@ -43,6 +43,7 @@ export default {
     edittingCellId: String,
     allEdit: Boolean,
     params: Object,
+    dataType: String,
     selectList: {
       type: Array,
       default () {
@@ -52,6 +53,13 @@ export default {
 
   },
   computed: {
+    selectListData() {
+      if (this.dataType) {
+        return this.$store.getters.getInfo(this.dataType);
+      }else{
+        return this.selectList;
+      }
+    },
     isServer() {
       return this.params.column.isServer
     },
@@ -63,19 +71,19 @@ export default {
     },
     getSelectListText() {
 
-      if (this.params.column.editType == "text") {
-        return this.value
-      } else {
-        let text = "没有匹配项目"
-        for (var index in this.selectList) {
-          var item = this.selectList[index];
-          if (this.value == item.value) {
-            text = item.label;
-            break;
-          }
-        }
-        return text;
-      }
+      // if (this.params.column.editType == "text") {
+      //   return this.value
+      // } else {
+      //   let text = "没有匹配项目"
+      //   for (var index in this.selectList) {
+      //     var item = this.selectList[index];
+      //     if (this.value == item.value) {
+      //       text = item.label;
+      //       break;
+      //     }
+      //   }
+      //   return text;
+      // }
     }
   },
   methods: {

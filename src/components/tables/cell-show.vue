@@ -2,29 +2,8 @@
 <div class="tables-edit-outer">
   <div v-if="!isEditting" class="tables-edit-con">
     <span class="value-con">{{label}}</span>
-    <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
   </div>
-  <!-- <div v-else class="tables-editting-con">
-    <div v-if="isEditType" class="tables-editting-con" style="float:left">
-      <Input :value="value" @input="handleInput" style="width:150px" class="tables-edit-input" />
-    </div>
-    <div v-else class="tables-editting-con" style="float:left">
-      <span v-if="isServer">
-        <Select :value="value"  filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
-                <Option v-for="(option, index) in selectList" :value="option.value" :key="index">{{option.label}}</Option>
-        </Select>
-      </span>
-      <span v-else>
-          <Select :value="value"   filterable   style="width:150px" @on-change="handleInput">
-            <Option v-for="item in selectList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-      </span>
-    </div>
-    <span v-if="!allEdit">
-    <Button @click="saveEdit" style="padding: 6px 4px;" type="text"><Icon type="md-checkmark"></Icon></Button>
-    <Button @click="canceltEdit" style="padding: 6px 4px;" type="text"><Icon type="md-close"></Icon></Button>
-  </span>
-  </div> -->
+
 </div>
 </template>
 
@@ -50,6 +29,7 @@ export default {
     params: Object,
     editable: Boolean,
     editType: String,
+    dataType:String,
     selectList: Array
 
   },
@@ -57,6 +37,13 @@ export default {
     this.getSelectListText()
   },
   computed: {
+    selectListData() {
+      if (this.dataType) {
+        this.$store.getters.getInfo(this.dataType);
+      }else{
+        return selectList;
+      }
+    },
     // isLoading(){
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
@@ -81,8 +68,8 @@ export default {
         this.label = this.value
       } else if (this.editType == 'select') {
         let text = '没有匹配项目'
-        for (var index in this.selectList) {
-          var item = this.selectList[index]
+        for (var index in this.selectListData) {
+          var item = this.selectListData[index]
           if (this.value == item.value) {
             text = item.label
             break
@@ -91,7 +78,7 @@ export default {
         this.label = text
       } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
-        var node = breadthQuery(this.selectList, this.value)
+        var node = breadthQuery(this.selectListData, this.value)
         if (node) {
           text = node.title
         }
@@ -100,6 +87,7 @@ export default {
         var that = this
         if (this.params.column.selectListFun && typeof (this.params.column.selectListFun) === 'function') {
           this.params.column.selectListFun(getDataByParams, this.params, function (item) {
+            console.log(item)
             that.label = item
           }, this)
         }

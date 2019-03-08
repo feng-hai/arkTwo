@@ -32,15 +32,27 @@ export default {
     }
   },
   getters: {
-    // getTableInfoById: (state, getters) => (id) => {
-    //   return state.tablesInfo[id]
-    // }
     getOrganizationInfo: state => state.organizationList,
     getMenusInfo: state => state.menusList,
     getRolesInfo: state => state.roles,
-    getOrgTreeInfo: state => state.orgTree
+    getOrgTreeInfo: state => state.orgTree,
+    getInfo: state => (type) => {
+      if (type == "orgTree") {
+        return state.orgTree
+      } else if (type == "org") {
+        return state.organizationList
+      } else if (type == "menu") {
+        return state.menusList
+      } else if (type == "role") {
+        return state.roles
+      }
+    }
   },
   actions: {
+    updateData({commit}){
+      console.log("updateData")
+        commit('setOrganization', [])
+    },
     getMenuInfoAction({
       commit
     }) {

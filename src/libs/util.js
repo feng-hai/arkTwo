@@ -598,13 +598,12 @@ export const translateDataToTree = (data) => {
 export const breadthQuery = (tree, id) => {
   var stark = []
   stark = stark.concat(tree)
-
   while (stark.length) {
     var temp = stark.shift()
-    if (temp.children) {
+    if (temp&&temp.children) {
       stark = stark.concat(temp.children)
     }
-    if (temp.id === id) {
+    if (temp&&temp.id === id) {
       return temp
     }
   }
