@@ -87,7 +87,7 @@ export default {
         var that = this
         if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
           this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
-            //console.log(item)
+            // console.log(item)
             that.label = item
           }, this)
         }

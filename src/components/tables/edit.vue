@@ -59,14 +59,14 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
       treeValue: '',
       label: '',
-      funValue: '', //函数是用
+      funValue: '', // 函数是用
       dataList: [],
-      value1: '' //測試用
+      value1: '' // 測試用
     }
   },
   props: {
@@ -77,11 +77,11 @@ export default {
     editable: Boolean,
     editType: String,
     dataType: String,
-    selectList: Array,
+    selectList: Array
 
   },
   computed: {
-    selectListData() {
+    selectListData () {
       if (this.dataType) {
         return this.$store.getters.getInfo(this.dataType)
       } else {
@@ -92,25 +92,23 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.editType
     },
-    isEditting() {
-      var that = this;
+    isEditting () {
+      var that = this
       if (this.editType == 'fun' && this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}`) {
-
         this.$nextTick(() => {
-
-          that.$refs['agency1'].query = this.label;
-          //that.value1 = this.value;
+          that.$refs['agency1'].query = this.label
+          // that.value1 = this.value;
         })
       }
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
+    getSelectListText () {
       if (this.editType == 'text') {
         if (this.value == '') {
           return '空'
@@ -135,24 +133,22 @@ export default {
         this.label = text
       } else if (this.editType == 'fun') {
         var that = this
-        if (this.params.column.selectListFunText && typeof(this.params.column.selectListFunText) === 'function') {
-          this.params.column.selectListFunText(getDataByParams, this.params, function(item) {
-
+        if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
+          this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
             that.label = item
-
           }, this)
         }
       }
     }
   },
-  mounted() {
-    this.getSelectListText;
+  mounted () {
+    this.getSelectListText
   },
   methods: {
-    remoteMethod(val) {
-      var that = this;
-      if (this.params.column.selectListFun && typeof(this.params.column.selectListFun) === 'function') {
-        this.params.column.selectListFun(getDataByParams, val, function(item) {
+    remoteMethod (val) {
+      var that = this
+      if (this.params.column.selectListFun && typeof (this.params.column.selectListFun) === 'function') {
+        this.params.column.selectListFun(getDataByParams, val, function (item) {
           console.log(item)
           that.dataList = item
         }, this)
@@ -161,11 +157,10 @@ export default {
       //   this.$emit('on-search-edit', val)
       // }
     },
-    handleInput(val) {
+    handleInput (val) {
       this.$emit('input', val, this.params)
     },
-    startEdit() {
-
+    startEdit () {
       // var that = this;
       //
       // if (this.editType == 'fun') {
@@ -178,21 +173,21 @@ export default {
 
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
+    saveEdit () {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   },
   watch: {
-    value(val, new1) {
-      this.funValue = val;
+    value (val, new1) {
+      this.funValue = val
       // this.treeValue = val;
       // console.log("watch", val)
       //  if (val.length != new1.length)
-      //console.log("val", new1, val)
+      // console.log("val", new1, val)
     }
   }
 }
