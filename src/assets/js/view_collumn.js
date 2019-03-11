@@ -327,6 +327,17 @@ const FIELDS = [{
   editType: 'text'
 },
 {
+  title: '数据函数（根据id获取text显示内容）',
+  key: 'selectListFunText',
+  sortable: false,
+  align: 'center',
+  visible: true,
+  editable: true,
+  isSearch: true,
+  minWidth: 250,
+  editType: 'text'
+},
+{
   title: '按钮操作（静态）',
   key: 'options',
   sortable: false,

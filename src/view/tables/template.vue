@@ -1,7 +1,7 @@
 <template>
 <div>
   <Card style="margin-top:20px">
-    <tables :height="400" :total="total" :permit="permit" @on-saveRow="saveRow" :buttons="buttons" :current="current" :pageSize="pageSize" @on-page-change="pageChange" @on-pageSize-change="pageSizeChange" :loading="isLoading" ref="tables" @on-add="addItem"
+    <tables  :total="total" :permit="permit" @on-saveRow="saveRow" :buttons="buttons" :current="current" :pageSize="pageSize" @on-page-change="pageChange" @on-pageSize-change="pageSizeChange" :loading="isLoading" ref="tables" @on-add="addItem"
       @on-select="onSelect" @on-select-cancel="onSelectCancel" @on-select-all="onSelectAll" @on-select-all-cancel="onSelectAllCancel" :isPage="isPage" @on-all-delete="deleteItems" @on-edit="editPage" @on-selection-change="handleSelectRow" @on-search="search"
       @on-search-edit="searchP" @on-save-edit="editCell" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" />
     <!-- <Button style="margin: 10px 0;" type="primary" @click="exportExcel">导出为Csv文件</Button> -->

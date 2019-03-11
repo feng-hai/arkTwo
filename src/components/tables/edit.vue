@@ -1,7 +1,7 @@
 <template>
 <div class="tables-edit-outer">
   <div v-if="!isEditting" class="tables-edit-con">
-    <span class="value-con">{{getSelectListText}}</span>
+    <span class="value-con">{{label}}</span>
     <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button>
   </div>
   <div v-else class="tables-editting-con">
@@ -25,6 +25,16 @@
       <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true"/> -->
       <tree-select :placeholder="params.column.title " :value="value" style="width:150px;" check-strictly :expand-all="true" @on-change="handleInput" :data="selectListData"></tree-select>
     </div>
+    <div v-else-if="isEditType=='fun'" style="float:left">
+      <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true"/> -->
+      <!-- <Select ref="agency" clearable :value="value" @on-change="handleInput" :label="label" filterable remote :remote-method="remoteMethod" :loading="isLoading">
+               <Option v-for="(option, index) in dataList" :value="option.value" :key="index">{{option.label}}</Option>
+      </Select> -->
+      <Select ref="agency1" clearable v-model="value1" @on-change="handleInput" :label="label" filterable remote :remote-method="remoteMethod" :loading="isLoading">
+               <Option v-for="(option, index) in dataList" :value="option.value" :key="index">{{option.label}}</Option>
+      </Select>
+    </div>
+
     <span v-if="!allEdit">
     <Button @click="saveEdit" style="padding: 6px 4px;" type="text"><Icon type="md-checkmark"></Icon></Button>
     <Button @click="canceltEdit" style="padding: 6px 4px;" type="text"><Icon type="md-close"></Icon></Button>
@@ -37,6 +47,9 @@
 import {
   breadthQuery
 } from '@/libs/util'
+import {
+  getDataByParams
+} from '@/api/handle'
 // import {
 //   getDataByParams
 // } from '@/api/handle'
@@ -46,10 +59,14 @@ export default {
   components: {
     TreeSelect
   },
-  data () {
+  data() {
     return {
       isLoading: false,
-      treeValue: ''
+      treeValue: '',
+      label: '',
+      funValue: '', //函数是用
+      dataList: [],
+      value1: '' //測試用
     }
   },
   props: {
@@ -60,10 +77,11 @@ export default {
     editable: Boolean,
     editType: String,
     dataType: String,
-    selectList: Array
+    selectList: Array,
+
   },
   computed: {
-    selectListData () {
+    selectListData() {
       if (this.dataType) {
         return this.$store.getters.getInfo(this.dataType)
       } else {
@@ -74,21 +92,30 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer () {
+    isServer() {
       return this.params.column.isServer
     },
-    isEditType () {
+    isEditType() {
       return this.editType
     },
-    isEditting () {
+    isEditting() {
+      var that = this;
+      if (this.editType == 'fun' && this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}`) {
+
+        this.$nextTick(() => {
+
+          that.$refs['agency1'].query = this.label;
+          //that.value1 = this.value;
+        })
+      }
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText () {
+    getSelectListText() {
       if (this.editType == 'text') {
         if (this.value == '') {
           return '空'
         }
-        return this.value
+        this.label = this.value
       } else if (this.editType == 'select') {
         let text = '没有匹配项目'
         for (var index in this.selectListData) {
@@ -98,44 +125,75 @@ export default {
             break
           }
         }
-        return text
+        this.label = text
       } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
         var node = breadthQuery(this.selectListData, this.value)
         if (node) {
           text = node.title
         }
-        return text
+        this.label = text
+      } else if (this.editType == 'fun') {
+        var that = this
+        if (this.params.column.selectListFunText && typeof(this.params.column.selectListFunText) === 'function') {
+          this.params.column.selectListFunText(getDataByParams, this.params, function(item) {
+
+            that.label = item
+
+          }, this)
+        }
       }
     }
   },
+  mounted() {
+    this.getSelectListText;
+  },
   methods: {
-    remoteMethod (val) {
-      if (val != this.value) {
-        this.$emit('on-search-edit', val)
+    remoteMethod(val) {
+      var that = this;
+      if (this.params.column.selectListFun && typeof(this.params.column.selectListFun) === 'function') {
+        this.params.column.selectListFun(getDataByParams, val, function(item) {
+          console.log(item)
+          that.dataList = item
+        }, this)
       }
+      // if (val != this.value) {
+      //   this.$emit('on-search-edit', val)
+      // }
     },
-    handleInput (val) {
+    handleInput(val) {
       this.$emit('input', val, this.params)
     },
-    startEdit () {
+    startEdit() {
+
+      // var that = this;
+      //
+      // if (this.editType == 'fun') {
+      //
+      //   this.$nextTick(() => {
+      //     console.log(that.$refs['agency'])
+      //     that.$refs['agency'].query = this.label;
+      //   })
+      // }
+
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit () {
+    saveEdit() {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit () {
+    canceltEdit() {
       this.$emit('on-cancel-edit', this.params)
     }
   },
   watch: {
-    // value(val, new1) {
-    //   this.treeValue = val;
-    //   console.log("watch", val)
-    //   //  if (val.length != new1.length)
-    //   //console.log("val", new1, val)
-    // }
+    value(val, new1) {
+      this.funValue = val;
+      // this.treeValue = val;
+      // console.log("watch", val)
+      //  if (val.length != new1.length)
+      //console.log("val", new1, val)
+    }
   }
 }
 </script>

@@ -85,9 +85,9 @@ export default {
         this.label = text
       } else if (this.editType == 'fun') {
         var that = this
-        if (this.params.column.selectListFun && typeof (this.params.column.selectListFun) === 'function') {
-          this.params.column.selectListFun(getDataByParams, this.params, function (item) {
-            console.log(item)
+        if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
+          this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
+            //console.log(item)
             that.label = item
           }, this)
         }
