@@ -234,9 +234,8 @@ export default {
             desc: '新增一条信息成功'
           })
 
-          this.getTableInfo();
-          this.$emit("on-saveRow", params.row)
-
+          this.getTableInfo()
+          this.$emit('on-saveRow', params.row)
         })
       })
     },
@@ -263,7 +262,7 @@ export default {
       this.addUrl = jsonObject.addUrl
       this.deleteUrl = jsonObject.deleteUrl
       this.editUrl = jsonObject.editUrl
-      this.isCount = jsonObject.isCount == undefined ? true : jsonObject.isCount == "true" ? true : false;
+      this.isCount = jsonObject.isCount == undefined ? true : jsonObject.isCount == 'true'
       this.permit.addPermit = jsonObject.addPermit
       this.permit.deletePermit = jsonObject.deletePermit
       this.permit.editPermit = jsonObject.editPermit
@@ -290,7 +289,6 @@ export default {
         var item = jsonObject.columns[i]
 
         if (item['selectList'] && typeof item['selectList'] === 'string') { // 获取静态数据
-
           jsonObject.columns[i].selectList = toJson(item.selectList)
         }
       }
@@ -394,15 +392,14 @@ export default {
               desc: '删除信息成功'
             })
 
-            this.getTableInfo();
-            this.$emit("on-delete", this.selectData[index])
-
+            this.getTableInfo()
+            this.$emit('on-delete', this.selectData[index])
           })
         }
       }
     },
 
-    editPage(params, vm) {
+    editPage (params, vm) {
       // const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
       // const route = {
       //   name: 'view',
@@ -415,8 +412,7 @@ export default {
       //   }
       // }
       // this.$router.push(route)
-      this.$emit("on-edit", params, vm)
-
+      this.$emit('on-edit', params, vm)
     },
     addItem () {
       this.tableData.unshift(Object.assign({}, this.itemDefault))
@@ -470,7 +466,7 @@ export default {
             title: '修改提示提示',
             desc: '修改信息成功'
           })
-          this.$emit("on-save-edit", params)
+          this.$emit('on-save-edit', params)
         })
       }
     },
@@ -486,10 +482,9 @@ export default {
             desc: '删除一条信息成功'
           })
 
-          this.getTableInfo();
+          this.getTableInfo()
 
-          this.$emit("on-delete", params)
-
+          this.$emit('on-delete', params)
         })
       } else {
         this.tableData = this.tableData.filter((item) => {

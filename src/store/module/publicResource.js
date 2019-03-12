@@ -7,8 +7,7 @@ import {
   translateDataToTree,
   getCookiesValueByKey
 
-} from "@/libs/util.js"
-
+} from '@/libs/util.js'
 
 export default {
   state: {
@@ -18,16 +17,16 @@ export default {
     roles: []
   },
   mutations: {
-    setOrganization(state, orgInfo) {
-      var rootId = getCookiesValueByKey("domainId")
+    setOrganization (state, orgInfo) {
+      var rootId = getCookiesValueByKey('domainId')
       console.log(orgInfo)
       state.orgTree = translateDataToTree(orgInfo, rootId)
       state.organizationList = orgInfo
     },
-    setMenusList(state, menuInfo) {
+    setMenusList (state, menuInfo) {
       state.menusList = menuInfo
     },
-    setRolesList(state, rolesInfo) {
+    setRolesList (state, rolesInfo) {
       state.roles = rolesInfo
     }
   },
@@ -52,13 +51,13 @@ export default {
     }
   },
   actions: {
-    updateData({
+    updateData ({
       commit
     }) {
       console.log('updateData')
       commit('setOrganization', [])
     },
-    getMenuInfoAction({
+    getMenuInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -73,7 +72,7 @@ export default {
         })
       })
     },
-    getRolesInfoAction({
+    getRolesInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -81,22 +80,19 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-
           commit('setRolesList', res.data.collection)
 
-
-            resolve(res.data.collection)
+          resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
       })
     },
     // 分组信息
-    getOrgInfoAction({
+    getOrgInfoAction ({
       state,
       commit
     }) {
-
       return new Promise((resolve, reject) => {
         getOrganizationInfo({
           page_id: 0,

@@ -59,7 +59,7 @@ export default {
   components: {
     TreeSelect
   },
-  data() {
+  data () {
     return {
       isLoading: false,
       treeValue: '',
@@ -82,7 +82,7 @@ export default {
 
   },
   computed: {
-    selectListData() {
+    selectListData () {
       console.log(this.dataType)
       if (this.dataType) {
         return this.$store.getters.getInfo(this.dataType)
@@ -95,14 +95,13 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.editType
     },
-    isEditting() {
-
+    isEditting () {
       var that = this
       if (this.editType == 'fun' && this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}`) {
         this.$nextTick(() => {
@@ -111,19 +110,16 @@ export default {
         })
       }
 
-
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
-    getSelectListText() {
+    getSelectListText () {
       if (this.editType == 'text') {
         if (this.value == '') {
-
           this.label = '空'
           return
         }
 
         this.label = this.value
-
       } else if (this.editType == 'select') {
         let text = '没有匹配项目'
         for (var index in this.selectList) {
@@ -134,62 +130,55 @@ export default {
           }
         }
 
-
         this.label = text
-
       } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
         var node = breadthQuery(this.selectListData, this.value)
         if (node) {
           text = node.title
-
         }
         this.label = text
       } else if (this.editType == 'fun') {
         var that = this
-        if (this.params.column.selectListFunText && typeof(this.params.column.selectListFunText) === 'function') {
-          this.params.column.selectListFunText(getDataByParams, this.params, function(item) {
+        if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
+          this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
             that.label = item
           }, this)
-
         }
       }
     }
   },
-  mounted() {
+  mounted () {
     this.getSelectListText
   },
   methods: {
-    remoteMethod(val) {
-
+    remoteMethod (val) {
       var that = this
-      if (this.params.column.selectListFun && typeof(this.params.column.selectListFun) === 'function') {
-        this.params.column.selectListFun(getDataByParams, val, function(item) {
+      if (this.params.column.selectListFun && typeof (this.params.column.selectListFun) === 'function') {
+        this.params.column.selectListFun(getDataByParams, val, function (item) {
           that.dataList = item
         }, this)
-
       }
       // if (val != this.value) {
       //   this.$emit('on-search-edit', val)
       // }
     },
-    handleInput(val) {
+    handleInput (val) {
       this.$emit('input', val, this.params)
     },
-    startEdit() {
-
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
+    saveEdit () {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   },
   watch: {
-    value(nv, no) {
+    value (nv, no) {
       if (nv != nv) {
         this.funValue = nv
       }

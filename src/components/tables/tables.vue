@@ -393,7 +393,6 @@ export default {
     //   this.$emit('on-Add')
     // },
     handleTableData () {
-
       if (this.value) {
         this.insideTableData = this.value.map((item, index) => {
           let res = item

@@ -44,7 +44,7 @@ export default {
     }
   },
   props: {
-    value: [String, Number, Boolean,Object],
+    value: [String, Number, Boolean, Object],
     edittingCellId: String,
     allEdit: Boolean,
     params: Object,
@@ -113,7 +113,7 @@ export default {
 
         if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
           this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
-            //console.log(item)
+            // console.log(item)
 
             that.label = item
           }, this)

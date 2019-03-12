@@ -93,7 +93,6 @@ const FIELDS = [{
   fixed: 'left',
   key: 'index1'
 
-
 },
 {
   title: '类型',

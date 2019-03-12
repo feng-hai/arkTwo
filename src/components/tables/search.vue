@@ -61,7 +61,6 @@ export default {
       }
     },
     isServer () {
-
       return this.params.column.isServer
     },
     isEditType () {
@@ -71,19 +70,18 @@ export default {
       // return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     },
     getSelectListText () {
-
-      if (this.params.column.editType == "text") {
+      if (this.params.column.editType == 'text') {
         return this.value
       } else {
-        let text = "没有匹配项目"
+        let text = '没有匹配项目'
         for (var index in this.selectListData) {
-          var item = this.selectListData[index];
+          var item = this.selectListData[index]
           if (this.value == item.value) {
-            text = item.label;
-            break;
+            text = item.label
+            break
           }
         }
-        return text;
+        return text
       }
     }
   },
