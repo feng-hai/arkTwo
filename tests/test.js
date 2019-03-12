@@ -45,6 +45,6 @@ function(fun, val, callback, vm) {
   "label":"单体电压差值",
   "value":"subBatteryVoltage"
 },{
-  "label":"3级",
-  "value":"3"
+  "label":"最高单体电压",
+  "value":"maxBatteryVoltage"
 }]

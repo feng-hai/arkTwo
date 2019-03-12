@@ -7,20 +7,20 @@
   </div>
   <div v-else class="tables-editting-con">
     <div v-if="isEditType=='text'" class="tables-editting-con" style="float:left">
-      <Input :value="value" @input="handleInput" style="width:150px" class="tables-edit-input" />
+      <Input :value="value" clearable  @input="handleInput" style="width:150px" class="tables-edit-input" />
     </div>
     <div v-else-if="isEditType=='date'" class="tables-editting-con" style="float:left">
       <DatePicker :value="value" type="date" placeholder="Select date" style="width: 200px" @on-change="handleInput"></DatePicker>
     </div>
     <div v-else-if="isEditType=='select'" class="tables-editting-con" style="float:left">
       <span v-if="isServer">
-        <Select :value="value"  filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
+        <Select :value="value" clearable   filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
                 <Option v-for="(option, index) in selectListData" :value="option.value" :key="index">{{option.label}}</Option>
         </Select>
       </span>
 
       <span v-else>
-          <Select :value="value"   filterable   style="width:150px" @on-change="handleInput">
+          <Select :value="value" clearable   filterable   style="width:150px" @on-change="handleInput">
             <Option v-for="item in selectListData" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
       </span>
