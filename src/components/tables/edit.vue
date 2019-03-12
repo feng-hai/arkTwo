@@ -117,7 +117,8 @@ export default {
     getSelectListText() {
       if (this.editType == 'text') {
         if (this.value == "") {
-          return "空"
+          this.label = "空";
+          return
         }
 
         this.label = this.value
@@ -199,8 +200,10 @@ export default {
     }
   },
   watch: {
-    value(val, new1) {
-      this.funValue = val;
+    value(nv, no) {
+      if(nv!=nv)
+      this.funValue = nv;
+      this.getSelectListText;
       // this.treeValue = val;
       // console.log("watch", val)
       //  if (val.length != new1.length)
