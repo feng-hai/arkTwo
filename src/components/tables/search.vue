@@ -48,6 +48,9 @@ export default {
       default () {
         return []
       }
+    },
+    dataType:{
+      type:String
     }
 
   },
