@@ -21,3 +21,10 @@ export const getRolesInfo = (option) => {
     method: 'get'
   })
 }
+export const getModelInfo = (option) => {//智航
+  return axios.request({
+    url: '/bigger/model',
+    params: option,
+    method: 'get'
+  })
+}

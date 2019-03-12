@@ -6,13 +6,13 @@
 <script>
 import tablesPage from '@/view/tables/template'
 export default {
-  name: 'vehicleModelPage',
+  name: 'alarmSet',
   components: {
     tablesPage
   },
   data () {
     return {
-      viewId: '2D330092AB3B459B9E520DA58BC5C2E4'
+      viewId: '95A8A9FEDCA3484A98B127CCE55A872E'
     }
   },
   methods:{

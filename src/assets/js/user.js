@@ -31,6 +31,24 @@ const USER01 = {
       component: 'join_page'
 
     }]
+  },{
+    path: '/alarmInfo',
+    name: 'alarmInfo',
+    component: 'main',
+    meta: {
+      icon: 'md-menu',
+      title: '报警信息'
+    },
+    children: [{
+      path: 'alarmSet',
+      name: 'alarmSet',
+      meta: {
+        icon: '_qq',
+        title: '报警设置'
+      },
+      component: 'alarmInfo/alarmSet'
+
+    }]
   }, {
     path: '/baseInfo',
     name: 'baseInfo',

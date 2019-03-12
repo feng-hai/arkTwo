@@ -17,13 +17,15 @@ export default {
     ...mapActions([
       "getOrgInfoAction",
       'getMenuInfoAction',
-      'getRolesInfoAction'
+      'getRolesInfoAction',
+      'getVehicleModelAction'
     ]),
   },
   mounted() {
     this.getOrgInfoAction();
     this.getMenuInfoAction();
     this.getRolesInfoAction();
+    this.getVehicleModelAction();
   }
 }
 </script>

@@ -1,7 +1,10 @@
 <template>
 <div style="float:left">
   <div v-if="isEditType=='text'" class="tables-editting-con" style="margin-right:5px">
-    <Input :value="value" @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
+    <Input :value="value" clearable  @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
+  </div>
+  <div v-else-if="isEditType=='date'" class="tables-editting-con" style="float:left">
+    <DatePicker  type="date" placeholder="Select date" style="width: 200px" @on-change="handleInput"></DatePicker>
   </div>
   <div v-else-if="isEditType=='selectTree'"  style="margin-right:5px">
     <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
@@ -9,12 +12,12 @@
   </div>
   <div v-else class="tables-editting-con" style="margin-right:5px">
     <span v-if="isServer">
-      <Select :value="value" :placeholder="params.column.title "   filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
+      <Select :value="value" clearable  :placeholder="params.column.title "   filterable  remote  :remote-method="remoteMethod" :loading="isLoading" @on-change="handleInput">
               <Option v-for="(option, index) in selectListData" :value="option.value" :key="index">{{option.label}}</Option>
       </Select>
     </span>
     <span v-else>
-        <Select :value="value" :placeholder="params.column.title "   filterable   @on-change="handleInput">
+        <Select :value="value" clearable  :placeholder="params.column.title "   filterable   @on-change="handleInput">
           <Option v-for="item in selectListData" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
     </span>
