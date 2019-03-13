@@ -15,9 +15,9 @@
   <Layout class="backColor">
 
     <Sider hide-trigger  width="400"  id="slider" class="backColor bigSliderLeft">
-      <device-statistics @on-click="turnToPage" :chartsHeight='chartsHeight' style=" margin:0 10px 0 10px" />
-      <device-statistics :chartsHeight='chartsHeight' style="margin:10px 10px 0 10px" />
-      <device-statistics :chartsHeight='chartsHeight' style="margin:10px 10px 0 10px" />
+      <device-statistics @on-click="turnToPage" class="backImage" :chartsHeight='chartsHeight' style=" margin:0 10px 0 10px" />
+      <device-statistics :chartsHeight='chartsHeight'  class="backImage" style="margin:10px 10px 0 10px" />
+      <device-statistics :chartsHeight='chartsHeight'  class="backImage" style="margin:10px 10px 0 10px" />
     </Sider>
     <Content class="main-content-con backColor">
 

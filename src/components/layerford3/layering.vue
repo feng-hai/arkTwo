@@ -299,7 +299,7 @@ export default {
 
       console.log(d, $("#Sider").width());
       that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1]) + 'px'
-      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0]+ $("#Sider").width())   + 'px'
+      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0]+ $("#Sider").width()-100+13)   + 'px'
       that.tipsOptions.title = d.name
       that.tipContent = d.content
       that.showtips()

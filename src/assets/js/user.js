@@ -15,7 +15,7 @@ const USER01 = {
     },
     {
       path: '/bigerScreen',
-      name: 'join',
+      name: 'bigerScreen',
       component: 'parentView',
       meta: {
         icon: 'md-menu',

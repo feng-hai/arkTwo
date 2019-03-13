@@ -12,10 +12,10 @@
     "textStyle": {},
     "title": {
         "textStyle": {
-            "color": "#516b91"
+            "color": "#fff"
         },
         "subtextStyle": {
-            "color": "#93b7e3"
+            "color": "#fff"
         }
     },
     "line": {
@@ -64,11 +64,11 @@
         "itemStyle": {
             "normal": {
                 "borderWidth": 0,
-                "borderColor": "#ccc"
+                "borderColor": "#fff"
             },
             "emphasis": {
                 "borderWidth": 0,
-                "borderColor": "#ccc"
+                "borderColor": "#fff"
             }
         }
     },
