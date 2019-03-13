@@ -247,6 +247,7 @@ export default [{
   //       import ('@/view/map_echarts/map_echarts.vue')
   //   }]
   // },
+
   {
     path: '/tools_methods',
     name: 'tools_methods',
@@ -282,6 +283,25 @@ export default [{
       },
       component: () =>
         import ('@/view/i18n/i18n-page.vue')
+    }]
+  },
+    // 单车数据的总和
+    {
+    path: '/veichle_table',
+    name: 'veichle_table',
+    meta: {
+      hideInBread: true
+    },
+    component: Main,
+    children: [{
+      path: 'veichle_table',
+      name: 'veichle_table',
+      meta: {
+        icon: 'md-planet',
+        title: '{{ veichle_table }}'
+      },
+      component: () =>
+        import ('@/view/veichleTable/index.vue')
     }]
   },
   {
@@ -373,33 +393,19 @@ export default [{
         component: () =>
           import ('@/view/tools/view/tools_views.vue')
       },
-
-      // {
-      //   path: 'view/:id',
-      //   name: 'view',
-      //   meta: {
-      //     icon: 'md-flower',
-      //     title: route => `{{ view }}-${route.params.id}`,
-      //     notCache: false,
-      //     beforeCloseName: 'before_close_normal'
-      //   },
-      //   component: () =>
-      //     import ('@/view/tools/view/tools_views.vue')
-      // },
+      // 单车页面的实时监控、数据明细、轨迹回放、电池分布的总和
       {
-        path: 'query',
-        name: 'query',
+        path: 'veichle_details/:id',
+        name: 'veichle_details',
         meta: {
           icon: 'md-flower',
-
-          title: route => `{{ view }}-${route.params.id}`,
+          // -${route.params.id}
+          title: route => `{{ veichle_details }}-${route.params.VIN}`,
           notCache: true,
-
-          title: route => `{{ query }}-${route.query.id}`,
-          notCache: true
+          beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/argu-page/query.vue')
+          import ('@/view/components/veichleDetails/index.vue')
       },
       // {
       //   path: 'map',

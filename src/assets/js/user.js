@@ -48,6 +48,15 @@ const USER01 = {
       },
       component: 'alarmInfo/alarmSet'
 
+    },{
+      path: 'alarmPage',
+      name: 'alarmPage',
+      meta: {
+        icon: '_qq',
+        title: '报警管理'
+      },
+      component: 'alarmInfo/alarmPage'
+
     }]
   }, {
     path: '/baseInfo',

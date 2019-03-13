@@ -3,7 +3,7 @@
   <div v-if="isEditType=='text'" class="tables-editting-con" style="margin-right:5px">
     <Input :value="value" clearable  @input="handleInput" :placeholder="params.column.title " class="tables-edit-input" />
   </div>
-  <div v-else-if="isEditType=='date'" class="tables-editting-con" style="float:left">
+  <div v-else-if="isEditType=='date'" class="tables-editting-con" style="float:left;margin-right:5px">
     <DatePicker  type="date" placeholder="Select date" style="width: 200px" @on-change="handleInput"></DatePicker>
   </div>
   <div v-else-if="isEditType=='selectTree'"  style="margin-right:5px">

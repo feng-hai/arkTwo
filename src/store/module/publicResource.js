@@ -21,12 +21,19 @@ export default {
   mutations: {
     setOrganization(state, orgInfo) {
       var rootId = getCookiesValueByKey('domainId')
-    
+
       state.orgTree = translateDataToTree(orgInfo, rootId)
       state.organizationList = orgInfo
     },
     setMenusList(state, menuInfo) {
-      state.menusList = menuInfo
+      state.menusList = menuInfo.map(item => {
+
+        return {
+          label: item.name,
+          value: item.unid
+        }
+
+      })
     },
     setRolesList(state, rolesInfo) {
       state.roles = rolesInfo
@@ -56,6 +63,7 @@ export default {
       } else if (type == 'org') {
         return state.organizationList
       } else if (type == 'menu') {
+        console.log("menu", state.menusList)
         return state.menusList
       } else if (type == 'role') {
         return state.roles
@@ -81,8 +89,9 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-          commit('setMenusList', res.data)
-          resolve(res.data)
+          commit('setMenusList', res.data.collection)
+          console.log(res.data.collection)
+          resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })

@@ -111,7 +111,12 @@ export default {
               commit('setTableData', data)
               resolve(data)
             }).catch(err => {
-              reject(err)
+              //console.log(err.response);
+              //reject(err)
+              resolve({
+                data: [],
+                count:0
+              })
             })
           } else {
             getDataByParams(option).then(res => {
@@ -122,7 +127,12 @@ export default {
               commit('setTableData', data)
               resolve(data)
             }).catch(err => {
-              reject(err)
+              // console.log(err.response);
+              // reject(err)
+              resolve({
+                data: [],
+                count:0
+              })
             })
           }
         } else {
@@ -134,7 +144,12 @@ export default {
             commit('setTableData', data)
             resolve(data)
           }).catch(err => {
-            reject(err)
+            // console.log(err.response);
+            // reject(err)
+            resolve({
+              data: [],
+              count:0
+            })
           })
         }
       })

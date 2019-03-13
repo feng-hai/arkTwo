@@ -44,6 +44,7 @@ export const getRealTimeData = (params) => {
 }
 
 export const vehicleDataAnlaysis = (params) => {
+  // console.log(params, 'params');
   return axios.request({
     url: '/sensor/vehicle_history/' + params.unid,
     params: params,

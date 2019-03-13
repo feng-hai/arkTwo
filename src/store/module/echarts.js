@@ -5,7 +5,7 @@ export default {
     Province: '',
     getEcharts: [],
     getArr: [],
-    dataAnalysisArr: null,
+    dataAnalysisArr: [],
     dtdywdArr: {},
     getoptions: [],
   },

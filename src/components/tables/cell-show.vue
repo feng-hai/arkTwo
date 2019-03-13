@@ -1,7 +1,8 @@
 <template>
 <div class="tables-edit-outer">
   <div v-if="!isEditting" class="tables-edit-con">
-    <span class="value-con" v-html="label"></span>
+    <a v-if="isLink" v-on:click="turnTo">    <span class="value-con" v-html="label"></span></a>
+    <span v-else class="value-con" v-html="label"></span>
     <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
   </div>
   <!-- <div v-else class="tables-editting-con">
@@ -61,6 +62,9 @@ export default {
     this.getSelectListText()
   },
   computed: {
+    isLink() {
+      return (this.params.column.linkFun && typeof(this.params.column.linkFun) === 'function')
+    },
 
     selectListData() {
       if (this.dataType) {
@@ -86,6 +90,11 @@ export default {
 
   },
   methods: {
+    turnTo() {
+      if (this.params.column.linkFun && typeof(this.params.column.linkFun) === 'function') {
+        this.params.column.linkFun(getDataByParams, this.params, function() {}, this);
+      }
+    },
     getSelectListText() {
       if (this.editType == 'text') {
         if (this.value == '') {
