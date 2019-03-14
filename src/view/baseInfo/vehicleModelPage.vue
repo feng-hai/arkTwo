@@ -18,12 +18,12 @@ export default {
   methods:{
     editPage(params,vm)
     {
-      const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
+      console.log(params, 'params');
+      const id = params.row.unid;
       const rowNum=params.row.rowNum;
       const columnNum=params.row.columnNum;
-      console.log(rowNum,columnNum)
       const route = {
-        name: 'params',
+        name: 'modelUpdate',
         params: {
           id: id,
           name:name,
@@ -32,7 +32,7 @@ export default {
         },
         meta: {
           title: `动态路由-`+params.row.name,
-          notCache: false
+          notCache: true
         }
       }
       this.$router.push(route)

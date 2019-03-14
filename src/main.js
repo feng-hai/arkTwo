@@ -17,6 +17,7 @@ import '@/assets/icons/iconfont.css'
 import 'vue-tree-halower/dist/halower-tree.min.css' // you can customize the style of the tree
 
 import VCharts from 'v-charts'
+import $ from 'jquery'
 
 import 'v-charts/lib/style.css'
 import { VTree, VSelectTree } from 'vue-tree-halower'/* 全部引入，后续需要优化 */

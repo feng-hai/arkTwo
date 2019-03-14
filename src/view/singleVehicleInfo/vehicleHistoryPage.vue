@@ -16,6 +16,10 @@ export default {
       objectId: 'C3331D8F51EE4BE99C63287ACA668BC0'
     }
   },
+  mounted() {
+    this.objectId = this.$route.params.id;
+    console.log(this.objectId);
+  },
   methods: {
     handleFunction(data) {
 

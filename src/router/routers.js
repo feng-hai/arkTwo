@@ -381,6 +381,19 @@ export default [{
         component: () =>
           import ('@/view/argu-page/params.vue')
       },
+      // 设置型号的子路由跳转
+       {
+        path: 'params/:id',
+        name: 'params',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ params }}-${route.params.id}`,
+          notCache: true,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () =>
+          import ('@/view/argu-page/params.vue')
+      },
       {
         path: 'view/:id',
         name: 'view',
@@ -406,6 +419,19 @@ export default [{
         },
         component: () =>
           import ('@/view/components/veichleDetails/index.vue')
+      },
+      {
+        path: 'modelUpdate/:id',
+        name: 'modelUpdate',
+        meta: {
+          icon: 'md-flower',
+          // -${route.params.id}
+          title: route => `{{ modelUpdate }}-${route.params.id}`,
+          notCache: true,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () =>
+          import ('@/view/components/modelUpdate/index.vue')
       },
       // {
       //   path: 'map',

@@ -1,5 +1,5 @@
+const webpack = require('webpack')
 const path = require('path')
-
 const resolve = dir => {
   return path.join(__dirname, dir)
 }
@@ -36,6 +36,15 @@ module.exports = {
       .set('_c', resolve('src/components'))
     config.entry('index')
      .add('babel-polyfill')
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery:"jquery",
+        "windows.jQuery":"jquery"
+      })
+    ]
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false

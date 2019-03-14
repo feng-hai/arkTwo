@@ -1,6 +1,9 @@
 import {
   getVechileInfo,
-  getVehicleHistory
+  getVehicleHistory,
+  getModel,
+  getModelpPut,
+  getModelPost
 } from '@/api/vehicle.js'
 
 export default {
@@ -53,7 +56,38 @@ export default {
       }).catch(error => {
         reject(error)
       })
+    },
+    // 获取数据
+    getModelInfo({commit}, option){
+        return new Promise((resolve, reject) => {
+            getModel(option).then(res => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error);
+        })
+    },
+    // 修改数据
+    putModelInfo({commit}, option){
+        return new Promise((resolve, reject) => {
+            getModelpPut(option).then(res => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error);
+        })
+    },
+    // 提交数据
+   postModelInfo({commit}){
+        return new Promise((resolve, reject) => {
+            getModelPost().then(res => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error);
+        })
     }
+
     // getMenuInfoAction({
     //   commit
     // }) {

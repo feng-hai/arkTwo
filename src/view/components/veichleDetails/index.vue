@@ -14,6 +14,9 @@
     <p slot="title">电池组</p>
     <battery-arr></battery-arr>
   </Card>
+  <div id ="history">
+  <vehicleHistoryPage></vehicleHistoryPage>
+  </div>
   <!-- </div> -->
   <div style="position: absolute; top: 140px; right: 50px;">
     <Anchor container=".content-wrapper" :scroll-offset="offsetTop" show-ink>
@@ -21,6 +24,7 @@
       <AnchorLink href="#dataDetails" title="数据明细" />
       <AnchorLink href="#dataBack" title="轨迹回放" />
       <AnchorLink href="#batteries" style="top: 100px;" title="电池组" />
+      <AnchorLink href="#history"  title="历史数据" />
     </Anchor>
   </div>
 </div>
@@ -31,6 +35,7 @@ import dataWebscoket from '../data_webscoket/index';
 import dataDetails from '../data-details/index'
 import dataBack from '_c/data_back/index'
 import batteryArr from '../gaodeMap/index'
+import vehicleHistoryPage from '@/view/singleVehicleInfo/vehicleHistoryPage'
 import {
   getParams2,
   // toJson,
@@ -50,6 +55,7 @@ export default {
     dataDetails,
     dataBack,
     batteryArr,
+    vehicleHistoryPage
   },
   mounted() {
     this.websocketFunc();

@@ -8,6 +8,7 @@ import table from './module/table'
 import dataDetails from './module/dataDetails'
 import addRoutes from './dynamicRouter/addRoutes'
 import publicResource from './module/publicResource'
+import vehicle from './module/vehicle'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -29,6 +30,6 @@ export default new Vuex.Store({
     addRoutes,
     publicResource,
     table,
-  //  vehicle
+   vehicle
   }
 })

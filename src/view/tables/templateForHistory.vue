@@ -1,6 +1,7 @@
 <template>
 <div>
   <Card style="margin-top:20px">
+    <p slot="title">历史数据</p>
     <div class="search-con search-con-top">
 
 
@@ -141,6 +142,7 @@ export default {
   },
   methods: {
     ChangePage(page) {
+      console.log("ChangePage")
       this.hasNext = false;
       if (page > this.current) {
         this.searchParams.date_from = this.date_from;
@@ -154,6 +156,7 @@ export default {
       this.searchResult()
     },
     handleInput(val) {
+      console.log("handleInput")
       this.date_from = val[0].replace(" ", "T");
       this.date_to = val[1].replace(" ", "T");
       this.searchParams.date_from = val[0].replace(" ", "T");
@@ -294,6 +297,7 @@ export default {
       this.getTableInfo()
     },
     pageSizeChange(pageSize) {
+
       this.isLoading = true
       this.pageSize = pageSize
       this.ArrayDate = [];
@@ -395,6 +399,7 @@ export default {
         url: options.url,
         method: 'get'
       }
+      console.log(this.searchParams)
       option['params'] = Object.assign({}, {
         num: this.pageSize
       }, this.searchParams)
@@ -406,6 +411,7 @@ export default {
         }).join(',');
       }
       option.params = Object.assign({}, option.params, this.searchParams)
+      console.log(option.params);
       this.getHistoryTable({
         isCount: this.isCount,
         options: option
@@ -505,6 +511,7 @@ export default {
 
     searchP(params) {},
     search(searchParams) { // 搜索按钮
+      console.log("searchParams")
       this.searchParams = searchParams
       if (this.isRemote) {
         this.getTableInfo()
@@ -589,11 +596,22 @@ export default {
   },
   mounted() {
     var temp = [];
-    temp.push(formateDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-dd HH:mm:ss'));
-    temp.push(formateDate(new Date(), 'yyyy-MM-dd HH:mm:ss'));
-    this.dateRange = temp;
-    this.initParams()
-    this.getTableInfo()
+    var that=this;
+    this.$nextTick(() => {
+          that.initParams()
+      that.date_from = formateDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-ddTHH:mm:ss')
+      that.date_to = formateDate(new Date(), 'yyyy-MM-ddTHH:mm:ss');
+      that.searchParams.date_from = that.date_from;
+      that.searchParams.date_to = that.date_to;
+      console.log(this.searchParams, "moubted");
+
+      temp.push(formateDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-dd HH:mm:ss'));
+      temp.push(formateDate(new Date(), 'yyyy-MM-dd HH:mm:ss'));
+      that.dateRange = temp;
+
+      that.getTableInfo()
+    })
+
 
 
     //  console.log($(document).height());
