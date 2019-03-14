@@ -31,6 +31,22 @@ function(fun, params, callback, vm) {
   vm.$router.push(route)
 }
 
+
+//格式化查询日期
+function(val, callback) {
+  if (Array.isArray(val) && val.length == 2) {
+    var start = val[0];
+    var end = val[1];
+    var item = {
+      date_from: start.replace(" ", "T"),
+      date_to: end.replace(" ", "T")
+    };
+    callback(item);
+  } else {
+    callback({});
+  }
+}
+
 function(fun, params, callback, vm) {
   const id = params.row.entity_unid;
   const route = {

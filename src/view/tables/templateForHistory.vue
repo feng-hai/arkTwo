@@ -1,16 +1,26 @@
 <template>
 <div>
   <Card style="margin-top:20px">
+    <div class="search-con search-con-top">
+
+
+      <DatePicker v-model="dateRange" type="datetimerange" placeholder="Select date and time" style="width: 300px;margin-right:10px;" @on-change="handleInput"></DatePicker>
+      <Button type="primary" @click="searchResult">查詢</Button>
+    </div>
+
     <tables :total="total" :permit="permit" @on-saveRow="saveRow" :buttons="buttons" :current="current" :pageSize="pageSize" @on-page-change="pageChange" @on-pageSize-change="pageSizeChange" :loading="isLoading" ref="tables" @on-add="addItem" @on-select="onSelect"
       @on-select-cancel="onSelectCancel" @on-select-all="onSelectAll" @on-select-all-cancel="onSelectAllCancel" :isPage="isPage" @on-all-delete="deleteItems" @on-edit="editPage" @on-selection-change="handleSelectRow" @on-search="search" @on-search-edit="searchP"
-      @on-save-edit="editCell" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" />
-    <!-- <Button style="margin: 10px 0;" type="primary" @click="exportExcel">导出为Csv文件</Button> -->
+      @on-save-edit="editCell" editable v-model="tableData" :columns="columns" @on-delete="handleDelete" />
+    <div class="search-con search-con-top">
+      <bigPage @on-change="ChangePage" @on-pageChange="pageSizeChange" :current="current" :hasNext="hasNext"></bigPage>
+    </div>
   </Card>
   <!-- </Card> -->
 </div>
 </template>
 
 <script>
+import bigPage from '_c/bigPage'
 import axios from 'axios'
 import Tables from '_c/tables'
 import {
@@ -25,7 +35,8 @@ import {
 import {
   getParams2,
   toJson,
-  toStr
+  toStr,
+  formateDate
 } from '@/libs/util'
 import {
   mapActions,
@@ -35,9 +46,10 @@ import {
 
 import handle from '@/api/handle'
 export default {
-  name: 'tablesPage',
+  name: 'tablesHistoryPage',
   components: {
-    Tables
+    Tables,
+    bigPage
   },
   computed: {
     ...mapGetters([
@@ -74,7 +86,7 @@ export default {
     isPage: { //是否需要分页
       type: Boolean,
       default () {
-        return true
+        return false
       }
     },
     dataT: { //表數據
@@ -86,9 +98,11 @@ export default {
   },
   data() {
     return {
+      dateRange: [], //日期
       tableData: [],
       backTableData: [],
       selectData: [], // 列表中选择的行
+      url: '',
       columns: [{
         key: 'ee'
       }],
@@ -114,13 +128,39 @@ export default {
       deleteUrl: 'delete_table_view', // 删除的url
       editUrl: 'edit_table_view', // 修改的url
       ruleValidate: {}, // 新增修改时验证
-      isCount: true //是否有单独查询count语句
+      isCount: true, //是否有单独查询count语句
+      ArrayDate: [], //数据第一条数据时间
+      lastDate: '', //数据最后一条数据时间
+      hasNext: false, //是否有下一条数据
+      date_from: '', //保存选择的开始时间
+      date_to: '' //保存选择的结束时间
     }
   },
   created() {
 
   },
   methods: {
+    ChangePage(page) {
+      this.hasNext = false;
+      if (page > this.current) {
+        this.searchParams.date_from = this.date_from;
+        this.searchParams.date_to = this.lastDate;
+      } else {
+        this.searchParams.date_from = this.date_from;
+        this.searchParams.date_to = this.ArrayDate[page - 1];
+      }
+      this.current = page;
+
+      this.searchResult()
+    },
+    handleInput(val) {
+      this.date_from = val[0].replace(" ", "T");
+      this.date_to = val[1].replace(" ", "T");
+      this.searchParams.date_from = val[0].replace(" ", "T");
+      this.searchParams.date_to = val[1].replace(" ", "T");
+      this.ArrayDate = [];
+      this.current = 1;
+    },
     // ...mapState (['menus']),
     ...mapActions([
       'handleTablesInfo',
@@ -128,7 +168,8 @@ export default {
       'addTableData',
       'deleteTableData',
       'editTableData',
-      'getCheckOnly'
+      'getCheckOnly',
+      'getHistoryTable'
     ]),
 
     onSelect(selection, row) {
@@ -242,7 +283,6 @@ export default {
             title: '新增提示',
             desc: '新增一条信息成功'
           })
-
           this.getTableInfo()
           this.$emit('on-saveRow', params.row)
         })
@@ -256,7 +296,11 @@ export default {
     pageSizeChange(pageSize) {
       this.isLoading = true
       this.pageSize = pageSize
-      this.getTableInfo()
+      this.ArrayDate = [];
+      this.current = 1;
+      this.searchParams.date_to = this.date_to;
+      //this.getTableInfo()
+      this.searchResult()
     },
     setColumnInfo(json) {
       var jsonObject = Object.assign({}, json)
@@ -268,6 +312,7 @@ export default {
       let options = {
         url: jsonObject.url
       }
+      this.url = jsonObject.url;
       this.addUrl = jsonObject.addUrl
       this.deleteUrl = jsonObject.deleteUrl
       this.editUrl = jsonObject.editUrl
@@ -326,7 +371,7 @@ export default {
         this.itemDefault = toJson(json.itemDefault)
       }
       options.columns = this.columns;
-      this.getTableDatas(options)
+      this.searchResult();
     },
     createColumns() {
       var urlInfo = window.location.href
@@ -350,34 +395,37 @@ export default {
         url: options.url,
         method: 'get'
       }
+      option['params'] = Object.assign({}, {
+        num: this.pageSize
+      }, this.searchParams)
 
-      if (this.isPage) {
-        option['params'] = Object.assign({}, {
-          page_id: this.current - 1,
-          page_size: this.pageSize
-        }, this.searchParams)
-      } else {
-        option['params'] = Object.assign({}, this.searchParams)
-      }
       if (this.objectId && options.url.indexOf('{Oid}')) { //如果父页面传递id信息，在url中替换掉
         option.url = options.url.replace('{Oid}', this.objectId)
         option.params.field = options.columns.map(item => {
           return item.field;
         }).join(',');
       }
-
       option.params = Object.assign({}, option.params, this.searchParams)
-      this.getTableData({
+      this.getHistoryTable({
         isCount: this.isCount,
         options: option
       }).then(res => {
-        this.tableData = this.handleFunction(res.data)
-        //  console.log('菜单管理', this.tableData)
+
+        var tempData = this.handleFunction(res.data)
+
+        this.lastDate = tempData[tempData.length - 1]["DATIME_RX"].replace(" ", "T");
+
         this.total = res.count
-        if (!this.isRemote) {
-          this.backTableData = Object.assign([], this.tableData)
-          //  console.log(this.backTableData)
+        this.hasNext = res.data.hasNext;
+        if (this.ArrayDate.length < this.current) {
+          this.ArrayDate.push(tempData[0]["DATIME_RX"].replace(" ", "T")); //保存当前页面最大时间
         }
+        tempData.splice(tempData.length - 1, 1);
+        this.tableData = tempData;
+        // if (!this.isRemote) {
+        //   this.backTableData = Object.assign([], this.tableData)
+        //   //  console.log(this.backTableData)
+        // }
         this.isLoading = false
       }).catch(err => {
         this.isLoading = false
@@ -392,8 +440,15 @@ export default {
       //   this.isLoading = false;
       // })
     },
+    searchResult() {
+      this.isLoading = true;
+      this.getTableDatas({
+        url: this.url,
+        columns: this.columns
+      })
+    },
     getTableInfo() {
-      this.isLoading = true
+      this.isLoading = false
       this.createColumns() // 表头部分
       // this.getTableDatas(); //数据部分
     },
@@ -533,8 +588,14 @@ export default {
     }
   },
   mounted() {
+    var temp = [];
+    temp.push(formateDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-dd HH:mm:ss'));
+    temp.push(formateDate(new Date(), 'yyyy-MM-dd HH:mm:ss'));
+    this.dateRange = temp;
     this.initParams()
     this.getTableInfo()
+
+
     //  console.log($(document).height());
   },
   watch: {

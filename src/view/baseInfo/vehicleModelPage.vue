@@ -19,11 +19,16 @@ export default {
     editPage(params,vm)
     {
       const id = params.row.unid // parseInt(Math.random() * 1000000000000000000000)
+      const rowNum=params.row.rowNum;
+      const columnNum=params.row.columnNum;
+      console.log(rowNum,columnNum)
       const route = {
-        name: 'view',
+        name: 'params',
         params: {
           id: id,
-          name:name
+          name:name,
+          rowNum:rowNum,
+          columnNum:columnNum
         },
         meta: {
           title: `动态路由-`+params.row.name,

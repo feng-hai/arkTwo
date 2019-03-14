@@ -127,6 +127,7 @@ export default {
           page_size: 5,
           q: query
         }).then(res => {
+          console.log(res)
           const list = res.map(item => {
             this.loading2 = false
             return {

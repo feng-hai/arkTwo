@@ -126,6 +126,15 @@ const USER01 = {
       component: 'tables/template'
     },
     {
+      path: 'vehicleHistory',
+      name: 'vehicleHistory',
+      meta: {
+        title: `可编辑图表`,
+        notCache: false
+      },
+      component: 'singleVehicleInfo/vehicleHistoryPage'
+    },
+    {
       path: 'viewManagement',
       name: 'viewManagement',
       meta: {

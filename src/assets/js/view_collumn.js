@@ -273,6 +273,10 @@ const FIELDS = [{
         label: '日期'
       },
       {
+        value: 'ddate',
+        label: '时间范围'
+      },
+      {
         value: 'selectTree',
         label: '树形结构'
       }, {
@@ -433,8 +437,26 @@ const FIELDS = [{
       }
     ]
   }, {
-    title: '是否换行',
+    title: '是否换行-tooltip',
     key: 'tooltip',
+    align: 'center',
+    editable: true,
+    visible: true,
+    editType: 'select',
+    minWidth: 250,
+    selectList: [{
+        value: true,
+        label: '不换行'
+      },
+      {
+        value: false,
+        label: '换行'
+      }
+    ]
+  },
+  {
+    title: '是否换行',
+    key: 'ellipsis',
     align: 'center',
     editable: true,
     visible: true,

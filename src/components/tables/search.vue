@@ -6,6 +6,10 @@
   <div v-else-if="isEditType=='date'" class="tables-editting-con" style="float:left;margin-right:5px">
     <DatePicker  type="date" placeholder="Select date" style="width: 200px" @on-change="handleInput"></DatePicker>
   </div>
+  <div v-else-if="isEditType=='ddate'" class="tables-editting-con" style="float:left;margin-right:5px">
+      <DatePicker type="datetimerange" placeholder="Select date and time" style="width: 300px" @on-change="handleInput"></DatePicker>
+    <!-- <DatePicker  type="date" placeholder="Select date" style="width: 200px" @on-change="handleInput"></DatePicker> -->
+  </div>
   <div v-else-if="isEditType=='selectTree'"  style="margin-right:5px">
     <!-- <v-select-tree :data="selectList" @node-select="handleInput" :radio="true" /> -->
      <tree-select  v-model="treeValue" style="width:150px;"  :placeholder="params.column.title " check-strictly :expand-all="true" @on-change="handleInput" :data="selectListData"></tree-select>

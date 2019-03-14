@@ -20,10 +20,10 @@ export default {
     tableData: {}
   },
   mutations: {
-    setTableInfo (state, tableInfo) {
+    setTableInfo(state, tableInfo) {
       state.tablesInfo[tableInfo.id] = tableInfo
     },
-    setTableData (state, tableData) {
+    setTableData(state, tableData) {
       state.tableData = tableData
     }
   },
@@ -33,7 +33,7 @@ export default {
     }
   },
   actions: {
-    getAlltableInfo ({
+    getAlltableInfo({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -47,7 +47,7 @@ export default {
       })
     },
 
-    getCheckOnly ({
+    getCheckOnly({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -60,7 +60,7 @@ export default {
         })
       })
     },
-    editTableData ({
+    editTableData({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -73,7 +73,7 @@ export default {
         })
       })
     },
-    deleteTableData ({
+    deleteTableData({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -86,7 +86,7 @@ export default {
         })
       })
     },
-    addTableData ({
+    addTableData({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -99,7 +99,30 @@ export default {
         })
       })
     },
-    getTableData ({
+    getHistoryTable({ //查询车辆历史数据
+      commit
+    }, options) {
+      var option = options.options
+      return new Promise((resolve, reject) => {
+        getDataByParams(option).then(res => {
+          console.log(res)
+          var data = {
+            data: res.data.datas,
+            count:0
+          }
+          commit('setTableData', data)
+          resolve(data)
+        }).catch(err => {
+          // console.log(err.response);
+          // reject(err)
+          resolve({
+            data: [],
+            count: 0
+          })
+        })
+      })
+    },
+    getTableData({
       commit
     }, options) {
       var option = options.options
@@ -115,7 +138,7 @@ export default {
               //reject(err)
               resolve({
                 data: [],
-                count:0
+                count: 0
               })
             })
           } else {
@@ -131,7 +154,7 @@ export default {
               // reject(err)
               resolve({
                 data: [],
-                count:0
+                count: 0
               })
             })
           }
@@ -148,17 +171,17 @@ export default {
             // reject(err)
             resolve({
               data: [],
-              count:0
+              count: 0
             })
           })
         }
       })
     },
 
-    handleTablesInfo ({
-      commit
-    },
-    tableId
+    handleTablesInfo({
+        commit
+      },
+      tableId
     ) {
       var that = this
       return new Promise((resolve, reject) => {

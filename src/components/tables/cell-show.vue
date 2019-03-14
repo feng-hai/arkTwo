@@ -1,10 +1,17 @@
 <template>
 <div class="tables-edit-outer">
-  <div v-if="!isEditting" class="tables-edit-con">
-    <a v-if="isLink" v-on:click="turnTo">    <span class="value-con" v-html="label"></span></a>
-    <span v-else class="value-con" v-html="label"></span>
-    <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
-  </div>
+
+  <Tooltip placement="bottom-end">
+
+    <div v-if="!isEditting" class="tables-edit-con">
+      <a v-if="isLink" v-on:click="turnTo">    <span class="value-con" v-html="label"></span></a>
+      <span v-else class="value-con" v-html="label.length>20?label.substring(0, 13) + '.....':label"></span>
+      <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
+    </div>
+    <div slot="content"  style="white-space: normal;">
+      {{label}}
+    </div>
+  </Tooltip>
   <!-- <div v-else class="tables-editting-con">
     <div v-if="isEditType" class="tables-editting-con" style="float:left">
       <Input :value="value" @input="handleInput" style="width:150px" class="tables-edit-input" />
