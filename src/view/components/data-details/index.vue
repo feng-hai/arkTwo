@@ -27,6 +27,11 @@ import setData from './mixin/setData.js'
 export default{
 	name: 'data_details',
 	mixins: [setData],
+	props: {
+		getWebscoket: {
+			type: Array
+		}
+	},
 	data(){
 		return{
 			msg: [],
@@ -44,9 +49,9 @@ export default{
 		this.websocketFunc(); //推送信息
 	},
 	computed: {
-		...mapGetters([
-			'getWebscoket'
-	])
+	// 	...mapGetters([
+	// 		'getWebscoket'
+	// ])
 	},
 	watch: {
 		getWebscoket(nv, ov){

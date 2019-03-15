@@ -7,32 +7,18 @@ export default {
         // 实时推送信息
 websocketFunc(){
   var _this = this;
+  let id = _this.$route.params.id;
   setTimeout(function(){
     _this.ws = new WebSocket("ws://58.213.131.5/ws");  //建立连接
-    let domainId= _this.getdomainId;
-    let timer = null;
-    if(!domainId){
-      let timer = setInterval(() => {
-      let domainId= _this.getdomainId;
-      }, 1000) 
-      timer = null;}
     _this.ws.onopen = function(){
-      _this.ws.send('{"pageId":"0","vehicleId":"'+domainId+'"}');
+      _this.ws.send('{"pageId":"1","vehicleId":"'+id+'"}');
     }
     _this.ws.onmessage = function(e) {
         let jsonObj=JSON.parse(e.data);  //解析json数据--》对象
         // _this.$refs.disMap.disMapFn(jsonObj.canModel); //发送给地图
         if(jsonObj.type==1){  //1.为国标数据
           _this.wsOnmessage(jsonObj.canModel)
-          // if(typeof _this.$refs.gdmap.wsOnmessage === "function"){
-          //   _this.$refs.gdmap.wsOnmessage(jsonObj.canModel); //收到信息---发送给设备单车页面
-          // }
-          // console.log(jsonObj.canModel, 'jsonObj.canModel')
         }else if(jsonObj.type==0){
-            // if(typeof _this.$refs.alarmInfo.wsOnmessage === "function"){
-            //     _this.$refs.alarmInfo.wsOnmessage(jsonObj.canModel.vehicleCode); //收到信息---发送给报警
-            // }
-            // console.log(jsonObj.canModel.vehicleCode, 'jsonObj.canModel.vehicleCode')
         }
         _this.ws.onclose = function() {
           _this.ws = null;

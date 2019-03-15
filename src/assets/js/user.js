@@ -4,34 +4,139 @@ const USER01 = {
   access: ['super_admin', 'admin'],
   token: 'super_admin',
   avator: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png',
-  menus: [{
-    path: '',
-    name: 'doc',
-    meta: {
-      title: 'æ–‡æ¡£',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
-  },
-  {
-    path: '/join',
-    name: 'join',
-    component: 'main',
-    meta: {
-      icon: 'md-menu',
-      title: '多级菜单'
-    },
-    children: [{
-      path: 'join_page',
-      name: 'join_page',
+  menus: [
+    {
+      path: '/systemManager',
+      name: 'systemManager',
       meta: {
-        icon: '_qq',
-        title: 'QQç¾¤'
+        icon: 'md-menu',
+        title: '系统管理'
       },
-      component: 'join_page'
+      component: 'main',
+      children: [{
+        path: 'button',
+        name: 'buttonPage',
+        meta: {
+          title: '按钮管理',
+          notCache: false
+        },
+        component: 'systemManagement/buttonPage'
+      },
+      {
+        path: 'company',
+        name: 'companyPage',
+        meta: {
+          title: '机构管理',
+          notCache: false
+        },
+        component: 'systemManagement/companyPage'
+      },
+      {
+        path: 'menu',
+        name: 'menuPage',
+        meta: {
+          title: '菜单管理',
+          notCache: false
+        },
+        component: 'systemManagement/menuPage'
+      },
+      {
+        path: 'userManagement',
+        name: 'userPage',
+        meta: {
+          title: `用户管理`,
+          notCache: false
+        },
+        component: 'systemManagement/userPage'
+      },
+      {
+        path: 'roleManagement',
+        name: 'rolePage',
+        meta: {
+          title: `角色管理`,
+          notCache: false
+        },
+        component: 'systemManagement/rolePage'
+      }
+      ]
+    }, {
+      path: '/baseInfo',
+      name: 'baseInfo',
+      component: 'main',
+      meta: {
+        icon: 'md-menu',
+        title: '多级菜单'
+      },
+      children: [{
+        path: 'devicePage',
+        name: 'devicePage',
+        meta: {
+          icon: '_qq',
+          title: '设备管理'
+        },
+        component: 'baseInfo/devicePage'
 
-    }]
-  },{
+      },
+      {
+        path: 'vehiclesPage',
+        name: 'vehiclesPage',
+        meta: {
+          icon: '_qq',
+          title: '车辆管理'
+        },
+        component: 'baseInfo/vehiclesPage'
+
+      },
+      {
+        path: 'vehicleTypePage',
+        name: 'vehicleTypePage',
+        meta: {
+          icon: '_qq',
+          title: '车辆类型管理'
+        },
+        component: 'baseInfo/vehicleTypePage'
+
+      },
+      {
+        path: 'vehicleModelPage',
+        name: 'vehicleModelPage',
+        meta: {
+          icon: '_qq',
+          title: '车辆型号管理'
+        },
+        component: 'baseInfo/vehicleModelPage'
+
+      }]
+    },
+  //   {
+  //   path: '',
+  //   name: 'doc',
+  //   meta: {
+  //     title: 'æ–‡æ¡£',
+  //     href: 'https://lison16.github.io/iview-admin-doc/#/',
+  //     icon: 'ios-book'
+  //   }
+  // },
+  // {
+  //   path: '/join',
+  //   name: 'join',
+  //   component: 'main',
+  //   meta: {
+  //     icon: 'md-menu',
+  //     title: '多级菜单'
+  //   },
+  //   children: [{
+  //     path: 'join_page',
+  //     name: 'join_page',
+  //     meta: {
+  //       icon: '_qq',
+  //       title: 'QQç¾¤'
+  //     },
+  //     component: 'join_page'
+  //
+  //   }]
+  // },
+  {
     path: '/alarmInfo',
     name: 'alarmInfo',
     component: 'main',
@@ -58,55 +163,8 @@ const USER01 = {
       component: 'alarmInfo/alarmPage'
 
     }]
-  }, {
-    path: '/baseInfo',
-    name: 'baseInfo',
-    component: 'main',
-    meta: {
-      icon: 'md-menu',
-      title: '多级菜单'
-    },
-    children: [{
-      path: 'devicePage',
-      name: 'devicePage',
-      meta: {
-        icon: '_qq',
-        title: '设备管理'
-      },
-      component: 'baseInfo/devicePage'
-
-    },
-    {
-      path: 'vehiclesPage',
-      name: 'vehiclesPage',
-      meta: {
-        icon: '_qq',
-        title: '车辆管理'
-      },
-      component: 'baseInfo/vehiclesPage'
-
-    },
-    {
-      path: 'vehicleTypePage',
-      name: 'vehicleTypePage',
-      meta: {
-        icon: '_qq',
-        title: '车辆类型管理'
-      },
-      component: 'baseInfo/vehicleTypePage'
-
-    },
-    {
-      path: 'vehicleModelPage',
-      name: 'vehicleModelPage',
-      meta: {
-        icon: '_qq',
-        title: '车辆型号管理'
-      },
-      component: 'baseInfo/vehicleModelPage'
-
-    }]
   },
+
 
   {
     path: '/tools',
@@ -205,61 +263,7 @@ const USER01 = {
     }
     ]
   },
-  {
-    path: '/systemManager',
-    name: 'systemManager',
-    meta: {
-      icon: 'md-menu',
-      title: '系统管理'
-    },
-    component: 'main',
-    children: [{
-      path: 'button',
-      name: 'buttonPage',
-      meta: {
-        title: '按钮管理',
-        notCache: false
-      },
-      component: 'systemManagement/buttonPage'
-    },
-    {
-      path: 'company',
-      name: 'companyPage',
-      meta: {
-        title: '机构管理',
-        notCache: false
-      },
-      component: 'systemManagement/companyPage'
-    },
-    {
-      path: 'menu',
-      name: 'menuPage',
-      meta: {
-        title: '菜单管理',
-        notCache: false
-      },
-      component: 'systemManagement/menuPage'
-    },
-    {
-      path: 'userManagement',
-      name: 'userPage',
-      meta: {
-        title: `用户管理`,
-        notCache: false
-      },
-      component: 'systemManagement/userPage'
-    },
-    {
-      path: 'roleManagement',
-      name: 'rolePage',
-      meta: {
-        title: `角色管理`,
-        notCache: false
-      },
-      component: 'systemManagement/rolePage'
-    }
-    ]
-  },
+
   {
     path: '/reportManagement',
     name: 'reportManagement',

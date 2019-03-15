@@ -63,6 +63,9 @@ props: {
 	dom: {
 		type: String,
 		default: 'container'
+	},
+	getWebscoket: {
+		type: Array
 	}
 },
 data(){
@@ -94,11 +97,7 @@ data(){
 		lineGaode: [],
 	}
 },
-computed: {
-...mapGetters([
-	'getWebscoket',
-])
-},
+computed: {},
 watch:{
 	getWebscoket(nv, ov){
 		let _this = this;

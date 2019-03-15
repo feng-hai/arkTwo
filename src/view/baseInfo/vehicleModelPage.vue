@@ -18,7 +18,7 @@ export default {
   methods:{
     editPage(params,vm)
     {
-      console.log(params, 'params');
+      const name = params.tableData[params.index].name;
       const id = params.row.unid;
       const rowNum=params.row.rowNum;
       const columnNum=params.row.columnNum;

@@ -2,17 +2,17 @@
 <div>
   <!-- <div class="goodshow" style="height: calc(100vh - 140px); overflow-y: scroll; position: relative;"> -->
   <div id="webscoket" style="overflow: hidden;">
-    <data-webscoket :dom="doms"></data-webscoket>
+    <data-webscoket :getWebscoket="webscoketData" :dom="doms"></data-webscoket>
   </div>
   <div id="dataDetails" style="overflow: hidden;margin-top: 10px;">
-    <data-details></data-details>
+    <data-details :getWebscoket="webscoketData"></data-details>
   </div>
   <div id="dataBack" style="overflow: hidden; height: 565px;margin-top: 10px;">
     <data-back></data-back>
   </div>
   <Card id="batteries" style="margin-top: 10px;">
     <p slot="title">电池组</p>
-    <battery-arr></battery-arr>
+    <battery-arr :getWebscoket="webscoketData"></battery-arr>
   </Card>
   <div id ="history">
   <vehicleHistoryPage></vehicleHistoryPage>
@@ -48,6 +48,7 @@ export default {
       doms: 'doms',
       offsetTop: 0,
       ws: null,
+      webscoketData: [],
     }
   },
   components: {
@@ -57,27 +58,28 @@ export default {
     batteryArr,
     vehicleHistoryPage
   },
-  mounted() {
-    this.websocketFunc();
+  mounted () {
+    this.$nextTick(() => {
+      this.websocketFunc(); //建立webscoket
+    })
   },
   methods: {
     websocketFunc() {
-      let urlInfo = window.location.href;
-      var id = getParams2(urlInfo);
+      let id = this.$route.params.id;
+      console.log(id, 'this.$route.params');
+      // var id = getParams2(urlInfo);
       let _this = this;
       // this.$next
-      setTimeout(function() {
         _this.ws = new WebSocket("ws://58.213.131.5/ws"); //建立连接
         _this.ws.onopen = function() {
-          console.log(id, 'idddddddddddd');
-          _this.ws.send('{"pageId":"1","vehicleId":"+ id +"}');
+          _this.ws.send('{"pageId":"1","vehicleId":"'+ id +'"}');
         }
         _this.ws.onmessage = function(e) {
-          console.log(e, 'eeeeeeeeeeeeeeeeeeeee');
-
+          // console.log(e, 'eeeeeeeeeeeeeeeeeeeee');
           let jsonObj = JSON.parse(e.data); //解析json数据--》对象
           if (jsonObj.type == 1) {
-            _this.$store.dispatch('getWebscokets', jsonObj.canModel.list)
+            _this.webscoketData = jsonObj.canModel.list;
+            // _this.$store.dispatch('getWebscokets', jsonObj.canModel.list)
           }
           //内存释放
           jsonObj = null;
@@ -87,7 +89,6 @@ export default {
           _this.ws = null;
           _this.websocketFunc();
         }
-      }, 10)
     }
   },
 }

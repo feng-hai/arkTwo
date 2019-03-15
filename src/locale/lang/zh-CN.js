@@ -31,6 +31,7 @@ export default {
   data_back: '数据回放',
   data_details: '数据明细-国标',
   details: '明细展示',
+  modelUpdate: '单体布局',
   data_details_qibiao: '数据明细-企标',
   data_table_webscoket: '设备分析-推送',
   data_webscoket: '实时推送',

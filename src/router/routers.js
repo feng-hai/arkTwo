@@ -248,117 +248,136 @@ export default [{
   //   }]
   // },
 
+  // {
+  //   path: '/tools_methods',
+  //   name: 'tools_methods',
+  //   meta: {
+  //     hideInBread: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'tools_methods_page',
+  //     name: 'tools_methods_page',
+  //     meta: {
+  //       icon: 'ios-hammer',
+  //       title: '工具方法',
+  //       beforeCloseName: 'before_close_normal'
+  //     },
+  //     component: () =>
+  //       import ('@/view/tools-methods/tools-methods.vue')
+  //   }]
+  // },
+  // {
+  //   path: '/i18n',
+  //   name: 'i18n',
+  //   meta: {
+  //     hideInBread: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'i18n_page',
+  //     name: 'i18n_page',
+  //     meta: {
+  //       icon: 'md-planet',
+  //       title: 'i18n - {{ i18n_page }}'
+  //     },
+  //     component: () =>
+  //       import ('@/view/i18n/i18n-page.vue')
+  //   }]
+  // },
+  // // 单车数据的总和
+  // {
+  //   path: '/veichle_table',
+  //   name: 'veichle_table',
+  //   meta: {
+  //     hideInBread: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'veichle_table',
+  //     name: 'veichle_table',
+  //     meta: {
+  //       icon: 'md-planet',
+  //       title: '单车明细'
+  //     },
+  //     component: () =>
+  //       import ('@/view/veichleTable/index.vue')
+  //   }]
+  // },
+  // 单车数据的总和
   {
-    path: '/tools_methods',
-    name: 'tools_methods',
+    path: '/map_echarts',
+    name: 'map_echarts',
     meta: {
       hideInBread: true
     },
     component: Main,
     children: [{
-      path: 'tools_methods_page',
-      name: 'tools_methods_page',
-      meta: {
-        icon: 'ios-hammer',
-        title: '工具方法',
-        beforeCloseName: 'before_close_normal'
-      },
-      component: () =>
-        import ('@/view/tools-methods/tools-methods.vue')
-    }]
-  },
-  {
-    path: '/i18n',
-    name: 'i18n',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [{
-      path: 'i18n_page',
-      name: 'i18n_page',
+      path: 'map_echarts_page',
+      name: 'map_echarts_page',
       meta: {
         icon: 'md-planet',
-        title: 'i18n - {{ i18n_page }}'
+        title: '地图'
       },
       component: () =>
-        import ('@/view/i18n/i18n-page.vue')
+        import ('@/view/map_echarts/map_echarts.vue')
     }]
   },
-    // 单车数据的总和
-    {
-    path: '/veichle_table',
-    name: 'veichle_table',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [{
-      path: 'veichle_table',
-      name: 'veichle_table',
-      meta: {
-        icon: 'md-planet',
-        title: '{{ veichle_table }}'
-      },
-      component: () =>
-        import ('@/view/veichleTable/index.vue')
-    }]
-  },
-  {
-    path: '/error_store',
-    name: 'error_store',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [{
-      path: 'error_store_page',
-      name: 'error_store_page',
-      meta: {
-        icon: 'ios-bug',
-        title: '错误收集'
-      },
-      component: () =>
-        import ('@/view/error-store/error-store.vue')
-    }]
-  },
-  {
-    path: '/error_logger',
-    name: 'error_logger',
-    meta: {
-      hideInBread: true,
-      hideInMenu: true
-    },
-    component: Main,
-    children: [{
-      path: 'error_logger_page',
-      name: 'error_logger_page',
-      meta: {
-        icon: 'ios-bug',
-        title: '错误收集'
-      },
-      component: () =>
-        import ('@/view/single-page/error-logger.vue')
-    }]
-  },
-  {
-    path: '/directive',
-    name: 'directive',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [{
-      path: 'directive_page',
-      name: 'directive_page',
-      meta: {
-        icon: 'ios-navigate',
-        title: '指令'
-      },
-      component: () =>
-        import ('@/view/directive/directive.vue')
-    }]
-  },
+  // {
+  //   path: '/error_store',
+  //   name: 'error_store',
+  //   meta: {
+  //     hideInBread: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'error_store_page',
+  //     name: 'error_store_page',
+  //     meta: {
+  //       icon: 'ios-bug',
+  //       title: '错误收集'
+  //     },
+  //     component: () =>
+  //       import ('@/view/error-store/error-store.vue')
+  //   }]
+  // },
+  // {
+  //   path: '/error_logger',
+  //   name: 'error_logger',
+  //   meta: {
+  //     hideInBread: true,
+  //     hideInMenu: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'error_logger_page',
+  //     name: 'error_logger_page',
+  //     meta: {
+  //       icon: 'ios-bug',
+  //       title: '错误收集'
+  //     },
+  //     component: () =>
+  //       import ('@/view/single-page/error-logger.vue')
+  //   }]
+  // },
+  // {
+  //   path: '/directive',
+  //   name: 'directive',
+  //   meta: {
+  //     hideInBread: true
+  //   },
+  //   component: Main,
+  //   children: [{
+  //     path: 'directive_page',
+  //     name: 'directive_page',
+  //     meta: {
+  //       icon: 'ios-navigate',
+  //       title: '指令'
+  //     },
+  //     component: () =>
+  //       import ('@/view/directive/directive.vue')
+  //   }]
+  // },
 
   {
     path: '/argu',
@@ -382,7 +401,7 @@ export default [{
           import ('@/view/argu-page/params.vue')
       },
       // 设置型号的子路由跳转
-       {
+      {
         path: 'params/:id',
         name: 'params',
         meta: {
@@ -408,7 +427,7 @@ export default [{
       },
       // 单车页面的实时监控、数据明细、轨迹回放、电池分布的总和
       {
-        path: 'veichle_details/:id',
+        path: 'veichle_details/:id/:VIN',
         name: 'veichle_details',
         meta: {
           icon: 'md-flower',
@@ -426,24 +445,24 @@ export default [{
         meta: {
           icon: 'md-flower',
           // -${route.params.id}
-          title: route => `{{ modelUpdate }}-${route.params.id}`,
+          title: route => `{{ modelUpdate }}-${route.params.name}`,
           notCache: true,
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
           import ('@/view/components/modelUpdate/index.vue')
       },
-      // {
-      //   path: 'map',
-      //   name: 'map',
-      //   meta: {
-      //     icon: 'md-flower',
-      //     title: route => `{{ map }}-${route.query.id}`,
-      //     notCache: true
-      //   },
-      //   component: () =>
-      //     import ('@/view/argu-page/map.vue')
-      // },
+      {
+        path: 'map',
+        name: 'map',
+        meta: {
+          icon: 'md-flower',
+          title: route => `{{ map }}-${route.query.id}`,
+          notCache: true
+        },
+        component: () =>
+          import ('@/view/argu-page/map.vue')
+      },
       {
         path: 'map_component/:id',
         name: 'map_component',
@@ -478,14 +497,14 @@ export default [{
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: false,
+      hideInMenu: true,
       notCache: false
     },
     children: [{
       path: '/home',
       name: 'home',
       meta: {
-        hideInMenu: false,
+        hideInMenu: true,
         title: '首页',
         notCache: false,
         icon: 'md-home'

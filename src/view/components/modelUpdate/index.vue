@@ -2,18 +2,19 @@
 <div class="modelUpdate">
   <Card>
   	 <p slot="title">单体布局</p>
-  	<Scroll>
+  	<!-- <Scroll> -->
   		<table id="viewTabs" class="viewTabs" border="0">
     		<tr class="info"></tr>
   		</table>
     <div class="button">
-    	<Button type="primary" @click="addCells" style="margin-right: 6px">添加行</Button>
-    	<Button type="primary" @click="addRows">添加列</Button>
+    	<Button type="primary" @click="addCells">添加行</Button>
+    	<Button type="primary" @click="addRows" style="margin:0 10px">添加列</Button>
+      <Button type="primary" @click="save">保存</Button>
+
     </div>
     <div class="save">
-    	<Button type="primary" @click="save" style="display: block; margin: 0 auto;">保存</Button>
     </div>
-  	</Scroll>
+  	<!-- </Scroll> -->
 
   </Card>
 </div>
@@ -202,8 +203,5 @@ mounted() {
 }
 .button{
 	padding: 10px 0 10px 0px;
-}
-.save{
-	margin: 10px 0 10px 0;
 }
 </style>

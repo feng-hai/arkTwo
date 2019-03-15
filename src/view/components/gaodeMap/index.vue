@@ -32,6 +32,11 @@ import {
 export default {
   name: '',
   // mixins: [Websocket],
+  props: {
+    getWebscoket: {
+      type: Array
+    }
+  },
   data(){
     return{
       ws: null,
@@ -50,7 +55,7 @@ export default {
 computed:{
   ...mapGetters([
     'getdomainId',
-    'getWebscoket'
+    // 'getWebscoket'
   ]),
 },
 watch: {
