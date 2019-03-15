@@ -1,10 +1,15 @@
 <template>
 <div>
-  <tablesPage :viewId="viewId" @on-edit="editPage"></tablesPage>
+  <tablesPage :viewId="viewId" @on-edit="editPage" @on-saveRow="saveRow"></tablesPage>
 </div>
 </template>
 <script>
 import tablesPage from '@/view/tables/template'
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
 export default {
   name: 'vehicleModelPage',
   components: {
@@ -16,6 +21,14 @@ export default {
     }
   },
   methods:{
+    ...mapActions([
+      'getVehicleModelAction',
+    ]),
+    saveRow() {
+    this.getVehicleModelAction();
+
+    },
+
     editPage(params,vm)
     {
       const name = params.tableData[params.index].name;

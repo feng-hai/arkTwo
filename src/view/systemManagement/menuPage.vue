@@ -1,13 +1,12 @@
 <template>
 <div>
-  <tablesPage :viewId="viewId"></tablesPage>
+  <tablesPage :viewId="viewId" @on-saveRow="saveRow"></tablesPage>
 </div>
 </template>
 <script>
 import {
-  mapActions,
-  mapGetters,
-  mapState
+  mapActions
+
 } from 'vuex'
 import tablesPage from '@/view/tables/template'
 export default {
@@ -16,16 +15,16 @@ export default {
     tablesPage
   },
   methods: {
-
     // 在首页初始化公共数据
     ...mapActions([
-      "getOrgInfoAction",
       'getMenuInfoAction',
-      'getRolesInfoAction',
-      'getVehicleModelAction'
     ]),
+    saveRow() {
+      this.getMenuInfoAction();
+      console.log("更新菜单信息")
+    }
   },
-  data () {
+  data() {
     return {
       viewId: '41728E0D3F2F44598D47B964B07B116D'
     }

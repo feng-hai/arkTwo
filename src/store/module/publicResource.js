@@ -36,7 +36,12 @@ export default {
       })
     },
     setRolesList(state, rolesInfo) {
-      state.roles = rolesInfo
+      state.roles = rolesInfo.map(item => {
+        return {
+          label: item.name,
+          value: item.unid
+        }
+      })
     },
     setModelList(state, modelInfo) {
 
@@ -120,6 +125,7 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
+          console.log("角色信息", res);
           commit('setRolesList', res.data.collection)
 
           resolve(res.data.collection)

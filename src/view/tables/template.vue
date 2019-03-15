@@ -243,8 +243,8 @@ export default {
             desc: '新增一条信息成功'
           })
 
-          this.getTableInfo()
-          this.$emit('on-saveRow', params.row)
+        //  this.getTableInfo()
+          that.$emit('on-saveRow', params.row)
         })
       })
     },
