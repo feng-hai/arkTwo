@@ -54,8 +54,8 @@ export default {
       'getEchartData',
     ]),
     wsOnmessage(data){
-      debugger;
-      console.log(data, 'dataaaaaaaaaa')
+      // debugger;
+      // console.log(data, 'dataaaaaaaaaa')
     },
     //初始化地图
     createMap(centerObj,zoomObj){

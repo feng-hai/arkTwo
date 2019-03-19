@@ -30,7 +30,10 @@ export default{
 	props: {
 		getWebscoket: {
 			type: Array
-		}
+		},
+		paramsId:{
+			type: String
+		},
 	},
 	data(){
 		return{
@@ -55,8 +58,11 @@ export default{
 	},
 	watch: {
 		getWebscoket(nv, ov){
-			console.log(nv, 'nv');
+			// console.log(nv, 'nv');
 			this.websocketFunc();
+		},
+		paramsId(){
+			this.getFilerUnid();
 		}
 	},
 	methods: {
@@ -84,11 +90,21 @@ export default{
 	//获取table传过来的信息
 	getFilerUnid(){
 		let _self = this;
-    let params = _self.$route.params;
-		this.getInfoCarDate({"unid": params.id}).then(res => {
+		if(_self.paramsId){
+			let params = _self.paramsId;
+			// console.log('params1111111111', params);
+			this.getInfoCarDate({"unid": params}).then(res => {
 			_self.vehicle = res;
 			_self.initRealTime(res.unid);
 		})
+		}else{
+    	let params = _self.$route.params.id;
+    	this.getInfoCarDate({"unid": params}).then(res => {
+			_self.vehicle = res;
+			_self.initRealTime(res.unid);
+		})
+		}
+
 	},
 	// 获取type和title的名称
 	getDetailTitle(){

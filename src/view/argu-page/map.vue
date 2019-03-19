@@ -154,6 +154,11 @@ computed:{
 mounted() {
 	this.getCarInfoData();
 },
+watch:{
+  $route(){
+    this.getCarInfoData();
+  }
+},
 methods: {
 ...mapActions([
   // 'closeTag',

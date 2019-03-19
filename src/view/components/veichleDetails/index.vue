@@ -5,17 +5,17 @@
     <data-webscoket :getWebscoket="webscoketData" :dom="doms"></data-webscoket>
   </div>
   <div id="dataDetails" style="overflow: hidden;margin-top: 10px;">
-    <data-details :getWebscoket="webscoketData"></data-details>
+    <data-details :getWebscoket="webscoketData" :paramsId="paramsId"></data-details>
   </div>
   <div id="dataBack" style="overflow: hidden; height: 565px;margin-top: 10px;">
-    <data-back></data-back>
+    <data-back :paramsId="paramsId"></data-back>
   </div>
   <Card id="batteries" style="margin-top: 10px;">
     <p slot="title">电池组</p>
-    <battery-arr :getWebscoket="webscoketData"></battery-arr>
+    <battery-arr :getWebscoket="webscoketData" :paramsId="paramsId"></battery-arr>
   </Card>
   <div id ="history">
-  <vehicleHistoryPage></vehicleHistoryPage>
+  <vehicleHistoryPage :paramsId="paramsId"></vehicleHistoryPage>
   </div>
   <!-- </div> -->
   <div style="position: absolute; top: 140px; right: 50px;">
@@ -49,6 +49,7 @@ export default {
       offsetTop: 0,
       ws: null,
       webscoketData: [],
+      paramsId: '',
     }
   },
   components: {
@@ -63,20 +64,28 @@ export default {
       this.websocketFunc(); //建立webscoket
     })
   },
+  watch:{
+    $route(){
+      this.paramsId = this.$route.params.id;
+      //初始化webscoket
+      this.webscoketData = [];
+      this.initWs(this.paramsId);
+    },
+  },
   methods: {
     websocketFunc() {
       let id = this.$route.params.id;
-      console.log(id, 'this.$route.params');
       // var id = getParams2(urlInfo);
       let _this = this;
       // this.$next
-        _this.ws = new WebSocket("ws://58.213.131.5/ws"); //建立连接
+      // setTimeout(() => {
+         _this.ws = new WebSocket("ws://58.213.131.5/ws"); //建立连接
         _this.ws.onopen = function() {
           _this.ws.send('{"pageId":"1","vehicleId":"'+ id +'"}');
         }
         _this.ws.onmessage = function(e) {
-          // console.log(e, 'eeeeeeeeeeeeeeeeeeeee');
-          let jsonObj = JSON.parse(e.data); //解析json数据--》对象
+          if(e){
+             let jsonObj = JSON.parse(e.data); //解析json数据--》对象
           if (jsonObj.type == 1) {
             _this.webscoketData = jsonObj.canModel.list;
             // _this.$store.dispatch('getWebscokets', jsonObj.canModel.list)
@@ -84,18 +93,47 @@ export default {
           //内存释放
           jsonObj = null;
           e = null;
+        }else{
+          return;
         }
-        _this.ws.onclose = function() {
+         
+        }
+        _this.ws.onclose = function(e) {
+          console.log(e, '监听关闭事件')
+          // _this.ws.close();
           _this.ws = null;
-          _this.websocketFunc();
+          // _this.websocketFunc();
         }
-    }
+      // }, 10)
+      
+    },
+    //初始化webscoket
+    initWs(unid){
+      var _this = this;
+      // if(_this.ws.readyState === 1){
+      if(_this.ws == null){// ws连接还没有建立完
+        _this.intervalWs=setInterval(function(){
+          if(_this.ws != null && _this.ws.readyState ===1 ){
+            _this.ws.send('{"pageId":"1","vehicleId":"'+unid+'"}');
+            clearInterval(_this.intervalWs);
+          }
+        },1000);
+      }else{
+        _this.ws.send('{"pageId":"1","vehicleId":"'+unid+'"}');
+      }
+    // }
+    },
   },
+  beforeDestroy() {
+    // console.log('000000000000');
+    this.ws = null;
+    // this.ws.close();
+  }
 }
 </script>
 
 <style scoped>
-.goodshow>>>.content-wrapper {
+.goodshow >>>.content-wrapper {
   overflow: hidden !important;
 }
 </style>

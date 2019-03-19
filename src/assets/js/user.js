@@ -9,7 +9,7 @@ const USER01 = {
       path: '/systemManager',
       name: 'systemManager',
       meta: {
-        icon: 'md-menu',
+        icon: 'ios-apps-outline',
         title: '系统管理'
       },
       component: 'main',
@@ -26,6 +26,7 @@ const USER01 = {
         path: 'company',
         name: 'companyPage',
         meta: {
+          icon:'ios-football-outline',
           title: '机构管理',
           notCache: false
         },
@@ -35,6 +36,7 @@ const USER01 = {
         path: 'menu',
         name: 'menuPage',
         meta: {
+            icon:'md-menu',
           title: '菜单管理',
           notCache: false
         },
@@ -44,6 +46,7 @@ const USER01 = {
         path: 'userManagement',
         name: 'userPage',
         meta: {
+          icon:'md-people',
           title: `用户管理`,
           notCache: false
         },
@@ -53,6 +56,7 @@ const USER01 = {
         path: 'roleManagement',
         name: 'rolePage',
         meta: {
+          icon:'ios-paw',
           title: `角色管理`,
           notCache: false
         },
@@ -71,7 +75,7 @@ const USER01 = {
         path: 'devicePage',
         name: 'devicePage',
         meta: {
-          icon: '_qq',
+          icon: 'ios-square',
           title: '设备管理'
         },
         component: 'baseInfo/devicePage'
@@ -81,7 +85,7 @@ const USER01 = {
         path: 'vehiclesPage',
         name: 'vehiclesPage',
         meta: {
-          icon: '_qq',
+          icon: 'md-document',
           title: '车辆管理'
         },
         component: 'baseInfo/vehiclesPage'
@@ -91,7 +95,7 @@ const USER01 = {
         path: 'vehicleTypePage',
         name: 'vehicleTypePage',
         meta: {
-          icon: '_qq',
+          icon: 'ios-git-branch',
           title: '车辆类型管理'
         },
         component: 'baseInfo/vehicleTypePage'
@@ -101,7 +105,7 @@ const USER01 = {
         path: 'vehicleModelPage',
         name: 'vehicleModelPage',
         meta: {
-          icon: '_qq',
+          icon: 'ios-git-commit',
           title: '车辆型号管理'
         },
         component: 'baseInfo/vehicleModelPage'
@@ -141,14 +145,14 @@ const USER01 = {
     name: 'alarmInfo',
     component: 'main',
     meta: {
-      icon: 'md-menu',
+      icon: 'md-albums',
       title: '报警信息'
     },
     children: [{
       path: 'alarmSet',
       name: 'alarmSet',
       meta: {
-        icon: '_qq',
+        icon: 'md-settings',
         title: '报警设置'
       },
       component: 'alarmInfo/alarmSet'
@@ -157,7 +161,7 @@ const USER01 = {
       path: 'alarmPage',
       name: 'alarmPage',
       meta: {
-        icon: '_qq',
+        icon: 'ios-notifications-outline',
         title: '报警管理'
       },
       component: 'alarmInfo/alarmPage'
@@ -170,7 +174,7 @@ const USER01 = {
     path: '/tools',
     name: 'tools',
     meta: {
-      icon: 'md-menu',
+      icon: 'ios-construct-outline',
       title: '工具箱'
     },
     component: 'main',
@@ -268,7 +272,7 @@ const USER01 = {
     path: '/reportManagement',
     name: 'reportManagement',
     meta: {
-      icon: 'md-menu',
+      icon: 'ios-stats-outline',
       title: '报表管理'
     },
     component: 'main',

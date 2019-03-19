@@ -1,5 +1,5 @@
 <template>
-<Card >
+<Card>
   <search @open="open" :vehicleIDP="vehicleID" :setItem="setting" @formateData="formateData"> </search>
   <echarts-t ref="echarts" :setItem="setting" :columns="chartData.columns" :rows="chartData.rows" style="margin-top:20px"></echarts-t>
   <edit ref="edit" @input="setChange"></edit>
@@ -28,7 +28,7 @@ export default {
     echartsT,
     search
   },
-  data () {
+  data() {
     return {
       pageId: 'echartsTemplate',
       vehicleID: '',
@@ -49,13 +49,13 @@ export default {
     ])
   },
   methods: {
-    formateData (value) {
+    formateData(value) {
       this.chartData.rows = value
     },
-    open () {
+    open() {
       this.$refs['edit'].open(this.setting)
     },
-    setChange (item) { // 修改了图表设置
+    setChange(item) { // 修改了图表设置
       var columns = []
       this.setting.xArrayObject.forEach(item => {
         columns.push(item.id)
@@ -73,19 +73,22 @@ export default {
       'getVehicleHistoryAction'
     ])
   },
-  mounted () {
-    this.$nextTick(function () {
-      this.setting = toJson(getCookiesValueByKey(this.pageId + 'setting'))
-      var columns = []
-      this.setting.xArrayObject.forEach(item => {
-        columns.push(item.id)
-      })
-      this.setting.yArrayObject.forEach(item => {
-        columns.push(item.id)
-      })
-      this.chartData.columns = columns
-      this.$refs['echarts'].setChart(0, true)
-      this.chartData.rows = []
+  mounted() {
+    this.$nextTick(function() {
+      var cookieValue = toJson(getCookiesValueByKey(this.pageId + 'setting'))
+      if (cookieValue) {
+        this.setting = cookieValue;
+        var columns = []
+        this.setting.xArrayObject.forEach(item => {
+          columns.push(item.id)
+        })
+        this.setting.yArrayObject.forEach(item => {
+          columns.push(item.id)
+        })
+        this.chartData.columns = columns
+        this.$refs['echarts'].setChart(0, true)
+        this.chartData.rows = []
+      }
     })
     // this.options2 = toJson(getCookiesValueByKey(this.pageId + "vehicleID-option"))
 

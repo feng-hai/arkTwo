@@ -22,7 +22,7 @@ websocketFunc(){
         }
         _this.ws.onclose = function() {
           _this.ws = null;
-          _this.websocketFunc();
+          // _this.websocketFunc();
        }
        _this.ws.onerror = function (evt) {
         console.log(evt, '这是webscoket报错！');

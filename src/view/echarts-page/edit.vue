@@ -48,7 +48,7 @@
     </FormItem>
     <FormItem label="y轴规整零" filterable>
       <Select multiple v-model="formItem.zeroFields">
-              <Option v-for="item in formItem.yArrayObject"  :key="item.id" :label="item.name" :value="item.id"></Option>
+              <Option v-for="item in yArrayObject"  :key="item.id" :label="item.name" :value="item.id"></Option>
     </Select>
     </FormItem>
   </Form>
@@ -79,29 +79,29 @@ export default {
         return false
       }
     }
-
   },
-  data () {
+  data() {
     return {
+      yArrayObject: [],
       // showWindowBDrawer: false,
       showContainerBDrawer: false,
       functionsItems: [],
       functions: [],
       xAxisTypes: [{
-        name: '类别',
-        id: 'category'
-      }, {
-        name: '数值',
-        id: 'value'
-      },
-      {
-        name: '时间',
-        id: 'time'
-      },
-      {
-        name: 'log',
-        id: 'log'
-      }
+          name: '类别',
+          id: 'category'
+        }, {
+          name: '数值',
+          id: 'value'
+        },
+        {
+          name: '时间',
+          id: 'time'
+        },
+        {
+          name: 'log',
+          id: 'log'
+        }
       ],
       // showBDrawer3: false,
       // width1: 300,
@@ -131,12 +131,12 @@ export default {
       'getOrgTreeInfo'
     ]),
 
-    placementComputed () {
+    placementComputed() {
       return this.placement ? 'left' : 'right'
     }
   },
   methods: {
-    open (setting) {
+    open(setting) {
       this.showContainerBDrawer = true
       this.formItem = setting
       this.handleTablesInfo(this.formItem.resource).then(res => {
@@ -147,14 +147,14 @@ export default {
         console.log(this.url)
       })
     },
-    submit () {
+    submit() {
       this.$emit('input', this.formItem)
       this.showContainerBDrawer = false
     },
-    close () {
+    close() {
       this.showContainerBDrawer = false
     },
-    xChange (value) {
+    xChange(value) {
       var temp = []
       value.forEach(item => {
         temp.push({
@@ -164,28 +164,32 @@ export default {
       })
       this.formItem.xArrayObject = temp
     },
-    yChange (value) {
+    yChange(value) {
       var temp = []
+      console.log(value)
       value.forEach(item => {
         temp.push({
           id: item.split('|')[0],
           name: item.split('|')[1]
         })
       })
+
       this.formItem.yArrayObject = temp
+      this.yArrayObject = temp
     },
-    resourceChange (value) {
+    resourceChange(value) {
+      console.log(value);
       this.formItem.x = []
       this.formItem.y = []
       this.formItem.yArrayObject = []
       this.formItem.xArrayObject = []
       this.formItem.xAxisType = ''
+
       this.handleTablesInfo(value).then(res => {
         if (res.columns) {
           this.formItem.url = res.url
           this.functionsItems = res.columns
         }
-        console.log(this.url)
       })
     },
     // ...mapState (['menus']),
@@ -193,7 +197,7 @@ export default {
       'getAlltableInfo',
       'handleTablesInfo'
     ]),
-    handleResize (event) {
+    handleResize(event) {
       const {
         atMin
       } = event

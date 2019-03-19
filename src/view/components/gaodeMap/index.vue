@@ -35,6 +35,9 @@ export default {
   props: {
     getWebscoket: {
       type: Array
+    },
+    paramsId: {
+      type: String
     }
   },
   data(){
@@ -61,6 +64,9 @@ computed:{
 watch: {
   getWebscoket(nv, ov){
     this.websocketFunc();
+  },
+  paramsId(){
+    this.getCarInfoData()
   }
 },
 
@@ -97,15 +103,23 @@ methods: {
     // 车辆的基本信息获取
     getCarInfoData(){
       let _self = this;
-      let params = _self.$route.params;
-      // console.log(params, 'params');
-      this.getInfoCarDate({"unid": params.id}).then(res => {
-        // console.log(res, 'resssssssssssss');
+      if(_self.paramsId){
+        this.getInfoCarDate({"unid": _self.paramsId}).then(res => {
+        this.vehicle = res;
+        _self.refreshAlarmSet(res);
+      })       
+      //初始化webscoket
+      this.initWs(_self.paramsId);
+      }else{
+        let params = _self.$route.params;
+        this.getInfoCarDate({"unid": params.id}).then(res => {
         this.vehicle = res;
         _self.refreshAlarmSet(res);
       })
       //初始化webscoket
       this.initWs(params.id);
+      }
+
     },
     //报警初始化设置
     initAlarmSet:function() {
@@ -180,7 +194,7 @@ methods: {
           });
         }
         this.batteryData = batteryDataTmp;
-        console.log(this.batteryData, 'batteryData');
+        // console.log(this.batteryData, 'batteryData');
         this.initRealTime(vehicle.unid);
       }, err => {
         this.batteryData = [];

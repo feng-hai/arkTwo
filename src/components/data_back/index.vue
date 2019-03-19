@@ -40,7 +40,7 @@
     		</Select>
     		<!-- 开始时间和结束时间 -->
     		<div class="dataStartEnd">
-    			<DatePicker type="datetimerange" @on-change="handleStartChange" placeholder="开始时间  -  结束时间" style="width: 300px"></DatePicker>
+    			<DatePicker type="datetimerange" v-model="startEndTime" @on-change="handleStartChange" placeholder="开始时间  -  结束时间" style="width: 300px"></DatePicker>
     		</div>
     		<Button type="primary" @click="submit" style="margin-left: 10px;">查询</Button>
       </div>
@@ -75,6 +75,7 @@ export default{
 		return{
 			startTime: '',
 			endTime: '',
+			startEndTime: '',
 			currentPercent: 0,
 			defaultOptions: {
 				markerOptions : {},
@@ -110,8 +111,14 @@ export default{
 			len: 0,
 			timeNum: 1,
 			legenNum: -1,
+			paramsIdd: '',
 			colorType: ["#47a447", "#ED9c28", "#e36159", "#2baab1",
             "#734ba9"] //图表的样式颜色
+		}
+	},
+	props: {
+		paramsId: {
+			type: String
 		}
 	},
 	components: {
@@ -146,7 +153,7 @@ export default{
 			let seriesData = this.lineEcharts.ydata.slice(0, nv)
 			this.lineEcharts.seriesData.data = seriesData;
 			let lineArr = this.lineArr.slice(0, nv)
-			console.log(lineArr, 'lineArr')
+			// console.log(lineArr, 'lineArr')
 			this.newLine = [];
 			this.defaultOptions.map.clearMap();
 			this.newLine = lineArr;
@@ -159,16 +166,22 @@ export default{
 				clearInterval(this.timeKey);
 				// this.timeKey = null;
 			}
+		},
+		paramsId(nv, ov){
+			this.paramsIdd = nv;
+			this.startEndTime = '';
+			this.startTime = '';
+			this.endTime = '';
+			this.model1 = [];
+			this.fruit = [];
+			this.submit();
 		}
 	},
 	methods: {
 		getData(index){
-			if(this.lineEcharts.seriesData.data){
+			if(this.lineEcharts.seriesData[index].data.length >= 0){
 				let data = this.lineEcharts.seriesData[index].data
-				// console.log(data, 'dataaaaaaaaaaaaaaaaaa');
-				// debugger;
-				// console.log(this.legenNum, 'this.legenNum');
-				return data ? (data[this.legenNum] ? data[this.legenNum] : 0) : 0
+				return data ? (data[this.legenNum-2] ? data[this.legenNum-2] : 0) : 0
 				// return data ? data[index++] : 0
 			}else{
 				return 0;
@@ -286,7 +299,7 @@ export default{
 		handleStartChange(data){
 			this.startTime = data[0];
 			this.endTime = data[1];
-			console.log(data, 'startEndTime')
+			// console.log(data, 'startEndTime')
 		},
 		// 结束时间获取
 		// handleEndChange(data){
@@ -320,7 +333,11 @@ export default{
 				this.$Message.warning('时间区间不能超过24小时!')
 			}else{
 				//api数据的获取
-				let unid = this.$route.params.id;
+				if(!_this.paramsId){
+					_this.paramsIdd = _this.$route.params.id;;
+				}else{
+					_this.paramsIdd = _this.paramsId;
+				}
 				let date_from = this.startTime.replace(/ /, "T");
 	      let date_to = this.endTime.replace(/ /, "T");
 	      let field = 'DATIME_RX,lon,lat';
@@ -338,7 +355,7 @@ export default{
 	      	seriesData.push({name:name,type:"line",data:[]});
 	      })
 	      this.submitParams = {
-	      	unid: unid,
+	      	unid: _this.paramsIdd,
 	      	date_from: date_from,
 	      	date_to: date_to,
 	      	field: field,
@@ -406,7 +423,7 @@ export default{
         map: that.defaultOptions.map,
         position: obj,
         icon: require("@/assets/images/car.png"),
-        offset: new AMap.Pixel(-26, -13),
+        offset: new AMap.Pixel(-13, -40),
        autoRotation: true,
         angle: 0,
     });  
@@ -555,13 +572,13 @@ export default{
 			}
 	},
 		QueryChange(data){
-			console.log('data',data);
+			// console.log('data',data);
 		},
 		ChangeValue(value){
 			let _this = this;
 			if(value.length >= 5){
-				console.log(value, 'value');
-				console.log(this.cityList, 'this.cityList');
+				// console.log(value, 'value');
+				// console.log(this.cityList, 'this.cityList');
 				let arr3 = this.cityList.filter(item => {
 				return value.every(item2 => {
 					return item.value != item2.value
@@ -592,8 +609,9 @@ export default{
 <style scoped>
 .title{
 	text-align: left;
-	line-height: 30px;
-	height: 30px;
+	line-height: 14px;
+	height: 35px;
+	font-weight: bold;
 	border-bottom: 1px solid #e2dddd;
 }
 .selection{

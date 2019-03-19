@@ -10,10 +10,20 @@ export default {
   components: {
     tablesHistoryPage
   },
+  props: {
+    paramsId: {
+      type: String
+    }
+  },
   data() {
     return {
       viewId: '8540D8F90F314D658913EFF948448142',
       objectId: 'C3331D8F51EE4BE99C63287ACA668BC0'
+    }
+  },
+  watch:{
+    paramsId(nv, ov){
+      this.objectId = nv;
     }
   },
   mounted() {

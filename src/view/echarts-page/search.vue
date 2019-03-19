@@ -4,6 +4,7 @@
   <Select v-show="selectedShow" ref="agency" clearable v-model="vehicleID" @on-change="changeVehicle" :label="vin" :label-in-value="true" filterable remote :remote-method="remoteMethod2" :loading="loading2" style="width: 300px; margin-right:10px;">
            <Option v-for="(option, index) in options2" :value="option.value" :key="index">{{option.label}}</Option>
   </Select>
+
   <DatePicker type="datetimerange" v-model="dateS" @on-change="changeDate" placeholder="Select date and time" style="width: 300px; margin-right:10px;"></DatePicker>
   <Button type="primary" @click="getChartsData">查询</Button><Button type="primary" @click="showMore" style="margin-left:10px;">更多</Button>
   <Button @click="open" type="primary" style="margin-left: 10px">设置</Button>
@@ -55,7 +56,7 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       historyData: [],
       pageId: 'echartsTemplate',
@@ -89,7 +90,7 @@ export default {
     }
   },
   computed: {
-    selectedShow () {
+    selectedShow() {
       if (this.vehicleIDP == '') {
         return true
       } else {
@@ -106,19 +107,19 @@ export default {
     ])
   },
   methods: {
-    showMore () {
+    showMore() {
       this.isMore = !this.isMore
     },
-    changeVehicle (value) {
+    changeVehicle(value) {
       setCookies(this.pageId + 'vehicleID', value)
       setCookies(this.pageId + 'vehicleID-option', this.options2)
     },
-    changeDate (selected, d) {
+    changeDate(selected, d) {
       setCookies(this.pageId + 'times', selected)
       this.start = selected[0].replace(' ', 'T')
       this.end = selected[1].replace(' ', 'T')
     },
-    remoteMethod2 (query) {
+    remoteMethod2(query) {
       if (query !== '') {
         this.loading2 = true
         this.getVehicleInfoAction({
@@ -141,7 +142,7 @@ export default {
         this.options2 = []
       }
     },
-    getChartsData () {
+    getChartsData() {
       var that = this
       that.count = 0
       that.historyData = []
@@ -161,8 +162,8 @@ export default {
       })
       var tempDate = toDate(this.start)
       var tempTimes = tempDate == null ? 0 : tempDate.getTime()
-      var url = that.setItem.url + '/' + (that.vehicleIDP == '' ? that.vehicleID : that.vehicleIDP)
-      var vehicleInfos = function (end) {
+      var url = that.setItem.url.replace("/{Oid}","") + '/' + (that.vehicleIDP == '' ? that.vehicleID : that.vehicleIDP)
+      var vehicleInfos = function(end) {
         that.getVehicleHistoryAction({
           url: url,
           params: {
@@ -198,7 +199,7 @@ export default {
       }
       vehicleInfos(this.end)
     },
-    open () {
+    open() {
       this.$emit('open')
     },
 
@@ -208,19 +209,32 @@ export default {
       'getVehicleHistoryAction'
     ])
   },
-  mounted () {
-    this.options2 = toJson(getCookiesValueByKey(this.pageId + 'vehicleID-option'))
-    this.setting = toJson(getCookiesValueByKey(this.pageId + 'setting'))
-    this.dateS = toJson(getCookiesValueByKey(this.pageId + 'times'))
-    this.start = this.dateS[0].replace(' ', 'T')
-    this.end = this.dateS[1].replace(' ', 'T')
+  mounted() {
+    var tempOptions = toJson(getCookiesValueByKey(this.pageId + 'vehicleID-option'))
+    if (tempOptions) {
+      this.options2 = tempOptions
+    }
+    var tempSetting = toJson(getCookiesValueByKey(this.pageId + 'setting'));
+    if (tempSetting) {
+      this.setting = tempSetting;
+    }
+
+    var tempdates = toJson(getCookiesValueByKey(this.pageId + 'times'))
+    if (tempdates) {
+      this.dateS = tempdates
+      this.start = this.dateS[0].replace(' ', 'T')
+      this.end = this.dateS[1].replace(' ', 'T')
+    }
+
     var that = this
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       var temp = toJson(getCookiesValueByKey(that.pageId + 'vehicleID'))
-      that.vin = temp.label
-      that.$refs['agency'].query = temp.label
-      that.loading2 = false
-      that.vehicleID = temp.value
+      if (temp) {
+        that.vin = temp.label
+        that.$refs['agency'].query = temp.label
+        that.loading2 = false
+        that.vehicleID = temp.value
+      }
     })
   }
 }

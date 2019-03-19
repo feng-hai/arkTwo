@@ -139,9 +139,9 @@ initMap(){
   //初始化地图
 	this.defaultOptions.map = new AMap.Map(this.dom, {
     resizeEnable: true,
-    // center: [116.397428, 39.90923],
+    center: [116.397428, 39.90923],
     zoom: 13
-		});
+});
 	},
 createMap(){
 	let that = this;
@@ -156,7 +156,7 @@ createMap(){
 	    map: that.defaultOptions.map,
 	    position: obj,
 	    icon: require("@/assets/images/car.png"),
-	    offset: new AMap.Pixel(-26, -13),
+	    offset: new AMap.Pixel(-13, -40),
 	    autoRotation: true,
 	    angle: 0,
 }); 
@@ -181,7 +181,20 @@ that.defaultOptions.polyline = new AMap.Polyline({
 //处理webscoket中推送过来的信息
 setDataWebscoket(){
 	let _this = this;
-  this.getWebscoket.forEach(function(obj){
+	//当点击切换的时候，初始化会没有webscoket的值，所以要设置之前的存在的值都为空
+	if(this.getWebscoket.length == 0){
+		_this.defaultOptions.map.clearMap();
+		this.newLine = [];
+		this.lineGaode = [];
+		this.createMap();
+		this.fruit = [];
+
+		this.cityList.forEach(function(obj){
+			obj.disabled = false;
+		})
+	  // this.myChart.clear();
+	}else{
+		this.getWebscoket.forEach(function(obj){
   	if(obj.alias === 'calLon'){
   		if(obj.value != 0 && !isNaN(obj.value)){
   			_this.lonData = Number(obj.value)
@@ -194,7 +207,7 @@ setDataWebscoket(){
   })
   if(_this.lonData && _this.lonData != 0 && _this.latData && _this.latData != 0){
  		_this.newLine.push([_this.lonData, _this.latData]);
- 		// _this.lineGaode.push(_this.newLine[0]);
+ 		_this.lineGaode = _this.newLine;
   }
  	// console.log(_this.newLine,'_this.newLine');
 
@@ -232,7 +245,9 @@ setDataWebscoket(){
  	}
  	// console.log(_this.lineEcharts.xAxisData, 'this.lineEcharts.xAxisData');
  	// console.log(_this.ydata, '_this.lineEcharts.ydata')
-	console.log(_this.seriesData, '_this.lineEcharts.seriesData')
+	// console.log(_this.seriesData, '_this.lineEcharts.seriesData')
+
+	}
 },
 // 处理select选择option数量的问题
 ChangeValue(value){
@@ -389,8 +404,9 @@ drawLine(value){
 <style scoped>
 .title{
 	text-align: left;
-	line-height: 30px;
-	height: 30px;
+	line-height: 14px;
+	height: 35px;
+	font-weight: bold;
 	border-bottom: 1px solid #e2dddd;
 }
 .selection{

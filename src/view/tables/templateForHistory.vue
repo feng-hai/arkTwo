@@ -619,6 +619,9 @@ export default {
   watch: {
     dataT(nv, ov) {
       this.tableData = nv;
+    },
+    objectId(nv, ov){
+      this.searchResult();
     }
     // '$route' (to, from) {
     //   this.initParams()

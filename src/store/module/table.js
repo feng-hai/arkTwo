@@ -108,7 +108,7 @@ export default {
           console.log(res)
           var data = {
             data: res.data.datas,
-            count:0
+            count: 0
           }
           commit('setTableData', data)
           resolve(data)
@@ -238,6 +238,7 @@ export default {
               ruleValidate: fields.rule, // 新增数据项规则
               buttons: fields.buttons // 新增、批量删除按钮
             }
+          
             commit('setTableInfo', viewManagement)
             resolve(viewManagement)
           }).catch(err => {
