@@ -135,6 +135,6 @@ export default {
 <style>
 .echarts{
   width: 100%;
-  height: 100vh;
+  height: 39.5vh;
 }
 </style>

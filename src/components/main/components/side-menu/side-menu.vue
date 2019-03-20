@@ -48,7 +48,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'dark'
+      default: 'light'
     },
     rootIconSize: {
       type: Number,
@@ -87,7 +87,7 @@ export default {
   },
   computed: {
     textColor () {
-      return this.theme === 'dark' ? '#fff' : '#495060'
+      return this.theme === 'light' ? '#666' : '#495060'
     }
   },
   watch: {

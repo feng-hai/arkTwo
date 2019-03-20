@@ -3,21 +3,25 @@
 <!-- 电池块的显示 -->
   <div :style="batteryNum">
     <!-- <Scroll> -->
-      <div class="batteryRow" v-for="itemRow in batteryData">
-        <div v-for="item in itemRow" :class="item.colClass">
-          <div :class="[item.dyClass,item.dyStyle]" v-if="item.dyIndex != null">
-          <Tooltip :content="item.dyIndex" placement="top">
-            <span style="display: block;">{{numberFormatter(dtdyArr[item.dyIndex - 1],3)}}</span>
-          </Tooltip>
-          </div>
-          <div :class="[item.wdClass,item.wdStyle]" v-if="item.wdIndex != null">
-            <Tooltip :content="item.wdIndex" placement="top">
-               <span style="display: block;" class="current1">{{numberFormatter(wdArr[item.wdIndex - 1]),2}}℃</span>
-            </Tooltip>
-             </div>
+    <div class="batteryRow" v-for="itemRow in batteryData">
+      <div v-for="item in itemRow" :class="item.colClass">
+        <div :class="[item.dyClass,item.dyStyle]" v-if="item.dyIndex != null">
+        <Tooltip :content="item.dyIndex" placement="top">
+          <span style="display: block;">{{numberFormatter(dtdyArr[item.dyIndex - 1],3)}}</span>
+        </Tooltip>
         </div>
+        <div :class="[item.wdClass,item.wdStyle]" v-if="item.wdIndex != null">
+          <Tooltip :content="item.wdIndex" placement="top">
+             <span style="display: block;" class="current1">{{numberFormatter(wdArr[item.wdIndex - 1]),2}}℃</span>
+          </Tooltip>
+           </div>
       </div>
+    </div>
   <!-- </Scroll> -->
+  <Card shadow v-if="batteryData.length > 0">
+    <chart-bar style="height: 300px;" :xData="xDataDtdy" :yData="yDataDtdy" :legendData="legendData1" :colorType="colorType1" />
+    <chart-bar style="height: 300px;" :xData="xDataWd" :yData="yDataWd" :legendData="legendData2" :colorType="colorType2" />
+  </Card>
   </div>
 </div>
 </template>
@@ -28,6 +32,7 @@ import {
   mapGetters,
   // mapState
 } from 'vuex'
+import { ChartBar } from '_c/charts'
 // import Websocket from './mixin/webscoket.js'
 export default {
   name: '',
@@ -39,6 +44,9 @@ export default {
     paramsId: {
       type: String
     }
+  },
+  components: {
+    ChartBar
   },
   data(){
     return{
@@ -53,6 +61,24 @@ export default {
       dtdyArr:[],
       wdArr:[],
       reportTime: null,
+      barData: {
+        Mon: 13253,
+        Tue: 34235,
+        Wed: 26321,
+        Thu: 12340,
+        Fri: 24643,
+        Sat: 1322,
+        Sun: 1324
+      },
+      // legendData: ['单体测温点', '单体温差点'],
+      legendData1: ['单体测温点'],
+      legendData2: ['单体温差点'],
+      xDataDtdy: [],
+      xDataWd: [],
+      yDataDtdy: [],
+      yDataWd: [],
+      colorType1: '#2baab1',
+      colorType2: '#ED9c28'
     }
   },
 computed:{
@@ -63,16 +89,23 @@ computed:{
 },
 watch: {
   getWebscoket(nv, ov){
+    this.yDataDtdy = [];
+    this.yDataWd = [];
+    this.xDataWd = [];
+    this.xDataDtdy = [];
     this.websocketFunc();
   },
   paramsId(){
     this.getCarInfoData()
+    this.echartsBar();
   }
 },
 
 mounted() {
   this.getCarInfoData();
   this.websocketFunc();  //实时推送信息
+  // this.echartsBar();
+  this.echartsBar();
 
 },
 methods: {
@@ -205,7 +238,8 @@ methods: {
     initRealTime(unid){
       this.getRealData({unid: unid}).then(res => {
         let entry = res.snapshot.entry;  
-        this.refreshData(entry);     
+        this.refreshData(entry); 
+        this.echartsBar();    
         },err => {
           this.dtdyArr = [];
           this.wdArr = [];
@@ -228,13 +262,42 @@ methods: {
         _this.wdArr = wdArrTmp;
         _this.$store.dispatch('getDtdyWdArr',{ dyArrTmp, wdArrTmp});
     },
-
+    echartsBar(){
+      let _this = this;
+      let xDataDtdy = [];
+      let xDataWd = [];
+      this.batteryData.forEach(function(item){
+        item.forEach(function(items){
+          if(items.dyIndex){
+            xDataDtdy.push(items.dyIndex);
+          }
+          if(items.wdIndex != null){
+            xDataWd.push(items.wdIndex);
+          }
+        })
+      })
+      this.xDataDtdy = xDataDtdy.sort(function(a,b){ return a-b;})
+      this.xDataDtdy.forEach(function(item){
+        _this.yDataDtdy.push(_this.dtdyArr[item-1])
+      })
+      this.xDataWd = xDataWd.sort(function(a,b){ return a-b;})
+      this.xDataWd.forEach(function(item){
+        _this.yDataWd.push(_this.wdArr[item-1])
+      })
+      this.yDataDtdy.forEach(function(item){
+        if(item == undefined){
+          item = '0'
+        }
+      })
+      this.yDataWd.forEach(function(item){
+        if(item == undefined){
+          item = '0'
+        }
+      })
+    },
     //设置样式
     refreshBatteryStyle:function(dyArrTmp,wdArrTmp) {
       let _this = this;
-      // console.log(_this.batteryData);
-      // console.log(wdArrTmp);
-      // console.log(dyArrTmp);
       _this.batteryData.forEach(function(obj, i){
         obj.forEach(function(obje, j){
           if(obje.dyIndex){
@@ -354,6 +417,7 @@ websocketFunc(){
     _this.refreshBatteryStyle(dyArrTmp,wdArrTmp);
     _this.dtdyArr =  dyArrTmp;
     _this.wdArr = wdArrTmp;
+    _this.echartsBar();
     _this.$store.dispatch('getDtdyWdArr',{ dyArrTmp, wdArrTmp});
 },
 

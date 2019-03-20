@@ -641,14 +641,17 @@ export default{
 .main >>> .ivu-tag{
 	display: none;
 }
+.main >>> .ivu-card-body{
+	height: 570px;
+}
 .control{
 	position: absolute;
 	left: 0;
-	bottom: -50px;
+	bottom: 6px;
 	width: 100%;
 	height: 50px;
 	line-height: 45px;
-	border: 1px solid #e2dddd;
+	/*border: 1px solid #e2dddd;*/
 	padding-left: 20px;
 	display: flex;
 }

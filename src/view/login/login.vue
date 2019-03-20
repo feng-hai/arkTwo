@@ -3,13 +3,17 @@
 </style>
 <template>
 <div class="login">
+  <div class="login-logo"></div>
   <div class="login-con">
-    <Card icon="log-in" title="欢迎登录" :bordered="false">
+     <div class="title"> 
+       <span>智航电池系统大数据管理平台</span>
+     </div>
+<!--     <Card icon="log-in" title="" :bordered="false"> -->
       <div class="form-con">
         <login-form @on-success-valid="handleSubmit"></login-form>
         <!-- <p class="login-tip">输入任意用户名和密码即可</p> -->
       </div>
-    </Card>
+<!--     </Card> -->
   </div>
 </div>
 </template>

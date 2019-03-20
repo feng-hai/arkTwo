@@ -173,7 +173,7 @@ export default {
           name: item.split('|')[1]
         })
       })
-
+      this.formItem.zeroFields = [];
       this.formItem.yArrayObject = temp
       this.yArrayObject = temp
     },

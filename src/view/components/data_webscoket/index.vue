@@ -195,11 +195,11 @@ setDataWebscoket(){
 	  // this.myChart.clear();
 	}else{
 		this.getWebscoket.forEach(function(obj){
-  	if(obj.alias === 'calLon'){
+  	if(obj.alias === 'lon'){
   		if(obj.value != 0 && !isNaN(obj.value)){
   			_this.lonData = Number(obj.value)
   		}
-  	}else if(obj.alias === 'calLat'){
+  	}else if(obj.alias === 'lat'){
   		if(obj.value != 0 && !isNaN(obj.value)){
   		  _this.latData = Number(obj.value)	
   		}
@@ -436,6 +436,9 @@ drawLine(value){
 }*/
 .main >>> .ivu-tag{
 	display: none;
+}
+.main >>> .ivu-card-body{
+	height: 570px;
 }
 .control{
 	position: absolute;

@@ -1,12 +1,15 @@
 <template>
   <Card :shadow="shadow" class="info-card-wrapper" :padding="0">
     <div class="content-con">
-      <div class="left-area" :style="{background: color, width: leftWidth}">
-        <common-icon class="icon" :type="icon" :size="iconSize" color="#fff"/>
+      <div class="left-area" :style="{width: leftWidth}">
+        <slot></slot>
       </div>
-      <div class="right-area" :style="{width: rightWidth}">
-        <div>
-          <slot></slot>
+      <div class="right-area" :style="{width: rightWidth}" style="position: relative;">
+        <div :style="{width: rightWidth}">
+          <div>
+          <example :colorType="indexId" style="width: 270px; height: 120px;" />
+          </div>
+          <div class="percent" :style="{color: colorTypes[indexId]}">+{{percent}}%</div>
         </div>
       </div>
     </div>
@@ -14,32 +17,29 @@
 </template>
 
 <script>
-import CommonIcon from '_c/common-icon'
+import Example from './example.vue'
 export default {
   name: 'InforCard',
   components: {
-    CommonIcon
+    Example
   },
   props: {
     left: {
       type: Number,
       default: 36
     },
-    color: {
-      type: String,
-      default: '#2d8cf0'
-    },
-    icon: {
-      type: String,
-      default: ''
-    },
-    iconSize: {
-      type: Number,
-      default: 20
-    },
     shadow: {
       type: Boolean,
       default: false
+    },
+    indexId: {
+      type: Number
+    }
+  },
+  data(){
+    return{
+      colorTypes: ['#00c6de', '#b6bde8', '#fcb822'],
+      percent: 17,
     }
   },
   computed: {
@@ -58,11 +58,16 @@ export default {
   float: left;
   height: 100%;
   display: table;
-  text-align: center;
+  /*text-align: center;*/
 }
 .size{
   width: 100%;
   height: 100%;
+}
+.percent{
+  position: absolute;
+  right: 36px;
+  bottom: 36px;
 }
 .middle-center{
   display: table-cell;
@@ -71,12 +76,14 @@ export default {
 .info-card-wrapper{
   .size;
   overflow: hidden;
+  box-shadow: 2px 2px 2px 0 0 #ccc;
   .ivu-card-body{
     .size;
   }
   .content-con{
     .size;
     position: relative;
+    display: flex;
     .left-area{
       .common;
       & > .icon{

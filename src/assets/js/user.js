@@ -9,24 +9,25 @@ const USER01 = {
       path: '/systemManager',
       name: 'systemManager',
       meta: {
-        icon: 'ios-apps-outline',
+        icon: '_baojing',
         title: '系统管理'
       },
       component: 'main',
-      children: [{
-        path: 'button',
-        name: 'buttonPage',
-        meta: {
-          title: '按钮管理',
-          notCache: false
-        },
-        component: 'systemManagement/buttonPage'
-      },
+      children: [
+      //   {
+      //   path: 'button',
+      //   name: 'buttonPage',
+      //   meta: {
+      //     title: '按钮管理',
+      //     notCache: false
+      //   },
+      //   component: 'systemManagement/buttonPage'
+      // },
       {
         path: 'company',
         name: 'companyPage',
         meta: {
-          icon:'ios-football-outline',
+          //icon:'ios-football-outline',
           title: '机构管理',
           notCache: false
         },
@@ -36,7 +37,7 @@ const USER01 = {
         path: 'menu',
         name: 'menuPage',
         meta: {
-            icon:'md-menu',
+            //icon:'md-menu',
           title: '菜单管理',
           notCache: false
         },
@@ -46,7 +47,7 @@ const USER01 = {
         path: 'userManagement',
         name: 'userPage',
         meta: {
-          icon:'md-people',
+         // icon:'md-people',
           title: `用户管理`,
           notCache: false
         },
@@ -56,7 +57,7 @@ const USER01 = {
         path: 'roleManagement',
         name: 'rolePage',
         meta: {
-          icon:'ios-paw',
+          //icon:'ios-paw',
           title: `角色管理`,
           notCache: false
         },

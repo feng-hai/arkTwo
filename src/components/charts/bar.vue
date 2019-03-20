@@ -11,45 +11,84 @@ export default {
   name: 'ChartBar',
   props: {
     value: Object,
-    text: String,
-    subtext: String
+    legendData: Array,
+    yData: Array,
+    xData: Array,
+    colorType: String
   },
   data () {
     return {
-      dom: null
+      dom: null,
+      legend: []
+    }
+  },
+  watch: {
+    yData(){
+      this.setEcharts();
+      this.setEcharts();
     }
   },
   methods: {
     resize () {
       this.dom.resize()
-    }
-  },
-  mounted () {
-    this.$nextTick(() => {
-      let xAxisData = Object.keys(this.value)
-      let seriesData = Object.values(this.value)
-      let option = {
-        title: {
-          text: this.text,
-          subtext: this.subtext,
-          x: 'center'
-        },
-        xAxis: {
-          type: 'category',
-          data: xAxisData
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: seriesData,
-          type: 'bar'
-        }]
+    },
+    setEcharts(){
+      // console.log(this.colorType, 'colorType');
+      this.legend = this.legendData;
+      this.$nextTick(() => {
+        let option = {
+          legend: {
+            data:this.legend
+          },
+          tooltip : {
+            trigger: 'axis'
+          },
+          xAxis : [
+          {
+            type : 'category',
+            data : this.xData
+          }
+          ],
+          yAxis: {
+            type: 'value'
+          },
+          series : [
+          {
+            name: this.legendData[0],
+            type:'bar',
+            data: this.yData,
+            markPoint : {
+              data : [
+                {type : 'max', name: '最大值'},
+                {type : 'min', name: '最小值'}
+              ]
+            },
+            itemStyle : {  
+              normal : {  
+                  lineStyle:{  
+                      color: this.colorType
+                  }  
+              }  
+          },  
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+          },
+      ],
+      color: this.colorType
       }
       this.dom = echarts.init(this.$refs.dom, 'tdTheme')
       this.dom.setOption(option)
       on(window, 'resize', this.resize)
     })
+    }
+  },
+  mounted () {
+    // console.log(this.xData, 'xData');
+    // console.log(this.yData, 'yData');
+    this.setEcharts();
   },
   beforeDestroy () {
     off(window, 'resize', this.resize)

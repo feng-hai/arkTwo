@@ -1,6 +1,6 @@
 <template>
 <Card>
-  <search @open="open" :vehicleIDP="vehicleID" :setItem="setting" @formateData="formateData"> </search>
+  <search @open="open" :vehicleIDP="vehicleID" :setItem="setting" @values="values" :getEndDate="getEndDate" :checkHasNext="checkHasNext" :getDataLength="getDataLength" :formatHistoryData="handleFunction"> </search>
   <echarts-t ref="echarts" :setItem="setting" :columns="chartData.columns" :rows="chartData.rows" style="margin-top:20px"></echarts-t>
   <edit ref="edit" @input="setChange"></edit>
 </Card>
@@ -16,7 +16,7 @@ import {
   mapState
 } from 'vuex'
 import {
-
+  formatData,
   toJson,
   toDate,
   setCookies,
@@ -49,8 +49,49 @@ export default {
     ])
   },
   methods: {
-    formateData(value) {
-      this.chartData.rows = value
+    getEndDate(res) {
+      var datas = res.datas;
+      var data = datas[datas.length - 1];
+      console.log("datatime", data);
+      var tempData = "";
+      console.log(data.pairs)
+      data.pairs.forEach(item => {
+        if (item.key == "DATIME_RX") {
+          tempData = item.value.replace(" ", "T");
+        }
+      });
+      return tempData;
+      // this.lastDate = data[data.length - 1]["DATIME_RX"].replace(" ", "T");
+
+    },
+    checkHasNext(res) {
+      return res.hasNext;
+    },
+    getDataLength(res) {
+      var data = res.datas;
+      return data.length-1;
+    },
+    handleFunction(res) { //格式化数据
+
+      var data = res.datas;
+
+      var temps = []
+      data.map(items => {
+        var temp = {};
+        items.pairs.forEach(item => {
+          temp[item.key] = item.value;
+        })
+        temps.push(temp);
+      })
+      return temps;
+
+    },
+    values(value) {
+      console.log("values", value)
+      var tempids = this.setting.yArrayObject.map(item => {
+        return item.id
+      })
+      this.chartData.rows = formatData(tempids, value, this.setting.zeroFields);
     },
     open() {
       this.$refs['edit'].open(this.setting)

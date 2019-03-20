@@ -13,6 +13,8 @@ import {
 } from 'v-click-outside-x'
 import installPlugin from '@/plugin'
 import './index.less'
+import '@/assets/css/main-style.less';//自己定制主样式文件
+import '@/assets/font/iconfont.css'
 import '@/assets/icons/iconfont.css'
 import 'vue-tree-halower/dist/halower-tree.min.css' // you can customize the style of the tree
 
