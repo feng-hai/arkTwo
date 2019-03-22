@@ -1,32 +1,32 @@
 <template>
-  <Card :shadow="shadow" class="info-card-wrapper" :padding="0">
+  <Card :shadow="shadow" class="info-card-wrapper" :padding="0" :style="{background: colorTypes[indexId]}">
     <div class="content-con">
       <div class="left-area" :style="{width: leftWidth}">
         <slot></slot>
       </div>
-      <div class="right-area" :style="{width: rightWidth}" style="position: relative;">
+     <!--  <div class="right-area" :style="{width: rightWidth}" style="position: relative;">
         <div :style="{width: rightWidth}">
           <div>
           <example :colorType="indexId" style="width: 270px; height: 120px;" />
           </div>
           <div class="percent" :style="{color: colorTypes[indexId]}">+{{percent}}%</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </Card>
 </template>
 
 <script>
-import Example from './example.vue'
+// import Example from './example.vue'
 export default {
   name: 'InforCard',
   components: {
-    Example
+    // Example
   },
   props: {
     left: {
       type: Number,
-      default: 36
+      default: 100
     },
     shadow: {
       type: Boolean,
@@ -38,7 +38,7 @@ export default {
   },
   data(){
     return{
-      colorTypes: ['#00c6de', '#b6bde8', '#fcb822'],
+      colorTypes: ['#0088cc', '#734BA9', '#2BAAB1', '#E36159'],
       percent: 17,
     }
   },
@@ -82,6 +82,7 @@ export default {
   }
   .content-con{
     .size;
+    padding: 16px;
     position: relative;
     display: flex;
     .left-area{

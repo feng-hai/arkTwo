@@ -1,7 +1,7 @@
 <template>
 <div class="realtime">
 <!-- 电池块的显示 -->
-  <div :style="batteryNum">
+  <div :style="batteryNum" v-if="dtdyArr.length > 0">
     <!-- <Scroll> -->
     <div class="batteryRow" v-for="itemRow in batteryData">
       <div v-for="item in itemRow" :class="item.colClass">
@@ -17,12 +17,11 @@
            </div>
       </div>
     </div>
-  <!-- </Scroll> -->
-  <Card shadow v-if="batteryData.length > 0">
-    <chart-bar style="height: 300px;" :xData="xDataDtdy" :yData="yDataDtdy" :legendData="legendData1" :colorType="colorType1" />
-    <chart-bar style="height: 300px;" :xData="xDataWd" :yData="yDataWd" :legendData="legendData2" :colorType="colorType2" />
-  </Card>
+      <chart-bar style="height: 300px;" :xData="xDataDtdy" :yData="yDataDtdy" :legendData="legendData1" :colorType="colorType1" />
+      <chart-bar style="height: 300px;" :xData="xDataWd" :yData="yDataWd" :legendData="legendData2" :colorType="colorType2" />
   </div>
+
+  <div v-else style="text-align: center;">暂无数据</div>
 </div>
 </template>
 
@@ -71,8 +70,8 @@ export default {
         Sun: 1324
       },
       // legendData: ['单体测温点', '单体温差点'],
-      legendData1: ['单体测温点'],
-      legendData2: ['单体温差点'],
+      legendData1: ['单体电压'],
+      legendData2: ['单体温度'],
       xDataDtdy: [],
       xDataWd: [],
       yDataDtdy: [],
@@ -96,8 +95,8 @@ watch: {
     this.websocketFunc();
   },
   paramsId(){
-    this.getCarInfoData()
-    this.echartsBar();
+    this.getCarInfoData();
+    this.websocketFunc();
   }
 },
 
@@ -105,7 +104,7 @@ mounted() {
   this.getCarInfoData();
   this.websocketFunc();  //实时推送信息
   // this.echartsBar();
-  this.echartsBar();
+  // this.echartsBar();
 
 },
 methods: {
@@ -140,7 +139,7 @@ methods: {
         this.getInfoCarDate({"unid": _self.paramsId}).then(res => {
         this.vehicle = res;
         _self.refreshAlarmSet(res);
-      })       
+      })
       //初始化webscoket
       this.initWs(_self.paramsId);
       }else{
@@ -173,7 +172,7 @@ methods: {
     // 报警等级设置
     refreshAlarmSet(row){
       //跳变开关，只有在为true的时候才检查是否跳变，第一次进来时关闭开关，开始刷新websocket后开启
-      this.isChangeSwitch = false; 
+      this.isChangeSwitch = false;
       let model_unid = row.model_unid;
       this.initAlarmSet();
       this.getAlarmSet({model_unid:model_unid}).then(res => {
@@ -227,7 +226,7 @@ methods: {
           });
         }
         this.batteryData = batteryDataTmp;
-        // console.log(this.batteryData, 'batteryData');
+        // console.log('batteryData',this.batteryData);
         this.initRealTime(vehicle.unid);
       }, err => {
         this.batteryData = [];
@@ -237,9 +236,9 @@ methods: {
 
     initRealTime(unid){
       this.getRealData({unid: unid}).then(res => {
-        let entry = res.snapshot.entry;  
-        this.refreshData(entry); 
-        this.echartsBar();    
+        let entry = res.snapshot.entry;
+        this.refreshData(entry);
+        this.echartsBar();
         },err => {
           this.dtdyArr = [];
           this.wdArr = [];
@@ -260,12 +259,16 @@ methods: {
         _this.refreshBatteryStyle(dyArrTmp,wdArrTmp);
         _this.dtdyArr =  dyArrTmp;
         _this.wdArr = wdArrTmp;
+        console.log('dtdyArr', _this.dtdyArr)
+        console.log('wdArr', _this.wdArr);
         _this.$store.dispatch('getDtdyWdArr',{ dyArrTmp, wdArrTmp});
     },
     echartsBar(){
       let _this = this;
       let xDataDtdy = [];
       let xDataWd = [];
+      this.yDataDtdy = [];
+      this.yDataWd = [];
       this.batteryData.forEach(function(item){
         item.forEach(function(items){
           if(items.dyIndex){
@@ -277,23 +280,32 @@ methods: {
         })
       })
       this.xDataDtdy = xDataDtdy.sort(function(a,b){ return a-b;})
+      console.log('xDataDtdy', this.xDataDtdy);
+      console.log('dtdyArr', this.dtdyArr);
+
       this.xDataDtdy.forEach(function(item){
         _this.yDataDtdy.push(_this.dtdyArr[item-1])
       })
       this.xDataWd = xDataWd.sort(function(a,b){ return a-b;})
+      console.log('xDataWd', this.xDataWd);
+      console.log('wdArr', this.wdArr);
+
       this.xDataWd.forEach(function(item){
         _this.yDataWd.push(_this.wdArr[item-1])
       })
-      this.yDataDtdy.forEach(function(item){
-        if(item == undefined){
-          item = '0'
-        }
-      })
-      this.yDataWd.forEach(function(item){
-        if(item == undefined){
-          item = '0'
-        }
-      })
+      // this.yDataDtdy.forEach(function(item){
+      //   if(item == undefined){
+      //     item = '0'
+      //   }
+      // })
+      // this.yDataWd.forEach(function(item){
+      //   if(item == undefined){
+      //     item = '0'
+      //   }
+      // })
+      console.log('yDataWd',this.yDataWd);
+      console.log('yDataDtdy',this.yDataDtdy);
+
     },
     //设置样式
     refreshBatteryStyle:function(dyArrTmp,wdArrTmp) {
@@ -350,7 +362,7 @@ methods: {
         i--;
       }
       return i+1;
-      
+
     },
     //设置报警等级
     getAlarmGrade:function(key, value) {
@@ -495,7 +507,7 @@ ul, li{
     width: 50%;
     color: #000;
 }
-.voltage-tit{ 
+.voltage-tit{
     padding-top:10px;
     font-size:16px;
     text-align:center;
@@ -507,7 +519,7 @@ ul, li{
     flex-direction:row;
     justify-content:center;
     flex: 0 0 auto;
-    
+
 }
 .item-col{
     flex:1;
@@ -566,7 +578,7 @@ span.alarm-3{color: #e25c2d;}
   /*width:55%;*/
 }
 .battery-num1{
-    flex:0 0 6.5%; 
+    flex:0 0 6.5%;
     /*height:20px;*/
     justify-content: space-around;
     align-content:flex-start;
@@ -574,10 +586,10 @@ span.alarm-3{color: #e25c2d;}
     margin-bottom:3px;
     box-sizing:border-box;
     border: 1px solid #48e39c;
-    
+
 }
 .battery-num2{
-    flex:0 0 6.5%; 
+    flex:0 0 6.5%;
     /*height:20px;*/
     justify-content:space-around;
     align-content:flex-start;
@@ -589,7 +601,7 @@ span.alarm-3{color: #e25c2d;}
 }
 /*全屏下电池组显示的数量变多*/
 .battery-num3{
-    flex:0 0 6.5%; 
+    flex:0 0 6.5%;
     /*height:30px;*/
     justify-content:space-around;
     align-content:flex-start;
@@ -603,7 +615,7 @@ span.alarm-3{color: #e25c2d;}
 .batteryDtdyNormal,.batteryWdNormal{
   height:16px;
   line-height: 16px;
-  box-sizing:border-box; 
+  box-sizing:border-box;
   /*background: #48e39c;*/
   text-align: center;
 }

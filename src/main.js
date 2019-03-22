@@ -14,8 +14,7 @@ import {
 import installPlugin from '@/plugin'
 import './index.less'
 import '@/assets/css/main-style.less';//自己定制主样式文件
-import '@/assets/font/iconfont.css'
-import '@/assets/icons/iconfont.css'
+import '@/assets/icons/iconfont.css'//自己定制主图标字体文件
 import 'vue-tree-halower/dist/halower-tree.min.css' // you can customize the style of the tree
 
 import VCharts from 'v-charts'

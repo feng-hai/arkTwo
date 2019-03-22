@@ -25,7 +25,6 @@ export default {
   watch: {
     yData(){
       this.setEcharts();
-      this.setEcharts();
     }
   },
   methods: {
@@ -33,7 +32,6 @@ export default {
       this.dom.resize()
     },
     setEcharts(){
-      // console.log(this.colorType, 'colorType');
       this.legend = this.legendData;
       this.$nextTick(() => {
         let option = {
@@ -86,8 +84,6 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.xData, 'xData');
-    // console.log(this.yData, 'yData');
     this.setEcharts();
   },
   beforeDestroy () {

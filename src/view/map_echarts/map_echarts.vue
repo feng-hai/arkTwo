@@ -1,25 +1,35 @@
 <template>
-  <div style="padding: 0 8px;">
+  <div class="main">
     <Row :gutter="20">
-    <i-col span="16" style="height: 100vh;">
+    <i-col span="16">
       <Card>
         <div class="update-paste-con">
           <gd-map ref="gdmap" @mapMarkerClick="mapMarkerClick" :getProvince="getProvince"></gd-map>
         </div>
       </Card>
     </i-col>
-    <i-col span="8" style="height: 100vh;">
-      <Row style="height: 50vh">
+    <i-col span="8">
+      <Row :gutter="10">
+         <i-col :xs="12" :md="12" :lg="12" v-for="(infor, i) in inforCardData" :key="`infor-${i}`">
+          <infor-card shadow :indexId = i>
+            <p class="textAlign">{{ infor.title }}</p>
+            <p style="font-size: 24px; color: #fff; font-weight: 500; margin-left: 15%">{{getCount(infor.count)}}</p>
+        <!-- <count-to :end="getCount(infor.count)" /> -->
+          </infor-card>
+        </i-col>
+      </Row>
+      <Row>
         <i-col span="24">
-        <Card>
-          <p slot="title">区域分布</p>
+          <Card class="CardPadding">
           <div v-if="flag">
            <echarts-map :dataArray.sync="dataArray" @getProvince="getProvincee"></echarts-map>
           </div>
-      </Card>
-      </i-col>
+          </Card>
+        </i-col>
       </Row>
-      <Row style="height: 50vh">
+    </i-col>
+   
+<!--  <Row style="height: 50vh">
         <i-col span="24" style="margin-top: 20px;">
         <Card>
           <p slot="title">分布排名</p>
@@ -28,16 +38,16 @@
         </div>
       </Card>
       </i-col>
-      </Row>
-    </i-col>
+      </Row> -->
   </Row>
   </div>
 </template>
 
 <script>
+import InforCard from '_c/info-card'
 import GdMap from './components/map.vue'
 import EchartsMap from './components/echartsMap.vue'
-import pie from './components/pie'
+// import pie from './components/pie'
 import {
   mapActions,
   mapGetters,
@@ -48,7 +58,8 @@ export default {
   components: {
     GdMap,
     EchartsMap,
-    pie
+    // pie,
+    InforCard,
   },
   data(){
     return {
@@ -56,17 +67,25 @@ export default {
       flag: false,
       getPro: false,
       getProvince: '',
-      ydata: [
-        {value:10, name:'rose1'},
-        {value:5, name:'rose2'},
-        {value:15, name:'rose3'},
-        {value:25, name:'rose4'},
-        {value:20, name:'rose5'},
-        {value:35, name:'rose6'},
-        {value:30, name:'rose7'},
-        {value:40, name:'rose8'}
-      ],
+      ydata: [],
       colorTypes: ['#00c6de', '#b6bde8', '#fcb822'],
+      inforCardData: [{
+        title: '入网数量',
+        count: 123456789,
+      },
+      {
+        title: '累计工作时间',
+        count: 123456789,
+      },
+      {
+        title: '里程数量',
+        count: 123456789,
+      },
+      {
+        title: '报警数量',
+        count: 123456789,
+      },
+    ],
 
 
     }
@@ -78,21 +97,76 @@ export default {
   // },
   mounted(){
     this.chartsData();
+    this.getCarNumber();
+    this.getMileage();
+    this.getEvent();
+    this.getWorkTime()
   },
   methods: {
     ...mapActions([
       'getEchartData',
+      'getCarDataNumber',
+      'getMileageDataNumber',
+      'getCarEventNumber',
+      'getWorkTimeNumber'
     ]),
+    // 获取入网数
+    getCarNumber(){
+      let _this = this;
+      this.getCarDataNumber({page_id: 0,page_size: 1}).then(res => {
+        _this.inforCardData[0].count = res.count;
+      })
+    },
+    //工作时间
+    getWorkTime(){
+      let _this = this;
+      this.getWorkTimeNumber().then(res => {
+        _this.inforCardData[1].count = (res/3600000).toFixed(0);
+      })
+    },
+    // 获取里程数
+    getMileage(){
+      let _this = this;
+      this.getMileageDataNumber({dt: new Date().getTime()}).then(res => {
+        // console.log('getMileage', res);
+        _this.inforCardData[2].count = res;
+      })
+    },
+    //获取故障车辆的数量
+    getEvent(){
+      let _this = this;
+      this.getCarEventNumber({
+        page_id: 0,
+        page_size: 10,
+        level_alert: 10
+        }).then(res => {
+        _this.inforCardData[3].count = res.count;
+      })
+    },
     getProvincee(data){
       this.getProvince = data;
+    },
+    getCount(num){
+    if(!num)return '0';
+    var info = parseFloat(num).toFixed(0).toString().split('.');
+    num=info[0];
+    var result = '';
+    while (num.length > 3) {
+        result = ',' + num.slice(-3) + result;
+        num = num.slice(0, num.length - 3);
+    }
+    if (num) { result = num + result; }
+    info[0] = result;
+    return info.join('.');
     },
     //高德地图的动态路由的传参
     mapMarkerClick(obj){
      const id = obj.unid;
       const route = {
-        name: 'map_component',
+        name: 'veichle_details',
         params: {
-          id
+          id,
+          VIN: obj.text
         },
         meta: {
           title: `动态路由-${id}`
@@ -284,6 +358,18 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.textAlign{
+  text-align: left;
+  color: #fff;
+  /*font-weight: bold;*/
+  /*margin: 30px 0 6px 20px;*/
+  margin-left: 15%;
+}
+.main >>> .info-card-wrapper{
+  margin-bottom: 10px;
+}
+.CardPadding >>> .ivu-card-body{
+  padding: 0;
+}
 </style>

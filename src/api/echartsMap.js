@@ -18,6 +18,46 @@ export const getInfoCarData = (params) => {
   })
 }
 
+// 总里程数
+export const getMileageNumber = (params) => {
+  let data = new Date().getTime();
+  return axios.request({
+    url: "/bigger/counter/mileage",
+    data: params,
+    method: 'get'
+  })
+}
+
+// 累计工作时间
+export const getWorkTime = (params) => {
+  let data = new Date().getTime();
+  return axios.request({
+    url: "/bigger/counter/worktime",
+    data: params,
+    method: 'get'
+  })
+}
+
+// 入网数量的数据
+export const getCarNumber = (params) => {
+  return axios.request({
+    url: '/bigger/vehicle',
+    params: params,
+    data: params,
+    method: 'get'
+  })
+}
+
+// 故障车辆的数量
+export const getCarEvent = (params) => {
+  return axios.request({
+    url: '/bigger/vehicle',
+    params: params,
+    data: params,
+    method: 'get'
+  })
+}
+
 
 export const getAlarmSetup = (option) => {
   return axios.request({

@@ -62,6 +62,32 @@ function(fun, params, callback, vm) {
   vm.$router.push(route)
 }
 
+
+//更加车辆id获取VIN号
+function(fun, params, callback, vm) {
+  callback(params.row.vin);
+}
+//车辆自动完成
+function(fun, val, callback, vm) {
+  fun({
+    "url": "/bigger/vehicle/info",
+    "method": "get",
+    "params": {
+      "q": val,
+      "page_id": 0,
+      "page_size": 10
+    }
+  }).then(res => {
+    var items = res.data.map(item => {
+      return {
+        label: item.vin,
+        value: item.vin
+      }
+    });
+    callback(items);
+  })
+}
+
 [{
   "label": "大于",
   "value": ">"
@@ -93,3 +119,78 @@ function(fun, params, callback, vm) {
   "label": "最高单体电压",
   "value": "maxBatteryVoltage"
 }]
+
+
+
+function(fun, params, callback, vm) {
+  const id = params.row.unid;
+  const route = {
+    "name": 'veichle_details',
+    "params": {
+      "id": id,
+      "VIN": params.row.vin
+    },
+    "meta": {
+      "title": `动态路由-${id}`
+    }
+  };
+  vm.$router.push(route);
+}
+//格式化车辆状态
+function(fun, val, callback, vm) {
+  var items = val.entry;
+  var temp = items.find(function(item) {
+    if (item.key == "ACTIVE_STATUS") {
+      return true;
+    }
+    return false;
+  });
+  var title = '';
+  if (temp.value == 1) {
+    title = '<a>充电</a>';
+  } else if (temp.value == 2) {
+    title = "<font color='#0000FF'>在线</font>"
+  } else {
+    title = "离线"
+  };
+  callback(title);
+
+}
+
+
+function(fun, params, callback, vm) {
+  const id = params.row.unid;
+  const route = {
+    "name": "veichle_details",
+    "params": {
+      "id": id,
+      "VIN": params.row.vin
+    },
+    "meta": {
+      "title": "动态路由-${id}"
+    }
+  };
+  vm.$router.push(route);
+}
+
+
+
+function(fun, val, callback, vm) {
+  fun({
+    "url": "/bigger/vehicle/info",
+    "method": "get",
+    "params": {
+      "q": val,
+      "page_id": 0,
+      "page_size": 10
+    }
+  }).then(function(res) {
+    var items = res.data.map(function(item){
+      return {
+        label: item.vin,
+        value: item.vin
+      }
+    });
+    callback(items);
+  })
+}

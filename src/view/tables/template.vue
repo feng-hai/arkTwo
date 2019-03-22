@@ -49,6 +49,12 @@ export default {
     ])
   },
   props: {
+    addBeforeFunc: {
+      type: Function,
+      default (option, callback) {
+        return callback(option);
+      }
+    },
     viewId: { //传递视图id，根据视图id获取对应的视图信息
       type: String,
       default () {
@@ -231,21 +237,28 @@ export default {
         var item = Object.assign({}, that.tableData[params.index])
         delete item['isNew']
         delete item['initRowIndex']
-        let option = {
-          url: that.addUrl,
-          data: item,
-          method: 'post'
-        }
-        that.addTableData(option).then(res => {
-          row['isNew'] = false
-          that.$Notice.success({
-            title: '新增提示',
-            desc: '新增一条信息成功'
-          })
+        item = that.addBeforeFunc(item, function(item) {
+          let option = {
+            url: that.addUrl,
+            data: item,
+            method: 'post'
+          }
+          that.addTableData(option).then(res => {
 
-        //  this.getTableInfo()
-          that.$emit('on-saveRow', params.row)
-        })
+            row['isNew'] = false
+            that.$Notice.success({
+              title: '新增提示',
+              desc: '新增一条信息成功'
+            })
+            if (res.data) {
+              item.unid = res.data;
+              //  this.getTableInfo()
+              that.$emit('on-saveRow', item)
+            }
+          })
+        });
+
+
       })
     },
     pageChange(pageIndex) {
@@ -473,6 +486,7 @@ export default {
       }
     },
     editCell(params) {
+      var that=this;
       if (this.isRemote) {
         params.row[params.column.key] = params.value
         this.editTableData({
@@ -484,7 +498,7 @@ export default {
             title: '修改提示提示',
             desc: '修改信息成功'
           })
-          this.$emit('on-save-edit', params)
+          that.$emit('on-save-edit', params)
         })
       }
     },

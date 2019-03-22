@@ -58,17 +58,19 @@ export default {
             },
             dataRange: {
                 min: 0,
-                max: 10,
+                max: 500,
                 x: 'left',
                 y: 'bottom',
                 // text: ['高', '低'], // 文本，默认为数值文本
                 calculable: false,
+                itemWidth: 10,
+                itemHeight: 10,
+                // splitNumber: 5,
                 splitList: [
                   {start: 500},
                   {start: 200, end: 500},
                   {start: 100, end: 200},
-                  {start: 10, end: 100},
-                  {start: 1, end: 10},
+                  {start: 1, end: 100},
                   {end: 0}
                 ],
             color: ['#12508e', '#1e7bd1', '#95c7f0']
@@ -135,6 +137,6 @@ export default {
 <style>
 .echarts{
   width: 100%;
-  height: 39.5vh;
+  height: calc(100vh - 342px);
 }
 </style>

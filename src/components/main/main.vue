@@ -5,7 +5,7 @@
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
         <div class="logo-con">
           <img v-show="!collapsed" :src="maxLogo" key="max-logo" />
-          <img v-show="collapsed" :src="minLogo" key="min-logo" style="width: 45px; height: 45px;" />
+          <img v-show="collapsed" :src="minLogo" key="min-logo" style="width: 40px; height: 40px;" />
         </div>
       </side-menu>
     </Sider>
@@ -14,7 +14,7 @@
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="unreadCount" :user-avator="userAvator"/>
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
-          <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
+          <!-- <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store> -->
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
@@ -47,7 +47,7 @@ import { mapMutations, mapActions, mapGetters } from 'vuex'
 import { getNewTagList, routeEqual,getMenuByRouter } from '@/libs/util'
 import routers from '@/router/routers'
 import minLogo from '@/assets/images/logo-min-white.png'
-import maxLogo from '@/assets/images/logo-white.png'
+import maxLogo from '@/assets/images/logo-max-white.png'
 import './main.less'
 export default {
   name: 'Main',
@@ -153,6 +153,7 @@ export default {
   },
   watch: {
     '$route' (newRoute) {
+      console.log("$route",newRoute)
       const { name, query, params, meta } = newRoute
       this.addTag({
         route: { name, query, params, meta },

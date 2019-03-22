@@ -65,11 +65,15 @@ export default {
     })
   },
   watch:{
-    $route(){
-      this.paramsId = this.$route.params.id;
-      //初始化webscoket
-      this.webscoketData = [];
-      this.initWs(this.paramsId);
+    $route(nv, ov){
+      if(nv.params.id === ov.params.id){ 
+        return;
+      }else{
+        this.paramsId = this.$route.params.id;
+        //初始化webscoket
+        this.webscoketData = [];
+        this.initWs(this.paramsId);
+      }
     },
   },
   methods: {

@@ -7,7 +7,7 @@
   </div>
   <div v-else class="tables-editting-con">
     <div v-if="isEditType=='text'" class="tables-editting-con" style="float:left">
-      <Input :value="value" clearable  @input="handleInput" style="width:150px" class="tables-edit-input" />
+      <Input :value="value" clearable @input="handleInput" style="width:150px" class="tables-edit-input" />
     </div>
     <div v-else-if="isEditType=='date'" class="tables-editting-con" style="float:left">
       <DatePicker :value="value" type="date" placeholder="Select date" style="width: 200px" @on-change="handleInput"></DatePicker>
@@ -92,7 +92,13 @@ export default {
     },
     selectListData() {
       if (this.dataType) {
-        return this.$store.getters.getInfo(this.dataType)
+        var temp = this.$store.getters.getInfo(this.dataType);
+        if (temp) {
+          return temp;
+        } else {
+
+        }
+      
       } else {
         return this.selectList
       }

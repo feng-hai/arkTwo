@@ -76,5 +76,10 @@ export default {
   vehiclesPage:'车辆信息',
   vehicleTypePage:'车辆类型',
   vehicleModelPage:'车辆型号',
-  reportManagement:'报表管理'
+  reportManagement:'报表管理',
+
+  echartsTempate: 'echarts模板',
+  editEcharts: '编辑Echarts',
+  vehicleHistory: '历史数据',
+  echartsTempateV: 'echartsTempateV',
 }

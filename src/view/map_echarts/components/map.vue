@@ -323,7 +323,8 @@ export default {
 }
 #mapApp {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 174px);
+  /*height: auto;*/
   position: relative;
 }
 .selectDiv{

@@ -1,4 +1,8 @@
-import { getEchartsData, getInfoCarData, getAlarmSetup, getModel, getRealTimeData, vehicleDataAnlaysis} from '@/api/echartsMap'
+import { 
+  getEchartsData, getInfoCarData, 
+  getAlarmSetup, getModel, getRealTimeData, 
+  vehicleDataAnlaysis, getCarNumber, getMileageNumber, 
+  getCarEvent, getWorkTime} from '@/api/echartsMap'
 
 export default {
   state: {
@@ -44,6 +48,53 @@ export default {
     openAnalysis({commit}, obj){
       commit('GET_OPEN_ANALYSIS', obj)
     },
+
+    // 获取入网数量
+    getCarDataNumber({commit}, option){
+      return new Promise((resolve, reject) => {
+        getCarNumber(option).then(res => {
+          var data = res.data;
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+     // 累计工作时间
+    getWorkTimeNumber({commit}, option){
+      return new Promise((resolve, reject) => {
+        getWorkTime(option).then(res => {
+          var data = res.data;
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    // 获取总里程数
+    getMileageDataNumber({commit}, option){
+      return new Promise((resolve, reject) => {
+        getMileageNumber(option).then(res => {
+          var data = res.data;
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+
+    // 获取故障车辆的数量
+    getCarEventNumber({commit}, option){
+      return new Promise((resolve, reject) => {
+        getCarEvent(option).then(res => {
+          var data = res.data;
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+
     // 高德地图的数据
   	getEchartData ({commit}, option) {
       return new Promise((resolve, reject) => {

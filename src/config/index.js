@@ -18,7 +18,7 @@ export default {
    */
   baseUrl: {
     dev: 'http://58.213.131.5', // 'https://shuchi.wlwltech.com:20443',//'https://newnetcom.com',
-    pro: 'https://produce.com'
+    pro: 'http://58.213.131.5'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

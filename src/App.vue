@@ -10,6 +10,9 @@ import {
   mapGetters,
   mapState
 } from 'vuex'
+import {
+  getToken
+} from '@/libs/util'
 export default {
   name: 'App',
   methods: {
@@ -22,10 +25,12 @@ export default {
     ]),
   },
   mounted() {
-    this.getOrgInfoAction();
-    this.getMenuInfoAction();
-    this.getRolesInfoAction();
-    this.getVehicleModelAction();
+    if (getToken()) {
+      this.getOrgInfoAction();
+      this.getMenuInfoAction();
+      this.getRolesInfoAction();
+      this.getVehicleModelAction();
+    }
   }
 }
 </script>

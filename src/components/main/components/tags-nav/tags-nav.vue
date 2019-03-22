@@ -186,6 +186,7 @@ export default {
   },
   watch: {
     '$route' (to) {
+      console.log(to)
       this.getTagElementByRoute(to)
     },
     visible (value) {
