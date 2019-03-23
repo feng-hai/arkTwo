@@ -19,23 +19,21 @@ export default {
     models: []
   },
   mutations: {
-    setOrganization(state, orgInfo) {
+    setOrganization (state, orgInfo) {
       var rootId = getCookiesValueByKey('domainId')
 
       state.orgTree = translateDataToTree(orgInfo, rootId)
       state.organizationList = orgInfo
     },
-    setMenusList(state, menuInfo) {
+    setMenusList (state, menuInfo) {
       state.menusList = menuInfo.map(item => {
-
         return {
           label: item.name,
           value: item.unid
         }
-
       })
     },
-    setRolesList(state, rolesInfo) {
+    setRolesList (state, rolesInfo) {
       state.roles = rolesInfo.map(item => {
         return {
           label: item.name,
@@ -43,15 +41,13 @@ export default {
         }
       })
     },
-    setModelList(state, modelInfo) {
-
+    setModelList (state, modelInfo) {
       state.models = modelInfo.map(item => {
         return {
           label: item.name,
           value: item.unid
         }
-      });
-
+      })
     }
   },
   getters: {
@@ -68,25 +64,24 @@ export default {
       } else if (type == 'org') {
         return state.organizationList
       } else if (type == 'menu') {
-        //console.log("menu", state.menusList)
+        // console.log("menu", state.menusList)
         return state.menusList
       } else if (type == 'role') {
         return state.roles
       } else if (type == 'model') {
-
         return state.models
       }
     }
   },
   actions: {
-    updateData({
+    updateData ({
       commit
     }) {
     //  console.log('updateData')
       commit('setOrganization', [])
     },
 
-    getMenuInfoAction({
+    getMenuInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -95,14 +90,14 @@ export default {
           page_size: 1000
         }).then((res) => {
           commit('setMenusList', res.data.collection)
-        //  console.log(res.data.collection)
+          //  console.log(res.data.collection)
           resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
       })
     },
-    getVehicleModelAction({
+    getVehicleModelAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -117,7 +112,7 @@ export default {
         })
       })
     },
-    getRolesInfoAction({
+    getRolesInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -125,7 +120,7 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-          //console.log("角色信息", res);
+          // console.log("角色信息", res);
           commit('setRolesList', res.data.collection)
 
           resolve(res.data.collection)
@@ -135,7 +130,7 @@ export default {
       })
     },
     // 分组信息
-    getOrgInfoAction({
+    getOrgInfoAction ({
       state,
       commit
     }) {

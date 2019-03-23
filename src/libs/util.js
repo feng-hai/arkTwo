@@ -76,7 +76,7 @@ export const getMenuByRouter = (list, access) => {
  * @returns {Array}
  */
 export const getBreadCrumbList = (route, homeRoute) => {
-  //console.log(homeRoute, "homeRoute")
+  // console.log(homeRoute, "homeRoute")
   let homeItem = { ...homeRoute,
     icon: homeRoute.meta.icon
   }
@@ -156,23 +156,22 @@ export const getTagNavListFromLocalstorage = () => {
  * @description 用于找到路由列表中name为home的对象
  */
 export const getHomeRoute = (routers, homeName = 'home') => {
-  //console.log(homeName);
+  // console.log(homeName);
 
   let i = -1
   let len = routers.length
   let homeRoute = {}
   while (++i < len) {
     let item = routers[i]
-  //  console.log("getHomeRoute", item.name)
+    //  console.log("getHomeRoute", item.name)
     if (item.children && item.children.length) {
       let res = getHomeRoute(item.children, homeName)
       if (res.name) return res
     } else {
-
       if (item.name === homeName) homeRoute = item
     }
   }
-  //console.log(homeRoute, "getHomeRoute")
+  // console.log(homeRoute, "getHomeRoute")
   return homeRoute
 }
 
@@ -289,7 +288,7 @@ export const getArrayFromFile = (file) => {
     let reader = new FileReader()
     reader.readAsText(file) // 以文本格式读取
     let arr = []
-    reader.onload = function(evt) {
+    reader.onload = function (evt) {
       let data = evt.target.result // 读到的数据
       let pasteData = data.trim()
       arr = pasteData.split((/[\n\u0085\u2028\u2029]|\r\n?/g)).map(row => {
@@ -412,7 +411,7 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
-      function(callback) {
+      function (callback) {
         return window.setTimeout(callback, 1000 / 60)
       }
     )
@@ -455,7 +454,7 @@ export const setTitle = (routeItem, vm) => {
 var DATE_REGEXP = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})([T\\s](\\d{2}):(\\d{2}):(\\d{2})(\\.(\\d{3}))?)?.*')
 export const toDate = (dateString) => {
   if (DATE_REGEXP.test(dateString)) {
-    var timestamp = dateString.replace(DATE_REGEXP, function($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
+    var timestamp = dateString.replace(DATE_REGEXP, function ($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
       var date = new Date($year, $month - 1, $day, $hour || '00', $minute || '00', $second || '00', $milliscond || '00')
       return date.getTime()
     })
@@ -514,7 +513,7 @@ export const formateDate = (date, fmt) => {
  *  (json) :json对象
  */
 export const toStr = (json) => {
-  var str = JSON.stringify(json, function(key, val) {
+  var str = JSON.stringify(json, function (key, val) {
     if (typeof val === 'function') {
       return val + ''
     }
@@ -527,7 +526,7 @@ export const toStr = (json) => {
  */
 export const toJson = (str) => {
   // json字符串转换成对象
-  let json = JSON.parse(str, function(k, v) {
+  let json = JSON.parse(str, function (k, v) {
     if (v.indexOf && v.indexOf('function') > -1) {
       return eval('(function(){return ' + v + ' })()')
     }
@@ -625,7 +624,7 @@ export const formatHistoryData = (datas) => {
   return tempDatas
 }
 
-Array.prototype.contains = function(val) {
+Array.prototype.contains = function (val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] == val) {
       return true

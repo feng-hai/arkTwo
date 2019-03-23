@@ -38,7 +38,7 @@ export default [
         icon: 'md-home'
       },
       component: () =>
-        import ('@/view/single-page/home')
+        import('@/view/single-page/home')
     }]
   },
   {
@@ -49,7 +49,7 @@ export default [
       hideInMenu: true
     },
     component: () =>
-      import ('@/view/login/login.vue')
+      import('@/view/login/login.vue')
   },
   {
     path: '/message',
@@ -67,7 +67,7 @@ export default [
         title: '消息中心'
       },
       component: () =>
-        import ('@/view/single-page/message/index.vue')
+        import('@/view/single-page/message/index.vue')
     }]
   },
   {
@@ -88,7 +88,7 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/argu-page/params.vue')
+          import('@/view/argu-page/params.vue')
       },
       {
         path: 'view/:id',
@@ -100,7 +100,7 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/tools/view/tools_views.vue')
+          import('@/view/tools/view/tools_views.vue')
       },
       { // 单车页面的实时监控、数据明细、轨迹回放、电池分布的总和
         path: 'veichle_details/:id/:VIN',
@@ -113,7 +113,7 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/components/veichleDetails/index.vue')
+          import('@/view/components/veichleDetails/index.vue')
       },
       {
         path: 'modelUpdate/:id',
@@ -126,7 +126,7 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/components/modelUpdate/index.vue')
+          import('@/view/components/modelUpdate/index.vue')
       },
       {
         path: 'map',
@@ -137,7 +137,7 @@ export default [
           notCache: true
         },
         component: () =>
-          import ('@/view/argu-page/map.vue')
+          import('@/view/argu-page/map.vue')
       },
       {
         path: 'map_component/:id',
@@ -150,7 +150,7 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/argu-page/map.vue')
+          import('@/view/argu-page/map.vue')
       },
       {
         path: 'data_anlaysis/:id',
@@ -163,11 +163,10 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () =>
-          import ('@/view/argu-page/data_anlaysis.vue')
+          import('@/view/argu-page/data_anlaysis.vue')
       }
     ]
   },
-
 
   {
     path: '/401',
@@ -176,7 +175,7 @@ export default [
       hideInMenu: true
     },
     component: () =>
-      import ('@/view/error-page/401.vue')
+      import('@/view/error-page/401.vue')
   },
   {
     path: '/500',
@@ -185,7 +184,7 @@ export default [
       hideInMenu: true
     },
     component: () =>
-      import ('@/view/error-page/500.vue')
+      import('@/view/error-page/500.vue')
   },
   {
     path: '*',
@@ -194,6 +193,6 @@ export default [
       hideInMenu: true
     },
     component: () =>
-      import ('@/view/error-page/404.vue')
+      import('@/view/error-page/404.vue')
   }
 ]

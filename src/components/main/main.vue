@@ -44,7 +44,7 @@ import Fullscreen from './components/fullscreen'
 import Language from './components/language'
 import ErrorStore from './components/error-store'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
-import { getNewTagList, routeEqual,getMenuByRouter } from '@/libs/util'
+import { getNewTagList, routeEqual, getMenuByRouter } from '@/libs/util'
 import routers from '@/router/routers'
 import minLogo from '@/assets/images/logo-min-white.png'
 import maxLogo from '@/assets/images/logo-max-white.png'
@@ -84,11 +84,11 @@ export default {
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-      //console.log(list)
+      // console.log(list)
       return list
     },
     menuList () {
-      return this.$store.getters.menuList //getMenuByRouter(this.$store.state.user.menus)//动态加载菜单时用这条语句 //this.$store.getters.menuList//this.$store.state.user.menus
+      return this.$store.getters.menuList // getMenuByRouter(this.$store.state.user.menus)//动态加载菜单时用这条语句 //this.$store.getters.menuList//this.$store.state.user.menus
     },
     local () {
       return this.$store.state.app.local
@@ -112,7 +112,7 @@ export default {
     ...mapActions([
       'handleLogin',
       'getUnreadMessageCount',
-      "getMenuList"
+      'getMenuList'
     ]),
     turnToPage (route) {
       let { name, params, query } = {}
@@ -153,7 +153,7 @@ export default {
   },
   watch: {
     '$route' (newRoute) {
-      //console.log("$route",newRoute)
+      // console.log("$route",newRoute)
       const { name, query, params, meta } = newRoute
       this.addTag({
         route: { name, query, params, meta },

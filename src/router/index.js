@@ -20,16 +20,16 @@ const router = new Router({
   mode: 'hash'
 })
 const LOGIN_PAGE_NAME = 'login'
-//静态菜单和动态菜单结合
+// 静态菜单和动态菜单结合
 const getMenus = () => {
-  var hash = {};
+  var hash = {}
 
   routes.forEach(item => {
-    hash[item.name] = true;
+    hash[item.name] = true
   })
   store.state.addRoutes.routeData.forEach(item => {
     if (!hash[item.name]) {
-      routes.push(item);
+      routes.push(item)
     }
   })
   // let menu = routes.push.apply(routes, store.state.addRoutes.routeData)
@@ -38,7 +38,7 @@ const getMenus = () => {
 
 const turnTo = (to, access, next) => {
   let menu = getMenus()
-  next();
+  next()
   // if (canTurnTo(to.name, access, menu)) next() // 有权限，可访问
   // else next({
   //   replace: true,

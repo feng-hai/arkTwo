@@ -83,5 +83,5 @@ export default {
   editEcharts: '编辑Echarts',
   vehicleHistory: '历史数据',
   echartsTempateV: 'echartsTempateV',
-  monitoringVachilePage:'关注车辆'
+  monitoringVachilePage: '关注车辆'
 }
