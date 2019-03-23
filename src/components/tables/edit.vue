@@ -98,7 +98,7 @@ export default {
         } else {
 
         }
-      
+
       } else {
         return this.selectList
       }
@@ -133,7 +133,7 @@ export default {
         }
         var that = this;
         if (this.params.column.formateFun && typeof(this.params.column.formateFun) === 'function') {
-          console.log(this.value)
+
           this.params.column.formateFun(getDataByParams, toJson(this.value), function(item) {
             that.label = item;
           }, this);

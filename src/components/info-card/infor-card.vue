@@ -38,7 +38,8 @@ export default {
   },
   data(){
     return{
-      colorTypes: ['#0088cc', '#734BA9', '#2BAAB1', '#E36159'],
+      colorTypes: ['#20c6b8', '#3149a4', '#02b3d7', '#ff7e53' ],
+      // colorTypes: ['#0088cc', '#734BA9', '#2BAAB1', '#E36159'],
       percent: 17,
     }
   },
@@ -86,6 +87,9 @@ export default {
     position: relative;
     display: flex;
     .left-area{
+      display: flex !important;
+  justify-content:center;
+  align-items:center;
       .common;
       & > .icon{
         .middle-center;

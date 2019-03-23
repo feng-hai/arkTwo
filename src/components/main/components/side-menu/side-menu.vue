@@ -52,7 +52,7 @@ export default {
     },
     rootIconSize: {
       type: Number,
-      default: 20
+      default: 24
     },
     iconSize: {
       type: Number,

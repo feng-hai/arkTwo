@@ -84,7 +84,7 @@ export default {
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-      console.log(list)
+      //console.log(list)
       return list
     },
     menuList () {
@@ -153,7 +153,7 @@ export default {
   },
   watch: {
     '$route' (newRoute) {
-      console.log("$route",newRoute)
+      //console.log("$route",newRoute)
       const { name, query, params, meta } = newRoute
       this.addTag({
         route: { name, query, params, meta },

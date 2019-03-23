@@ -71,7 +71,7 @@ export default {
                   {start: 200, end: 500},
                   {start: 100, end: 200},
                   {start: 1, end: 100},
-                  {end: 0}
+                  // {end: 0}
                 ],
             color: ['#12508e', '#1e7bd1', '#95c7f0']
             },
@@ -137,6 +137,6 @@ export default {
 <style>
 .echarts{
   width: 100%;
-  height: calc(100vh - 342px);
+  height: calc(100vh - 356px);
 }
 </style>

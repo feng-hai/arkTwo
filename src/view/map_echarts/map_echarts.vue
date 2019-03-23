@@ -9,11 +9,14 @@
       </Card>
     </i-col>
     <i-col span="8">
-      <Row :gutter="10">
+      <Row :gutter="15">
          <i-col :xs="12" :md="12" :lg="12" v-for="(infor, i) in inforCardData" :key="`infor-${i}`">
           <infor-card shadow :indexId = i>
+            <Icons :type="infor.icon" :size="40" />
+            <div class="infordata">
             <p class="textAlign">{{ infor.title }}</p>
-            <p style="font-size: 24px; color: #fff; font-weight: 500; margin-left: 15%">{{getCount(infor.count)}}</p>
+            <p class="textcount">{{getCount(infor.count)}}</p>
+            </div>
         <!-- <count-to :end="getCount(infor.count)" /> -->
           </infor-card>
         </i-col>
@@ -47,6 +50,8 @@
 import InforCard from '_c/info-card'
 import GdMap from './components/map.vue'
 import EchartsMap from './components/echartsMap.vue'
+import Icons from '_c/icons'
+
 // import pie from './components/pie'
 import {
   mapActions,
@@ -60,6 +65,7 @@ export default {
     EchartsMap,
     // pie,
     InforCard,
+    Icons
   },
   data(){
     return {
@@ -68,20 +74,24 @@ export default {
       getPro: false,
       getProvince: '',
       ydata: [],
-      colorTypes: ['#00c6de', '#b6bde8', '#fcb822'],
+      colorTypes: ['#20c6b8', '#ff89b0', '#02b3d7', '#f3b409'],
       inforCardData: [{
+        icon:'wangguan',
         title: '入网数量',
         count: 123456789,
       },
       {
+        icon:'shijian',
         title: '累计工作时间',
         count: 123456789,
       },
       {
+        icon:'licheng',
         title: '里程数量',
         count: 123456789,
       },
       {
+        icon:'baojing1',
         title: '报警数量',
         count: 123456789,
       },
@@ -362,14 +372,24 @@ export default {
 .textAlign{
   text-align: left;
   color: #fff;
+  font-size: 13px;
   /*font-weight: bold;*/
   /*margin: 30px 0 6px 20px;*/
-  margin-left: 15%;
+  
+}
+.textcount{
+font-size: 24px;
+color: #fff;
 }
 .main >>> .info-card-wrapper{
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .CardPadding >>> .ivu-card-body{
   padding: 0;
 }
+.infordata{
+  flex:1;
+  margin-left: 20px;
+}
+
 </style>

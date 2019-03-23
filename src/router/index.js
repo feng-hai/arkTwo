@@ -17,14 +17,23 @@ const {
 Vue.use(Router)
 const router = new Router({
   routes,
-  mode: 'hash',
-  base: '/ark6/',
+  mode: 'hash'
 })
 const LOGIN_PAGE_NAME = 'login'
 //静态菜单和动态菜单结合
 const getMenus = () => {
-  let menu = Object.assign(routes, store.state.addRoutes.routeData)
-  return menu
+  var hash = {};
+
+  routes.forEach(item => {
+    hash[item.name] = true;
+  })
+  store.state.addRoutes.routeData.forEach(item => {
+    if (!hash[item.name]) {
+      routes.push(item);
+    }
+  })
+  // let menu = routes.push.apply(routes, store.state.addRoutes.routeData)
+  // return menu
 }
 
 const turnTo = (to, access, next) => {

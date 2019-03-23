@@ -68,7 +68,7 @@ export default {
       } else if (type == 'org') {
         return state.organizationList
       } else if (type == 'menu') {
-        console.log("menu", state.menusList)
+        //console.log("menu", state.menusList)
         return state.menusList
       } else if (type == 'role') {
         return state.roles
@@ -82,7 +82,7 @@ export default {
     updateData({
       commit
     }) {
-      console.log('updateData')
+    //  console.log('updateData')
       commit('setOrganization', [])
     },
 
@@ -95,7 +95,7 @@ export default {
           page_size: 1000
         }).then((res) => {
           commit('setMenusList', res.data.collection)
-          console.log(res.data.collection)
+        //  console.log(res.data.collection)
           resolve(res.data.collection)
         }).catch(error => {
           reject(error)
@@ -125,7 +125,7 @@ export default {
           page_id: 0,
           page_size: 1000
         }).then((res) => {
-          console.log("角色信息", res);
+          //console.log("角色信息", res);
           commit('setRolesList', res.data.collection)
 
           resolve(res.data.collection)

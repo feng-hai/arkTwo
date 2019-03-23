@@ -234,7 +234,7 @@ export default {
             },
             'input': (val, params) => {
               this.edittingText = val
-              var that=this;
+              var that = this;
               if (params.column.formateFun && typeof params.column.formateFun == "function") {
                 params.column.formateFun(val, function(item) {
                   console.log(item)
@@ -276,7 +276,8 @@ export default {
             edittingCellId: this.edittingCellId,
             editable: this.editable,
             editType: params.column.editType ? params.column.editType : 'text', // 默认是text类型
-            selectList: params.column.selectList ? params.column.selectList : []
+            selectList: params.column.selectList ? params.column.selectList : [],
+            dataType: params.column['dataType']
           }
         })
         // }

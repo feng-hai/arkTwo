@@ -4,26 +4,16 @@ const USER01 = {
   access: ['super_admin', 'admin'],
   token: 'super_admin',
   avator: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png',
-  menus: [
-    {
+  menus: [{
       path: '/vehicleMonitoring',
       name: 'vehicleMonitoring',
       component: 'main',
       meta: {
-        icon: 'md-menu',
-        title: '多级菜单'
+        icon: '_jiankong',
+        title: '车辆监控'
       },
       children: [
-        //   {
-        //   path: 'devicePage',
-        //   name: 'devicePage',
-        //   meta: {
-        //
-        //     title: '设备管理'
-        //   },
-        //   component: 'baseInfo/devicePage'
-        //
-        // },
+
         {
           path: 'monitoring',
           name: 'monitoring',
@@ -34,22 +24,12 @@ const USER01 = {
           component: 'vehicleMonitoring/monitoringPage'
 
         },
-        // {
-        //   path: 'vehicleTypePage',
-        //   name: 'vehicleTypePage',
-        //   meta: {
-        //
-        //     title: '车辆类型管理'
-        //   },
-        //   component: 'baseInfo/vehicleTypePage'
-        //
-        // },
         {
-          path: 'vehicleModelPage',
-          name: 'vehicleModelPage',
+          path: 'monitoringVachilePage',
+          name: 'monitoringVachilePage',
           meta: {
 
-            title: '车辆型号管理'
+            title: '关注车辆'
           },
           component: 'baseInfo/vehicleModelPage'
 
@@ -120,7 +100,7 @@ const USER01 = {
       name: 'baseInfo',
       component: 'main',
       meta: {
-        icon: 'md-menu',
+        icon: '_jcxx',
         title: '多级菜单'
       },
       children: [
@@ -258,38 +238,8 @@ const USER01 = {
           },
           component: 'tools/viewManagement'
         },
-        {
-          path: 'params/123',
-          name: 'params',
-          params: {
-            id: 11
-          },
-          meta: {
-            title: `动态路由`,
-            notCache: false
-          },
-          component: 'tables/template'
 
-        },
 
-        {
-          path: 'level_2_3',
-          name: 'level_2_3',
-          meta: {
-            icon: 'md-funnel',
-            title: '二级-3'
-          },
-          component: 'components/tree-select/index'
-        },
-        {
-          path: 'viewList',
-          name: 'viewList',
-          meta: {
-            icon: 'md-funnel',
-            title: 'viewList'
-          },
-          component: 'tools/view/tools_viewList'
-        },
         {
           path: 'tools_time',
           name: 'tools_time',

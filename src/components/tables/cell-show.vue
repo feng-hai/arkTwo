@@ -8,7 +8,7 @@
       <span v-else class="value-con" v-html="label.length>40?label.substring(0, 13) + '.....':label"></span>
       <!-- <Button v-if="editable" @click="startEdit" class="tables-edit-btn" style="padding: 2px 4px;" type="text"><Icon type="md-create"></Icon></Button> -->
     </div>
-    <div slot="content"  style="white-space: normal;">
+    <div slot="content" style="white-space: normal;">
       {{label}}
     </div>
   </Tooltip>
@@ -65,8 +65,8 @@ export default {
     selectList: Array
 
   },
-  mounted() {
-    this.getSelectListText()
+  mounted() {;
+    this.getSelectListText();
   },
   computed: {
     isLink() {
@@ -75,7 +75,7 @@ export default {
 
     selectListData() {
       if (this.dataType) {
-        this.$store.getters.getInfo(this.dataType)
+       return  this.$store.getters.getInfo(this.dataType)
       } else {
         return selectList
       }
@@ -110,7 +110,7 @@ export default {
         if (this.params.column.formateFun && typeof(this.params.column.formateFun) === 'function') {
           var that = this;
           this.params.column.formateFun(getDataByParams, this.value, function(item) {
-            console.log(item);
+
             that.label = item;
           }, this);
         } else {
@@ -124,8 +124,8 @@ export default {
         this.label = this.value;
       } else if (this.editType == 'select') {
         let text = '没有匹配项目'
-        for (var index in this.selectList) {
-          var item = this.selectList[index]
+        for (var index in this.selectListData) {
+          var item = this.selectListData[index]
           if (this.value == item.value) {
             text = item.label
             break
@@ -134,7 +134,8 @@ export default {
         this.label = text
       } else if (this.editType == 'selectTree') {
         let text = '没有匹配项目'
-        var node = breadthQuery(this.selectList, this.value)
+
+        var node = breadthQuery(this.selectListData, this.value)
         if (node) {
           text = node.title
         }
