@@ -4,16 +4,20 @@
   <div id="webscoket" style="overflow: hidden;">
     <data-webscoket :getWebscoket="webscoketData" :dom="doms"></data-webscoket>
   </div>
+  
   <div id="dataDetails" style="overflow: hidden;margin-top: 10px;">
     <data-details :getWebscoket="webscoketData" :paramsId="paramsId"></data-details>
   </div>
-  <div id="dataBack" style="overflow: hidden; height: 565px;margin-top: 10px;">
-    <data-back :paramsId="paramsId"></data-back>
-  </div>
+
   <Card id="batteries" style="margin-top: 10px;">
     <p slot="title">电池组</p>
     <battery-arr :getWebscoket="webscoketData" :paramsId="paramsId"></battery-arr>
   </Card>
+
+  <div id="dataBack" style="overflow: hidden; height: 565px;margin-top: 10px;">
+    <data-back :paramsId="paramsId"></data-back>
+  </div>
+
   <div id ="history">
   <vehicleHistoryPage :paramsId="paramsId"></vehicleHistoryPage>
   </div>
@@ -66,7 +70,7 @@ export default {
   },
   watch:{
     $route(nv, ov){
-      if(nv.params.id === ov.params.id){ 
+      if(nv.params.id === ov.params.id){
         return;
       }else{
         this.paramsId = this.$route.params.id;
@@ -100,7 +104,7 @@ export default {
         }else{
           return;
         }
-         
+
         }
         _this.ws.onclose = function(e) {
           console.log(e, '监听关闭事件')
@@ -109,7 +113,7 @@ export default {
           // _this.websocketFunc();
         }
       // }, 10)
-      
+
     },
     //初始化webscoket
     initWs(unid){
