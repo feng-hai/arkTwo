@@ -1,7 +1,7 @@
 <template>
 <div>
   <Card >
-    <tables :total="total" :permit="permit" @on-saveRow="saveRow" :buttons="buttons" :current="current" :pageSize="pageSize" @on-page-change="pageChange" @on-pageSize-change="pageSizeChange" :loading="isLoading" ref="tables" @on-add="addItem" @on-select="onSelect"
+    <tables  :total="total":height="height" :permit="permit" @on-saveRow="saveRow" :buttons="buttons" :current="current" :pageSize="pageSize" @on-page-change="pageChange" @on-pageSize-change="pageSizeChange" :loading="isLoading" ref="tables" @on-add="addItem" @on-select="onSelect"
       @on-select-cancel="onSelectCancel" @on-select-all="onSelectAll" @on-select-all-cancel="onSelectAllCancel" :isPage="isPage" @on-all-delete="deleteItems" @on-edit="editPage" @on-selection-change="handleSelectRow" @on-search="search" @on-search-edit="searchP"
       @on-save-edit="editCell" editable searchable search-place="top" v-model="tableData" :columns="columns" @on-delete="handleDelete" />
     <!-- <Button style="margin: 10px 0;" type="primary" @click="exportExcel">导出为Csv文件</Button> -->
@@ -25,7 +25,8 @@ import {
 import {
   getParams2,
   toJson,
-  toStr
+  toStr,
+  windowHeight
 } from '@/libs/util'
 import {
   mapActions,
@@ -548,8 +549,12 @@ export default {
   },
   mounted() {
     this.initParams()
-    this.getTableInfo()
-    //  console.log($(document).height());
+    this.getTableInfo() //174 头部区域高度，72.77 ：查询区域高度 32：分页区域高度
+    this.height=windowHeight()-174-72.77-32;
+    var that=this;
+    window.onresize = function temp() {
+        that.height=windowHeight()-174-72.77-32;
+   };
   },
   watch: {
     dataT(nv, ov) {
@@ -564,5 +569,7 @@ export default {
 </script>
 
 <style>
-
+#tableApp {
+  width: 100%;
+  height: calc(100vh - 174px);}
 </style>

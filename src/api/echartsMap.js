@@ -91,4 +91,9 @@ export const vehicleDataAnlaysis = (params) => {
     method: 'get'
   })
 }
-
+export const getProvince=(params)=>{
+  return axios.request({
+    url: params.url,
+    method: 'get'
+  })
+}

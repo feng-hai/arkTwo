@@ -1,8 +1,8 @@
-import { 
-  getEchartsData, getInfoCarData, 
-  getAlarmSetup, getModel, getRealTimeData, 
-  vehicleDataAnlaysis, getCarNumber, getMileageNumber, 
-  getCarEvent, getWorkTime} from '@/api/echartsMap'
+import {
+  getEchartsData, getInfoCarData,
+  getAlarmSetup, getModel, getRealTimeData,
+  vehicleDataAnlaysis, getCarNumber, getMileageNumber,
+  getCarEvent, getWorkTime,getProvince} from '@/api/echartsMap'
 
 export default {
   state: {
@@ -104,7 +104,7 @@ export default {
           resolve(data)
         }).catch(err => {
           reject(err)
-        }) 
+        })
       })
     },
     // 报警信息的数据
@@ -115,11 +115,21 @@ export default {
           resolve(data)
         }).catch(err => {
           reject(err)
-        }) 
+        })
       })
     },
     //地图省会联动
-    getProvince({commit}, getProvince){
+    getProvinceAction({commit}, url){
+
+      return new Promise((resolve, reject) =>{
+        getProvince({url:url}).then(res=>{
+          console.log(res)
+          var data = res.data;
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
+      })
       commit('GET_PROVINCE', getProvince)
     },
     getArr({commit}, getArr){

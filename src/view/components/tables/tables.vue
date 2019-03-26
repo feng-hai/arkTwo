@@ -111,5 +111,7 @@ export default {
 </script>
 
 <style>
+.ivu-table-overflowY:{
 
+}
 </style>

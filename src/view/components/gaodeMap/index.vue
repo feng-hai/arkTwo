@@ -17,10 +17,12 @@
            </div>
       </div>
     </div>
+    <div v-if="xDataDtdy.length > 0">
       <chart-bar style="height: 300px;" :xData="xDataDtdy" :yData="yDataDtdy" :legendData="legendData1" :colorType="colorType1" />
-      <chart-bar style="height: 300px;" :xData="xDataWd" :yData="yDataWd" :legendData="legendData2" :colorType="colorType2" />
+      <chart-bar style="height: 300px;" :xData="xDataWd" :yData="yDataWd" :legendData="legendData2" :colorType="colorType2" /> 
+    </div>
+    <div v-else style="text-align: center;">暂无数据</div>
   </div>
-
   <div v-else style="text-align: center;">暂无数据</div>
 </div>
 </template>
@@ -238,7 +240,6 @@ methods: {
       this.getRealData({unid: unid}).then(res => {
         let entry = res.snapshot.entry;
         this.refreshData(entry);
-        this.echartsBar();
         },err => {
           this.dtdyArr = [];
           this.wdArr = [];
@@ -259,8 +260,11 @@ methods: {
         _this.refreshBatteryStyle(dyArrTmp,wdArrTmp);
         _this.dtdyArr =  dyArrTmp;
         _this.wdArr = wdArrTmp;
-        console.log('dtdyArr', _this.dtdyArr)
-        console.log('wdArr', _this.wdArr);
+        if(_this.dtdyArr.length > 0){
+          _this.echartsBar();
+        }
+        // console.log('dtdyArr', _this.dtdyArr)
+        // console.log('wdArr', _this.wdArr);
         _this.$store.dispatch('getDtdyWdArr',{ dyArrTmp, wdArrTmp});
     },
     echartsBar(){
@@ -280,15 +284,15 @@ methods: {
         })
       })
       this.xDataDtdy = xDataDtdy.sort(function(a,b){ return a-b;})
-      console.log('xDataDtdy', this.xDataDtdy);
-      console.log('dtdyArr', this.dtdyArr);
+      // console.log('xDataDtdy', this.xDataDtdy);
+      // console.log('dtdyArr', this.dtdyArr);
 
       this.xDataDtdy.forEach(function(item){
         _this.yDataDtdy.push(_this.dtdyArr[item-1])
       })
       this.xDataWd = xDataWd.sort(function(a,b){ return a-b;})
-      console.log('xDataWd', this.xDataWd);
-      console.log('wdArr', this.wdArr);
+      // console.log('xDataWd', this.xDataWd);
+      // console.log('wdArr', this.wdArr);
 
       this.xDataWd.forEach(function(item){
         _this.yDataWd.push(_this.wdArr[item-1])
@@ -429,7 +433,9 @@ websocketFunc(){
     _this.refreshBatteryStyle(dyArrTmp,wdArrTmp);
     _this.dtdyArr =  dyArrTmp;
     _this.wdArr = wdArrTmp;
-    _this.echartsBar();
+    if( _this.dtdyArr.length > 0){
+      _this.echartsBar();
+    }
     _this.$store.dispatch('getDtdyWdArr',{ dyArrTmp, wdArrTmp});
 },
 

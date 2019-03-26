@@ -1,20 +1,24 @@
 <template>
-	<div class="container" >
-		<!-- 国标的页面 -->
-		<div>
-			<Card class="cardText">
-				<p slot="title">基础信息</p>
-				<Row >
-					<Col span="8" v-for="items in item.data" :key="items.title">
-						<div class="from-group">
-							<div class="title">{{items.title}} : </div>
-							<div class="content">{{items.content}}</div>
-						</div>
-					</Col>
-				</Row>
-			</Card>
-		</div>
-	</div>
+	<Card class="main">
+		<Row class="setrow">
+			<Col span="4" align="center">
+				<span class="setAlign">VIN:</span>
+				<span>{{vehicle.vin}}</span>
+			</Col>
+			<Col span="4" align="center">
+				<span class="setAlign">车牌号:</span>
+				<span>{{vehicle.licence}}</span>
+			</Col>
+			<Col span="4" align="center">
+				<span class="setAlign">编号:</span>
+				<span>{{vehicle.name}}</span>
+			</Col>
+			<Col span="4" align="center">
+				<span class="setAlign">型号:</span>
+				<span>{{getmodel(vehicle.model)}}</span>
+			</Col>
+		</Row>
+	</Card>
 </template>
 
 <script>
@@ -25,74 +29,69 @@ import {
 } from 'vuex'
 export default{
 	name: 'data_details',
-	mixins: [setData],
 	props: {
-		getWebscoket: {
-			type: Array
-		},
-		paramsId:{
-			type: String
-		},
+    paramsId: {
+      type: String
+    }
 	},
 	data(){
 		return{
-			item:{
-        data:[]
-      }
+			vehicle: {},
 		}
 	},
 	mounted(){
-		// 获取type和title的名称
-
-	},
-	computed: {
+		// 获取车辆的基本信息
+		this.getInfoData();
 
 	},
 	watch: {
-
+		paramsId(){
+			this.getInfoData();
+		}
 	},
 	methods: {
-	...mapActions([
-  'getDetails',
-  'getInfoCarDate',
-  'getRealData',
-  'getWebscokets'
-	]),
-
-},
-
+		...mapActions([
+  'getInfoCarDate'
+]),
+	getmodel(val){
+		if(!val){
+			return '没有匹配项目';
+		}else{
+			return val;
+		}
+	},
+	getInfoData(){
+	  let _self = this;
+	  if(_self.paramsId){
+	    this.getInfoCarDate({"unid": _self.paramsId}).then(res => {
+	    this.vehicle = res;
+	  })
+	  }else{
+	    let params = _self.$route.params;
+	    this.getInfoCarDate({"unid": params.id}).then(res => {
+	    this.vehicle = res;
+	  })
+	}
+}
+}
 }
 </script>
 
 <style scoped>
-.cardText{
-	margin-bottom: 10px;
-}
-.from-group{
-	text-align: center;
-}
-.title{
-	display: inline-block;
-	width: 50%;
-	text-align: right;
-	background: #f8f8f8;
+.setrow{
 	height: 30px;
-	margin-right: 10px;
-	padding-right: 4px;
-	font-size: 13px;
 	line-height: 30px;
+	border-bottom: #f5f5f5;
 }
-.content{
-	display: inline-block;
-	color: #0088cc;
-	font-size: 15px;
-	width: 22%;
-	text-align: left;
+.setAlign{
+	padding-right: 10px;
+	font-weight: 700;
+	font-size: 14px;
 }
-/*.container >>> .ivu-col-span-8{
-	height: 30px;
+.main{
+	margin-bottom: 2px;
 }
-.container >>> .ivu-card-body{
-	height: 228px;
-}*/
+.main >>> .ivu-card-body{
+	padding: 6px;
+}
 </style>
