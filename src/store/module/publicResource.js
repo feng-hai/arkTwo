@@ -2,7 +2,11 @@ import {
   getOrganizationInfo,
   getMenuInfo,
   getRolesInfo,
-  getModelInfo
+  getModelInfo,
+  getMenuInfoData,
+  getRoleInfoData,
+  pustRolesInfo
+  // getAllRolesInfoData
 } from '@/api/publicResource'
 import {
   translateDataToTree,
@@ -80,7 +84,17 @@ export default {
     //  console.log('updateData')
       commit('setOrganization', [])
     },
-
+    // 获取所有的role数据
+    getMenuInfoDataAction ({commit}, option) {
+      return new Promise((resolve, reject) => {
+        getAllRolesInfoData(option).then((res) => {
+          let data = res.data
+          resolve(data);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
     getMenuInfoAction ({
       commit
     }) {
@@ -109,6 +123,41 @@ export default {
           resolve(res.data.collection)
         }).catch(error => {
           reject(error)
+        })
+      })
+    },
+    // 左边所有的菜单
+     getRolesInfoData({commit}, option){
+      return new Promise((resolve, reject) => {
+        getMenuInfoData(option).then(res => {
+          let data = res.data;
+          // console.log(data, 'data');
+          resolve(data);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
+
+     // 左边所有的菜单
+     postRolesInfoData({commit}, option){
+      return new Promise((resolve, reject) => {
+        pustRolesInfo(option).then(res => {
+          let data = res.data;
+          console.log(data, 'data');
+          resolve(res);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
+    getcurrentRolesInfoData({commit}, option){
+      return new Promise((resolve, reject) => {
+        getRoleInfoData(option).then(res => {
+          let data = res.data;
+          resolve(data);
+        }).catch(error => {
+          reject(error);
         })
       })
     },

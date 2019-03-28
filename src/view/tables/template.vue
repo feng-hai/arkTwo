@@ -553,6 +553,7 @@ export default {
     this.height=windowHeight()-174-72.77-32;
     var that=this;
     window.onresize = function temp() {
+      console.log("test")
         that.height=windowHeight()-174-72.77-32;
    };
   },
@@ -569,7 +570,8 @@ export default {
 </script>
 
 <style>
-#tableApp {
+/*#tableApp {
   width: 100%;
-  height: calc(100vh - 174px);}
+  height: calc(100vh - 174px);
+}*/
 </style>

@@ -288,7 +288,7 @@ export const getArrayFromFile = (file) => {
     let reader = new FileReader()
     reader.readAsText(file) // 以文本格式读取
     let arr = []
-    reader.onload = function(evt) {
+    reader.onload = function (evt) {
       let data = evt.target.result // 读到的数据
       let pasteData = data.trim()
       arr = pasteData.split((/[\n\u0085\u2028\u2029]|\r\n?/g)).map(row => {
@@ -411,7 +411,7 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
-      function(callback) {
+      function (callback) {
         return window.setTimeout(callback, 1000 / 60)
       }
     )
@@ -454,7 +454,7 @@ export const setTitle = (routeItem, vm) => {
 var DATE_REGEXP = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})([T\\s](\\d{2}):(\\d{2}):(\\d{2})(\\.(\\d{3}))?)?.*')
 export const toDate = (dateString) => {
   if (DATE_REGEXP.test(dateString)) {
-    var timestamp = dateString.replace(DATE_REGEXP, function($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
+    var timestamp = dateString.replace(DATE_REGEXP, function ($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
       var date = new Date($year, $month - 1, $day, $hour || '00', $minute || '00', $second || '00', $milliscond || '00')
       return date.getTime()
     })
@@ -513,7 +513,7 @@ export const formateDate = (date, fmt) => {
  *  (json) :json对象
  */
 export const toStr = (json) => {
-  var str = JSON.stringify(json, function(key, val) {
+  var str = JSON.stringify(json, function (key, val) {
     if (typeof val === 'function') {
       return val + ''
     }
@@ -526,7 +526,7 @@ export const toStr = (json) => {
  */
 export const toJson = (str) => {
   // json字符串转换成对象
-  let json = JSON.parse(str, function(k, v) {
+  let json = JSON.parse(str, function (k, v) {
     if (v.indexOf && v.indexOf('function') > -1) {
       return eval('(function(){return ' + v + ' })()')
     }
@@ -535,6 +535,107 @@ export const toJson = (str) => {
   return json
 }
 
+export const translaterolesToTree2 = (data) => {
+  // console.log('000000000', data);
+  var data = data.map(item => {
+    return {
+      id: item.id,
+      title: item.title,
+      expanded: true,
+      parent: item.parent
+    }
+  })
+  // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
+  let parents = data.filter(value => {
+    return value.parent == '0'
+  })
+  // 有父节点的数据
+  let childrens = data.filter(value => value.parent != '0')
+
+  // 定义转换方法的具体实现
+  let translator = (parents, childrens, level) => {
+    // 遍历父节点数据
+    parents.forEach((parent) => {
+      // 遍历子节点数据
+      childrens.forEach((current, index) => {
+        // 此时找到父节点对应的一个子节点
+        if (current.parent === parent.id) {
+          // 对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
+          let temp = Object.assign([], childrens)
+          // 让当前子节点从temp中移除，temp作为新的子节点数据，这里是为了让递归时，子节点的遍历次数更少，如果父子关系的层级越多，越有利
+          temp.splice(index, 1)
+          // 让当前子节点作为唯一的父节点，去递归查找其对应的子节点
+          translator([current], temp, level++)
+          if (level > 2) {
+            current.expanded = false
+          }
+          // 把找到子节点放入父节点的childrens属性中
+          typeof parent.children !== 'undefined' ? parent.children.push(current) : parent.children = [current]
+        }
+      })
+    })
+  }
+
+  // 调用转换方法
+  translator(parents, childrens, 1)
+
+  // 返回最终的结果
+  return parents
+}
+
+/**
+ * @param {Array} data  待转换的数组
+ *该方法用于将有父子关系的数组转换成树形结构的数组
+ * 接收一个具有父子关系的数组作为参数
+ * 返回一个树形结构的数组
+ */
+export const translaterolesToTree = (data) => {
+  var data = data.map(item => {
+    return {
+      id: item.unid,
+      title: item.name,
+      expanded: true,
+      parent: item.super_unid
+    }
+  })
+  console.log('data', data);
+  // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
+  let parents = data.filter(value => {
+    return value.parent == '0'
+  })
+  // 有父节点的数据
+  let childrens = data.filter(value => value.parent != '0')
+
+  // 定义转换方法的具体实现
+  let translator = (parents, childrens, level) => {
+    // 遍历父节点数据
+    parents.forEach((parent) => {
+      // 遍历子节点数据
+      childrens.forEach((current, index) => {
+        // 此时找到父节点对应的一个子节点
+        if (current.parent === parent.id) {
+          // 对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
+          let temp = Object.assign([], childrens)
+          // 让当前子节点从temp中移除，temp作为新的子节点数据，这里是为了让递归时，子节点的遍历次数更少，如果父子关系的层级越多，越有利
+          temp.splice(index, 1)
+          // 让当前子节点作为唯一的父节点，去递归查找其对应的子节点
+          translator([current], temp, level++)
+          if (level > 2) {
+            current.expanded = false
+          }
+          // 把找到子节点放入父节点的childrens属性中
+          typeof parent.children !== 'undefined' ? parent.children.push(current) : parent.children = [current]
+        }
+      })
+    })
+  }
+
+  // 调用转换方法
+  translator(parents, childrens, 1)
+
+  // 返回最终的结果
+  return parents
+}
 /**
  * @param {Array} data  待转换的数组
  *该方法用于将有父子关系的数组转换成树形结构的数组
@@ -542,6 +643,7 @@ export const toJson = (str) => {
  * 返回一个树形结构的数组
  */
 export const translateDataToTree = (data, rootid) => {
+  console.log('translateDataToTree', data);
   var data = data.map(item => {
     return {
       id: item.unid,
@@ -624,13 +726,33 @@ export const formatHistoryData = (datas) => {
   return tempDatas
 }
 
-Array.prototype.contains = function(val) {
+Array.prototype.contains = function (val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] == val) {
       return true
     }
   }
   return false
+}
+export const windowHeight = () => {
+  var winWidth = 0;
+  var winHeight = 0;
+  //获取窗口宽度
+  if (window.innerWidth)
+    winWidth = window.innerWidth;
+  else if ((document.body) && (document.body.clientWidth))
+    winWidth = document.body.clientWidth;
+  //获取窗口高度
+  if (window.innerHeight)
+    winHeight = window.innerHeight;
+  else if ((document.body) && (document.body.clientHeight))
+    winHeight = document.body.clientHeight;
+  //通过深入Document内部对body进行检测，获取窗口大小
+  if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
+    winHeight = document.documentElement.clientHeight;
+    winWidth = document.documentElement.clientWidth;
+  }
+  return winHeight
 }
 
 export const formatData = (code, items, formates) => {
@@ -684,25 +806,4 @@ export const formatData = (code, items, formates) => {
     }
   }
   return items
-}
-
-export const windowHeight = () => {
-  var winWidth = 0;
-  var winHeight = 0;
-  //获取窗口宽度
-  if (window.innerWidth)
-    winWidth = window.innerWidth;
-  else if ((document.body) && (document.body.clientWidth))
-    winWidth = document.body.clientWidth;
-  //获取窗口高度
-  if (window.innerHeight)
-    winHeight = window.innerHeight;
-  else if ((document.body) && (document.body.clientHeight))
-    winHeight = document.body.clientHeight;
-  //通过深入Document内部对body进行检测，获取窗口大小
-  if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-    winHeight = document.documentElement.clientHeight;
-    winWidth = document.documentElement.clientWidth;
-  }
-  return winHeight
 }

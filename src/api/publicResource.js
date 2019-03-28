@@ -14,10 +14,36 @@ export const getMenuInfo = (option) => {
     method: 'get'
   })
 }
+
+export const getMenuInfoData = (option) => {
+  return axios.request({
+    url: '/bigger/security/menu',
+    // params: option,
+    method: 'get'
+  })
+}
+
 export const getRolesInfo = (option) => {
   return axios.request({
-    url: 'bigger/security/privilege',
+    url: '/bigger/security/privilege',
     params: option,
+    method: 'get'
+  })
+}
+
+export const pustRolesInfo = (option) => {
+  var qs = require('qs')
+  console.log('option', option);
+  return axios.request({
+    url: '/bigger/security/privilege/bind',
+    data:qs.stringify(option),
+    method: 'post',
+  })
+}
+// 获取右边的数据
+export const getRoleInfoData = (option) => {
+  return axios.request({
+    url: '/bigger/security/privilege/' + option.unid + '/menu',
     method: 'get'
   })
 }

@@ -2,7 +2,12 @@ export default {
   /**
    * @description 配置显示在浏览器标签的title
    */
-  title: '储能大数据管理系统',
+  title: '智航储能大数据管理系统',
+
+  // 高德地图 key
+  MapKey: 'cfd8da5cf010c5f7441834ff5e764f5b',
+  // 地图限定城市
+  MapCityName: '江苏',
   /**
    * @description token在Cookie中存储的天数，默认1天
    */

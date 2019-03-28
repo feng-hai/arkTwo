@@ -185,7 +185,7 @@ function(fun, val, callback, vm) {
       "page_size": 10
     }
   }).then(function(res) {
-    var items = res.data.map(function(item){
+    var items = res.data.map(function(item) {
       return {
         label: item.vin,
         value: item.vin
@@ -193,4 +193,18 @@ function(fun, val, callback, vm) {
     });
     callback(items);
   })
+}
+
+function(val, callback) {
+  if (Array.isArray(val) && val.length == 2) {
+    var start = val[0];
+    var end = val[1];
+    var item = {
+      start_time: start.split(" ")[0],
+      end_time: end.split(" ")[0]
+    };
+    callback(item);
+  } else {
+    callback({});
+  }
 }

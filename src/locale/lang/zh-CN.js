@@ -63,6 +63,8 @@ export default {
   tools: '工具箱',
   userPage: '用户管理',
   rolePage: '角色管理',
+  roleManager: '角色管理',
+  
   systemManager: '系统管理',
   viewManagement: '视图管理',
   menuPage: '菜单管理',
@@ -78,10 +80,11 @@ export default {
   vehicleModelPage: '车辆型号',
   reportManagement: '报表管理',
   vehicleMonitoring: '车辆监控',
-  monitoring: '实时监控',
+  monitoringPage: '实时监控',
   echartsTempate: 'echarts模板',
   editEcharts: '编辑Echarts',
   vehicleHistory: '历史数据',
   echartsTempateV: 'echartsTempateV',
-  monitoringVachilePage: '关注车辆'
+  monitoringVachilePage: '关注车辆',
+  dailyReport:'车辆日报'
 }

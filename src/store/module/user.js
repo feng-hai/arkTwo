@@ -119,7 +119,7 @@ export default {
       var client_id = '597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com'
       var option = qs.stringify({
 
-        scope: '/bigger/counter/worktime /bigger/counter/mileage /bigger/openid /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /bigger/openid /sensor/vehicle_history /bigger/realtime_data /bigger/alarm_setup /bigger/model /bigger/vehicle /sensor/vehicle/cluster /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /security/openid_privilege_map/bind',
+        scope: '/bigger/security/privilege/bind /bigger/security/privilege /bigger/security/menu /bigger/counter/worktime /bigger/counter/mileage /bigger/openid /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /bigger/openid /sensor/vehicle_history /bigger/realtime_data /bigger/alarm_setup /bigger/model /bigger/vehicle /sensor/vehicle/cluster /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra /security/openid_privilege_map/bind',
 
         client_secret: 'daf2333dd314xfd',
         client_id: client_id, // "597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.csrzic.com",//"597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com",

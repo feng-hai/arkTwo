@@ -74,3 +74,12 @@ export default {
   }
 }
 </script>
+<style>
+.ivu-btn-primary{
+background: #007a3d;
+border: 1px solid #007a3d;
+}
+
+
+  
+</style>

@@ -128,6 +128,19 @@ export default [
         component: () =>
           import('@/view/components/modelUpdate/index.vue')
       },
+       {
+        path: 'roleManager/:id',
+        name: 'roleManager',
+        meta: {
+          icon: 'md-flower',
+          // -${route.params.id}
+          title: route => `{{ roleManager }}-${route.params.name}`,
+          notCache: true,
+          beforeCloseName: 'before_close_normal'
+        },
+        component: () =>
+          import ('@/view/components/roleManager/index.vue')
+      },
       {
         path: 'map',
         name: 'map',

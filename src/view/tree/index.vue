@@ -4,8 +4,8 @@
     <input class="tree-search-input" type="text" v-model.lazy="searchword" placeholder="search..." />
     <button class=" tree-search-btn" type="button" @click="search">GO</button>
     <button class=" tree-search-btn" type="button" @click="search1">GO</button>
-    <v-tree ref='tree' :data='treeData1' :radio="true" :multiple="false" :halfcheck='true' />
-      <v-tree ref='tree1' :data='treeData3' :radio="true" :multiple="false" :halfcheck='true' />
+    <v-tree ref='tree' :data='treeData1' :radio="true" :multiple="true" :halfcheck='true' />
+      <v-tree ref='tree1' :data='treeData3'  :multiple="true" :halfcheck='true' />
   </Card>
 </div>
 </template>

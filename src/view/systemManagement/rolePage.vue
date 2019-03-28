@@ -1,6 +1,6 @@
 <template>
 <div>
-  <tablesPage :viewId="viewId" @on-saveRow="saveRow"></tablesPage>
+  <tablesPage :viewId="viewId" @on-edit="editPage" @on-saveRow="saveRow"></tablesPage>
 </div>
 </template>
 <script>
@@ -28,6 +28,24 @@ export default {
     saveRow() {
       this.getRolesInfoAction();
       console.log("更新角色")
+    },
+     editPage(params,vm){
+      const name = params.row.name;
+      const id = params.row.unid;
+      const data = params.row;
+      const route = {
+        name: 'roleManager',
+        params: {
+          id: id,
+          name:name,
+          data: params.row
+        },
+        meta: {
+          title: `动态路由-`+params.row.name,
+          notCache: true
+        }
+      }
+      this.$router.push(route)
     }
   }
 }

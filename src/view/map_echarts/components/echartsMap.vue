@@ -92,7 +92,7 @@ export default {
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{b}'
+          formatter: '{a}<br/>{b}:{c}'
         },
         dataRange: {
           min: 0,
@@ -163,7 +163,7 @@ export default {
         },
         label: {
           normal: {
-            show: true,
+            show: false,
             textStyle: {
               color: '#999',
               fontSize: 13
@@ -245,7 +245,7 @@ export default {
 .echarts {
   width: 100%;
   margin-top: 10px;
-  height: calc(100vh - 356px);
+  height: calc(100vh - 366px);
 }
 
 .iconBack {
