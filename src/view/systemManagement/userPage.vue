@@ -1,6 +1,6 @@
 <template>
 <div>
-  <tablesPage :viewId="viewId" @on-saveRow="saveRow" @on-save-edit="onSaveEdit"></tablesPage>
+  <tablesPage :viewId="viewId" @on-saveRow="saveRow" :addBeforeFunc="addBeforeFunc" @on-save-edit="onSaveEdit"></tablesPage>
 </div>
 </template>
 <script>
@@ -21,6 +21,10 @@ export default {
     }
   },
   methods: {
+    addBeforeFunc: function(item, callback) {
+      item.credential = "123456";
+      callback(item);
+    },
     onSaveEdit: function(params) {
       if (params.column.field == "privilege_unid") {
         this.saveRow(params.row);

@@ -534,23 +534,38 @@ export const toJson = (str) => {
   })
   return json
 }
-
-export const translaterolesToTree2 = (data) => {
-  // console.log('000000000', data);
-  var data = data.map(item => {
+export const translaterolesToTree2 = (data, flag) => {
+  if(flag === '0'){
+    var data = data.map(item => {
     return {
       id: item.id,
       title: item.title,
-      expanded: true,
-      parent: item.parent
+      expanded: item.expanded,
+      parent: item.parent,
+      checked: item.checked,
+      halfcheck: false
     }
   })
+  // console.log('data', data);
+  }else{
+    var data = data.map(item => {
+    return {
+      id: item.id,
+      title: item.title,
+      parent: item.parent,
+      expanded: item.expanded,
+      checked: item.checked,
+      halfcheck: false
+    }
+  })
+  }
+
   // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
   let parents = data.filter(value => {
-    return value.parent == '0'
+    return value.parent == undefined
   })
   // 有父节点的数据
-  let childrens = data.filter(value => value.parent != '0')
+  let childrens = data.filter(value => value.parent != undefined)
 
   // 定义转换方法的具体实现
   let translator = (parents, childrens, level) => {
@@ -582,7 +597,6 @@ export const translaterolesToTree2 = (data) => {
   // 返回最终的结果
   return parents
 }
-
 /**
  * @param {Array} data  待转换的数组
  *该方法用于将有父子关系的数组转换成树形结构的数组
@@ -594,17 +608,18 @@ export const translaterolesToTree = (data) => {
     return {
       id: item.unid,
       title: item.name,
-      expanded: true,
+      expanded: false,
+      halfcheck: false,
       parent: item.super_unid
     }
   })
   console.log('data', data);
   // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
   let parents = data.filter(value => {
-    return value.parent == '0'
+    return value.parent == undefined;
   })
   // 有父节点的数据
-  let childrens = data.filter(value => value.parent != '0')
+  let childrens = data.filter(value => value.parent != undefined)
 
   // 定义转换方法的具体实现
   let translator = (parents, childrens, level) => {
@@ -643,7 +658,7 @@ export const translaterolesToTree = (data) => {
  * 返回一个树形结构的数组
  */
 export const translateDataToTree = (data, rootid) => {
-  console.log('translateDataToTree', data);
+  // console.log('translateDataToTree', data);
   var data = data.map(item => {
     return {
       id: item.unid,

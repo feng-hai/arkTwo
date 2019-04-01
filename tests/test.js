@@ -208,3 +208,18 @@ function(val, callback) {
     callback({});
   }
 }
+
+
+
+function(val, callback) {
+  if (val) {
+
+    var item = {
+      name_login: val,
+      credential: '123456'
+    };
+    callback(item);
+  } else {
+    callback({});
+  }
+}

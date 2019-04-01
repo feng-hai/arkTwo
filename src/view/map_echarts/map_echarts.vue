@@ -25,7 +25,7 @@
         <i-col span="24">
           <Card class="CardPadding">
           <div v-if="flag">
-           <echarts-map :dataArray.sync="dataArray" @getProvince="getProvincee"></echarts-map>
+           <echarts-map :dataArray.sync="dataArray" @clickCity="clickCity"></echarts-map>
           </div>
           </Card>
         </i-col>
@@ -49,7 +49,7 @@
 <script>
 import InforCard from '_c/info-card'
 import GdMap from './components/map.vue'
-import EchartsMap from './components/echartsMap.vue'
+import EchartsMap from './components/vehicleClusterPage.vue'
 import Icons from '_c/icons'
 
 // import pie from './components/pie'
@@ -112,6 +112,8 @@ export default {
     this.getWorkTime()
   },
   methods: {
+
+
     ...mapActions([
       'getEchartData',
       'getCarDataNumber',
@@ -119,6 +121,11 @@ export default {
       'getCarEventNumber',
       'getWorkTimeNumber'
     ]),
+
+    clickCity(params){//echarts点击城市触发事件
+      console.log(params,"clickCity")//在此处调用高德地图事件，使其城市居中，变色显示
+
+    },
     // 获取入网数
     getCarNumber () {
       let _this = this

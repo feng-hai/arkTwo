@@ -49,15 +49,16 @@ export default {
       _self.drawBounds(nv)
     }
   },
-  async created() {
+  async mounted() {
     // 已载入高德地图API，则直接初始化地图
     if (window.AMap) {
       this.initMap()
       // 未载入高德地图API，则先载入API再初始化
     } else {
       await remoteLoad(`http://webapi.amap.com/maps?v=1.3&key=${config.MapKey}`)
-    //  await remoteLoad('http://webapi.amap.com/ui/1.0/main.js')
-      this.initMap()
+      //await remoteLoad('http://webapi.amap.com/ui/1.0/main.js')
+      var that = this;
+        that.initMap()
     }
   },
   methods: {
