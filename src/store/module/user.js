@@ -100,7 +100,7 @@ export default {
       userName = userName.trim()
       var client_id = '597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com'
       var option = qs.stringify({
-        scope: ' /openid /bigger/security /bigger/grid /openid /bigger/device  /sensor/vehicle /bigger/model /bigger/domain /sensor/vehicle  /bigger/vehicle /bigger/vehicle/info /bigger/event /bigger/national_standard /sensor/hydra',
+        scope: '/bigger /firemen',//' /openid /firemen/security /firemen/grid /openid /firemen/device  /sensor/vehicle /firemen/model /firemen/domain /sensor/vehicle  /firemen/vehicle /firemen/vehicle/info /firemen/event /firemen/national_standard /sensor/hydra',
         client_secret: 'daf2333dd314xfd',
         client_id: client_id, // "597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.csrzic.com",//"597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com",
         grant_type: 'password',

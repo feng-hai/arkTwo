@@ -2,9 +2,9 @@ import view_collumn from '@/assets/js/view_collumn'
 const viewManagement = {
   id: '125',
   name: '测试',
-  url: '/bigger/grid',
-  addUrl: '/bigger/grid',
-  deleteUrl: '/bigger/grid/{id}',
+  url: '/firemen/grid',
+  addUrl: '/firemen/grid',
+  deleteUrl: '/firemen/grid/{id}',
   des: '',
   addPermit: true, // 新增按钮是否有权限
   isRouter: { // 新增按钮显示时， 设置为true，跳转到url对应的页面，否则在当前页面新增
@@ -112,7 +112,7 @@ const viewManagement = {
 const viewDetailManagement = {
   id: '124',
   name: '测试',
-  url: '/bigger/grid/{id}',
+  url: '/firemen/grid/{id}',
   addUrl: 'add_table_view',
   deleteUrl: 'delete_table_view',
   des: '',

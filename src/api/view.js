@@ -3,7 +3,7 @@ import axios from '@/libs/api.request'
 export const getTableView = (params) => {
 //  console.log(params)
   return axios.request({
-    url: '/bigger/grid',
+    url: '/firemen/grid',
     method: 'get',
     params: params
   })
@@ -11,7 +11,7 @@ export const getTableView = (params) => {
 export const getTableColumns = (id) => {
   // console.log(id);
   return axios.request({
-    url: '/bigger/grid/' + id,
+    url: '/firemen/grid/' + id,
     method: 'get'
     // ,
     // params:{

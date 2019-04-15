@@ -40,13 +40,14 @@ div.mains {
     background-color: rgba(0,0,0,0);
   }
 
-  .backImage {
-
-
-
-    background-repeat: no-repeat;
-
-    background-image: url("../../assets/img/backgroundForPart.png");
+  .backImage:before{
+    background:
+    url("../../assets/img/backgroundForPart.png") left top no-repeat,
+    url("../../assets/img/backgroundForPart.png") right top no-repeat,
+    url("../../assets/img/backgroundForPart.png") left bottom no-repeat,
+    url("../../assets/img/backgroundForPart.png") right bottom no-repeat;
+    -webkit-filter: blur(3px);
+   filter: blur(3px);
   }
 }
 

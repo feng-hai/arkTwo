@@ -253,7 +253,7 @@ export default {
           this.selectedData.sort(compare('index'))
 
           that.addTableData({
-            url: '/bigger/grid/' + id,
+            url: '/firemen/grid/' + id,
             method: 'put',
             data: {
               name: that.formValidate.name,
@@ -292,7 +292,7 @@ export default {
         this.selectedData.sort(compare('index'))
         if (valid) {
           that.addTableData({
-            url: '/bigger/grid',
+            url: '/firemen/grid',
             method: 'post',
             data: {
               name: that.formValidate.name,

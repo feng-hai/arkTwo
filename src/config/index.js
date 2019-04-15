@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev:  'https://shuchi.wlwltech.com:20443',//'https://newnetcom.com',//'https://api.renxingzuche.com', //
+    dev:  'https://api.renxingzuche.com', //
     pro: 'https://api.renxingzuche.com'
   },
   /**
