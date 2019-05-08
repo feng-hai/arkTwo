@@ -17,6 +17,7 @@ const BASE_URL = process.env.NODE_ENV === 'production'
   : '/'
 var webpack = require('webpack')
 module.exports = {
+  assetsDir: 'static',
 
   // Project deployment base
   // By default we assume your app will be deployed at the root of a domain,
@@ -43,6 +44,7 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
+      .set('webVideoCtrl',resolve('src/assets/js/webVideoCtrl.js'))
     config.entry('index')
       .add('babel-polyfill')
   },

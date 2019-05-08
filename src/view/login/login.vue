@@ -7,7 +7,7 @@
     <Card icon="log-in" title="欢迎登录" :bordered="false">
       <div class="form-con">
         <login-form @on-success-valid="handleSubmit"></login-form>
-        <p class="login-tip">输入任意用户名和密码即可</p>
+        <!-- <p class="login-tip">输入任意用户名和密码即可</p> -->
       </div>
     </Card>
   </div>
@@ -47,6 +47,7 @@ export default {
         password
       }).then(res => {
         var that = this;
+
         this.getUserInfo().then(res => {
           if (that.getMenus) {
             that.add_Routes(that.getMenus); //触发vuex里的增加路由

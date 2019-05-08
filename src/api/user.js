@@ -25,12 +25,12 @@ export const login = (option) => {
   //   method: 'post'
   // })
 }
-export const getUserInfo = (token) => {
+export const getUserInfo = (id) => {
   return axios.request({
     url: 'get_info',
-    params: {
-      token
-    },
+    // params: {
+    //   token
+    // },
     method: 'get'
   })
 }

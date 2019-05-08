@@ -22,33 +22,34 @@ const USER01 = {
         title: '多级菜单'
       },
       children: [{
-        path: 'homeForBigger',
-        name: 'homeForBigger',
-        meta: {
-          icon: '_qq',
-          title: '大屏展示'
-        },
-        component: 'single-page/home/home'
+          path: 'homeForBigger',
+          name: 'homeForBigger',
+          meta: {
+            icon: '_qq',
+            title: '大屏展示'
+          },
+          component: 'single-page/home/home'
 
-      },{
-        path: 'tools_json',
-        name: 'tools_json',
-        meta: {
-          icon: '_qq',
-          title: 'Json工具'
-        },
-        component: 'tools/tools_json'
+        }, {
+          path: 'tools_json',
+          name: 'tools_json',
+          meta: {
+            icon: '_qq',
+            title: 'Json工具'
+          },
+          component: 'tools/tools_json'
 
-      },
-      {
-        path: 'setIconInlayerforBig',
-        name: 'setIconInlayerforBig',
-        meta: {
-          title: '打点',
-          notCache: false
         },
-        component: 'layers/Icons_Annotation'
-      },]
+        {
+          path: 'setIconInlayerforBig',
+          name: 'setIconInlayerforBig',
+          meta: {
+            title: '打点',
+            notCache: false
+          },
+          component: 'layers/Icons_Annotation'
+        },
+      ]
     }, {
       path: '/tools',
       name: 'tools',
@@ -74,6 +75,33 @@ const USER01 = {
             notCache: false
           },
           component: 'tools/viewManagement'
+        },
+        {
+          path: 'videoPage',
+          name: 'videoPage',
+          meta: {
+            title: `视频demo`,
+            notCache: true
+          },
+          component: 'pages/videos/videoPage'
+        },
+        {
+          path: 'videoPage1',
+          name: 'videoPage1',
+          meta: {
+            title: `视频demo`,
+            notCache: true
+          },
+          component: 'pages/videos/videoPage0'
+        },
+        {
+          path: 'tool_tree',
+          name: 'tool_tree',
+          meta: {
+            title: 'tree',
+            notCache: false
+          },
+          component: 'tree/index'
         },
         {
           path: 'params/123',
@@ -225,15 +253,15 @@ const USER01 = {
             notCache: false
           },
           component: 'baseInfoManagement/deviceManagement'
-        },  {
-            path: 'host',
-            name: 'hostManagement',
-            meta: {
-              title: '主机管理',
-              notCache: false
-            },
-            component: 'baseInfoManagement/hostManagement'
+        }, {
+          path: 'host',
+          name: 'hostManagement',
+          meta: {
+            title: '主机管理',
+            notCache: false
           },
+          component: 'baseInfoManagement/hostManagement'
+        },
         {
           path: 'video',
           name: 'videoManagement',

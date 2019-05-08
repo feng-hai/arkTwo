@@ -105,7 +105,7 @@ export default {
       var option = options.options
       return new Promise((resolve, reject) => {
         if (options.isCount) {
-          if ('page_id' in option.params) {
+          if ('offset' in option.params) {
             getDataByParamsForSearch(option).then(res => {
               var data = res // {data:array,count:number}
               commit('setTableData', data)

@@ -1,34 +1,60 @@
 import {
   getOrganizationInfo,
   getMenuInfo,
-  getRolesInfo
+  getRolesInfo,
+  getModelInfo,
+  getMenuInfoData,
+  getRoleInfoData,
+  pustRolesInfo
+  // getAllRolesInfoData
 } from '@/api/publicResource'
 import {
-  translateDataToTree
+  translateDataToTree,
+  getCookiesValueByKey
+
 } from '@/libs/util.js'
-// import {
-//   setToken,
-//   getToken
-// } from '@/libs/util'
-// import user from '@/assets/js/user'
 
 export default {
   state: {
     organizationList: [],
     orgTree: [],
     menusList: [],
-    roles: []
+    roles: [],
+    models: []
   },
   mutations: {
-    setOrganization (state, orgInfo) {
-      state.orgTree = translateDataToTree(orgInfo)
+    setOrganization(state, orgInfo) {
+      //todo
+      var rootId = 'C98D97238CA34F96A969BDA01DAB31FA' //getCookiesValueByKey('domainId')
+      state.orgTree = translateDataToTree(orgInfo, rootId);
+      console.log(state.orgTree,"orgTree");
       state.organizationList = orgInfo
     },
-    setMenusList (state, menuInfo) {
-      state.menusList = menuInfo
+    setMenusList(state, menuInfo) {
+      console.log(menuInfo,"menuInfo")
+      state.menusList = menuInfo.map(item => {
+        return {
+          label: item.name,
+          value: item.unid
+        }
+      });
+      console.log(state.menusList,"menusList")
     },
-    setRolesList (state, rolesInfo) {
-      state.roles = rolesInfo
+    setRolesList(state, rolesInfo) {
+      state.roles = rolesInfo.map(item => {
+        return {
+          label: item.name,
+          value: item.unid
+        }
+      })
+    },
+    setModelList(state, modelInfo) {
+      state.models = modelInfo.map(item => {
+        return {
+          label: item.name,
+          value: item.unid
+        }
+      })
     }
   },
   getters: {
@@ -38,33 +64,125 @@ export default {
     getOrganizationInfo: state => state.organizationList,
     getMenusInfo: state => state.menusList,
     getRolesInfo: state => state.roles,
-    getOrgTreeInfo: state => state.orgTree
+    getOrgTreeInfo: state => state.orgTree,
+    getInfo: state => (type) => {
+      if (type == 'orgTree') {
+        return state.orgTree
+      } else if (type == 'org') {
+        return state.organizationList
+      } else if (type == 'menu') {
+        // console.log("menu", state.menusList)
+        return state.menusList
+      } else if (type == 'role') {
+        return state.roles
+      } else if (type == 'model') {
+        return state.models
+      }
+    }
   },
   actions: {
-    getMenuInfoAction ({
+    updateData({
+      commit
+    }) {
+      //  console.log('updateData')
+      commit('setOrganization', [])
+    },
+    // 获取所有的role数据
+    getMenuInfoDataAction({
+      commit
+    }, option) {
+      return new Promise((resolve, reject) => {
+        getAllRolesInfoData(option).then((res) => {
+          let data = res.data
+          resolve(data);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
+    getMenuInfoAction({
       commit
     }) {
       return new Promise((resolve, reject) => {
         getMenuInfo({
-          page_id: 0,
+          offset: 0,
           page_size: 1000
         }).then((res) => {
-          commit('setMenusList', res.data.collection)
+          commit('setMenusList', res.data)
+          //  console.log(res.data.collection)
           resolve(res.data.collection)
         }).catch(error => {
           reject(error)
         })
       })
     },
-    getRolesInfoAction ({
+    getVehicleModelAction({
+      commit
+    }) {
+      return new Promise((resolve, reject) => {
+        getModelInfo({
+          offset: 0,
+          page_size: 1000
+        }).then((res) => {
+          commit('setModelList', res.data.collection)
+          resolve(res.data.collection)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    // 左边所有的菜单
+    getRolesInfoData({
+      commit
+    }, option) {
+      return new Promise((resolve, reject) => {
+        getMenuInfoData(option).then(res => {
+          let data = res.data;
+          // console.log(data, 'data');
+          resolve(data);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
+
+    // 左边所有的菜单
+    postRolesInfoData({
+      commit
+    }, option) {
+      return new Promise((resolve, reject) => {
+        pustRolesInfo(option).then(res => {
+          let data = res.data;
+          console.log(data, 'data');
+          resolve(res);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
+    getcurrentRolesInfoData({
+      commit
+    }, option) {
+      return new Promise((resolve, reject) => {
+        getRoleInfoData(option).then(res => {
+          let data = res.data;
+          resolve(data);
+        }).catch(error => {
+          reject(error);
+        })
+      })
+    },
+    getRolesInfoAction({
       commit
     }) {
       return new Promise((resolve, reject) => {
         getRolesInfo({
-          page_id: 0,
+          offset: 0,
           page_size: 1000
         }).then((res) => {
+          // console.log("角色信息", res);
           commit('setRolesList', res.data.collection)
+
           resolve(res.data.collection)
         }).catch(error => {
           reject(error)
@@ -72,17 +190,17 @@ export default {
       })
     },
     // 分组信息
-    getOrgInfoAction ({
+    getOrgInfoAction({
       state,
       commit
-    }, option) {
+    }) {
       return new Promise((resolve, reject) => {
         getOrganizationInfo({
-          page_id: 0,
+          offset: 0,
           page_size: 1000
         }).then((res) => {
-          commit('setOrganization', res.data.collection)
-          resolve(res.data.collection)
+          commit('setOrganization', res.data)
+          resolve(res.data)
         }).catch(error => {
           reject(error)
         })

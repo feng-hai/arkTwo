@@ -31,47 +31,47 @@ export default {
     messageContentStore: {}
   },
   mutations: {
-    setAvator (state, avatorPath) {
+    setAvator(state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId (state, id) {
+    setUserId(state, id) {
       state.userId = id
     },
-    setUserName (state, name) {
+    setUserName(state, name) {
       state.userName = name
     },
-    setAccess (state, access) {
+    setAccess(state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setToken(state, token) {
       state.token = token
       setToken(token)
     },
-    setMenus (state, menus) {
+    setMenus(state, menus) {
       state.menus = menus
     },
-    setHasGetInfo (state, status) {
+    setHasGetInfo(state, status) {
       state.hasGetInfo = status
     },
-    setMessageCount (state, count) {
+    setMessageCount(state, count) {
       state.unreadCount = count
     },
-    setMessageUnreadList (state, list) {
+    setMessageUnreadList(state, list) {
       state.messageUnreadList = list
     },
-    setMessageReadedList (state, list) {
+    setMessageReadedList(state, list) {
       state.messageReadedList = list
     },
-    setMessageTrashList (state, list) {
+    setMessageTrashList(state, list) {
       state.messageTrashList = list
     },
-    updateMessageContentStore (state, {
+    updateMessageContentStore(state, {
       msg_id,
       content
     }) {
       state.messageContentStore[msg_id] = content
     },
-    moveMsg (state, {
+    moveMsg(state, {
       from,
       to,
       msg_id
@@ -90,7 +90,7 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({
+    handleLogin({
       commit
     }, {
       userName,
@@ -100,7 +100,7 @@ export default {
       userName = userName.trim()
       var client_id = '597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com'
       var option = qs.stringify({
-        scope: '/bigger /firemen', // ' /openid /firemen/security /firemen/grid /openid /firemen/device  /sensor/vehicle /firemen/model /firemen/domain /sensor/vehicle  /firemen/vehicle /firemen/vehicle/info /firemen/event /firemen/national_standard /sensor/hydra',
+        scope: '/bigger /firemen /openid /firemen/security /firemen/grid /openid /firemen/device  /sensor/vehicle /firemen/model /firemen/domain /sensor/vehicle  /firemen/vehicle /firemen/vehicle/info /firemen/event /firemen/national_standard /sensor/hydra',
         client_secret: 'daf2333dd314xfd',
         client_id: client_id, // "597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.csrzic.com",//"597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com",
         grant_type: 'password',
@@ -115,6 +115,8 @@ export default {
           // commit('setToken', data.token)
           resolve()
         }).catch(err => {
+          //commit('setToken', '222222222222222222')
+            //resolve()
           reject(err)
         })
         // login({
@@ -130,19 +132,19 @@ export default {
       })
     },
     // 退出登录
-    handleLogOut ({
+    handleLogOut({
       state,
       commit
     }) {
       return new Promise((resolve, reject) => {
-      //  logout(state.token).then(() => {
+        //  logout(state.token).then(() => {
         commit('setToken', '')
         commit('setAccess', [])
         commit('setMenus', [])
 
         resolve()
 
-      //  }).catch(err => {
+        //  }).catch(err => {
         //  reject(err)
         // })
         // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
@@ -152,10 +154,11 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo ({
+    getUserInfo({
       state,
       commit
     }) {
+
       return new Promise((resolve, reject) => {
         try {
           const data = user.USER01
@@ -175,7 +178,7 @@ export default {
       })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
-    getUnreadMessageCount ({
+    getUnreadMessageCount({
       state,
       commit
     }) {
@@ -187,7 +190,7 @@ export default {
       // })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
-    getMessageList ({
+    getMessageList({
       state,
       commit
     }) {
@@ -214,7 +217,7 @@ export default {
       })
     },
     // 根据当前点击的消息的id获取内容
-    getContentByMsgId ({
+    getContentByMsgId({
       state,
       commit
     }, {
@@ -237,7 +240,7 @@ export default {
       })
     },
     // 把一个未读消息标记为已读
-    hasRead ({
+    hasRead({
       state,
       commit
     }, {
@@ -258,7 +261,7 @@ export default {
       })
     },
     // 删除一个已读消息到回收站
-    removeReaded ({
+    removeReaded({
       commit
     }, {
       msg_id
@@ -277,7 +280,7 @@ export default {
       })
     },
     // 还原一个已删除消息到已读消息
-    restoreTrash ({
+    restoreTrash({
       commit
     }, {
       msg_id

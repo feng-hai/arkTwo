@@ -42,6 +42,7 @@
   </Table>
   <div class="search-con search-con-top" v-if="isPage">
     <Page :total="total" :current="current" :page-size="pageSize" @on-change="pageChange" @on-page-size-change="pageSizeChange" show-elevator show-sizer></Page>
+    <!-- <bigPage></bigPage> -->
   </div>
   <!-- <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
     <Select v-model="searchKey" class="search-col">
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+// import bigPage from '_c/bigPage'
 import TablesEdit from './edit.vue'
 import cellShow from './cell-show.vue'
 import search from './search.vue'
@@ -67,6 +69,7 @@ export default {
   components: {
     search,
     searchExpand
+    // bigPage
   },
   props: {
     isPage: {
@@ -220,7 +223,10 @@ export default {
             // edittingCellId: this.edittingCellId,
             // editable: this.editable,
             // editType: this.editable ? params.column.editType ? params.column.editType : 'text' : 'text',
-            selectList: params.column.selectList ? params.column.selectList : []
+
+            selectList: params.column.selectList ? params.column.selectList : [],
+            dataType: params.column['dataType']
+
           },
           on: {
             'on-search-edit': (params) => {
@@ -228,7 +234,16 @@ export default {
             },
             'input': (val, params) => {
               this.edittingText = val
-              this.searchValues[params.column.key] = val
+              var that = this
+              if (params.column.formateFun && typeof params.column.formateFun === 'function') {
+                params.column.formateFun(val, function (item) {
+                  console.log(item)
+                  that.searchValues = Object.assign({}, that.searchValues, item)
+                })
+              } else {
+                this.searchValues[params.column.key] = val
+              }
+
               console.log('search', this.searchValues)
               // this.searchColumns[]["searchValue"]=
             },
@@ -261,7 +276,8 @@ export default {
             edittingCellId: this.edittingCellId,
             editable: this.editable,
             editType: params.column.editType ? params.column.editType : 'text', // 默认是text类型
-            selectList: params.column.selectList ? params.column.selectList : []
+            selectList: params.column.selectList ? params.column.selectList : [],
+            dataType: params.column['dataType']
           }
         })
         // }
@@ -279,7 +295,10 @@ export default {
             edittingCellId: this.edittingCellId,
             editable: this.editable,
             editType: params.column.editType ? params.column.editType : 'text', // 默认是text类型
-            selectList: params.column.selectList ? params.column.selectList : []
+
+            selectList: params.column.selectList ? params.column.selectList : [],
+            dataType: params.column['dataType']
+
           },
           on: {
             'on-search-edit': (params) => {
@@ -382,6 +401,7 @@ export default {
       //  this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
       this.$emit('on-search', this.searchValues)
     },
+
     // handleAdd() { //新增一行
     //   this.$emit('on-Add')
     // },
