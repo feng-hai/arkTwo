@@ -1,5 +1,5 @@
 <template>
-<div id="layering" class="layer">
+<div id="layering">
   <tips :tips-options="tipsOptions" ref="dialog" @yes="yes" v-cloak>
     <slot name="header">
       <a href="javascript:;" @click="yes">{{tipTitle}}</a>
@@ -40,8 +40,6 @@ export default {
       },
       translate: [0, 0],
       scale: 1.0,
-      type: 0,
-
       //    dataContent: this.dataParent.dataContent || [], //點數據
       //  pointImage: this.dataParent.pointImage,
       //    backgroudImage: this.dataParent.backgroudImage,
@@ -65,8 +63,8 @@ export default {
     'dataParent'
   ],
   handleScroll: function() {
-    // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-    // console.log(scrollTop)
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    console.log(scrollTop)
   },
   watch: {
     dataParent: { // 监控父页面数据变化
@@ -85,22 +83,7 @@ export default {
         //  this.backgroudImage = val.backgroudImage || ""; //画布背景
         //  this.containerWidth = val.containerWidth || 100;
         //  this.containerHight = val.containerHight || 100;
-
-        if (val.type != this.type) {
-
-
-          //  that.initPage();
-          if (this.type == 0) {
-            that.svgClick();
-          } else if (val.type == 0) {
-            that.svgUnclick();
-          }
-          this.type = val.type;
-
-        }
-        if (this.type != 4) {
-          that.createBg()
-        }
+        that.createBg()
         that.initPoint() // 重新初始化化
       },
       deep: true // 监控对象需要设置的属性
@@ -112,7 +95,6 @@ export default {
   methods: {
     // 监听从组件内传递出来的事件
     yes(args) {
-      console.log("点击事件")
       this.$emit('openModel', this.dataContent)
     },
     // 显示tips
@@ -139,10 +121,8 @@ export default {
       // 初始化比例尺
       var width = that.dataParent.width || $('#' + divId).parent().width()
 
-
       //根据真实容器宽度和地图真实宽度计算比例尺
       var scale = width / that.dataParent.containerWidth
-      //  d3.select('#' + divId).selectAll('svg').remove();
       // 初始化画布
       that.dataParent.svg = d3.select('#' + divId).append('svg')
         .attr('width', width)
@@ -166,74 +146,70 @@ export default {
         .on('drag', that.dragged)
         .on('dragend', that.dragended)
 
-
-      that.dataParent.container.append('g')
-        .attr('class', 'x axis')
-        .selectAll('line')
-        .data(d3.range(0, that.containerWidth, 10))
-        .enter().append('line')
-        .attr('x1', function(d) {
-          return d
-        })
-        .attr('y1', 0)
-        .attr('x2', function(d) {
-          return d
-        })
-        .attr('y2', that.containerHight)
-      that.dataParent.container.append('g')
-        .attr('class', 'y axis')
-        .selectAll('line')
-        .data(d3.range(0, that.containerHight, 10))
-        .enter().append('line')
-        .attr('x1', 0)
-        .attr('y1', function(d) {
-          return d
-        })
-        .attr('x2', that.containerWidth)
-        .attr('y2', function(d) {
-          return d
-        })
-
       if (that.dataParent.type == 4 || that.dataParent.type == 5) { // 等于4的时候是新增
-
+        that.dataParent.container.append('g')
+          .attr('class', 'x axis')
+          .selectAll('line')
+          .data(d3.range(0, that.containerWidth, 10))
+          .enter().append('line')
+          .attr('x1', function(d) {
+            return d
+          })
+          .attr('y1', 0)
+          .attr('x2', function(d) {
+            return d
+          })
+          .attr('y2', that.containerHight)
+        that.dataParent.container.append('g')
+          .attr('class', 'y axis')
+          .selectAll('line')
+          .data(d3.range(0, that.containerHight, 10))
+          .enter().append('line')
+          .attr('x1', 0)
+          .attr('y1', function(d) {
+            return d
+          })
+          .attr('x2', that.containerWidth)
+          .attr('y2', function(d) {
+            return d
+          })
         var isClicking = false
-        that.svgClick();
-        // that.dataParent.svg.on('click', function() {
-        //   that.clearCircle()
-        //
-        //   var matrix = this.getScreenCTM()
-        //     .translate(+this.getAttribute('cx'), +this.getAttribute('cy'))
-        //
-        //   var RECT_W = 20 * that.dataParent.slider,
-        //     RECT_H = (42 * that.dataParent.slider)
-        //   var offset_x = 0,
-        //     offset_y = 0
-        //   var xV = (d3.event.x - that.dataParent.translate[0] - matrix.e) / that.dataParent.scale
-        //   var yV = (d3.event.y - that.dataParent.translate[1] - matrix.f + that.dataParent.scrollTop) / that.dataParent.scale
-        //   that.pointValue = [xV, yV]
-        //   that.dataParent.circle = that.dataParent.container
-        //     .attr('class', 'all,point')
-        //     .append('image')
-        //     .attr('xlink:href', that.dataParent.pointImage)
-        //     .attr('x', xV - RECT_W / 2 + offset_x)
-        //     .attr('y', yV - RECT_H)
-        //     .attr('width', RECT_W)
-        //     .attr('height', RECT_H)
-        //     .call(that.drag)
-        //   if (that.dataParent.type == 5) {
-        //     that.dataParent.circle1 = that.dataParent.container.append('g')
-        //       .append('circle')
-        //       .attr('cx', xV)
-        //       .attr('cy', yV) // 将圆心放到svg高度中间
-        //       .attr('r', function(d) {
-        //         return 40
-        //       })
-        //       .attr('fill', 'yellow') // 给各圆填充黄色
-        //       .attr('stroke', 'orange') // 给各圆边涂成橘黄
-        //       .style('opacity', 0.2)
-        //       .call(that.drag)
-        //   }
-        // })
+        that.dataParent.svg.on('click', function() {
+          that.clearCircle()
+          // console.log("测试");
+          var matrix = this.getScreenCTM()
+            .translate(+this.getAttribute('cx'), +this.getAttribute('cy'))
+          //  console.log("top" + that.scrollTop);
+          var RECT_W = 20 * that.dataParent.slider,
+            RECT_H = (42 * that.dataParent.slider)
+          var offset_x = 0,
+            offset_y = 0
+          var xV = (d3.event.x - that.dataParent.translate[0] - matrix.e) / that.dataParent.scale
+          var yV = (d3.event.y - that.dataParent.translate[1] - matrix.f + that.dataParent.scrollTop) / that.dataParent.scale
+          that.pointValue = [xV, yV]
+          that.dataParent.circle = that.dataParent.container
+            .attr('class', 'all,point')
+            .append('image')
+            .attr('xlink:href', that.dataParent.pointImage)
+            .attr('x', xV - RECT_W / 2 + offset_x)
+            .attr('y', yV - RECT_H)
+            .attr('width', RECT_W)
+            .attr('height', RECT_H)
+            .call(that.drag)
+          if (that.dataParent.type == 5) {
+            that.dataParent.circle1 = that.dataParent.container.append('g')
+              .append('circle')
+              .attr('cx', xV)
+              .attr('cy', yV) // 将圆心放到svg高度中间
+              .attr('r', function(d) {
+                return 40
+              })
+              .attr('fill', 'yellow') // 给各圆填充黄色
+              .attr('stroke', 'orange') // 给各圆边涂成橘黄
+              .style('opacity', 0.2)
+              .call(that.drag)
+          }
+        })
       }
       var rect = that.dataParent.svg.append('rect')
         .attr('width', that.width)
@@ -243,50 +219,6 @@ export default {
       that.initPoint()
       that.dataParent.zoom.scale(scale)
       that.dataParent.zoom.event(that.dataParent.svg.transition().duration(200))
-    },
-    svgUnclick: function() {
-      var that = this
-      that.dataParent.svg.on('click', null);
-    },
-    svgClick: function() {
-      var that = this
-      that.dataParent.svg.on('click', function() {
-
-        that.clearCircle()
-
-        var matrix = this.getScreenCTM()
-          .translate(+this.getAttribute('cx'), +this.getAttribute('cy'))
-
-        var RECT_W = 20 * that.dataParent.slider,
-          RECT_H = (42 * that.dataParent.slider)
-        var offset_x = 0,
-          offset_y = 0
-        var xV = (d3.event.x - that.dataParent.translate[0] - matrix.e) / that.dataParent.scale
-        var yV = (d3.event.y - that.dataParent.translate[1] - matrix.f) / that.dataParent.scale
-        that.pointValue = [xV, yV]
-        that.dataParent.circle = that.dataParent.container
-          .attr('class', 'dot1')
-          .append('image')
-          .attr('xlink:href', that.dataParent.pointImage)
-          .attr('x', xV - RECT_W / 2 + offset_x)
-          .attr('y', yV - RECT_H)
-          .attr('width', RECT_W)
-          .attr('height', RECT_H)
-          .call(that.drag)
-        if (that.dataParent.type == 5) {
-          that.dataParent.circle1 = that.dataParent.container.append('g')
-            .append('circle')
-            .attr('cx', xV)
-            .attr('cy', yV) // 将圆心放到svg高度中间
-            .attr('r', function(d) {
-              return 40
-            })
-            .attr('fill', 'yellow') // 给各圆填充黄色
-            .attr('stroke', 'orange') // 给各圆边涂成橘黄
-            .style('opacity', 0.2)
-            .call(that.drag)
-        }
-      })
     },
     createBg: function() {
       var that = this
@@ -315,7 +247,6 @@ export default {
     initPoint: function() {
       var that = this
       var temp = that.dataParent.container.selectAll('.dot1')
-      that.clearCircle();//清楚鼠标添加的点
       temp.remove()
       var that = this
       var RECT_W = 20 * that.dataParent.slider,
@@ -335,7 +266,7 @@ export default {
           return d.x - RECT_W / 2 + offset_x
         })
         .attr('y', function(d) {
-          return d.y - RECT_H + offset_y
+          return d.y - RECT_H + 2 + offset_y
         })
         .attr('width', RECT_W)
         .attr('height', RECT_H)
@@ -365,8 +296,10 @@ export default {
         RECT_H = 42 * that.dataParent.slider
       var offset_x = 0,
         offset_y = 0
-      that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1] - 100 + that.dataParent.offset_y) + 'px'
-      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0] - 90) + 'px'
+
+      console.log(d, $("#Sider").width());
+      that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1]) + 'px'
+      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0]+ $("#Sider").width()-100+13)   + 'px'
       that.tipsOptions.title = d.name
       that.tipContent = d.content
       that.showtips()
@@ -411,14 +344,11 @@ export default {
 }
 </script>
 <style>
-.layer {
-  /*position: relative;*/
-}
-
 .dot circle {
   fill: lightsteelblue;
   stroke: steelblue;
   stroke-width: 1.5px;
+
 }
 
 .dot circle.dragging {

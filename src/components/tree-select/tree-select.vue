@@ -99,7 +99,7 @@ export default {
   },
   mounted () {
     var that = this
-    
+
     document.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.close()
@@ -117,4 +117,5 @@ export default {
         padding: 0 6px;
     }
 }
+
 </style>

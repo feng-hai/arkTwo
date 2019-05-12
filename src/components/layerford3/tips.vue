@@ -55,6 +55,7 @@ export default {
     },
     yes: function () {
       this.show = false
+      console.log("show");
       this.$emit('yes', {
         name: 'wenzi',
         age: 36
