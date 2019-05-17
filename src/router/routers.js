@@ -1,6 +1,6 @@
 import Main from '@/components/main'
 import parentView from '@/components/parent-view'
-
+import parentViewbig from '@/components/parent-view-big'
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
  * meta: {

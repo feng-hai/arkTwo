@@ -366,6 +366,7 @@ export default {
       tempData: [],
       data: {
         offset_y: 51,
+        offset_x: 0,
         slider: 1, //图标放大缩小比例
         //  width: 1000, // 画布宽度
         height: (windowHeight() - 174 - 51 - 90) < 600 ? 600 : (windowHeight() - 174 - 51 - 90), // 画布高度

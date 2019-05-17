@@ -36,6 +36,9 @@ Vue.use(VSelectTree)
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
 })
+import GeminiScrollbar from 'vue-gemini-scrollbar'
+
+Vue.use(GeminiScrollbar)
 // Vue.use(TreeTable)
 // Vue.use(VOrgTree)
 /**

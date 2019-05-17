@@ -10,6 +10,9 @@ function lazy(name) {
       return () =>
         import ("@/components/parent-view")
 
+    }else if (name == 'parentViewBig') {
+      return () =>
+        import ("@/components/parent-view-big")
     } else {
       //let file = name.split('_')[0]
       return () =>

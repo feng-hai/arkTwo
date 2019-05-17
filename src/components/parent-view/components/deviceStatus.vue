@@ -1,7 +1,7 @@
 <template>
-<div v-on:click="cardClick">
-  <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
-    <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="用户访问来源"></chart-pie>
+<div v-on:click="cardClick" >
+ <Card shadow  style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
+    <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="设备状态"></chart-pie>
   </Card>
 </div>
 </template>
@@ -63,26 +63,23 @@ export default {
           color: '#9A66E4'
         }
       ],
-      pieData: [{
-          value: 335,
-          name: '直接访问'
-        },
+      pieData: [
         {
           value: 310,
-          name: '邮件营销'
+          name: '报警'
         },
         {
-          value: 234,
-          name: '联盟广告'
+          value: 4,
+          name: '故障'
         },
         {
           value: 135,
-          name: '视频广告'
+          name: '屏蔽'
         },
         {
-          value: 1548,
-          name: '搜索引擎'
-        }
+            value: 1335,
+            name: '正常'
+          }
       ],
       barData: {
         Mon: 13253,
@@ -96,8 +93,9 @@ export default {
     }
   },
   methods: {
-    cardClick() {
-      this.$emit("on-click", 'homeForBigger')
+    cardClick()
+    {
+     this.$emit("on-click",'homeForBigger')
     }
     // 在首页初始化公共数据
     // ...mapActions([

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+let echarts = require('echarts')
 import tdTheme from './theme.json'
 import {
   on,
@@ -15,7 +15,9 @@ export default {
   props: {
     value: Array,
     text: String,
-    subtext: String
+    subtext: String,
+
+
   },
   data() {
     return {
@@ -31,7 +33,7 @@ export default {
     this.$nextTick(() => {
       let legend = this.value.map(_ => _.name)
       let option = {
-    
+
         title: {
           text: this.text,
           subtext: this.subtext,
@@ -48,7 +50,7 @@ export default {
         },
         series: [{
           type: 'pie',
-          radius: '55%',
+          radius: ['50%','70%'],
           center: ['50%', '60%'],
           data: this.value,
           itemStyle: {

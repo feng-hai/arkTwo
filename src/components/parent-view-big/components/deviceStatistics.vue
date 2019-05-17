@@ -1,6 +1,6 @@
 <template>
-<div v-on:click="cardClick">
-  <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
+<div v-on:click="cardClick" >
+ <Card shadow  style=" backgroundColor:rgba(255, 255, 255, 0.1);  background-image: url('../../assets/img/backgroundForPart.png');">
     <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="用户访问来源"></chart-pie>
   </Card>
 </div>
@@ -96,8 +96,9 @@ export default {
     }
   },
   methods: {
-    cardClick() {
-      this.$emit("on-click", 'homeForBigger')
+    cardClick()
+    {
+     this.$emit("on-click",'setIconInlayerforBig')
     }
     // 在首页初始化公共数据
     // ...mapActions([

@@ -1,5 +1,5 @@
 <template>
-<Layout class="big_mains_home">
+<Layout class="big_mains">
   <!-- <Header id="header" class="backColor">Header</Header> -->
   <Row class="big_header">
     <Col span="8">
@@ -16,64 +16,35 @@
     </Col>
   </Row>
   <Layout class="backColor">
-
-    <Sider hide-trigger width="400" id="slider" class="backColor bigSliderLeft">
-      <deviceStatus @on-click="turnToPage" class="backImage" :chartsHeight='chartsHeight' style=" margin:0 10px 0 10px" />
-      <vedioStatus2 :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
-      <alarm :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
-    </Sider>
     <Content class="main-content-con backColor">
 
       <Layout class="main-layout-con backColor">
         <!-- <div class="tag-nav-wrapper">
             <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
           </div> -->
-        <Content class="content-wrapper backColor backImage">
+        <Content class="content-wrapper backColor">
           <keep-alive :include="cacheList" :exclude="notCacheName">
             <router-view ref="child" />
           </keep-alive>
-
         </Content>
       </Layout>
     </Content>
-    <Sider hide-trigger width="400" class="backColor bigSliderRight">
-      <jobControl :chartsHeight='chartsHeight' class="backImage" style="margin:0 10px 0 10px;margin-right:10px" />
-      <ElectronicFence :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 10px 10px;margin-right:10px" />
-      <daozha :chartsHeight='chartsHeight' class="backImage" style="margin:0px 10px 10px 10px;margin-right:10px" />
-    </Sider>
   </Layout>
 </Layout>
 </template>
 <script>
 import deviceStatistics from './components/deviceStatistics'
-import deviceStatus from './components/deviceStatus'
-import vedioStatus from './components/vedioStatus'
-import vedioStatus2 from './components/vedioStatus2'
-import jobControl from './components/jobControl'
-import ElectronicFence from './components/ElectronicFence'
 import showCurrentTime from "./components/times"
-import daozha from "./components/daozha"
-import alarm from "./components/alarm"
 import User from './components/user/'
 import titles from "./components/titles"
 import './parent-view.less'
 export default {
-  name: 'ParentView',
+  name: 'ParentViewBig',
   components: {
-
     deviceStatistics,
-    deviceStatus,
-    vedioStatus,
-    vedioStatus2,
-    jobControl,
-    ElectronicFence,
     showCurrentTime,
-    daozha,
-    alarm,
     User,
     titles
-
-
   },
   data() {
     return {
@@ -92,7 +63,7 @@ export default {
       return [(this.$route.meta && this.$route.meta.notCache) ? this.$route.name : '']
     },
     cacheList() {
-      return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
+      return ['ParentView0', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
     }
   },
   created() {
@@ -103,7 +74,6 @@ export default {
   },
   methods: {
     turnToPage(to) {
-      console.log(to+"pppppppppppppppp")
       this.$router.push({
         name: to,
         meta: {

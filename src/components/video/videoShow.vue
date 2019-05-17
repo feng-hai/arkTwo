@@ -265,12 +265,12 @@ export default {
 </script>
 <style>
 @charset "utf-8";
-* {
+/** {
   margin: 0;
   padding: 0;
-}
+}*/
 
-html {
+/*html {
   width: 100%;
   height: 100%;
   font-size: 12px;
@@ -286,7 +286,7 @@ body {
 select {
   height: 20px;
   line-height: 20px;
-}
+}*/
 
 .left {
   float: left;

@@ -30,7 +30,7 @@ const USER01 = {
           },
           component: 'single-page/home/home'
 
-        }, {
+        },  {
           path: 'tools_json',
           name: 'tools_json',
           meta: {
@@ -51,6 +51,24 @@ const USER01 = {
         },
       ]
     }, {
+      path: '/bigerScreenFirst',
+      name: 'bigerScreenFirst',
+      component: 'parentViewBig',
+      meta: {
+        icon: 'md-menu',
+        title: '多级菜单'
+      },
+      children: [ {
+          path: 'firstBigger',
+          name: 'firstBigger',
+          meta: {
+            icon: '_qq',
+            title: '大屏展示'
+          },
+          component: 'single-page/firstPage/first'
+        }
+      ]
+    },{
       path: '/tools',
       name: 'tools',
       meta: {
@@ -75,6 +93,15 @@ const USER01 = {
             notCache: false
           },
           component: 'tools/viewManagement'
+        },
+        {
+          path: 'zidiyiEcharts',
+          name: 'zidiyiEcharts',
+          meta: {
+            title: `自定义视图`,
+            notCache: false
+          },
+          component: 'tools/zidiyiEchart'
         },
         {
           path: 'videoPage',

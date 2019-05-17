@@ -363,10 +363,12 @@ export default {
 
       var RECT_W = 20 * that.dataParent.slider,
         RECT_H = 42 * that.dataParent.slider
-      var offset_x = 0,
-        offset_y = 0
+      var offset_x = that.dataParent.offset_x?that.dataParent.offset_x:0,
+        offset_y = 0;
+        console.log(offset_x )
+        console.log(d.x, that.dataParent.scale,that.dataParent.translate,that.dataParent.offset_x);
       that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1] - 100 + that.dataParent.offset_y) + 'px'
-      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0] - 90) + 'px'
+      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0] - 90 +offset_x ) + 'px'
       that.tipsOptions.title = d.name
       that.tipContent = d.content
       that.showtips()
