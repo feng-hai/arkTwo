@@ -2,7 +2,7 @@
 <div class="contentinfo">
   <p class="pTitle"><span class="active">周界监控</span></p>
   <electronicEcharts :chartsHeight="chartsHeight"></electronicEcharts>
-  <electronicTable :scollHeight="scollHeight" style="padding-bottom:5px"></electronicTable>
+  <electronicTable :scollHeight="scollHeight" style="padding-bottom:10px"></electronicTable>
 
 </div>
 </template>
@@ -20,8 +20,8 @@ export default {
   },
   data() {
     return {
-      chartsHeight: (windowHeight() - 180) / 2,
-      scollHeight: (windowHeight() - 180) / 2
+    chartsHeight: (windowHeight() - 120) / 2-20-10,
+      scollHeight: (windowHeight() - 120) / 2-10-23
 
     }
   }
@@ -31,6 +31,8 @@ export default {
 <style>
 .contentinfo{
   position: relative;
+  height: calc(100vh - 104px);
+    overflow:hidden;
 }
 .pTitle {
     position: absolute;

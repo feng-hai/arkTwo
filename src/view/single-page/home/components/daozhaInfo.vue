@@ -1,25 +1,25 @@
 <template>
-  <div class ="contentinfo">
-    <p class="pTitle"><span class="active" >æŠ¥è­¦ä¿¡æ¯</span></p>
-  <barrierEcharts :chartsHeight="chartsHeight"></barrierEcharts>
-  <barrierTable :scollHeight="scollHeight" style="padding-bottom:10px"></barrierTable>
+<div class ="contentinfo">
+  <p class="pTitle"><span class="active" >道闸监控</span></p>
+  <daozhaEcharts :chartsHeight="chartsHeight"></daozhaEcharts>
+  <daozhaTable :scollHeight="scollHeight" style="padding-bottom:10px"></daozhaTable>
 </div>
 </template>
 <script>
-import barrierTable from './barrierTable.vue'
-import barrierEcharts from './barrierEcharts.vue'
+import daozhaTable from './daozhaTable.vue'
+import daozhaEcharts from './daozhaEcharts.vue'
 import {
   windowHeight
 } from '@/libs/util'
 export default {
   name: 'alarmInfo',
   components :{
-    barrierTable,
-    barrierEcharts
+    daozhaTable,
+    daozhaEcharts
   },
   data() {
     return {
-    chartsHeight: (windowHeight() - 120) / 2-20-10,
+  chartsHeight: (windowHeight() - 120) / 2-20-10,
       scollHeight: (windowHeight() - 120) / 2-10-23
 
     }
@@ -31,9 +31,8 @@ export default {
 .contentinfo{
   position: relative;
   height: calc(100vh - 104px);
-  overflow:hidden;
+    overflow:hidden;
 }
-
 .pTitle {
     position: absolute;
     top: 20px;

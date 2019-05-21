@@ -301,7 +301,7 @@
   // }
 #alarmTable  .big_table_cell{
     color:#5bf4fd;
-    padding:10px 10px 10px 10px;
+    padding:0px 10px 10px 10px;
     font-size: 12px;
     text-align: center;
   }

@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     turnToPage1() {
-      this.$emit("on-click", "bigalarmInfo")
+      this.$emit("on-click", "bigdaozha")
     },
     turnToPage2() {
       this.$emit("on-click", "homeForBigger")

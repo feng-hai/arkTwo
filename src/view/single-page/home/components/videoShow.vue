@@ -1,7 +1,5 @@
 <template>
-<div id="big_video">
-
-
+<div id="big_video" >
   <videoTemplate ref="video" @initVideo="initVideo" :split="split" :vwidth="vwidth" :vheight="vheight" :iChannelID="iChannelID" :id="id1"></videoTemplate>
   <drag-drawer v-model="showContainerBDrawer" :width.sync="width1" min-width="30px" :inner="true" :transfer="false" :placement="placementComputed" @on-resize="handleResize" :scrollable="true">
     <videoInfo :cameras="cameras" @on-click="selectCamera" @click-type="selectScreenType">
@@ -10,7 +8,6 @@
   <drag-drawer v-model="showCompanyBDrawer" :width.sync="width2" min-width="30px" :inner="true" :transfer="false" placement="left" :draggable="draggable" @on-resize="handleResize" :scrollable="true">
     <!-- <v-tree ref='tree'style="margin-top:20px; margin-left:20px;" :data='treeData1' :radio="true" :multiple="false" :halfcheck='true' /> -->
   </drag-drawer>
-
   <ButtonGroup class="buttonType">
     <!-- <Tooltip content="楼层信息" placement="right-start">
       <Button icon="ios-git-network" type="info" class="layersButtonBottom" @click="showCompanyBDrawer = !showCompanyBDrawer"></Button>
@@ -51,8 +48,10 @@ export default {
     // })
   },
   created() {
-    this.vwidth = $("#big_video").parent().width();
-    console.log(this.vwidth,"big_videobig_videobig_videobig_videobig_video");
+    this.$nextTick(function(){
+      this.vwidth = $("#big_video").width();
+    })
+
   },
   data() {
     return {
@@ -68,12 +67,15 @@ export default {
       width2: 400,
       placement: false,
       draggable: true,
-      vwidth: $("#big_video").width(),
+      vwidth: null,
       vheight: windowHeight() - 120,
       cameras: [] //摄像头信息
     }
   },
   methods: {
+    handleResize() {
+
+    },
     changeMap() {
       this.showTableBDrawer = false;
       this.showMapBDrawer = true;

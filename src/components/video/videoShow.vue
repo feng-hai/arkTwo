@@ -199,6 +199,9 @@ export default {
         alert("您还未安装过插件，双击开发包目录里的WebComponents.exe安装！");
         return;
       }
+      if (this.vwidth == null) {
+        return;
+      }
       // 初始化插件参数及插入插件
       WebVideoCtrl.I_InitPlugin(this.vwidth, this.vheight, {
         iWndowType: this.split,
@@ -241,8 +244,6 @@ export default {
   mounted() {
     console.log("mounted")
     var that = this;
-
-
     //  await remoteLoad(`../../assets/js/webVideoCtrl.js`)
     //await remoteLoad('http://webapi.amap.com/ui/1.0/main.js')
     this.$nextTick(() => {
@@ -267,14 +268,18 @@ export default {
     // }
 
   },
+
   created() {
     console.log("created")
 
   },
   watch: {
     vwidth(n, o) {
-      cosnole.log(n, o, "dddddffffffffffff");
-      that.initVideo();
+      var that = this;
+      if (n != o) {
+        that.initVideo();
+      }
+
     }
   },
   destoryed() {

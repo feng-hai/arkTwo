@@ -93,7 +93,15 @@ const USER01 = {
             notCache: false
           },
           component: 'single-page/home/components/videoShow'
-        },
+        },  {
+            path: 'bigdaozha',
+            name: 'bigdaozha',
+            meta: {
+              title: '道闸监控',
+              notCache: false
+            },
+            component: 'single-page/home/components/daozhaInfo'
+          },
       ]
     }, {
       path: '/bigerScreenFirst',

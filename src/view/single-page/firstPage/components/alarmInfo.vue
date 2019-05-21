@@ -1,36 +1,21 @@
 <template>
-
      <div style="width:100%;height:100%;" class=" big_table backImage">
-       <p>
-         <i class="iconfont icon-baojing"></i><span>{{title}}</span>
-       </p>
-
-   <div class="test test-1" @mouseover="mouseover"   @mouseout="mouseout">
-    <div class="scrollbar" :style="{right:scollRight+'px'}">
-      <div >
-      <Row v-for="(item , index) in alarmArray" :key="index">
-          <Col span="6" class="big_table_cell">{{item.datetime}}</Col>
-          <Col span="6" class="big_table_cell">{{item.domainName}}</Col>
-          <Col span="6" class="big_table_cell">{{item.area}}</Col>
-          <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
-      </Row>
-    </div>
-    </div>
-</div>
-              <!-- <div id="wrapper" style="height: 200px;position:relative;  ">
+         <p>
+           <i class="iconfont icon-baojing"></i><span>{{title}}</span>
+         </p>
+         <div class="test test-1" @mouseover="mouseover"   @mouseout="mouseout">
+            <div class="scrollbar" :style="{right:scollRight+'px'}">
+                <div>
                   <Row v-for="(item , index) in alarmArray" :key="index">
-                      <Col span="6" >{{item.datetime}}</Col>
-                      <Col span="6" >{{item.domainName}}</Col>
-                      <Col span="6" >{{item.area}}</Col>
-                      <Col span="6" >{{item.typeName}}</Col>
+                      <Col span="6" class="big_table_cell">{{item.datetime}}</Col>
+                      <Col span="6" class="big_table_cell">{{item.domainName}}</Col>
+                      <Col span="6" class="big_table_cell">{{item.area}}</Col>
+                      <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
                   </Row>
-                </div> -->
-
-
-
+               </div>
+            </div>
+          </div>
       </div>
-
-
   </template>
   <script>
     const prefixCls = 'ivu-page';
@@ -47,7 +32,6 @@
               zIndex:"auto",        //滚动条z-Index
               autohidemode:true,     //自动隐藏模式
               horizrailenabled:true,//是否显示水平滚动条
-
             },
           scollRight:-17,
           forceGemini:true,
@@ -153,27 +137,20 @@
       methods:{
           mouseover:function()
           {
-          //  this.scollRight=0;
+           this.scollRight=0;
           },
           mouseout:function(){
-            //  this.scollRight=-17;
+             this.scollRight=-17;
           }
-
       }
-
     }
   </script>
   <style lang="scss">
-  // .scrollbar .conten-rig li{
-  //   float: left;
-  //   padding: 10px;
-  //   list-style-type: none;
-  //
-  // }
   .big_table_cell{
     color:rgb(255, 80, 80);
     padding:10px 10px 10px 10px;
     font-size: 12px;
+    text-align: center;
   }
   .big_table{
       background-color: rgba(24,35,50,0.1);
@@ -196,9 +173,7 @@
   }
   .clear{ clear:both}
 
-
   /* override gemini-scrollbar default styles */
-
 /* vertical scrollbar track */
 .gm-scrollbar.-vertical {
   background-color: red
@@ -208,7 +183,6 @@
 .gm-scrollbar.-horizontal {
   background-color: transparent;
 }
-
 /* scrollbar thumb */
 .gm-scrollbar .thumb {
   background-color: rebeccapurple;
@@ -217,11 +191,9 @@
   background-color: fuchsia;
 }
 
-
-
 .test{
     width: 100%;
-    height: 180px;
+    height:  calc(100vh - 660px);
     //overflow: auto;
     // float: left;
     // margin: 5px;
@@ -237,7 +209,6 @@
 	bottom: 0;
 	overflow-x: hidden;
 	overflow-y: scroll;
-
 }
 
 .scrollbar::-webkit-scrollbar {/*滚动条整体样式*/

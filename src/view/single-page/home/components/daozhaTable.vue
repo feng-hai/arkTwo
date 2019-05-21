@@ -4,19 +4,17 @@
          <i class="iconfont icon-baojing"></i><span>{{title}}</span>
        </p> -->
        <Row >
-           <Col span="8" class="big_table_cell">周界点位</Col>
-           <Col span="8" class="big_table_cell">开始时间</Col>
-           <Col span="8" class="big_table_cell">结束时间</Col>
+           <Col span="12" class="big_table_cell">车牌号</Col>
+           <Col span="12" class="big_table_cell">开始时间</Col>
 
        </Row>
        <div class="test test-1" :style="{height:scollHeight+'px'}"  @mouseover="mouseover"   @mouseout="mouseout">
           <div class="scrollbar" :style="{right:scollRight+'px'}">
             <div >
             <Row v-for="(item , index) in alarmArray" :key="index">
-                <Col span="8" class="big_table_cell">{{item.typeName}}</Col>
-                <Col span="8" class="big_table_cell">{{item.datetime}}</Col>
+                <Col span="12" class="big_table_cell">{{item.name}}</Col>
+                <Col span="12" class="big_table_cell">{{item.datetime}}</Col>
 
-                <Col span="8" class="big_table_cell">{{item.datetime}}</Col>
             </Row>
             </div>
           </div>
@@ -56,190 +54,226 @@
           title:'报警信息',
           alarmArray:[
             {
+              name:'苏A9000',
               datetime:'2019-05-15 10:21:21',
               domainName:'南京动车所',
-              person:'张工',
+              area:'二次东区',
               typeName:'烟感报警'
             },
             {
+              name:'苏A9000',
               datetime:'2019-05-15 10:22:21',
               domainName:'南京动车所',
-              person:'张工',
+              area:'二次东区',
               typeName:'烟感报警'
             },
             {
+              name:'苏A9000',
               datetime:'2019-05-15 10:21:21',
               domainName:'南京动车所',
-              person:'张工',
+              area:'二次东区',
               typeName:'烟感报警'
             },
             {
+              name:'苏A9000',
               datetime:'2019-05-15 10:22:21',
               domainName:'南京动车所',
-              person:'张工',
+              area:'二次东区',
               typeName:'烟感报警'
             },
             {
+                name:'苏A9000',
               datetime:'2019-05-15 10:21:21',
               domainName:'南京动车所',
-              person:'张工',
+              area:'二次东区',
               typeName:'烟感报警'
             },
             {
+                name:'苏A9000',
               datetime:'2019-05-15 10:22:21',
               domainName:'南京动车所',
-              person:'张工',
+              area:'二次东区',
               typeName:'烟感报警'
             },  {
+                name:'苏A9000',
                 datetime:'2019-05-15 10:21:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                  name:'苏A9000',
                 datetime:'2019-05-15 10:22:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                  name:'苏A9000',
                 datetime:'2019-05-15 10:21:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                  name:'苏A9000',
                 datetime:'2019-05-15 10:22:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                  name:'苏A9000',
                 datetime:'2019-05-15 10:21:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                name:'苏A9000',
                 datetime:'2019-05-15 10:22:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                name:'苏A9000',
                 datetime:'2019-05-15 10:21:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },
               {
+                name:'苏A9000',
                 datetime:'2019-05-15 10:22:21',
                 domainName:'南京动车所',
-                person:'张工',
+                area:'二次东区',
                 typeName:'烟感报警'
               },  {
+                name:'苏A9000',
                   datetime:'2019-05-15 10:21:21',
                   domainName:'南京动车所',
-                  person:'张工',
+                  area:'二次东区',
                   typeName:'烟感报警'
                 },
                 {
+                    name:'苏A9000',
                   datetime:'2019-05-15 10:22:21',
                   domainName:'南京动车所',
-                  person:'张工',
+                  area:'二次东区',
                   typeName:'烟感报警'
                 },  {
+                  name:'苏A9000',
                     datetime:'2019-05-15 10:21:21',
                     domainName:'南京动车所',
-                    person:'张工',
+                    area:'二次东区',
                     typeName:'烟感报警'
                   },
                   {
+                    name:'苏A9000',
                     datetime:'2019-05-15 10:22:21',
                     domainName:'南京动车所',
-                    person:'张工',
+                    area:'二次东区',
                     typeName:'烟感报警'
                   },
                   {
+                      name:'苏A9000',
                     datetime:'2019-05-15 10:21:21',
                     domainName:'南京动车所',
-                    person:'张工',
+                    area:'二次东区',
                     typeName:'烟感报警'
                   },
                   {
+                      name:'苏A9000',
                     datetime:'2019-05-15 10:22:21',
                     domainName:'南京动车所',
-                    person:'张工',
+                    area:'二次东区',
                     typeName:'烟感报警'
                   },
                   {
+                      name:'苏A9000',
                     datetime:'2019-05-15 10:21:21',
                     domainName:'南京动车所',
-                    person:'张工',
+                    area:'二次东区',
                     typeName:'烟感报警'
                   },
                   {
+                      name:'苏A9000',
                     datetime:'2019-05-15 10:22:21',
                     domainName:'南京动车所',
-                    person:'张工',
+                    area:'二次东区',
                     typeName:'烟感报警'
                   },  {
+                      name:'苏A9000',
                       datetime:'2019-05-15 10:21:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                      name:'苏A9000',
                       datetime:'2019-05-15 10:22:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                        name:'苏A9000',
                       datetime:'2019-05-15 10:21:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                        name:'苏A9000',
                       datetime:'2019-05-15 10:22:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                      name:'苏A9000',
                       datetime:'2019-05-15 10:21:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                      name:'苏A9000',
                       datetime:'2019-05-15 10:22:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                      name:'苏A9000',
+
                       datetime:'2019-05-15 10:21:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },
                     {
+                      name:'苏A9000',
+
                       datetime:'2019-05-15 10:22:21',
                       domainName:'南京动车所',
-                      person:'张工',
+                      area:'二次东区',
                       typeName:'烟感报警'
                     },  {
+                      name:'苏A9000',
+
                         datetime:'2019-05-15 10:21:21',
                         domainName:'南京动车所',
-                        person:'张工',
+                        area:'二次东区',
                         typeName:'烟感报警'
                       },
                       {
+                        name:'苏A9000',
+
                         datetime:'2019-05-15 10:22:21',
                         domainName:'南京动车所',
-                        person:'张工',
+                        area:'二次东区',
                         typeName:'烟感报警'
                       }
           ]
@@ -267,7 +301,7 @@
   // }
 #alarmTable  .big_table_cell{
     color:#5bf4fd;
-    padding:10px 10px 10px 10px;
+    padding:0px 10px 10px 10px;
     font-size: 12px;
     text-align: center;
   }

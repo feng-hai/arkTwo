@@ -151,8 +151,6 @@
     height: 240px;
     width: 50%;
     padding:0px 10px 10px 10px;
-
-
   }
   .alarmInfo{
     height: calc(100vh - 590px);
@@ -163,7 +161,6 @@
       height: calc(100vh - 120px);
       padding:0px 20px 10px 0px;
       background-color: rgba(24,35,50,0.1);
-
   }
 
   </style>
