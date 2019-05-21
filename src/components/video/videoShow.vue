@@ -1,24 +1,26 @@
 <template>
 <div>
   <div :id="id" ref="tet" class="plugin"></div>
-  <Button @click="stopRealPlay">关闭预览</Button>     <Button @click="startRealPlay">开始预览</Button>
+  <Button @click="stopRealPlay">关闭预览</Button>
+  <Button @click="startRealPlay">开始预览</Button>
 </div>
 </template>
 <script>
 import remoteLoad from '@/assets/js/remoteLoad.js'
 import WebVideoCtrl from '@/libs/webVideo.js'
+
 export default {
   name: 'videoTemplate',
   data() {
     return {
-      g_iWndIndex: 2,
+      g_iWndIndex: 2, //激活窗口位置
       iStreamType: 1,
 
       szInfo: ''
     }
   },
   props: {
-    id:{
+    id: {
       type: String,
       default: 'divPlugin'
     },
@@ -40,18 +42,32 @@ export default {
     },
     split: {
       type: String,
-      default: '1'
+      default: '4'
     },
-    Num: { //第几路摄像头
+    vwidth: {
       type: Number,
-      default: 13
+      default: 400
     },
+    vheight: {
+      type: Number,
+      default: 300
+    },
+    // Num: { //第几路摄像头
+    //   type: Number,
+    //   default: 13
+    // },
     iChannelID: { //第几路摄像头
       type: Number,
       default: 2
     }
   },
   methods: {
+
+    // 窗口分割数
+    changeWndNum(iType) {
+      iType = parseInt(iType, 10);
+      WebVideoCtrl.I_ChangeWndNum(iType);
+    },
     getChannelInfo() {
 
       var that = this;
@@ -80,31 +96,40 @@ export default {
       //   }
       // });
       // // 数字通道
-      // WebVideoCtrl.I_GetDigitalChannelInfo(that.ip, {
-      //   async: false,
-      //   success: function(xmlDoc) {
-      //     console.log("数字通道",xmlDoc)
-      //     that.startRealPlay();
-      //     // var oChannels = $(xmlDoc).find("InputProxyChannelStatus");
-      //     //
-      //     // $.each(oChannels, function (i) {
-      //     // 	var id = parseInt($(this).find("id").eq(0).text(), 10),
-      //     // 		name = $(this).find("name").eq(0).text(),
-      //     // 		online = $(this).find("online").eq(0).text();
-      //     // 	if ("false" == online) {// 过滤禁用的数字通道
-      //     // 		return true;
-      //     // 	}
-      //     // 	if ("" == name) {
-      //     // 		name = "IPCamera " + ((id - nAnalogChannel) < 9 ? "0" + (id - nAnalogChannel) : (id - nAnalogChannel));
-      //     // 	}
-      //     // 	oSel.append("<option value='" + id + "' bZero='false'>" + name + "</option>");
-      //     // });
-      //     // showOPInfo(szIP + " 获取数字通道成功！");
-      //   },
-      //   error: function() {
-      //     //showOPInfo(szIP + " 获取数字通道失败！");
-      //   }
-      // });
+      WebVideoCtrl.I_GetDigitalChannelInfo(that.ip, {
+        async: false,
+        success: function(xmlDoc) {
+          // that.startRealPlay();
+          var oChannels = $(xmlDoc).find("InputProxyChannelStatus");
+          var temp = [];
+          $.each(oChannels, function(i) {
+            var id = parseInt($(this).find("id").eq(0).text(), 10),
+              name = $(this).find("name").eq(0).text(),
+              online = $(this).find("online").eq(0).text();
+            // if ("false" == online) { // 过滤禁用的数字通道
+            //   return true;
+            // }
+            if ("" == name) {
+              name = "IPCamera " + id < 9 ? "0" + id : id;
+              //name = "IPCamera " + ((id - nAnalogChannel) < 9 ? "0" + (id - nAnalogChannel) : (id - nAnalogChannel));
+            }
+
+            temp.push({
+              id: id,
+              name: name,
+              online: online,
+              oChannels: id
+            })
+            //console.log("<option value='" + id + "' bZero='false'>" + name + "</option>")
+            // oSel.append("<option value='" + id + "' bZero='false'>" + name + "</option>");
+          });
+          that.$emit("initVideo", temp)
+          // showOPInfo(szIP + " 获取数字通道成功！");
+        },
+        error: function() {
+          //showOPInfo(szIP + " 获取数字通道失败！");
+        }
+      });
       // // 零通道
       // WebVideoCtrl.I_GetZeroChannelInfo(that.ip, {
       //   async: false,
@@ -133,7 +158,7 @@ export default {
     startRealPlay() {
       var that = this;
       var oWndInfo = WebVideoCtrl.I_GetWindowStatus(that.g_iWndIndex);
-      console.log(oWndInfo)
+
       if (oWndInfo != null) { // 已经在播放了，先停止
         WebVideoCtrl.I_Stop();
       }
@@ -148,7 +173,7 @@ export default {
       } else {
         this.szInfo = "开始预览失败！";
       }
-      console.log(this.szInfo)
+
       //showOPInfo(szIP + " " + szInfo);
     },
     stopRealPlay() { //停止预览
@@ -163,7 +188,7 @@ export default {
         } else {
           szInfo = "停止预览失败！";
         }
-        console.log(szInfo)
+
         // showOPInfo(oWndInfo.szIP + " " + szInfo);
       }
     },
@@ -175,7 +200,7 @@ export default {
         return;
       }
       // 初始化插件参数及插入插件
-      WebVideoCtrl.I_InitPlugin(500, 300, {
+      WebVideoCtrl.I_InitPlugin(this.vwidth, this.vheight, {
         iWndowType: this.split,
         cbSelWnd: function(xmlDoc) {
           that.g_iWndIndex = $(xmlDoc).find("SelectWnd").eq(0).text();
@@ -246,6 +271,12 @@ export default {
     console.log("created")
 
   },
+  watch: {
+    vwidth(n, o) {
+      cosnole.log(n, o, "dddddffffffffffff");
+      that.initVideo();
+    }
+  },
   destoryed() {
     console.log("destoryed")
     var that = this;
@@ -288,9 +319,9 @@ select {
   line-height: 20px;
 }*/
 
-.left {
+/*.left {
   float: left;
-}
+}*/
 
 .freeze {
   /*position: relative;*/
@@ -299,8 +330,8 @@ select {
   color: #FFFFFF;
   font-size: 26px;
   font-weight: bold;
-  filter: alpha(opacity=60);
-  opacity: 0.6;
+  filter: alpha(opacity=10);
+  opacity: 0.2;
 }
 
 .vtop {
@@ -311,8 +342,8 @@ select {
 /*插件*/
 
 .plugin {
-  width: 500px;
-  height: 300px;
+  width: 100vw;
+  height: 100vh;
 }
 
 fieldset {

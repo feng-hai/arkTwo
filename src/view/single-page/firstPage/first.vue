@@ -3,18 +3,18 @@
     <Col span="12">
           <Row>
               <Col span="12" class="statusShow">
-                  <statusShow title="南京动车所" grade="96" :list="dongche"></statusShow>
+                  <statusShow title="南京动车所" @on-click="turnToPage('homeForBigger')" grade="96" :list="dongche"></statusShow>
               </Col>
               <Col span="12" style="padding-left:0px"  class="statusShow">
-                <statusShow title="南京南动车所" grade="98" :list="dongchenan"></statusShow>
+                <statusShow title="南京南动车所" @on-click="turnToPage('homeForBigger')"  grade="98" :list="dongchenan"></statusShow>
               </Col>
           </Row>
           <Row>
               <Col span="12"  class="statusShow" >
-                <statusShow title="徐州东动车所" grade="99" :list="xuzhoudong"></statusShow>
+                <statusShow title="徐州东动车所" @on-click="turnToPage('homeForBigger')"  grade="99" :list="xuzhoudong"></statusShow>
               </Col>
               <Col span="12" style="padding-left:0px"  class="statusShow">
-                <statusShow title="合肥南动车所" grade="99" :list="hefeinan"></statusShow>
+                <statusShow title="合肥南动车所" @on-click="turnToPage('homeForBigger')"  grade="99" :list="hefeinan"></statusShow>
               </Col>
           </Row>
           <Row>
@@ -39,6 +39,18 @@
       statusShow,
       mapEcharts,
       alarmInfo
+      },
+      methods:{
+        turnToPage(to) {
+          console.log(to+"dddddddddddd")
+          this.$router.push({
+            name: to,
+            meta: {
+              title: `视图管理`,
+              notCache: false
+            }
+          })
+        }
       },
       data() {
         return{

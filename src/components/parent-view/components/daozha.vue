@@ -1,9 +1,9 @@
 <template>
-<div v-on:click="cardClick">
+<div >
   <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
     <p class="pTitle"><span :class="isdaozha?action:noaction" @click="changeType">道闸监控</span><span @click="changeType" :class="isdaozha?noaction:action">充电桩监控</span></p>
-    <Chart-object v-show="isdaozha" v-bind:style="{height:chartsHeight + 'px'}" text="巡检管理"></Chart-object>
-    <Chart-object ref="chongdian" v-show="ischongdian" v-bind:style="{width:'100%',height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
+    <Chart-object @on-click="turnToPage1"  v-show="isdaozha" v-bind:style="{height:chartsHeight + 'px'}" text="巡检管理"></Chart-object>
+    <Chart-object @on-click="turnToPage2"  ref="chongdian" v-show="ischongdian" v-bind:style="{width:'100%',height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
     </TabPane>
     <!-- <Chart-object v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="巡检管理1"></Chart-object></TabPane> -->
   </Card>
@@ -60,8 +60,11 @@ export default {
     }
   },
   methods: {
-    cardClick() {
-      this.$emit("on-click", 'setIconInlayerforBig')
+    turnToPage1() {
+      this.$emit("on-click", "bigalarmInfo")
+    },
+    turnToPage2() {
+      this.$emit("on-click", "homeForBigger")
     },
     changeType() {
         this.$refs.chongdian.resize();

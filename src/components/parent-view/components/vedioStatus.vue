@@ -72,7 +72,7 @@ export default {
           value: 4,
           name: '离线'
         }
-      
+
       ],
       barData: {
         Mon: 13253,
@@ -88,7 +88,7 @@ export default {
   methods: {
     cardClick()
     {
-     this.$emit("on-click",'setIconInlayerforBig')
+     this.$emit("on-click",'bigvideo')
     }
     // 在首页初始化公共数据
     // ...mapActions([

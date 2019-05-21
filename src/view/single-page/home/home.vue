@@ -3,8 +3,6 @@
 
   <vue-layer v-show="showMapBDrawer" class="edit" :data-parent="data"></vue-layer>
   <pointsTable v-show="showTableBDrawer"></pointsTable>
-
-
   <ButtonGroup  class="buttonType">
     <Tooltip content="楼层信息" placement="right-start">
         <Button icon="ios-git-network" type="info" class="layersButtonBottom" @click="showCompanyBDrawer = !showCompanyBDrawer"></Button>

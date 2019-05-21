@@ -1,13 +1,12 @@
 <template>
 <div v-on:click="cardClick">
-  <Card shadow   style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
-  <p class="pTitle"><span class="active" >报警信息</span></p>
-    <Chart-object class="alarmType" v-bind:style="{height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
+  <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
+    <Chart-object v-bind:style="{height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
   </Card>
 </div>
 </template>
 <script>
-import '../parent-view.less'
+// import '../parent-view.less'
 import {
   ChartObject,
 } from '_c/charts'
@@ -17,7 +16,7 @@ export default {
     chartsHeight: {
       type: Number,
       default () {
-        return 200;
+        return 300;
       }
     },
   },
@@ -27,10 +26,9 @@ export default {
   data() {
     return {
       options: {
-        // title: {
-        //   text: '报警信息',
-        //   x: 'center'
-        // },
+        title: {
+          x: 'center'
+        },
         color: ['#3398DB'],
         tooltip: {
           trigger: 'axis',
@@ -68,7 +66,7 @@ export default {
   },
   methods: {
     cardClick() {
-      this.$emit("on-click", 'bigalarmInfo')
+      this.$emit("on-click", 'setIconInlayerforBig')
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -86,27 +84,5 @@ export default {
 <style lang="less">
 .count-style {
     font-size: 50px;
-}
-.alarmType{
-  cursor: pointer;
-  cursor: hand;
-}
-.pTitle {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-    span {
-        cursor: pointer;
-        cursor: hand;
-        padding: 10px;
-        // Border: 1px solid #000;
-    }
-    .active {
-        color: #fff;
-    }
-    .noactive {
-        color: #bbb;
-    }
 }
 </style>

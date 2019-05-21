@@ -1,17 +1,19 @@
 <template>
-<div v-on:click="cardClick" >
- <Card shadow  style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
-    <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="设备状态"></chart-pie>
+<div v-on:click="cardClick">
+  <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
+    <p class="pTitle"><span class="active">设备状态</span></p>
+    <Chart-object v-bind:style="{height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
+    <!-- <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="巡检管理"></chart-pie> -->
   </Card>
 </div>
 </template>
 <script>
 import '../parent-view.less'
 import {
-  ChartPie,
+  ChartObject,
 } from '_c/charts'
 export default {
-  name: 'deviceStatistics',
+  name: 'vedioStatus',
   props: {
     chartsHeight: {
       type: Number,
@@ -21,81 +23,62 @@ export default {
     },
   },
   components: {
-    ChartPie,
+    ChartObject,
   },
   data() {
     return {
-
-      inforCardData: [{
-          title: '新增用户',
-          icon: 'md-person-add',
-          count: 803,
-          color: '#2d8cf0'
+      options: {
+        // title: {
+        //   text: '某站点用户访问来源',
+        //   subtext: '纯属虚构',
+        //   x: 'center'
+        // },
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        {
-          title: '累计点击',
-          icon: 'md-locate',
-          count: 232,
-          color: '#19be6b'
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          data: ['报警', '离线','正常']
         },
-        {
-          title: '新增问答',
-          icon: 'md-help-circle',
-          count: 142,
-          color: '#ff9900'
-        },
-        {
-          title: '分享统计',
-          icon: 'md-share',
-          count: 657,
-          color: '#ed3f14'
-        },
-        {
-          title: '新增互动',
-          icon: 'md-chatbubbles',
-          count: 12,
-          color: '#E46CBB'
-        },
-        {
-          title: '新增页面',
-          icon: 'md-map',
-          count: 14,
-          color: '#9A66E4'
-        }
-      ],
-      pieData: [
-        {
-          value: 310,
-          name: '报警'
-        },
-        {
-          value: 4,
-          name: '故障'
-        },
-        {
-          value: 135,
-          name: '屏蔽'
-        },
-        {
-            value: 1335,
-            name: '正常'
+        series: [{
+          name: '设备状态',
+          type: 'pie',
+          radius: ['50%','70%'],
+          center: ['50%', '60%'],
+          data: [{
+              value: 35,
+              name: '报警'
+            },
+            {
+              value: 3210,
+              name: '正常'
+            },
+            {
+              value: 10,
+              name: '离线'
+            },
+            {
+              value: 121,
+              name: '屏蔽'
+            }
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
           }
-      ],
-      barData: {
-        Mon: 13253,
-        Tue: 34235,
-        Wed: 26321,
-        Thu: 12340,
-        Fri: 24643,
-        Sat: 1322,
-        Sun: 1324
+        }]
       }
     }
+
   },
   methods: {
-    cardClick()
-    {
-     this.$emit("on-click",'homeForBigger')
+    cardClick() {
+      this.$emit("on-click", 'homeForBigger')
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -113,5 +96,23 @@ export default {
 <style lang="less">
 .count-style {
     font-size: 50px;
+}
+.pTitle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    span {
+        cursor: pointer;
+        cursor: hand;
+        padding: 10px;
+        // Border: 1px solid #000;
+    }
+    .active {
+        color: #fff;
+    }
+    .noactive {
+        color: #bbb;
+    }
 }
 </style>

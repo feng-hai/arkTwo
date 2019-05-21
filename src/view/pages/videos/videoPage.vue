@@ -1,7 +1,7 @@
 <template>
 <div>
   <Card style="margin-top:20px">
-    <videoTemplate :iChannelID="iChannelID" :id="id1"></videoTemplate>
+    <videoTemplate  split="1" :iChannelID="iChannelID" :id="id1"></videoTemplate>
   </Card>
 </div>
 </template>
@@ -14,8 +14,9 @@ export default {
   },
   data() {
     return {
-      iChannelID: 3,
+      iChannelID: 2,
       id1:"divPlugin1",
+      id2:"divPlugin2",
 
     }
   }

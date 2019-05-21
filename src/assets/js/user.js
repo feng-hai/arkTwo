@@ -49,6 +49,51 @@ const USER01 = {
           },
           component: 'layers/Icons_Annotation'
         },
+        {
+          path: 'bigalarmInfo',
+          name: 'bigalarmInfo',
+          meta: {
+            title: '报警信息',
+            notCache: false
+          },
+          component: 'single-page/home/components/alarmInfo'
+        },
+        {
+          path: 'biginspactionInfo',
+          name: 'biginspactionInfo',
+          meta: {
+            title: '巡检信息',
+            notCache: false
+          },
+          component: 'single-page/home/components/inspactionInfo'
+        },
+        {
+          path: 'bigelectronicInfo',
+          name: 'bigelectronicInfo',
+          meta: {
+            title: '巡检管理',
+            notCache: false
+          },
+          component: 'single-page/home/components/electronicInfo'
+        },
+        {
+          path: 'bigbarrierInfo',
+          name: 'bigbarrierInfo',
+          meta: {
+            title: '报警信息',
+            notCache: false
+          },
+          component: 'single-page/home/components/barrierInfo'
+        },
+        {
+          path: 'bigvideo',
+          name: 'bigvideo',
+          meta: {
+            title: '视频信息',
+            notCache: false
+          },
+          component: 'single-page/home/components/videoShow'
+        },
       ]
     }, {
       path: '/bigerScreenFirst',

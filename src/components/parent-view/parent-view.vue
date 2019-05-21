@@ -19,8 +19,8 @@
 
     <Sider hide-trigger width="400" id="slider" class="backColor bigSliderLeft">
       <deviceStatus @on-click="turnToPage" class="backImage" :chartsHeight='chartsHeight' style=" margin:0 10px 0 10px" />
-      <vedioStatus2 :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
-      <alarm :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
+      <vedioStatus2 @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
+      <alarm @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
     </Sider>
     <Content class="main-content-con backColor">
 
@@ -37,9 +37,9 @@
       </Layout>
     </Content>
     <Sider hide-trigger width="400" class="backColor bigSliderRight">
-      <jobControl :chartsHeight='chartsHeight' class="backImage" style="margin:0 10px 0 10px;margin-right:10px" />
-      <ElectronicFence :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 10px 10px;margin-right:10px" />
-      <daozha :chartsHeight='chartsHeight' class="backImage" style="margin:0px 10px 10px 10px;margin-right:10px" />
+      <jobControl @on-click="turnToPage"  :chartsHeight='chartsHeight' class="backImage" style="margin:0 10px 0 10px;margin-right:10px" />
+      <ElectronicFence @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 10px 10px;margin-right:10px" />
+      <daozha @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:0px 10px 10px 10px;margin-right:10px" />
     </Sider>
   </Layout>
 </Layout>

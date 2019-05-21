@@ -1,6 +1,7 @@
 <template>
 <div v-on:click="cardClick">
   <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
+  <p class="pTitle"><span class="active">设备状态</span></p>
     <Chart-object v-bind:style="{height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
   </Card>
 </div>
@@ -26,9 +27,11 @@ export default {
   data() {
     return {
       options: {
-        title: {
-          text: '视频监控',
-          x: 'center'
+
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          data: ['离线','在线']
         },
         tooltip: {
           trigger: 'item',
@@ -38,18 +41,18 @@ export default {
         series: [
 
           {
-            name: '面积模式',
+            name: '视频监控',
             type: 'pie',
             radius: '55%',
             center: ['50%', '50%'],
             roseType: 'redius',
             data: [{
                 value: 10,
-                name: '在线'
+                name: '离线'
               },
               {
-                value: 5,
-                name: '离线'
+                value: 35,
+                name: '在线'
               }
 
 
@@ -62,7 +65,7 @@ export default {
   },
   methods: {
     cardClick() {
-      this.$emit("on-click", 'setIconInlayerforBig')
+      this.$emit("on-click", 'bigvideo')
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -80,5 +83,23 @@ export default {
 <style lang="less">
 .count-style {
     font-size: 50px;
+}
+.pTitle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    span {
+        cursor: pointer;
+        cursor: hand;
+        padding: 10px;
+        // Border: 1px solid #000;
+    }
+    .active {
+        color: #fff;
+    }
+    .noactive {
+        color: #bbb;
+    }
 }
 </style>

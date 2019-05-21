@@ -1,7 +1,7 @@
 <template>
 <div>
   <Card style="margin-top:20px">
-    <videoTemplate :iChannelID="iChannelID" :id="id1"></videoTemplate>
+    <videoTemplate :iChannelID="iChannelID" split="1" :id="id1"></videoTemplate>
   </Card>
 </div>
 </template>

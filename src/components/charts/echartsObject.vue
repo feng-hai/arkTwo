@@ -1,5 +1,5 @@
 <template>
-<div ref="dom" class="charts chart-bar"></div>
+<div @click="cardClick" ref="dom" class="charts chart-bar"></div>
 </template>
 
 <script>
@@ -56,6 +56,10 @@ export default {
     }
   },
   methods: {
+    cardClick() {
+      console.log("cardClick000000000000000000")
+      this.$emit("on-click")
+    },
     resize() {
       console.log("refs")
       this.dom.resize()

@@ -1,5 +1,5 @@
 <template>
-<div class="template-page backImage">
+<div class="template-page backImage" @click="turnToPage">
   <p>
     <i> 图标</i><span>{{title}}</span>
   </p>
@@ -17,6 +17,12 @@
 </template>
 <script>
 export default {
+  methods: {
+    turnToPage() {
+      console.log("turnToPage")
+      this.$emit("on-click");
+    }
+  },
   data() {
     return {
       title: '文字标题',

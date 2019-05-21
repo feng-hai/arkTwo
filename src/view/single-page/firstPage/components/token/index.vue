@@ -1,5 +1,5 @@
 <template>
-<div class="template-page backImage">
+<div class="template-page backImage"  @click="turnToPage">
   <p>
     <i class="iconfont icon-jianzhu"></i><span>{{title}}</span>
   </p>
@@ -64,7 +64,14 @@ export default {
       // title: '文字标题',
 
     }
+  },
+  methods:{
+    turnToPage() {
+      console.log("turnToPage")
+      this.$emit("on-click");
+    }
   }
+
 }
 </script>
 <style lang="scss" >
