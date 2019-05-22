@@ -1,0 +1,110 @@
+<template>
+<div v-on:click="cardClick" style="width:200px;height:200px;">
+  <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1);width:200px;height:200px; ">
+    <p class="pTitle"><span class="active">巡检管理</span></p>
+    <Chart-object v-bind:style="{height:chartsHeight + 'px',width:'200px'}" :options="options" text="巡检管理"></Chart-object>
+    <!-- <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="巡检管理"></chart-pie> -->
+  </Card>
+</div>
+</template>
+<script>
+import '../parent-view.less'
+import {
+  ChartObject,
+} from '_c/charts'
+export default {
+  name: 'vedioStatus',
+  props: {
+    chartsHeight: {
+      type: Number,
+      default () {
+        return 200;
+      }
+    },
+  },
+  components: {
+    ChartObject,
+  },
+  data() {
+    return {
+      options: {
+        // title: {
+        //   text: '某站点用户访问来源',
+        //   subtext: '纯属虚构',
+        //   x: 'center'
+        // },
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'right',
+          data: ['已完成', '待巡检']
+        },
+        series: [{
+          name: '巡检管理',
+          type: 'pie',
+          radius: ['50%','70%'],
+          center: ['50%', '60%'],
+          data: [{
+              value: 335,
+              name: '已完成'
+            },
+            {
+              value: 310,
+              name: '待巡检'
+            }
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }]
+      }
+    }
+
+  },
+  methods: {
+    cardClick() {
+      this.$emit("on-click", 'biginspactionInfo')
+    }
+    // 在首页初始化公共数据
+    // ...mapActions([
+    //   "getOrgInfoAction",
+    //   'getMenuInfoAction'
+    // ]),
+  },
+  mounted() {
+    // this.getOrgInfoAction();
+    // this.getMenuInfoAction();
+  }
+}
+</script>
+
+<style lang="less">
+.count-style {
+    font-size: 50px;
+}
+.pTitle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    span {
+        cursor: pointer;
+        cursor: hand;
+        padding: 10px;
+        // Border: 1px solid #000;
+    }
+    .active {
+        color: #fff;
+    }
+    .noactive {
+        color: #bbb;
+    }
+}
+</style>

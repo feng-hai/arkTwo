@@ -1,20 +1,21 @@
 <template>
 <div id="big_layers" class="backImage home_first drag-drawer-inner-box">
 
-  <vue-layer v-show="showMapBDrawer" class="edit" :data-parent="data"></vue-layer>
+
+  <vue-layer v-show="showMapBDrawer" class="edit" :data-parent="data" @openModel="openModel"></vue-layer>
   <pointsTable v-show="showTableBDrawer"></pointsTable>
-  <ButtonGroup  class="buttonType">
+  <ButtonGroup class="buttonType">
     <Tooltip content="楼层信息" placement="right-start">
-        <Button icon="ios-git-network" type="info" class="layersButtonBottom" @click="showCompanyBDrawer = !showCompanyBDrawer"></Button>
+      <Button icon="ios-git-network" type="info" class="layersButtonBottom" @click="showCompanyBDrawer = !showCompanyBDrawer"></Button>
     </Tooltip><br/>
     <Tooltip content="设备类型" placement="right-start">
-        <Button icon="ios-switch-outline"  class="layersButtonUp layersButtonBottom"  type="info" @click="showContainerBDrawer = !showContainerBDrawer"></Button>
+      <Button icon="ios-switch-outline" class="layersButtonUp layersButtonBottom" type="info" @click="showContainerBDrawer = !showContainerBDrawer"></Button>
     </Tooltip><br/>
     <Tooltip content="列表展示" placement="right-start">
-          <Button icon="ios-keypad-outline"  class="layersButtonUp layersButtonBottom"  type="info" @click="changeTable"></Button>
+      <Button icon="ios-keypad-outline" class="layersButtonUp layersButtonBottom" type="info" @click="changeTable"></Button>
     </Tooltip><br/>
     <Tooltip content="地图展示" placement="right-start">
-          <Button icon="ios-map-outline" class="layersButtonUp" type="info" @click="changeMap"></Button>
+      <Button icon="ios-map-outline" class="layersButtonUp" type="info" @click="changeMap"></Button>
     </Tooltip>
   </ButtonGroup>
   <div v-show="showMapBDrawer">
@@ -28,8 +29,10 @@
     </deviceType>
   </drag-drawer>
   <drag-drawer v-model="showCompanyBDrawer" :width.sync="width2" min-width="30px" :inner="true" :transfer="false" placement="left" :draggable="draggable" @on-resize="handleResize" :scrollable="true">
-    <v-tree ref='tree'style="margin-top:20px; margin-left:20px;" :data='treeData1' :radio="true" :multiple="false" :halfcheck='true' />
+    <v-tree ref='tree' style="margin-top:20px; margin-left:20px;" :data='treeData1' :radio="true" :multiple="false" :halfcheck='true' />
   </drag-drawer>
+  <modelz :isShow="modal1" @close="modal1=false"></modelz>
+
 
 </div>
 </template>
@@ -54,6 +57,9 @@ import {
 import Example from './example.vue'
 import pointsTable from './components/pointsTable.vue'
 import deviceType from './components/deviceType.vue'
+import modelz from './components/modelz.vue'
+import alarmTable from '@/view/single-page/home/components/alarmTable'
+import videoTemplate from '_c/video/index.js'
 // import {
 //   mapActions,
 //   mapGetters,
@@ -70,10 +76,18 @@ export default {
     vueLayer: layering,
     DragDrawer,
     pointsTable,
-    deviceType
+    deviceType,
+    alarmTable,
+    videoTemplate,
+    modelz
   },
   data() {
     return {
+      vwidth: null,
+      vheight: null,
+      iChannelID: 2,
+      id1: "divPlugin1",
+      modal1: false,
       treeData1: [],
       showMapBDrawer: true,
       showCompanyBDrawer: false,
@@ -86,11 +100,49 @@ export default {
       draggable: true,
       sliderNum: 50,
       data: {
+        divId: 'test001',
         offset_y: -15,
         offset_x: -5,
         slider: 0.5, //图标放大缩小比例
         //  width: 1000, // 画布宽度
         height: (windowHeight() - 174) < 600 ? 600 : (windowHeight() - 174), // 画布高度
+        pageTop: 0, // 画布据页面距离
+        pageLeft: 0, // 画布距页面左边距离
+        zoom: {},
+        containerHight: 144, // 底图真实高度
+        containerWidth: 243, // 底图真实宽度
+        pointImage: require('../../../assets/img/t3.png'), // 点的背景图
+        backgroudImage: require('../../../assets/img/bg.png'), // 画布的备件图
+        scrollTop: 0,
+        type: 0, //4是新增 5是修改
+        dataContent: [{
+            id: 1,
+            x: 100,
+            y: 79,
+            type: "4",
+            name: 'test01',
+            content: 'test Content',
+            pointImage: require('../../../assets/img/t3.png')
+          },
+          {
+            id: 1,
+            x: 100,
+            y: 99,
+            type: "4",
+            name: 'test01',
+            content: 'test Content',
+            pointImage: require('../../../assets/img/t3.png')
+          }
+        ]
+
+      },
+      data1: {
+        divId: 'test002',
+        offset_y: -15,
+        offset_x: -5,
+        slider: 0.5, //图标放大缩小比例
+        //  width: 1000, // 画布宽度
+        height: (windowHeight() - 174) < 600 ? 300 : (windowHeight() - 174) / 2 - 50, // 画布高度
         pageTop: 0, // 画布据页面距离
         pageLeft: 0, // 画布距页面左边距离
         zoom: {},
@@ -203,6 +255,23 @@ export default {
       'getOrgInfoAction'
 
     ]),
+    openModel(e) {
+      this.modal1 = true;
+
+      // var that = this;
+      // this.$nextTick(function() {
+      //
+      //   that.$refs.layer01.initPage();
+      //   setTimeout(function() {
+      //     that.vheight = $("#tempcol").height();
+      //     that.vwidth = $("#tempcol").width();
+      //     // that.$refs.videoTemplate.initVideo();
+      //
+      //   }, 100)
+      //   //  that.$refs.videoTemplate.initVideo();
+      // })
+
+    },
     sliderChange() {
       this.data.slider = this.sliderNum / 100;
     },
@@ -259,16 +328,19 @@ export default {
   border-color: #2db7f5;
 }
 
+
+
+
 #big_layers .buttonType {
   position: absolute;
   top: 40%;
   left: 10px;
 }
 
-#big_layers .ivu-tooltip-inner
-{
+#big_layers .ivu-tooltip-inner {
   background-color: rgba(70, 76, 91, 0.2) !important;
 }
+
 #big_layers .halo-tree .tree-expand {
   background-color: rgba(0, 0, 55, 0) !important;
 }
@@ -283,16 +355,16 @@ export default {
   overflow: hidden !important;
 }
 
-#big_layers .layersButtonBottom
-{
+#big_layers .layersButtonBottom {
   border-bottom-right-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
 }
-#big_layers .layersButtonUp
-{
+
+#big_layers .layersButtonUp {
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
 }
+
 #big_layers .ivu-drawer-wrap {
   overflow: hidden !important;
 }

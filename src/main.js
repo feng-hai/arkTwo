@@ -25,6 +25,9 @@ Vue.use(VCharts)
 
 Vue.use(VTree)
 Vue.use(VSelectTree)
+
+// import layer from 'vue-layer'
+// Vue.prototype.$layer = layer(Vue);
 // import TreeTable from 'tree-table-vue'
 // import VOrgTree from 'v-org-tree'
 // import 'v-org-tree/dist/v-org-tree.css'

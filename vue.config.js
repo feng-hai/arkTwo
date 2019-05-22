@@ -47,6 +47,8 @@ module.exports = {
       .set('webVideoCtrl',resolve('src/assets/js/webVideoCtrl.js'))
     config.entry('index')
       .add('babel-polyfill')
+  //   config.externals({layer:'layer'})
+  // config.resolve.alias.set('vue$','vue/dist/vue.js')
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false

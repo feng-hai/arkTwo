@@ -6,12 +6,13 @@
     <show-current-time />
     </Col>
     <Col span="8" class="big_cente">
-    <span><Icon style="margin-bottom:5px;margin-right:5px;" type="md-train" /></span><span>南京动车段智慧消防安防平台</span>
+    <span><Icon style="margin-bottom:5px;margin-right:5px;" type="md-train" /></span><span @click="openMedol">南京动车段智慧消防安防平台</span>
     </Col>
     <Col span="8">
     <div style="float:right;margin-right:50px;">
       <user :message-unread-count="unreadCount" :user-avator="userAvator" style="float:right;" />
-      <titles style="margin-right:70px;" name="动车段管理员"/>
+      <titles style="margin-right:70px;" name="动车段管理员" />
+      <span  style="margin-right:70px;" @click="modal1=true">应急预案</span>
     </div>
     </Col>
   </Row>
@@ -32,17 +33,18 @@
           <keep-alive :include="cacheList" :exclude="notCacheName">
             <router-view ref="child" />
           </keep-alive>
-
         </Content>
       </Layout>
     </Content>
     <Sider hide-trigger width="400" class="backColor bigSliderRight">
-      <jobControl @on-click="turnToPage"  :chartsHeight='chartsHeight' class="backImage" style="margin:0 10px 0 10px;margin-right:10px" />
+      <jobControl @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:0 10px 0 10px;margin-right:10px" />
       <ElectronicFence @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 10px 10px;margin-right:10px" />
       <daozha @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:0px 10px 10px 10px;margin-right:10px" />
     </Sider>
+      <plan :isShow="modal1" @close="modal1=false"></plan>
   </Layout>
 </Layout>
+
 </template>
 <script>
 import deviceStatistics from './components/deviceStatistics'
@@ -56,7 +58,10 @@ import daozha from "./components/daozha"
 import alarm from "./components/alarm"
 import User from './components/user/'
 import titles from "./components/titles"
+
+
 import './parent-view.less'
+import plan  from '@/view/single-page/home/components/contingencyPlan.vue'
 export default {
   name: 'ParentView',
   components: {
@@ -71,14 +76,17 @@ export default {
     daozha,
     alarm,
     User,
-    titles
+    titles,
+    plan
+
 
 
   },
   data() {
     return {
       chartsHeight: 170,
-      unreadCount: 0
+      unreadCount: 0,
+      modal1: false
     }
   },
   computed: {
@@ -103,7 +111,7 @@ export default {
   },
   methods: {
     turnToPage(to) {
-      console.log(to+"pppppppppppppppp")
+      console.log(to + "pppppppppppppppp")
       this.$router.push({
         name: to,
         meta: {
@@ -111,6 +119,20 @@ export default {
           notCache: false
         }
       })
+    },
+    openMedol() {
+      this.modal1 = true;
+      // this.$layer.alert("找不到对象！");
+      //   this.$layer.iframe({
+      // 		content: {
+      // 		  content: pv, //传递的组件对象
+      // 		  parent: this,//当前的vue对象
+      // 		  data:[]//props
+      // 		},
+      // 		area:['1000px','800px'],
+      // 		title:"editForm"
+      // });
+
     }
   },
   mounted() {

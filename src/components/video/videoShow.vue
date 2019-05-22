@@ -1,8 +1,8 @@
 <template>
 <div>
   <div :id="id" ref="tet" class="plugin"></div>
-  <Button @click="stopRealPlay">关闭预览</Button>
-  <Button @click="startRealPlay">开始预览</Button>
+  <!-- <Button @click="stopRealPlay">关闭预览</Button>
+  <Button @click="startRealPlay">开始预览</Button> -->
 </div>
 </template>
 <script>
@@ -347,8 +347,8 @@ select {
 /*插件*/
 
 .plugin {
-  width: 100vw;
-  height: 100vh;
+  /*width: 100vw;
+  height: 100vh;*/
 }
 
 fieldset {

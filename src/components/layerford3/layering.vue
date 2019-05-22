@@ -1,5 +1,5 @@
 <template>
-<div id="layering" class="layer">
+<div :id="dataParent.divId" class="layer">
   <tips :tips-options="tipsOptions" ref="dialog" @yes="yes" v-cloak>
     <slot name="header">
       <a href="javascript:;" @click="yes">{{tipTitle}}</a>
@@ -112,7 +112,7 @@ export default {
   methods: {
     // 监听从组件内传递出来的事件
     yes(args) {
-      console.log("点击事件")
+      console.log("点击事件", args, this.dataContent)
       this.$emit('openModel', this.dataContent)
     },
     // 显示tips
@@ -139,10 +139,14 @@ export default {
       // 初始化比例尺
       var width = that.dataParent.width || $('#' + divId).parent().width()
 
-
+      $('#' + divId).find('svg').remove();
       //根据真实容器宽度和地图真实宽度计算比例尺
       var scale = width / that.dataParent.containerWidth
-      //  d3.select('#' + divId).selectAll('svg').remove();
+      // var svgTemp = d3.select('#' + divId).selectAll('svg');
+      // // svgTemp.exit().remove();
+      // for (var i = 0; i < svgTemp[0].length - 1; i++) {
+      //   svgTemp[0][i].remove();
+      // }
       // 初始化画布
       that.dataParent.svg = d3.select('#' + divId).append('svg')
         .attr('width', width)
@@ -315,7 +319,7 @@ export default {
     initPoint: function() {
       var that = this
       var temp = that.dataParent.container.selectAll('.dot1')
-      that.clearCircle();//清楚鼠标添加的点
+      that.clearCircle(); //清楚鼠标添加的点
       temp.remove()
       var that = this
       var RECT_W = 20 * that.dataParent.slider,
@@ -363,12 +367,12 @@ export default {
 
       var RECT_W = 20 * that.dataParent.slider,
         RECT_H = 42 * that.dataParent.slider
-      var offset_x = that.dataParent.offset_x?that.dataParent.offset_x:0,
+      var offset_x = that.dataParent.offset_x ? that.dataParent.offset_x : 0,
         offset_y = 0;
-        console.log(offset_x )
-        console.log(d.x, that.dataParent.scale,that.dataParent.translate,that.dataParent.offset_x);
+      console.log(offset_x)
+      console.log(d.x, that.dataParent.scale, that.dataParent.translate, that.dataParent.offset_x);
       that.tipsOptions.top = (d.y * that.dataParent.scale + that.dataParent.translate[1] - 100 + that.dataParent.offset_y) + 'px'
-      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0] - 90 +offset_x ) + 'px'
+      that.tipsOptions.left = (d.x * that.dataParent.scale + that.dataParent.translate[0] - 90 + offset_x) + 'px'
       that.tipsOptions.title = d.name
       that.tipContent = d.content
       that.showtips()
@@ -414,7 +418,7 @@ export default {
 </script>
 <style>
 .layer {
-  /*position: relative;*/
+  position: relative;
 }
 
 .dot circle {
@@ -460,9 +464,9 @@ export default {
 
 /* Style northward tooltips differently */
 
-.d3-tip.n:after {
+/*.d3-tip.n:after {
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
-}
+}*/
 </style>

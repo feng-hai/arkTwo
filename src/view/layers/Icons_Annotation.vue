@@ -14,10 +14,12 @@
     <Col span="16" style="padding-left:10px; padding-right:10px;">
     <Card>
       <p slot="title">分层图
-        <Icon type="md-cloud-upload" @click="updateImage=true" style="font-size:200%;float:right; cursor:pointer;" /> </p>
+        <Icon type="md-cloud-upload" @click="openImage" style="font-size:200%;float:right; cursor:pointer;" /> </p>
       <div>
         <vue-layer :data-parent="data" @openModel="openModel" @layerPoint="layerPoint"></vue-layer>
+
       </div>
+
       <p>图标大小</p>
       <p class="editP">
         <Slider v-model="sliderNum" @on-change="sliderChange" show-input></Slider>
@@ -282,8 +284,17 @@
     </Col>
   </Row>
 
-  <Modal v-model="updateImage" title="Common Modal dialog box title" @on-ok="ok" @on-cancel="cancel">
-    <updateImage></updateImage>
+  <Modal v-model="updateImage" width="80%" title="Common Modal dialog box title" >
+    <Row>
+      <Col span="12" id="tempcol">
+      <vue-layer ref="layer01" :data-parent="data1" @openModel="openModel" @layerPoint="layerPoint"></vue-layer>
+      <alarmTable></alarmTable>
+      </Col>
+      <Col span="12">
+      <videoTemplate v-if="updateImage" :vwidth="vwidth" :vheight="vheight" ref="videoTemplate" split="3" :iChannelID="iChannelID" :id="id1"></videoTemplate>
+      </Col>
+    </Row>
+    <!-- <updateImage></updateImage> -->
   </Modal>
 </div>
 </template>
@@ -291,6 +302,7 @@
 import layering from '_c/layerford3'
 import tablesPage from '@/view/tables/template'
 import updateImage from '@/view/tools/updateTemplate'
+import alarmTable from '@/view/single-page/home/components/alarmTable'
 import {
   windowHeight
 } from '@/libs/util'
@@ -299,12 +311,14 @@ import {
   mapGetters,
   mapState
 } from 'vuex'
-
+import videoTemplate from '_c/video/index.js'
 export default {
   components: {
     vueLayer: layering,
     tablesPage: tablesPage,
-    updateImage: updateImage
+    updateImage: updateImage,
+    videoTemplate,
+    alarmTable
   },
   computed: {
     ...mapGetters([
@@ -313,6 +327,10 @@ export default {
   },
   data() {
     return {
+      vwidth: null,
+      vheight: null,
+      iChannelID: 2,
+      id1: "divPlugin1",
       updateImage: false, //上传图层对话框，默认不显示
       viewId: '570821854F8245B3BBA4A27ACB72F4DB',
       deviceId: '', //待和底图保存的设备id
@@ -365,11 +383,49 @@ export default {
       },
       tempData: [],
       data: {
+        divId: 'test001',
         offset_y: 51,
         offset_x: 0,
         slider: 1, //图标放大缩小比例
         //  width: 1000, // 画布宽度
-        height: (windowHeight() - 174 - 51 - 90) < 600 ? 600 : (windowHeight() - 174 - 51 - 90), // 画布高度
+        height: 400, //(windowHeight() - 174 - 51 - 90) < 600 ? 600 : (windowHeight() - 174 - 51 - 90), // 画布高度
+        pageTop: 0, // 画布据页面距离
+        pageLeft: 0, // 画布距页面左边距离
+        zoom: {},
+        containerHight: 144, // 底图真实高度
+        containerWidth: 243, // 底图真实宽度
+        pointImage: require('../../assets/img/t3.png'), // 点的背景图
+        backgroudImage: require('../../assets/img/bg.png'), // 画布的备件图
+        scrollTop: 0,
+        type: 0, //4是新增 5是修改
+        dataContent: [{
+            id: 1,
+            x: 100,
+            y: 79,
+            type: "4",
+            name: 'test01',
+            content: 'test Content',
+            pointImage: require('../../assets/img/t3.png')
+          },
+          {
+            id: 1,
+            x: 100,
+            y: 99,
+            type: "4",
+            name: 'test01',
+            content: 'test Content',
+            pointImage: require('../../assets/img/t3.png')
+          }
+        ]
+
+      },
+      data1: {
+        divId: 'test002',
+        offset_y: 51,
+        offset_x: 0,
+        slider: 1, //图标放大缩小比例
+        //  width: 1000, // 画布宽度
+        height: 400, //(windowHeight() - 174 - 51 - 90) < 600 ? 600 : (windowHeight() - 174 - 51 - 90), // 画布高度
         pageTop: 0, // 画布据页面距离
         pageLeft: 0, // 画布距页面左边距离
         zoom: {},
@@ -438,6 +494,22 @@ export default {
       'getOrgInfoAction'
 
     ]),
+    openImage() {
+      this.updateImage = true;
+      var that = this;
+      this.$nextTick(function() {
+
+        that.$refs.layer01.initPage();
+        setTimeout(function(){
+          that.vheight = $("#tempcol").height();
+          that.vwidth = $("#tempcol").width();
+          // that.$refs.videoTemplate.initVideo();
+
+        },100)
+        //  that.$refs.videoTemplate.initVideo();
+      })
+
+    },
     preShow() {
       var temp = [];
       temp.push(this.pointValue)
@@ -450,7 +522,9 @@ export default {
       this.data.dataContent = this.tempData;
     },
     openModel(e) {
+      console.log(e, "獲取車輛信息")
       this.pointValue = e;
+
     },
     search() {
 
@@ -497,6 +571,16 @@ export default {
         })
       }
     }
+
+  },
+  created() {
+    var that = this;
+    this.$nextTick(function() {
+
+
+    })
+
+
 
   }
 }
