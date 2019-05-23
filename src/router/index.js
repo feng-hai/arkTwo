@@ -17,7 +17,7 @@ const {
 Vue.use(Router)
 const router = new Router({
   routes,
-  mode: 'history'
+  mode: 'hash'
 })
 const LOGIN_PAGE_NAME = 'login'
 //静态菜单和动态菜单结合

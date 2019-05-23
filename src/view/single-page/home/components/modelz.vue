@@ -76,17 +76,17 @@ export default {
         containerHight: 144, // 底图真实高度
         containerWidth: 243, // 底图真实宽度
         pointImage: require('../../../../assets/img/t3.png'), // 点的背景图
-        backgroudImage: require('../../../../assets/img/bg.png'), // 画布的备件图
+        backgroudImage: require('../../../../assets/img/test.png'), // 画布的备件图
         scrollTop: 0,
         type: 0, //4是新增 5是修改
         dataContent: [{
             id: 1,
             x: 100,
             y: 79,
-            type: "4",
+            type: "1",
             name: 'test01',
             content: 'test Content',
-            pointImage: require('../../../../assets/img/t3.png')
+            pointImage: require('../../../../assets/img/b-1.png')
           },
           {
             id: 1,
@@ -95,7 +95,7 @@ export default {
             type: "4",
             name: 'test01',
             content: 'test Content',
-            pointImage: require('../../../../assets/img/t3.png')
+            pointImage: require('../../../../assets/img/c-3.png')
           }
         ]
 

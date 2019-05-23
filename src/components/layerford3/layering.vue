@@ -112,7 +112,7 @@ export default {
   methods: {
     // 监听从组件内传递出来的事件
     yes(args) {
-      console.log("点击事件", args, this.dataContent)
+      //console.log("点击事件", args, this.dataContent)
       this.$emit('openModel', this.dataContent)
     },
     // 显示tips
@@ -131,6 +131,10 @@ export default {
       if (that.dataParent.circle1 && typeof that.dataParent.circle1.remove === 'function') {
         that.dataParent.circle1.remove()
       }
+
+      var temp = that.dataParent.container.selectAll('.circle');
+      if(temp)
+      temp.remove();
     },
     initPage: function() {
       var that = this
@@ -239,11 +243,11 @@ export default {
         //   }
         // })
       }
-      var rect = that.dataParent.svg.append('rect')
-        .attr('width', that.width)
-        .attr('height', that.height)
-        .style('fill', 'none')
-        .style('pointer-events', 'all')
+      // var rect = that.dataParent.svg.append('rect')
+      //   .attr('width', that.width)
+      //   .attr('height', that.height)
+      //   .style('fill', 'none')
+      //   .style('pointer-events', 'all')
       that.initPoint()
       that.dataParent.zoom.scale(scale)
       that.dataParent.zoom.event(that.dataParent.svg.transition().duration(200))
@@ -321,11 +325,36 @@ export default {
       var temp = that.dataParent.container.selectAll('.dot1')
       that.clearCircle(); //清楚鼠标添加的点
       temp.remove()
-      var that = this
       var RECT_W = 20 * that.dataParent.slider,
         RECT_H = 42 * that.dataParent.slider
       var offset_x = 0,
         offset_y = 0
+
+      var tempcircle = that.dataParent.dataContent.filter(function(item) {
+        if (item.type == "4") {
+          return true;
+        }
+      });
+      console.log(tempcircle, that.dataParent.dataContent)
+      that.dataParent.container.append('g')
+        .attr('class', 'circle')
+        .selectAll('div')
+        .data(tempcircle)
+        .enter()
+        .append('circle')
+        .attr('cx', function(d) {
+          return d.x
+        })
+        .attr('cy', function(d) {
+          return d.y
+        }) // 将圆心放到svg高度中间
+        .attr('r', function(d) {
+          return 40
+        })
+        .attr('fill', 'yellow') // 给各圆填充黄色
+        .attr('stroke', 'orange') // 给各圆边涂成橘黄
+        .style('opacity', 0.2)
+      //.call(that.drag)
       var dot = that.dataParent.container.append('g')
         .attr('class', 'dot1')
         .selectAll('div')
@@ -344,10 +373,8 @@ export default {
         .attr('width', RECT_W)
         .attr('height', RECT_H)
         .on('click', function(d, i) {
-          console.log(i);
           that.openModel(d)
         })
-
       /* .on("mouseover", function(e) {
           TweenMax.to($(this).prev(), .1, {
               y: "-=8",

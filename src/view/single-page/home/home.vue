@@ -112,14 +112,14 @@ export default {
         containerHight: 144, // 底图真实高度
         containerWidth: 243, // 底图真实宽度
         pointImage: require('../../../assets/img/t3.png'), // 点的背景图
-        backgroudImage: require('../../../assets/img/bg.png'), // 画布的备件图
+        backgroudImage: require('../../../assets/img/521-4-B.png'), // 画布的备件图
         scrollTop: 0,
         type: 0, //4是新增 5是修改
         dataContent: [{
             id: 1,
             x: 100,
             y: 79,
-            type: "4",
+            type: "1",
             name: 'test01',
             content: 'test Content',
             pointImage: require('../../../assets/img/t3.png')
@@ -128,7 +128,7 @@ export default {
             id: 1,
             x: 100,
             y: 99,
-            type: "4",
+            type: "2",
             name: 'test01',
             content: 'test Content',
             pointImage: require('../../../assets/img/t3.png')
@@ -136,110 +136,7 @@ export default {
         ]
 
       },
-      data1: {
-        divId: 'test002',
-        offset_y: -15,
-        offset_x: -5,
-        slider: 0.5, //图标放大缩小比例
-        //  width: 1000, // 画布宽度
-        height: (windowHeight() - 174) < 600 ? 300 : (windowHeight() - 174) / 2 - 50, // 画布高度
-        pageTop: 0, // 画布据页面距离
-        pageLeft: 0, // 画布距页面左边距离
-        zoom: {},
-        containerHight: 144, // 底图真实高度
-        containerWidth: 243, // 底图真实宽度
-        pointImage: require('../../../assets/img/t3.png'), // 点的背景图
-        backgroudImage: require('../../../assets/img/bg.png'), // 画布的备件图
-        scrollTop: 0,
-        type: 0, //4是新增 5是修改
-        dataContent: [{
-            id: 1,
-            x: 100,
-            y: 79,
-            type: "4",
-            name: 'test01',
-            content: 'test Content',
-            pointImage: require('../../../assets/img/t3.png')
-          },
-          {
-            id: 1,
-            x: 100,
-            y: 99,
-            type: "4",
-            name: 'test01',
-            content: 'test Content',
-            pointImage: require('../../../assets/img/t3.png')
-          }
-        ]
 
-      },
-      inforCardData: [{
-          title: '新增用户',
-          icon: 'md-person-add',
-          count: 803,
-          color: '#2d8cf0'
-        },
-        {
-          title: '累计点击',
-          icon: 'md-locate',
-          count: 232,
-          color: '#19be6b'
-        },
-        {
-          title: '新增问答',
-          icon: 'md-help-circle',
-          count: 142,
-          color: '#ff9900'
-        },
-        {
-          title: '分享统计',
-          icon: 'md-share',
-          count: 657,
-          color: '#ed3f14'
-        },
-        {
-          title: '新增互动',
-          icon: 'md-chatbubbles',
-          count: 12,
-          color: '#E46CBB'
-        },
-        {
-          title: '新增页面',
-          icon: 'md-map',
-          count: 14,
-          color: '#9A66E4'
-        }
-      ],
-      pieData: [{
-          value: 335,
-          name: '直接访问'
-        },
-        {
-          value: 310,
-          name: '邮件营销'
-        },
-        {
-          value: 234,
-          name: '联盟广告'
-        },
-        {
-          value: 135,
-          name: '视频广告'
-        },
-        {
-          value: 1548,
-          name: '搜索引擎'
-        }
-      ],
-      barData: {
-        Mon: 13253,
-        Tue: 34235,
-        Wed: 26321,
-        Thu: 12340,
-        Fri: 24643,
-        Sat: 1322,
-        Sun: 1324
-      }
     }
   },
   computed: {
