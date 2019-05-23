@@ -1,5 +1,5 @@
 <template>
-<div v-if="isShow" class="tempShowModel" title="Common Modal dialog box title">
+<div v-if="isShow" class="tempShowModel" >
   <div class="temp-ivu">
     <div class="temp-ivu-close" @click="closeModel">
       <Icon type="ios-close" />
@@ -59,7 +59,7 @@
 </div>
 </template>
 <script>
-import contingencyPlanTable from '@/view/single-page/home/components/contingencyPlanTable'
+
 
 import {
   windowHeight
@@ -75,7 +75,7 @@ export default {
   },
   components: {
 
-    contingencyPlanTable,
+
 
   },
   watch: {

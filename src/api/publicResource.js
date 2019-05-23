@@ -2,7 +2,7 @@ import axios from '@/libs/api.request'
 
 export const getOrganizationInfo = (option) => {
   return axios.request({
-    url: '/firemen/domain',
+    url: '/firemen/domain/flat',
     params: option,
     method: 'get'
   })

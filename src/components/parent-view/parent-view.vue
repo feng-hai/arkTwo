@@ -12,7 +12,7 @@
     <div style="float:right;margin-right:50px;">
       <user :message-unread-count="unreadCount" :user-avator="userAvator" style="float:right;" />
       <titles style="margin-right:70px;" name="动车段管理员" />
-      <span  style="margin-right:70px;" @click="modal1=true">应急预案</span>
+      <span style=" position:absolute; right:450px;top:-45px; color:#2db7f5;font-size:58px;" title="应急预案" @click="modal1=true"> <Icon type="ios-bookmark-outline" /></span>
     </div>
     </Col>
   </Row>
@@ -41,10 +41,9 @@
       <ElectronicFence @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 10px 10px;margin-right:10px" />
       <daozha @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:0px 10px 10px 10px;margin-right:10px" />
     </Sider>
-      <plan :isShow="modal1" @close="modal1=false"></plan>
+    <plan :isShow="modal1" @close="modal1=false"></plan>
   </Layout>
 </Layout>
-
 </template>
 <script>
 import deviceStatistics from './components/deviceStatistics'
@@ -61,7 +60,7 @@ import titles from "./components/titles"
 
 
 import './parent-view.less'
-import plan  from '@/view/single-page/home/components/contingencyPlan.vue'
+import plan from '@/view/single-page/home/components/contingencyPlan.vue'
 export default {
   name: 'ParentView',
   components: {

@@ -8,7 +8,9 @@
       <p slot="title">组织结构</p>
       <input class="tree-search-input" type="text" v-model.lazy="searchword" placeholder="search..." />
       <button class=" tree-search-btn" type="button" @click="search">搜索</button>
+      <div class="treeCompany">
       <v-tree ref='tree' :data='treeData1' :radio="true" :multiple="false" :halfcheck='true' />
+    </div>
     </Card>
     </Col>
     <Col span="16" style="padding-left:10px; padding-right:10px;">
@@ -576,7 +578,7 @@ export default {
   created() {
     var that = this;
     this.$nextTick(function() {
-
+    //  $(".treeCompany").width($(".treeCompany").parent().width())
 
     })
 
@@ -591,9 +593,34 @@ export default {
   padding: 10px 10px 10px 0px
 }
 
+
 .demo-split {
   height: calc(100vh - 144px);
   border: 1px solid #dcdee2;
+}
+.treeCompany
+{
+  height:  calc(100vh - 264px);
+  overflow: auto;
+  margin-top:20px;
+
+
+
+}
+
+.treeCompany .ivu-card-body
+{
+  padding:0;
+}
+.halo-tree .tree-node-el{
+
+white-space: nowrap;
+}
+.tree-search-input
+{
+  width: 77%;
+  float: left;
+
 }
 
 .optionType {
