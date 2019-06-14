@@ -41,6 +41,7 @@ export default {
       translate: [0, 0],
       scale: 1.0,
       type: 0,
+      uri: '',
 
       //    dataContent: this.dataParent.dataContent || [], //點數據
       //  pointImage: this.dataParent.pointImage,
@@ -87,18 +88,17 @@ export default {
         //  this.containerHight = val.containerHight || 100;
 
         if (val.type != this.type) {
-
-
           //  that.initPage();
-          if (this.type == 0) {
+          if (val.type == 4) {
             that.svgClick();
-          } else if (val.type == 0) {
+          } else if (val.type != 4) {
             that.svgUnclick();
           }
           this.type = val.type;
 
         }
-        if (this.type != 4) {
+        if (this.uri != val.backgroudImage) {
+          this.uri = val.backgroudImage;
           that.createBg()
         }
         that.initPoint() // 重新初始化化
@@ -133,8 +133,8 @@ export default {
       }
 
       var temp = that.dataParent.container.selectAll('.circle');
-      if(temp)
-      temp.remove();
+      if (temp)
+        temp.remove();
     },
     initPage: function() {
       var that = this
@@ -445,7 +445,7 @@ export default {
 </script>
 <style>
 .layer {
-  position: relative;
+  /*position: relative;*/
 }
 
 .dot circle {

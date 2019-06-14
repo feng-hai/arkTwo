@@ -12,6 +12,11 @@ import '../parent-view.less'
 import {
   ChartObject,
 } from '_c/charts'
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
 export default {
   name: 'vedioStatus',
   props: {
@@ -69,6 +74,10 @@ export default {
 
   },
   methods: {
+    ...mapActions([
+      'getBigInfoAction'
+
+    ]),
     cardClick() {
       this.$emit("on-click", 'biginspactionInfo')
     }
@@ -79,8 +88,24 @@ export default {
     // ]),
   },
   mounted() {
+    var that = this;
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
+    //访问车辆状态数据
+    this.getBigInfoAction({
+      channel: 'PATROL_TODO',
+      system_id: '157'
+    }).then(res => {
+      var temp = res.data.map(item => {
+        return {
+          value: item.amount,
+          name: item.name
+        }
+      })
+      that.options.series[0].data = temp;
+      console.log(that.options)
+
+    })
   }
 }
 </script>

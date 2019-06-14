@@ -17,7 +17,6 @@
     </Col>
   </Row>
   <Layout class="backColor">
-
     <Sider hide-trigger width="400" id="slider" class="backColor bigSliderLeft">
       <deviceStatus @on-click="turnToPage" class="backImage" :chartsHeight='chartsHeight' style=" margin:0 10px 0 10px" />
       <vedioStatus2 @on-click="turnToPage" :chartsHeight='chartsHeight' class="backImage" style="margin:10px 10px 0 10px" />
@@ -57,14 +56,16 @@ import daozha from "./components/daozha"
 import alarm from "./components/alarm"
 import User from './components/user/'
 import titles from "./components/titles"
-
-
 import './parent-view.less'
 import plan from '@/view/single-page/home/components/contingencyPlan.vue'
+// import {
+//   mapActions,
+//   mapGetters,
+//   mapState
+// } from 'vuex'
 export default {
   name: 'ParentView',
   components: {
-
     deviceStatistics,
     deviceStatus,
     vedioStatus,
@@ -77,9 +78,6 @@ export default {
     User,
     titles,
     plan
-
-
-
   },
   data() {
     return {
@@ -103,14 +101,14 @@ export default {
     }
   },
   created() {
-    console.log("header", $("#header").height())
     this.chartsHeight = ($(window).height() - 30 - 106) / 3 - 28
-    console.log(this.chartsHeight)
-    console.log($(window).height())
   },
   methods: {
+    // ...mapActions([
+    //   'getBigInfoAction'
+    //
+    // ]),
     turnToPage(to) {
-      console.log(to + "pppppppppppppppp")
       this.$router.push({
         name: to,
         meta: {
@@ -135,7 +133,15 @@ export default {
     }
   },
   mounted() {
-    console.log($(window).height())
+    // //访问车辆状态数据
+    // this.getBigInfoAction({
+    //   channel: 'FIRE_FACILITY',
+    //   system_id: '157'
+    // }).then(res => {
+    //   console.log(res);
+    //
+    // })
+
   }
 }
 </script>

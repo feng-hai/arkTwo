@@ -10,6 +10,11 @@
 </div>
 </template>
 <script>
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
 import '../parent-view.less'
 import {
   ChartObject,
@@ -60,6 +65,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'getBigInfoAction'
+
+    ]),
     turnToPage1() {
       this.$emit("on-click", "bigdaozha")
     },
@@ -89,8 +98,24 @@ export default {
     // ]),
   },
   mounted() {
+    var that = this;
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
+    //访问车辆状态数据
+    this.getBigInfoAction({
+      channel: 'GATE',
+      system_id: '157'
+    }).then(res => {
+      var temp = res.data.map(item => {
+        return {
+          value: item.amount,
+          name: item.name
+        }
+      })
+      that.options.series[0].data = temp;
+      console.log(that.options)
+
+    })
   }
 }
 </script>

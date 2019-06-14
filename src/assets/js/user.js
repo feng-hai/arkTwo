@@ -148,6 +148,15 @@ const USER01 = {
           component: 'tools/viewManagement'
         },
         {
+          path: 'vedioDemo',
+          name: 'vedioDemo',
+          meta: {
+            title: `视图管理`,
+            notCache: false
+          },
+          component: 'tools/vedio/demo'
+        },
+        {
           path: 'zidiyiEcharts',
           name: 'zidiyiEcharts',
           meta: {

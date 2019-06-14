@@ -8,7 +8,7 @@
       <Row>
         <Col span="12" id="tempcol">
         <div style="    border: 1px solid #5bf4fd; margin-bottom:15px; margin-right:15px;">
-          <vue-layer ref="layer01" :data-parent="data1" @openModel="openModel" @layerPoint="layerPoint"></vue-layer>
+          <vue-layer ref="layer01" :data-parent="data" @openModel="openModel" @layerPoint="layerPoint"></vue-layer>
         </div>
         <div style="    border: 1px solid #5bf4fd; margin-right:15px;padding:10px;">
           <alarmTable></alarmTable>
@@ -63,7 +63,7 @@ export default {
       vheight: null,
       iChannelID: 2,
       id1: "divPlugin1",
-      data1: {
+      data: {
         divId: 'test002',
         offset_y: -15,
         offset_x: -5,
@@ -123,7 +123,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 2000;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }

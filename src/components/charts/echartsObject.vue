@@ -55,18 +55,27 @@ export default {
       dom: null
     }
   },
+  watch: {
+    options: {
+      handler(n, o) {
+        this.setOption();
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   methods: {
     cardClick() {
-      console.log("cardClick000000000000000000")
+
       this.$emit("on-click")
     },
     resize() {
-      console.log("refs")
+
       this.dom.resize()
     },
     setOption() {
       this.$nextTick(() => {
-        console.log("setOption")
+
         this.dom = echarts.init(this.$refs.dom, 'tdTheme');
         this.dom.setOption(this.options);
       });

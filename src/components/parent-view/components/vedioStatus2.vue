@@ -1,7 +1,7 @@
 <template>
 <div v-on:click="cardClick">
   <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
-  <p class="pTitle"><span class="active">设备状态</span></p>
+    <p class="pTitle"><span class="active">视频监控</span></p>
     <Chart-object v-bind:style="{height:chartsHeight + 'px'}" :options="options" text="巡检管理"></Chart-object>
   </Card>
 </div>
@@ -11,6 +11,11 @@ import '../parent-view.less'
 import {
   ChartObject,
 } from '_c/charts'
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
 export default {
   name: 'vedioStatus',
   props: {
@@ -26,44 +31,45 @@ export default {
   },
   data() {
     return {
+
       options: {
 
         legend: {
           orient: 'vertical',
           left: 'right',
-          data: ['离线','在线']
+          data: ['离线', '在线']
         },
         tooltip: {
           trigger: 'item',
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
+        color:['red', '#19BE6B','yellow','blueviolet'],
         calculable: true,
-        series: [
-
-          {
-            name: '视频监控',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '50%'],
-            roseType: 'redius',
-            data: [{
-                value: 10,
-                name: '离线'
-              },
-              {
-                value: 35,
-                name: '在线'
-              }
-
-
-            ]
-          }
-        ]
+        series: [{
+          name: '视频监控',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '50%'],
+          roseType: 'redius',
+          data: [{
+              value: 10,
+              name: '离线'
+            },
+            {
+              value: 35,
+              name: '在线'
+            }
+          ]
+        }]
       }
     }
 
   },
   methods: {
+    ...mapActions([
+      'getBigInfoAction'
+
+    ]),
     cardClick() {
       this.$emit("on-click", 'bigvideo')
     }
@@ -74,6 +80,22 @@ export default {
     // ]),
   },
   mounted() {
+  var that=this;
+    //访问车辆状态数据
+    this.getBigInfoAction({
+      channel: 'CAMERA',
+      system_id: '157'
+    }).then(res => {
+      var temp = res.data.map(item => {
+        return {
+          value: item.amount,
+          name: item.name
+        }
+      })
+      that.options.series[0].data = temp;
+      console.log(that.options)
+
+    })
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
   }

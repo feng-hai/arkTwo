@@ -1,7 +1,5 @@
 <template>
-
-  <div :style="{width:'100%',height: height,}" class="map backImage" ref="myEchart"></div>
-
+<div :style="{width:'100%',height: height,}" class="map backImage" ref="myEchart"></div>
 </template>
 
 <script>
@@ -87,10 +85,10 @@ export default {
       //地理坐标系组件
       this.option.geo = { //引入地图 ，渲染地图凹凸显示
           map: map,
-            radius: '55%',
+          radius: '55%',
           label: {
             normal: {
-              show: true,
+              show: false,
               color: '#fff'
             },
             emphasis: {
@@ -118,9 +116,9 @@ export default {
             name: '点',
             type: 'scatter',
             coordinateSystem: 'geo',
-            symbol: 'pin', //关系图节点标记的图形
-            symbolSize: [30, 30],
-            symbolOffset: [0, '-40%'], //关系图节点标记相对于原本位置的偏移。[0, '50%']
+            symbol: 'circle', //关系图节点标记的图形
+            symbolSize: [10, 10],
+            //symbolOffset: [0, '-40%'], //关系图节点标记相对于原本位置的偏移。[0, '50%']
             large: true,
             label: {
               normal: {
@@ -165,7 +163,7 @@ export default {
             label: { //=============图形上的文本标签
               normal: {
                 show: true, //是否显示标签。
-              //  position: 'inside', //标签的位置。['50%', '50%'] [x,y]
+                //  position: 'inside', //标签的位置。['50%', '50%'] [x,y]
                 textStyle: { //标签的字体样式
                   color: '#cde6c7', //字体颜色
                   fontStyle: 'normal', //文字字体的风格 'normal'标准 'italic'斜体 'oblique' 倾斜
@@ -217,6 +215,13 @@ export default {
         ];
       //渲染地图
       this.chart.setOption(this.option);
+      this.chart.on('click', function(params) { //点击事件
+        if (params.componentType === 'series') {
+          var provinceName = params.name;
+          console.log(provinceName)
+        }
+      });
+
     }
   }
 }

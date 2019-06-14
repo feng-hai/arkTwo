@@ -576,4 +576,7 @@ export default {
   width: 100%;
   height: calc(100vh - 174px);
 }*/
+.ivu-table-overflowY,.ivu-table-overflowX{
+  position: relative;
+}
 </style>

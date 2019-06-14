@@ -70,6 +70,11 @@ export default {
   infoShow:'信息展示',
   pandect:'总览',
   alarmInfo:'报警监控',
-  hostManagement:'主机管理'
+  hostManagement:'主机管理',
+  firstBigger:'大屏首页',
+  reportManagement:'报表管理',
+  echartsTempate:'数据报表',
+  echartsTempateV:'自定义分析',
+  bigerScreen:'大屏内容'
 
 }

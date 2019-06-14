@@ -2,15 +2,15 @@ import {
   getOrganizationInfo,
   getMenuInfo,
   getRolesInfo,
-  getModelInfo,
-  getMenuInfoData,
-  getRoleInfoData,
-  pustRolesInfo
+  // getModelInfo,
+  // getMenuInfoData,
+  // getRoleInfoData,
+  // pustRolesInfo
   // getAllRolesInfoData
 } from '@/api/publicResource'
 import {
-  translateDataToTree,
-  getCookiesValueByKey
+  translateDataToTree
+  // getCookiesValueByKey
 
 } from '@/libs/util.js'
 
@@ -23,24 +23,24 @@ export default {
     models: []
   },
   mutations: {
-    setOrganization(state, orgInfo) {
-      //todo
-      var rootId = 'C98D97238CA34F96A969BDA01DAB31FA' //getCookiesValueByKey('domainId')
-      state.orgTree = translateDataToTree(orgInfo, rootId);
-      console.log(state.orgTree,"orgTree");
+    setOrganization (state, orgInfo) {
+      // TODO 当前用户的机构id
+      var rootId = 'C98D97238CA34F96A969BDA01DAB31FA'; // getCookiesValueByKey('domainId')
+      state.orgTree = translateDataToTree(orgInfo, rootId)
+      console.log(state.orgTree, "orgTree")
       state.organizationList = orgInfo
     },
-    setMenusList(state, menuInfo) {
-      console.log(menuInfo,"menuInfo")
+    setMenusList (state, menuInfo) {
+      console.log(menuInfo, "menuInfo")
       state.menusList = menuInfo.map(item => {
         return {
           label: item.name,
           value: item.unid
         }
-      });
-      console.log(state.menusList,"menusList")
+      })
+      console.log(state.menusList, "menusList")
     },
-    setRolesList(state, rolesInfo) {
+    setRolesList (state, rolesInfo) {
       state.roles = rolesInfo.map(item => {
         return {
           label: item.name,
@@ -48,7 +48,7 @@ export default {
         }
       })
     },
-    setModelList(state, modelInfo) {
+    setModelList (state, modelInfo) {
       state.models = modelInfo.map(item => {
         return {
           label: item.name,
@@ -81,14 +81,14 @@ export default {
     }
   },
   actions: {
-    updateData({
+    updateData ({
       commit
     }) {
       //  console.log('updateData')
       commit('setOrganization', [])
     },
     // 获取所有的role数据
-    getMenuInfoDataAction({
+    getMenuInfoDataAction ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -100,7 +100,7 @@ export default {
         })
       })
     },
-    getMenuInfoAction({
+    getMenuInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -116,7 +116,7 @@ export default {
         })
       })
     },
-    getVehicleModelAction({
+    getVehicleModelAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -132,7 +132,7 @@ export default {
       })
     },
     // 左边所有的菜单
-    getRolesInfoData({
+    getRolesInfoData ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -147,7 +147,7 @@ export default {
     },
 
     // 左边所有的菜单
-    postRolesInfoData({
+    postRolesInfoData ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
@@ -160,19 +160,19 @@ export default {
         })
       })
     },
-    getcurrentRolesInfoData({
+    getcurrentRolesInfoData ({
       commit
     }, option) {
       return new Promise((resolve, reject) => {
         getRoleInfoData(option).then(res => {
-          let data = res.data;
-          resolve(data);
+          let data = res.data
+          resolve(data)
         }).catch(error => {
-          reject(error);
+          reject(error)
         })
       })
     },
-    getRolesInfoAction({
+    getRolesInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -190,7 +190,7 @@ export default {
       })
     },
     // 分组信息
-    getOrgInfoAction({
+    getOrgInfoAction ({
       state,
       commit
     }) {

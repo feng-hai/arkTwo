@@ -10,6 +10,11 @@
 <script>
 import '../parent-view.less'
 import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
+import {
   ChartObject,
 } from '_c/charts'
 export default {
@@ -37,15 +42,16 @@ export default {
           trigger: 'item',
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
+        color:['blueviolet', 'yellow','red','#19BE6B'],
         legend: {
           orient: 'vertical',
           left: 'right',
-          data: ['报警', '离线','正常']
+          data: ['报警', '离线', '正常','屏蔽']
         },
         series: [{
           name: '设备状态',
           type: 'pie',
-          radius: ['50%','70%'],
+          radius: ['50%', '70%'],
           center: ['50%', '60%'],
           data: [{
               value: 35,
@@ -77,8 +83,23 @@ export default {
 
   },
   methods: {
+    ...mapActions([
+      'getBigInfoAction'
+
+    ]),
     cardClick() {
       this.$emit("on-click", 'homeForBigger')
+    },
+    getName(name) {
+      if (name == "NORMAL") {
+        return "正常";
+      } else if (name == "ALARM") {
+        return "报警"
+      } else if (name == "FAULT") {
+        return "屏蔽"
+      } else {
+        return "离线"
+      }
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -87,8 +108,24 @@ export default {
     // ]),
   },
   mounted() {
+    var that = this;
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
+    //访问车辆状态数据
+    this.getBigInfoAction({
+      channel: 'FIRE_FACILITY',
+      system_id: '157'
+    }).then(res => {
+      var temp = res.data.map(item => {
+        return {
+          value: item.amount,
+          name: this.getName(item.name)
+        }
+      })
+      that.options.series[0].data = temp;
+      console.log(that.options)
+
+    })
   }
 }
 </script>

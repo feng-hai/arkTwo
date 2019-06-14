@@ -6,6 +6,8 @@ import table from './module/table'
 import vehicle from './module/vehicle'
 import addRoutes from './dynamicRouter/addRoutes'
 import publicResource from './module/publicResource'
+import biggerScreen from  './module/biggerScreen'
+import Icons_Annotation from './module/Icons_Annotation'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -24,6 +26,8 @@ export default new Vuex.Store({
     addRoutes,
     publicResource,
     table,
-    vehicle
+    vehicle,
+    biggerScreen,
+    Icons_Annotation
   }
 })
