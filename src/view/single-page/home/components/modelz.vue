@@ -1,5 +1,6 @@
 <template>
-<div v-if="isShow" class="tempShowModel" >
+<div id ="modelz">
+<div v-if="isShow" class="tempShowModel"  >
   <div class="temp-ivu">
     <div class="temp-ivu-close" @click="closeModel">
       <Icon type="ios-close" />
@@ -21,6 +22,7 @@
     </div>
   </div>
 </div>
+</div>
 </template>
 <script>
 import alarmTable from '@/view/single-page/home/components/alarmTable'
@@ -34,7 +36,7 @@ export default {
     isShow: {
       type: Boolean,
       default () {
-        return false;
+        return false
       }
     }
   },
@@ -44,30 +46,29 @@ export default {
     videoTemplate
   },
   watch: {
-    isShow(n, o) {
-      console.log(n, o, "ddddddddddd")
-      var that = this;
-      this.$nextTick(function() {
-        setTimeout(function() {
-          that.vheight = $("#tempcol").height();
-          that.vwidth = $("#tempcol").width();
-
+    isShow (n, o) {
+      console.log(n, o, 'ddddddddddd')
+      var that = this
+      this.$nextTick(function () {
+        setTimeout(function () {
+          that.vheight = $('#tempcol').height()
+          that.vwidth = $('#tempcol').width()
         }, 100)
         //  that.$refs.videoTemplate.initVideo();
       })
     }
   },
-  data() {
+  data () {
     return {
       vwidth: null,
       vheight: null,
       iChannelID: 2,
-      id1: "divPlugin1",
+      id1: 'divPlugin1',
       data: {
         divId: 'test002',
         offset_y: -15,
         offset_x: -5,
-        slider: 0.5, //图标放大缩小比例
+        slider: 0.5, // 图标放大缩小比例
         //  width: 1000, // 画布宽度
         height: (windowHeight() - 174) < 600 ? 300 : (windowHeight() - 174) / 2 - 50, // 画布高度
         pageTop: 0, // 画布据页面距离
@@ -78,45 +79,45 @@ export default {
         pointImage: require('../../../../assets/img/t3.png'), // 点的背景图
         backgroudImage: require('../../../../assets/img/test.png'), // 画布的备件图
         scrollTop: 0,
-        type: 0, //4是新增 5是修改
+        type: 0, // 4是新增 5是修改
         dataContent: [{
-            id: 1,
-            x: 100,
-            y: 79,
-            type: "1",
-            name: 'test01',
-            content: 'test Content',
-            pointImage: require('../../../../assets/img/b-1.png')
-          },
-          {
-            id: 1,
-            x: 100,
-            y: 99,
-            type: "4",
-            name: 'test01',
-            content: 'test Content',
-            pointImage: require('../../../../assets/img/c-3.png')
-          }
+          id: 1,
+          x: 100,
+          y: 79,
+          type: '1',
+          name: 'test01',
+          content: 'test Content',
+          pointImage: require('../../../../assets/img/b-1.png')
+        },
+        {
+          id: 1,
+          x: 100,
+          y: 99,
+          type: '4',
+          name: 'test01',
+          content: 'test Content',
+          pointImage: require('../../../../assets/img/c-3.png')
+        }
         ]
 
-      },
+      }
     }
   },
   methods: {
-    closeModel() {
-      this.$emit("close")
+    closeModel () {
+      this.$emit('close')
     },
-    openModel() {
+    openModel () {
 
     },
-    layerPoint() {
+    layerPoint () {
 
     }
   }
 }
 </script>
 <style>
-.tempShowModel {
+#modelz .tempShowModel {
   position: fixed;
   overflow: auto;
   top: 0;
@@ -128,7 +129,7 @@ export default {
   outline: 0;
 }
 
-.temp-ivu {
+#modelz .temp-ivu {
   width: 80%;
   margin: 0 auto;
   position: relative;
@@ -136,7 +137,7 @@ export default {
   top: 100px;
 }
 
-.temp-ivu-close {
+#modelz .temp-ivu-close {
   z-index: 1;
   font-size: 30px;
   position: absolute;
@@ -147,7 +148,7 @@ export default {
   cursor: pointer;
 }
 
-.content {
+#modelz .content {
   position: relative;
   background-color: rgba(0, 0, 0, 0.8);
   border: 0;

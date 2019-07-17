@@ -13,12 +13,11 @@ import axios from '@/libs/api.request'
 //   })
 // }
 export const login = (option) => {
-
   return axios.request({
-   url: 'oauth/token',
-   data:option,
-   method: 'post'
- })
+    url: 'oauth/token',
+    data: option,
+    method: 'post'
+  })
   // return axios.request({
   //   url: 'login',
   //   data,
@@ -63,6 +62,53 @@ export const getContentByMsgId = msg_id => {
     params: {
       msg_id
     }
+  })
+}
+
+export const getMenusRoleId = id => {
+  console.log(id, getMenusRoleId)
+  return axios.request({
+    url: '/legacy/security/privilege/' + roleid + '/menu',
+    method: 'get'
+  })
+}
+export const getMenusCurrent = id => {
+  console.log(id, 'getMenusCurrent')
+  return axios.request({
+    url: '/legacy/security/privilege/' + roleid + '/menu',
+    method: 'get'
+  })
+}
+export const bindRoleAndMenus = option => {
+  var qs = require('qs')
+  return axios.request({
+    url: 'legacy/security/privilege_menu_map/bind',
+    method: 'put',
+    data: qs.stringify({
+      privilege_unid: option.roleid,
+      menu_unid: option.menus
+    })
+  })
+}
+
+export const getMenusByRoleId = option => {
+  // return new Promise((resolve, reject) => {
+  //   axios.all([getMenusCurrent(option.croleid), getMenusRoleId(option.roleid)]).then(
+  //     ([cmenus, menus]) => {
+  //       var res = {
+  //         cmenus: cmenus.data,
+  //         menus: menus.data
+  //       }
+  //       resolve(res)
+  //     }).catch(err => {
+  //       console.log(err)
+  //     reject(err)
+  //   })
+
+  // })
+  return axios.request({
+    url: '/legacy/security/privilege/' + option.roleid + '/menu',
+    method: 'get'
   })
 }
 

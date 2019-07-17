@@ -76,13 +76,13 @@ export default {
     videoTemplate,
     modelz
   },
-  data() {
+  data () {
     return {
       tempData: [],
       vwidth: null,
       vheight: null,
       iChannelID: 2,
-      id1: "divPlugin1",
+      id1: 'divPlugin1',
       modal1: false,
       treeData1: [],
       showMapBDrawer: true,
@@ -99,7 +99,7 @@ export default {
         divId: 'test001',
         offset_y: -15,
         offset_x: -5,
-        slider: 0.5, //图标放大缩小比例
+        slider: 0.5, // 图标放大缩小比例
         //  width: 1000, // 画布宽度
         height: (windowHeight() - 174) < 600 ? 600 : (windowHeight() - 174), // 画布高度
         pageTop: 0, // 画布据页面距离
@@ -110,37 +110,37 @@ export default {
         pointImage: require('../../../assets/img/t3.png'), // 点的背景图
         backgroudImage: require('../../../assets/img/521-4-B.png'), // 画布的备件图
         scrollTop: 0,
-        type: 0, //4是新增 5是修改
+        type: 0, // 4是新增 5是修改
         dataContent: [{
-            id: 1,
-            x: 100,
-            y: 79,
-            type: "1",
-            name: 'test01',
-            content: 'test Content',
-            pointImage: require('../../../assets/img/t3.png')
-          },
-          {
-            id: 1,
-            x: 100,
-            y: 99,
-            type: "2",
-            name: 'test01',
-            content: 'test Content',
-            pointImage: require('../../../assets/img/t3.png')
-          }
+          id: 1,
+          x: 100,
+          y: 79,
+          type: '1',
+          name: 'test01',
+          content: 'test Content',
+          pointImage: require('../../../assets/img/t3.png')
+        },
+        {
+          id: 1,
+          x: 100,
+          y: 99,
+          type: '2',
+          name: 'test01',
+          content: 'test Content',
+          pointImage: require('../../../assets/img/t3.png')
+        }
         ]
 
-      },
+      }
 
     }
   },
   computed: {
-    placementComputed() {
+    placementComputed () {
       return this.placement ? 'left' : 'right'
     },
     ...mapGetters([
-      "getOrgTreeInfo"
+      'getOrgTreeInfo'
     ])
   },
   methods: {
@@ -156,51 +156,50 @@ export default {
       'getMarkersAction',
       'getDevices'
     ]),
-    initData() {
-      var that = this;
-      that.deviceList = [];
-      that.data.backgroudImage = "";
-      this.layer_map_unid = "";
-      that.data.dataContent = [];
-      that.tempData = [];
+    initData () {
+      var that = this
+      that.deviceList = []
+      that.data.backgroudImage = ''
+      this.layer_map_unid = ''
+      that.data.dataContent = []
+      that.tempData = []
       that.imageInfo = {
         unid: '',
         url: '',
         width: '',
         height: ''
-      };
-
+      }
     },
-    clickNode(node) {
-      var that = this;
-      that.initData();
-      var floorId = node.id;
-      this.domain_unid = floorId;
+    clickNode (node) {
+      var that = this
+      that.initData()
+      var floorId = node.id
+      this.domain_unid = floorId
       this.getMapAction({
         domain_unid: floorId
       }).then(res => {
-        console.log("底图信息", res)
-        var mapInfo = res.data[0];
-        that.data.backgroudImage = mapInfo.atta.uri;
-        this.layer_map_unid = mapInfo.unid;
+        console.log('底图信息', res)
+        var mapInfo = res.data[0]
+        that.data.backgroudImage = mapInfo.atta.uri
+        this.layer_map_unid = mapInfo.unid
         this.getDevices({
           unid: mapInfo.unid
         }).then(res => {
-          console.log("获取未标注的信息", res);
+          console.log('获取未标注的信息', res)
           that.deviceList = res.data.map(item => {
             return {
               label: item.name,
               value: item.unid
             }
-          });
+          })
         }).catch(error => {
-          console.log("没有未标注的设备", error);
+          console.log('没有未标注的设备', error)
         })
         this.getMarkersAction({
           unid: mapInfo.unid
         }).then(res => {
-          console.log("底图Markers", res);
-          //所有marker打到底图上
+          console.log('底图Markers', res)
+          // 所有marker打到底图上
           that.data.dataContent = res.data.map(item => {
             return {
               id: item.unid,
@@ -209,25 +208,25 @@ export default {
               type: item.type_id,
               name: item.entity.name,
               content: '',
-              pointImage: item.avatar.indexOf( window.g.SERVICE_PATH)!= -1 ?item.avatar: window.g.SERVICE_PATH+item.avatar
+              pointImage: item.avatar.indexOf(window.g.SERVICE_PATH) != -1 ? item.avatar : window.g.SERVICE_PATH + item.avatar
             }
-          });
-          console.log("底图Markers dataContent", that.data.dataContent);
-          that.tempData = that.data.dataContent;
+          })
+          console.log('底图Markers dataContent', that.data.dataContent)
+          that.tempData = that.data.dataContent
         }).catch(error => {
-          console.log("底图没有Markers")
+          console.log('底图没有Markers')
         })
       }).catch(res => {
-        //that.data.backgroudImage = require('../../assets/img/bg.png');
-        that.data.dataContent = [];
+        // that.data.backgroudImage = require('../../assets/img/bg.png');
+        that.data.dataContent = []
         this.$Notice.warning({
           title: '平面图标注',
           desc: '没有底图信息'
-        });
-      });
+        })
+      })
     },
-    openModel(e) {
-      this.modal1 = true;
+    openModel (e) {
+      this.modal1 = true
 
       // var that = this;
       // this.$nextTick(function() {
@@ -241,47 +240,45 @@ export default {
       //   }, 100)
       //   //  that.$refs.videoTemplate.initVideo();
       // })
-
     },
-    searchItem(searchItem) {
-      var that = this;
+    searchItem (searchItem) {
+      var that = this
       this.data.dataContent = this.tempData.filter(item => {
-        if (searchItem.name != "" && searchItem.type != "") {
+        if (searchItem.name != '' && searchItem.type != '') {
           if (item.name.indexOf(searchItem.name) != -1 && item.type == searchItem.type) {
-            return true;
+            return true
           } else {
-            return false;
+            return false
           }
-        } else if (searchItem.name && searchItem.name != "" || searchItem.type && searchItem.type != "") {
-          var temp = false;
-          if (searchItem.name != "" && item.name.indexOf(searchItem.name) != -1) {
-            temp = true;
+        } else if (searchItem.name && searchItem.name != '' || searchItem.type && searchItem.type != '') {
+          var temp = false
+          if (searchItem.name != '' && item.name.indexOf(searchItem.name) != -1) {
+            temp = true
           }
 
-          if (searchItem.type != "" && item.type == searchItem.type) {
-            temp = true;
+          if (searchItem.type != '' && item.type == searchItem.type) {
+            temp = true
           }
-          console.log(temp, item.name.indexOf(searchItem.name), searchItem.name, searchItem.type, item.type, "dfsfsfs")
-          return temp;
+          console.log(temp, item.name.indexOf(searchItem.name), searchItem.name, searchItem.type, item.type, 'dfsfsfs')
+          return temp
         }
-        return true;
-      });
-      console.log(this.data.dataContent, "测试");
+        return true
+      })
+      console.log(this.data.dataContent, '测试')
     },
-    sliderChange() {
-      this.data.slider = this.sliderNum / 100;
+    sliderChange () {
+      this.data.slider = this.sliderNum / 100
     },
-    handleResize() {
+    handleResize () {
 
     },
-    changeMap() {
-      this.showTableBDrawer = false;
-      this.showMapBDrawer = true;
-
+    changeMap () {
+      this.showTableBDrawer = false
+      this.showMapBDrawer = true
     },
-    changeTable() {
-      this.showTableBDrawer = true;
-      this.showMapBDrawer = false;
+    changeTable () {
+      this.showTableBDrawer = true
+      this.showMapBDrawer = false
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -291,26 +288,24 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.treeData1 = []; // this.getOrgTreeInfo;
-      this.treeData1 = this.getOrgTreeInfo;
-      var that = this;
+      this.treeData1 = [] // this.getOrgTreeInfo;
+      this.treeData1 = this.getOrgTreeInfo
+      var that = this
       if (this.treeData1.length == 0) {
         this.getOrgInfoAction().then(res => {
-          that.treeData1 = that.getOrgTreeInfo;
-
+          that.treeData1 = that.getOrgTreeInfo
         })
       }
     }
   },
-  mounted() {
+  mounted () {
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
-    this.treeData1 = []; // this.getOrgTreeInfo;
-    var that = this;
+    this.treeData1 = [] // this.getOrgTreeInfo;
+    var that = this
     if (this.treeData1.length == 0) {
       this.getOrgInfoAction().then(res => {
-        that.treeData1 = that.getOrgTreeInfo;
-
+        that.treeData1 = that.getOrgTreeInfo
       })
     }
   }
@@ -318,13 +313,12 @@ export default {
 </script>
 
 <style >
+
 #big_layers .ivu-btn-info {
   color: #fff;
   background-color: rgba(0, 0, 55, 0.2) !important;
   border-color: #2db7f5;
 }
-
-
 
 /*#big_layers .ivu-collapse-header {
   padding-left: 0px !important;
@@ -380,7 +374,6 @@ export default {
 #big_layers .ivu-drawer-mask {
   background-color: rgba(0, 0, 0, 0) !important;
 }
-
 
 #big_layers {
   height: calc(100vh - 104px);

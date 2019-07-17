@@ -7,6 +7,30 @@
     "label": "非主体"
   }
 ]
+[{
+  "value": true,
+  "label": "已完成"
+},
+{
+  "value": false,
+  "label": "未完成"
+}
+]
+
+
+[{
+"value": true,
+"label": "隐藏"
+},
+{
+"value": false,
+"label": "显示"
+}
+]
+
+
+	
+[{ "value": 0, "label": "主页面" }, { "value": 1, "label": "子页面" }, { "value": 2, "label": "其他页面类型1" }, { "value": 3, "label": "其他页面类型2" }  ]
 
 function(fun, params, callback, vm) {
   fun({
@@ -16,6 +40,10 @@ function(fun, params, callback, vm) {
   })
   callback(params.row.vin);
 
+}
+function(fun,params,callback,vm)
+{
+  callback(params.row.)
 }
 
 //根据id获取Text
@@ -70,3 +98,10 @@ function(fun, val, callback, vm) {
 }
 
 function(fun, params, callback, vm) { callback(params.row.name); }
+
+function(fun, params, callback, vm) { 
+   if(params.row.checkpoint)
+   {
+    callback(params.row.checkpoint.name);
+   }
+ }

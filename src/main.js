@@ -71,6 +71,13 @@ if (sessionStorage.getItem('menuData') && sessionStorage.getItem('menuData').len
   }
 }
 
+/**
+ * 
+ * @msg: 加载video样式
+ * 
+ */
+require('vue-video-player/src/custom-theme.css')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -8,7 +8,7 @@
 <script>
 // import '../parent-view.less'
 import {
-  ChartObject,
+  ChartObject
 } from '_c/charts'
 export default {
   name: 'vedioStatus',
@@ -16,20 +16,20 @@ export default {
     chartsHeight: {
       type: Number,
       default () {
-        return 300;
+        return 300
       }
-    },
+    }
   },
   components: {
-    ChartObject,
+    ChartObject
   },
-  data() {
+  data () {
     return {
       options: {
         title: {
           x: 'center'
         },
-        color: ['#3398DB'],
+        color: ['#01C1A5'],
         tooltip: {
           trigger: 'axis',
           axisPointer: { // 坐标轴指示器，坐标轴触发有效
@@ -43,7 +43,7 @@ export default {
           containLabel: true
         },
         xAxis: [{
-           splitLine:{show: false},//去除网格线
+          splitLine: { show: false }, // 去除网格线
           type: 'category',
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           axisTick: {
@@ -51,7 +51,7 @@ export default {
           }
         }],
         yAxis: [{
-           splitLine:{show: false},//去除网格线
+          splitLine: { show: false }, // 去除网格线
           type: 'value'
         }],
         series: [{
@@ -62,11 +62,10 @@ export default {
         }]
       }
     }
-
   },
   methods: {
-    cardClick() {
-      this.$emit("on-click", 'setIconInlayerforBig')
+    cardClick () {
+      this.$emit('on-click', 'setIconInlayerforBig')
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -74,7 +73,7 @@ export default {
     //   'getMenuInfoAction'
     // ]),
   },
-  mounted() {
+  mounted () {
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
   }

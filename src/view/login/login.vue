@@ -38,7 +38,7 @@ export default {
       'getUserInfo',
       'add_Routes'
     ]),
-    handleSubmit({
+    handleSubmit ({
       userName,
       password
     }) {
@@ -46,17 +46,19 @@ export default {
         userName,
         password
       }).then(res => {
-        var that = this;
+        var that = this
 
         this.getUserInfo().then(res => {
           if (that.getMenus) {
-            that.add_Routes(that.getMenus); //触发vuex里的增加路由
+            that.add_Routes(that.getMenus) // 触发vuex里的增加路由
             sessionStorage.setItem('menuData', JSON.stringify(that.getMenus))
           }
           this.$router.push({
             name: this.$config.homeName
           })
         })
+      }).catch(err => {
+        this.$Message.error('用户名或密码错误！')
       })
     }
   }

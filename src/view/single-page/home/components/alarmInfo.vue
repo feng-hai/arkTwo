@@ -17,7 +17,7 @@ export default {
     alarmTable,
     alarmEcharts
   },
-  data() {
+  data () {
     return {
       chartsHeight: (windowHeight() - 120) / 2 - 20 - 10,
       scollHeight: (windowHeight() - 120) / 2 - 10 - 23
@@ -27,7 +27,7 @@ export default {
 
 }
 </script>
-<style>
+<style lang="less">
 .contentinfo {
   position: relative;
   height: calc(100vh - 104px);

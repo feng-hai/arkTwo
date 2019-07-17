@@ -37,6 +37,7 @@
     "v3": "0.0.0",
     "vue": "^2.5.10",
     "vue-gemini-scrollbar": "^2.0.1",
+    "vue-grid-layout": "^2.3.4",
     "vue-i18n": "^7.8.0",
     "vue-json-viewer": "^2.0.6",
     "vue-layer": "^0.9.13",

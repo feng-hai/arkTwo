@@ -1,3 +1,11 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: fh
+ * @Date: 2019-02-28 15:37:50
+ * @LastEditors: fh
+ * @LastEditTime: 2019-07-16 17:20:19
+ */
 import Cookies from 'js-cookie'
 
 // cookie保存的天数
@@ -54,7 +62,7 @@ const showThisMenuEle = (item, access) => {
  */
 export const getMenuByRouter = (list, access) => {
   let res = []
-  console.log('list', list);
+  console.log('list', list)
   forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
       let obj = {
@@ -63,7 +71,7 @@ export const getMenuByRouter = (list, access) => {
         meta: item.meta
       }
       if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access)) {
-        obj.children = getMenuByRouter(item.children, access);
+        obj.children = getMenuByRouter(item.children, access)
       }
       if (item.meta && item.meta.href) obj.href = item.meta.href
       if (showThisMenuEle(item, access)) res.push(obj)
@@ -78,7 +86,8 @@ export const getMenuByRouter = (list, access) => {
  */
 export const getBreadCrumbList = (route, homeRoute) => {
   // console.log(homeRoute, "homeRoute")
-  let homeItem = { ...homeRoute,
+  let homeItem = {
+    ...homeRoute,
     icon: homeRoute.meta.icon
   }
   let routeMetched = route.matched
@@ -86,7 +95,8 @@ export const getBreadCrumbList = (route, homeRoute) => {
   let res = routeMetched.filter(item => {
     return item.meta === undefined || !item.meta.hideInBread
   }).map(item => {
-    let meta = { ...item.meta
+    let meta = {
+      ...item.meta
     }
     if (meta.title && typeof meta.title === 'function') {
       meta.__titleIsFunction__ = true
@@ -102,15 +112,18 @@ export const getBreadCrumbList = (route, homeRoute) => {
   res = res.filter(item => {
     return !item.meta.hideInMenu
   })
-  return [{ ...homeItem,
+  return [{
+    ...homeItem,
     to: homeRoute.path
   }, ...res]
 }
 
 export const getRouteTitleHandled = (route) => {
-  let router = { ...route
+  let router = {
+    ...route
   }
-  let meta = { ...route.meta
+  let meta = {
+    ...route.meta
   }
   let title = ''
   if (meta.title) {
@@ -289,7 +302,7 @@ export const getArrayFromFile = (file) => {
     let reader = new FileReader()
     reader.readAsText(file) // 以文本格式读取
     let arr = []
-    reader.onload = function(evt) {
+    reader.onload = function (evt) {
       let data = evt.target.result // 读到的数据
       let pasteData = data.trim()
       arr = pasteData.split((/[\n\u0085\u2028\u2029]|\r\n?/g)).map(row => {
@@ -412,7 +425,7 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
-      function(callback) {
+      function (callback) {
         return window.setTimeout(callback, 1000 / 60)
       }
     )
@@ -455,7 +468,7 @@ export const setTitle = (routeItem, vm) => {
 var DATE_REGEXP = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})([T\\s](\\d{2}):(\\d{2}):(\\d{2})(\\.(\\d{3}))?)?.*')
 export const toDate = (dateString) => {
   if (DATE_REGEXP.test(dateString)) {
-    var timestamp = dateString.replace(DATE_REGEXP, function($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
+    var timestamp = dateString.replace(DATE_REGEXP, function ($all, $year, $month, $day, $part1, $hour, $minute, $second, $part2, $milliscond) {
       var date = new Date($year, $month - 1, $day, $hour || '00', $minute || '00', $second || '00', $milliscond || '00')
       return date.getTime()
     })
@@ -514,7 +527,7 @@ export const formateDate = (date, fmt) => {
  *  (json) :json对象
  */
 export const toStr = (json) => {
-  var str = JSON.stringify(json, function(key, val) {
+  var str = JSON.stringify(json, function (key, val) {
     if (typeof val === 'function') {
       return val + ''
     }
@@ -527,7 +540,7 @@ export const toStr = (json) => {
  */
 export const toJson = (str) => {
   // json字符串转换成对象
-  let json = JSON.parse(str, function(k, v) {
+  let json = JSON.parse(str, function (k, v) {
     if (v.indexOf && v.indexOf('function') > -1) {
       return eval('(function(){return ' + v + ' })()')
     }
@@ -598,6 +611,72 @@ export const translaterolesToTree2 = (data, flag) => {
   // 返回最终的结果
   return parents
 }
+String.prototype.trim = function (char, type) {
+  if (char) {
+    if (type == 'left') {
+      return this.replace(new RegExp('^\\' + char + '+', 'g'), '')
+    } else if (type == 'right') {
+      return this.replace(new RegExp('\\' + char + '+$', 'g'), '')
+    }
+    return this.replace(new RegExp('^\\' + char + '+|\\' + char + '+$', 'g'), '')
+  }
+  return this.replace(/^\s+|\s+$/g, '')
+}
+// 把数据转换为菜单要求的格式
+export const translateArraytoMenus = (data) => {
+  var data = data.map(item => {
+    return {
+      id: item.unid,
+      path: item.redirect_uri,
+      name: item.redirect_uri.trim('/', 'left'),
+      component: item.atta,
+      meta: {
+        icon: item.icon_uri,
+        title: item.name,
+        hideInMenu: item.flag_priv
+      },
+      title: item.name,
+      parent: item.super_unid
+    }
+  })
+  // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
+  let parents = data.filter(value => {
+    return value.parent == undefined || value.parent == ''
+  })
+  // 有父节点的数据
+  let childrens = data.filter(value => value.parent != undefined)
+
+  // 定义转换方法的具体实现
+  let translator = (parents, childrens, level) => {
+    // 遍历父节点数据
+    parents.forEach((parent) => {
+      // 遍历子节点数据
+      childrens.forEach((current, index) => {
+        // 此时找到父节点对应的一个子节点
+        if (current.parent === parent.id) {
+          // 对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
+          let temp = Object.assign([], childrens)
+          // 让当前子节点从temp中移除，temp作为新的子节点数据，这里是为了让递归时，子节点的遍历次数更少，如果父子关系的层级越多，越有利
+          temp.splice(index, 1)
+          // 让当前子节点作为唯一的父节点，去递归查找其对应的子节点
+          translator([current], temp, level++)
+          if (level > 2) {
+            current.expanded = false
+          }
+          // 把找到子节点放入父节点的childrens属性中
+          typeof parent.children !== 'undefined' ? parent.children.push(current) : parent.children = [current]
+        }
+      })
+    })
+  }
+
+  // 调用转换方法
+  translator(parents, childrens, 1)
+
+  // 返回最终的结果
+  return parents
+}
+
 /**
  * @param {Array} data  待转换的数组
  *该方法用于将有父子关系的数组转换成树形结构的数组
@@ -614,10 +693,10 @@ export const translaterolesToTree = (data) => {
       parent: item.super_unid
     }
   })
-  console.log('data', data);
+  console.log('data', data)
   // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
   let parents = data.filter(value => {
-    return value.parent == undefined;
+    return value.parent == undefined
   })
   // 有父节点的数据
   let childrens = data.filter(value => value.parent != undefined)
@@ -660,13 +739,13 @@ export const translaterolesToTree = (data) => {
  * 返回一个树形结构的数组
  */
 export const translateDataRole = (data) => {
-  let parent = [];
-  let children = [];
-  data.forEach(function(obj) {
+  let parent = []
+  let children = []
+  data.forEach(function (obj) {
     if (obj.menu_type === '父级') {
       parent.push(obj)
     } else {
-      children.push(obj);
+      children.push(obj)
     }
   })
 
@@ -702,7 +781,6 @@ export const translateDataRole = (data) => {
     parents.forEach((parent) => {
       // 遍历子节点数据
       childrens.forEach((current, index) => {
-
         // 此时找到父节点对应的一个子节点
         if (current.parent === parent.id) {
           // 对子节点数据进行深复制，这里只支持部分类型的数据深复制，对深复制不了解的童靴可以先去了解下深复制
@@ -728,8 +806,6 @@ export const translateDataRole = (data) => {
   return parents
 }
 
-
-
 /**
  * @param {Array} data  待转换的数组
  *该方法用于将有父子关系的数组转换成树形结构的数组
@@ -748,7 +824,6 @@ export const translateDataToTree = (data, rootid) => {
   })
   // 没有父节点的数据852B63AA0EC74839B7229309AC01CC82
   let parents = data.filter(value => {
-
     return value.id == rootid
   })
 
@@ -781,7 +856,7 @@ export const translateDataToTree = (data, rootid) => {
 
   // 调用转换方法
   translator(parents, childrens, 1)
-  console.log(parents);
+  console.log(parents)
   // 返回最终的结果
   return parents
 }
@@ -822,7 +897,7 @@ export const formatHistoryData = (datas) => {
   return tempDatas
 }
 
-Array.prototype.contains = function(val) {
+Array.prototype.contains = function (val) {
   for (var i = 0; i < this.length; i++) {
     if (this[i] == val) {
       return true
@@ -831,22 +906,16 @@ Array.prototype.contains = function(val) {
   return false
 }
 export const windowHeight = () => {
-  var winWidth = 0;
-  var winHeight = 0;
-  //获取窗口宽度
-  if (window.innerWidth)
-    winWidth = window.innerWidth;
-  else if ((document.body) && (document.body.clientWidth))
-    winWidth = document.body.clientWidth;
-  //获取窗口高度
-  if (window.innerHeight)
-    winHeight = window.innerHeight;
-  else if ((document.body) && (document.body.clientHeight))
-    winHeight = document.body.clientHeight;
-  //通过深入Document内部对body进行检测，获取窗口大小
+  var winWidth = 0
+  var winHeight = 0
+  // 获取窗口宽度
+  if (window.innerWidth) { winWidth = window.innerWidth } else if ((document.body) && (document.body.clientWidth)) { winWidth = document.body.clientWidth }
+  // 获取窗口高度
+  if (window.innerHeight) { winHeight = window.innerHeight } else if ((document.body) && (document.body.clientHeight)) { winHeight = document.body.clientHeight }
+  // 通过深入Document内部对body进行检测，获取窗口大小
   if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-    winHeight = document.documentElement.clientHeight;
-    winWidth = document.documentElement.clientWidth;
+    winHeight = document.documentElement.clientHeight
+    winWidth = document.documentElement.clientWidth
   }
   return winHeight
 }

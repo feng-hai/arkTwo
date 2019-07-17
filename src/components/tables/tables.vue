@@ -1,58 +1,102 @@
 <template>
-<div>
-  <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
-    <!-- <Select v-model="searchKey" class="search-col">
+  <div>
+    <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
+      <!-- <Select v-model="searchKey" class="search-col">
         <Option v-for="item in columns.filter(function(item,index,array){return item.key;})" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
     </Select>
     <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue" />
     <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
-    <Button @click="handleAdd" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;新增</Button> -->
-    <Row>
-      <Col v-for="(item,index) in searchColumns.filter((item,index)=>{
+      <Button @click="handleAdd" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;新增</Button>-->
+      <Row>
+        <Col
+          v-for="(item,index) in searchColumns.filter((item,index)=>{
         if(item.isSearchFront)return true;
-        })" style="padding-right:10px">
-      <searchExpand :column="item" :render="item.renderSearch"></searchExpand>
-      </Col>
-      <Col span="7">
-      <Button @click="handleSearch" v-if="searchColumns.length>0" class="search-btn" type="primary"><Icon type="search"/>搜索</Button>
-      <!-- <Button @click="handleAdd" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;新增</Button> -->
-      <Button @click="showAndhideExpand" v-if="searchColumns.length>3" class="search-btn"><Icon type="search"/>更多</Button>
+        })"
+          style="padding-right:10px"
+        >
+          <searchExpand :column="item" :render="item.renderSearch"></searchExpand>
+        </Col>
+        <Col span="7">
+          <Button
+            @click="handleSearch"
+            v-if="searchColumns.length>0"
+            class="search-btn"
+            type="primary"
+          >
+            <Icon type="search"/>搜索
+          </Button>
+          <!-- <Button @click="handleAdd" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;新增</Button> -->
+          <Button @click="showAndhideExpand" v-if="searchColumns.length>3" class="search-btn">
+            <Icon type="search"/>更多
+          </Button>
 
-      <searchExpand :column="addTemplete" :permit="permit" :render="createButtons"></searchExpand>
-
-      </Col>
-
-    </Row>
-    <Row style="margin-top:10px" v-if="expandValue">
-      <Col v-for="(item,index) in searchColumns.filter((item,index)=>{
+          <searchExpand :column="addTemplete" :permit="permit" :render="createButtons"></searchExpand>
+        </Col>
+      </Row>
+      <Row style="margin-top:10px" v-if="expandValue">
+        <Col
+          v-for="(item,index) in searchColumns.filter((item,index)=>{
         if(!item.isSearchFront)return true;
-        })" style="padding-right:10px">
-      <searchExpand :column="item" :render="item.renderSearch"></searchExpand>
-      </Col>
-    </Row>
+        })"
+          style="padding-right:10px"
+        >
+          <searchExpand :column="item" :render="item.renderSearch"></searchExpand>
+        </Col>
+      </Row>
+    </div>
 
-  </div>
-
-  <Table ref="tablesMain" :data="insideTableData" :columns="insideColumns" :stripe="stripe" :border="border" :show-header="showHeader" :width="width" :height="height" :loading="loading" :disabled-hover="disabledHover" :highlight-row="highlightRow" :row-class-name="rowClassName"
-    :size="size" :no-data-text="noDataText" :no-filtered-data-text="noFilteredDataText" @on-current-change="onCurrentChange" @on-select="onSelect" @on-select-cancel="onSelectCancel" @on-select-all="onSelectAll" @on-selection-change="onSelectionChange" @on-sort-change="onSortChange"
-    @on-filter-change="onFilterChange" @on-row-click="onRowClick" @on-row-dblclick="onRowDblclick" @on-expand="onExpand">
-    <slot name="header" slot="header"></slot>
-    <slot name="footer" slot="footer"></slot>
-    <slot name="loading" slot="loading"></slot>
-  </Table>
-  <div class="search-con search-con-top" v-if="isPage">
-    <Page :total="total" :current="current" :page-size="pageSize" @on-change="pageChange" @on-page-size-change="pageSizeChange" show-elevator show-sizer></Page>
-    <!-- <bigPage></bigPage> -->
-  </div>
-  <!-- <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
+    <Table
+      ref="tablesMain"
+      :data="insideTableData"
+      :columns="insideColumns"
+      :stripe="stripe"
+      :border="border"
+      :show-header="showHeader"
+      :width="width"
+      :height="height"
+      :loading="loading"
+      :disabled-hover="disabledHover"
+      :highlight-row="highlightRow"
+      :row-class-name="rowClassName"
+      :size="size"
+      :no-data-text="noDataText"
+      :no-filtered-data-text="noFilteredDataText"
+      @on-current-change="onCurrentChange"
+      @on-select="onSelect"
+      @on-select-cancel="onSelectCancel"
+      @on-select-all="onSelectAll"
+      @on-selection-change="onSelectionChange"
+      @on-sort-change="onSortChange"
+      @on-filter-change="onFilterChange"
+      @on-row-click="onRowClick"
+      @on-row-dblclick="onRowDblclick"
+      @on-expand="onExpand"
+    >
+      <slot name="header" slot="header"></slot>
+      <slot name="footer" slot="footer"></slot>
+      <slot name="loading" slot="loading"></slot>
+    </Table>
+    <div class="search-con search-con-top" v-if="isPage">
+      <Page
+        :total="total"
+        :current="current"
+        :page-size="pageSize"
+        @on-change="pageChange"
+        @on-page-size-change="pageSizeChange"
+        show-elevator
+        show-sizer
+      ></Page>
+      <!-- <bigPage></bigPage> -->
+    </div>
+    <!-- <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
     <Select v-model="searchKey" class="search-col">
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
     <Input placeholder="输入关键字搜索" class="search-input" v-model="searchValue" />
     <Button @click="onSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
-  </div> -->
-  <a id="hrefToExportTable" style="display: none;width: 0px;height: 0px;"></a>
-</div>
+    </div>-->
+    <a id="hrefToExportTable" style="display: none;width: 0px;height: 0px;"></a>
+  </div>
 </template>
 
 <script>
@@ -124,11 +168,9 @@ export default {
     size: String,
     width: {
       type: [Number, String]
-
     },
     height: {
       type: [Number, String]
-
     },
     stripe: {
       type: Boolean,
@@ -224,21 +266,29 @@ export default {
             // editable: this.editable,
             // editType: this.editable ? params.column.editType ? params.column.editType : 'text' : 'text',
 
-            selectList: params.column.selectList ? params.column.selectList : [],
+            selectList: params.column.selectList
+              ? params.column.selectList
+              : [],
             dataType: params.column['dataType']
-
           },
           on: {
-            'on-search-edit': (params) => {
+            'on-search-edit': params => {
               this.$emit('on-search-edit', params)
             },
-            'input': (val, params) => {
+            input: (val, params) => {
               this.edittingText = val
               var that = this
-              if (params.column.formateFun && typeof params.column.formateFun === 'function') {
+              if (
+                params.column.formateFun &&
+                typeof params.column.formateFun === 'function'
+              ) {
                 params.column.formateFun(val, function (item) {
                   console.log(item)
-                  that.searchValues = Object.assign({}, that.searchValues, item)
+                  that.searchValues = Object.assign(
+                    {},
+                    that.searchValues,
+                    item
+                  )
                 })
               } else {
                 this.searchValues[params.column.key] = val
@@ -247,14 +297,14 @@ export default {
               console.log('search', this.searchValues)
               // this.searchColumns[]["searchValue"]=
             },
-            'on-start-edit': (params) => {
+            'on-start-edit': params => {
               this.$emit('on-start-edit', params)
             },
-            'on-cancel-edit': (params) => {
+            'on-cancel-edit': params => {
               this.edittingCellId = ''
               this.$emit('on-cancel-edit', params)
             },
-            'on-save-edit': (params) => {
+            'on-save-edit': params => {
               // this.value[params.row.initRowIndex][params.column.key] = this.edittingText
               // this.$emit('input', this.value)
               // this.$emit('on-save-edit', Object.assign(params, {
@@ -271,12 +321,18 @@ export default {
         return h(cellShow, {
           props: {
             params: params,
-            value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',
-            allEdit: this.insideTableData[params.index]['isNew'] ? this.insideTableData[params.index]['isNew'] : false,
+            value: this.insideTableData[params.index][params.column.key]
+              ? this.insideTableData[params.index][params.column.key]
+              : '',
+            allEdit: this.insideTableData[params.index]['isNew']
+              ? this.insideTableData[params.index]['isNew']
+              : false,
             edittingCellId: this.edittingCellId,
             editable: this.editable,
             editType: params.column.editType ? params.column.editType : 'text', // 默认是text类型
-            selectList: params.column.selectList ? params.column.selectList : [],
+            selectList: params.column.selectList
+              ? params.column.selectList
+              : [],
             dataType: params.column['dataType']
           }
         })
@@ -290,43 +346,57 @@ export default {
         return h(TablesEdit, {
           props: {
             params: params,
-            value: this.insideTableData[params.index][params.column.key] ? this.insideTableData[params.index][params.column.key] : '',
-            allEdit: this.insideTableData[params.index]['isNew'] ? this.insideTableData[params.index]['isNew'] : false,
+            value: this.insideTableData[params.index][params.column.key]
+              ? this.insideTableData[params.index][params.column.key]
+              : '',
+            allEdit: this.insideTableData[params.index]['isNew']
+              ? this.insideTableData[params.index]['isNew']
+              : false,
             edittingCellId: this.edittingCellId,
             editable: this.editable,
             editType: params.column.editType ? params.column.editType : 'text', // 默认是text类型
 
-            selectList: params.column.selectList ? params.column.selectList : [],
+            selectList: params.column.selectList
+              ? params.column.selectList
+              : [],
             dataType: params.column['dataType']
-
           },
           on: {
-            'on-search-edit': (params) => {
+            'on-search-edit': params => {
               this.$emit('on-search-edit', params)
             },
-            'input': (val, params) => {
+            input: (val, params) => {
               this.edittingText = val
               if (params.row.isNew) {
-                this.value[params.row.initRowIndex][params.column.key] = this.edittingText
+                this.value[params.row.initRowIndex][
+                  params.column.key
+                ] = this.edittingText
                 this.$emit('input', this.value)
               }
             },
-            'on-start-edit': (params) => {
-              this.edittingCellId = `editting-${params.index}-${params.column.key}`
+            'on-start-edit': params => {
+              this.edittingCellId = `editting-${params.index}-${
+                params.column.key
+              }`
               this.$emit('on-start-edit', params)
             },
-            'on-cancel-edit': (params) => {
+            'on-cancel-edit': params => {
               this.edittingCellId = ''
               this.$emit('on-cancel-edit', params)
             },
-            'on-save-edit': (params) => {
-              this.value[params.row.initRowIndex][params.column.key] = this.edittingText
+            'on-save-edit': params => {
+              this.value[params.row.initRowIndex][
+                params.column.key
+              ] = this.edittingText
 
               this.$emit('input', this.value)
 
-              this.$emit('on-save-edit', Object.assign(params, {
-                value: this.edittingText
-              }))
+              this.$emit(
+                'on-save-edit',
+                Object.assign(params, {
+                  value: this.edittingText
+                })
+              )
 
               this.edittingCellId = ''
             }
@@ -355,7 +425,8 @@ export default {
         let render = function () {
           return ''
         }
-        if (item.isSearch) { // 是否作为查询条件显示
+        if (item.isSearch) {
+          // 是否作为查询条件显示
           this.suportSearch(item, index)
           if (!item.renderSearch) {
             item.renderSearch = render
@@ -424,7 +495,8 @@ export default {
     pageChange (pageIndex, page) {
       this.$emit('on-page-change', pageIndex)
     },
-    pageSizeChange (pageSize) { // 页面大小改变触发事件
+    pageSizeChange (pageSize) {
+      // 页面大小改变触发事件
       this.$emit('on-pageSize-change', pageSize)
     },
     onCurrentChange (currentRow, oldCurrentRow) {
@@ -457,7 +529,6 @@ export default {
     onExpand (row, status) {
       this.$emit('on-expand', row, status)
     }
-
   },
   watch: {
     columns (columns) {

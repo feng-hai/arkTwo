@@ -15,7 +15,7 @@ import {
   mapState
 } from 'vuex'
 import {
-  ChartObject,
+  ChartObject
 } from '_c/charts'
 export default {
   name: 'vedioStatus',
@@ -23,14 +23,14 @@ export default {
     chartsHeight: {
       type: Number,
       default () {
-        return 200;
+        return 200
       }
-    },
+    }
   },
   components: {
-    ChartObject,
+    ChartObject
   },
-  data() {
+  data () {
     return {
       options: {
         // title: {
@@ -40,35 +40,79 @@ export default {
         // },
         tooltip: {
           trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        color:['blueviolet', 'yellow','red','#19BE6B'],
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        }, // 报警、正常、离线、屏蔽
+        color: ['#EA6A76', '#27DAB3', '#009DFF', '#FEF85D'],
         legend: {
           orient: 'vertical',
           left: 'right',
-          data: ['报警', '离线', '正常','屏蔽']
+          data: ['报警', '离线', '正常', '屏蔽']
         },
         series: [{
           name: '设备状态',
           type: 'pie',
           radius: ['50%', '70%'],
           center: ['50%', '60%'],
-          data: [{
-              value: 35,
-              name: '报警'
-            },
-            {
-              value: 3210,
-              name: '正常'
-            },
-            {
-              value: 10,
-              name: '离线'
-            },
-            {
-              value: 121,
-              name: '屏蔽'
+          label: {
+            normal: {
+              formatter: ' {c}',
+              // backgroundColor: '#eee',
+              // borderColor: '#aaa',
+              borderWidth: 1,
+              borderRadius: 4,
+              // shadowBlur:3,
+              // shadowOffsetX: 2,
+              // shadowOffsetY: 2,
+              // shadowColor: '#999',
+              // padding: [0, 7],
+              rich: {
+                a: {
+                  color: '#999',
+                  lineHeight: 22,
+                  align: 'center'
+                },
+                // abg: {
+                //     backgroundColor: '#333',
+                //     width: '100%',
+                //     align: 'right',
+                //     height: 22,
+                //     borderRadius: [4, 4, 0, 0]
+                // },
+                hr: {
+                  borderColor: '#aaa',
+                  width: '100%',
+                  borderWidth: 0.5,
+                  height: 0
+                },
+                b: {
+                  fontSize: 12,
+                  lineHeight: 40
+                },
+                per: {
+                  color: '#eee',
+                  backgroundColor: '#334455',
+                  padding: [2, 4],
+                  borderRadius: 2
+                }
+              }
             }
+          },
+          data: [{
+            value: 35,
+            name: '报警'
+          },
+          {
+            value: 3210,
+            name: '正常'
+          },
+          {
+            value: 10,
+            name: '离线'
+          },
+          {
+            value: 121,
+            name: '屏蔽'
+          }
           ],
           itemStyle: {
             emphasis: {
@@ -80,25 +124,24 @@ export default {
         }]
       }
     }
-
   },
   methods: {
     ...mapActions([
       'getBigInfoAction'
 
     ]),
-    cardClick() {
-      this.$emit("on-click", 'homeForBigger')
+    cardClick () {
+      this.$emit('on-click', 'homeForBigger')
     },
-    getName(name) {
-      if (name == "NORMAL") {
-        return "正常";
-      } else if (name == "ALARM") {
-        return "报警"
-      } else if (name == "FAULT") {
-        return "屏蔽"
+    getName (name) {
+      if (name == 'NORMAL') {
+        return '正常'
+      } else if (name == 'ALARM') {
+        return '报警'
+      } else if (name == 'FAULT') {
+        return '屏蔽'
       } else {
-        return "离线"
+        return '离线'
       }
     }
     // 在首页初始化公共数据
@@ -107,11 +150,11 @@ export default {
     //   'getMenuInfoAction'
     // ]),
   },
-  mounted() {
-    var that = this;
+  mounted () {
+    var that = this
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
-    //访问车辆状态数据
+    // 访问车辆状态数据
     this.getBigInfoAction({
       channel: 'FIRE_FACILITY',
       system_id: '157'
@@ -122,9 +165,8 @@ export default {
           name: this.getName(item.name)
         }
       })
-      that.options.series[0].data = temp;
+      that.options.series[0].data = temp
       console.log(that.options)
-
     })
   }
 }
@@ -146,10 +188,10 @@ export default {
         // Border: 1px solid #000;
     }
     .active {
-        color: #fff;
+        color: #00CEFF;
     }
     .noactive {
-        color: #bbb;
+        color: #CAF3F8;
     }
 }
 </style>

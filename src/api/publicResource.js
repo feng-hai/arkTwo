@@ -9,14 +9,14 @@ export const getOrganizationInfo = (option) => {
 }
 export const getMenuInfo = (option) => {
   return axios.request({
-    url: '/firemen/menu/navigation',
+    url: '/legacy/security/menu',
     params: option,
     method: 'get'
   })
 }
 export const getRolesInfo = (option) => {
   return axios.request({
-    url: 'firemen/security/privilege',
+    url: '/legacy/security/privilege',
     params: option,
     method: 'get'
   })

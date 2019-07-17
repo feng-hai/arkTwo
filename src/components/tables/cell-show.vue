@@ -53,7 +53,7 @@ import {
 } from '@/libs/util'
 export default {
   name: 'TablesEdit',
-  data() {
+  data () {
     return {
       isLoading: false,
       label: ''
@@ -70,18 +70,19 @@ export default {
     selectList: Array
 
   },
-  mounted() {;
+  mounted () {
+    ;
     this.getSelectListText()
   },
   computed: {
-    istooltip() {
-      return this.params.column.tooltip;
+    istooltip () {
+      return this.params.column.tooltip
     },
-    isLink() {
-      return (this.params.column.linkFun && typeof(this.params.column.linkFun) === 'function')
+    isLink () {
+      return (this.params.column.linkFun && typeof (this.params.column.linkFun) === 'function')
     },
 
-    selectListData() {
+    selectListData () {
       if (this.dataType) {
         return this.$store.getters.getInfo(this.dataType)
       } else {
@@ -93,32 +94,32 @@ export default {
     //   console.log(this.params.column.isLoading)
     //     return this.params.column.isLoading?true:false
     // },
-    isServer() {
+    isServer () {
       return this.params.column.isServer
     },
-    isEditType() {
+    isEditType () {
       return this.editType === 'text'
     },
-    isEditting() {
+    isEditting () {
       return this.edittingCellId === `editting-${this.params.index}-${this.params.column.key}` || this.allEdit
     }
 
   },
   methods: {
-    turnTo() {
-      if (this.params.column.linkFun && typeof(this.params.column.linkFun) === 'function') {
-        this.params.column.linkFun(getDataByParams, this.params, function() {}, this)
+    turnTo () {
+      if (this.params.column.linkFun && typeof (this.params.column.linkFun) === 'function') {
+        this.params.column.linkFun(getDataByParams, this.params, function () {}, this)
       }
     },
-    getSelectListText() {
-      var that = this;
+    getSelectListText () {
+      var that = this
       if (this.editType == 'text') {
         if (this.value == '') {
           return '空'
         }
-        if (this.params.column.formateFun && typeof(this.params.column.formateFun) === 'function') {
+        if (this.params.column.formateFun && typeof (this.params.column.formateFun) === 'function') {
           var that = this
-          this.params.column.formateFun(getDataByParams, this.value, function(item) {
+          this.params.column.formateFun(getDataByParams, this.value, function (item) {
             that.label = item
           }, this)
         } else {
@@ -142,6 +143,7 @@ export default {
         let text = '没有匹配项目'
         for (var index in this.selectListData) {
           var item = this.selectListData[index]
+
           if (this.value == item.value) {
             text = item.label
             break
@@ -159,8 +161,8 @@ export default {
       } else if (this.editType == 'fun') {
         var that = this
 
-        if (this.params.column.selectListFunText && typeof(this.params.column.selectListFunText) === 'function') {
-          this.params.column.selectListFunText(getDataByParams, this.params, function(item) {
+        if (this.params.column.selectListFunText && typeof (this.params.column.selectListFunText) === 'function') {
+          this.params.column.selectListFunText(getDataByParams, this.params, function (item) {
             // console.log(item)
 
             that.label = item
@@ -168,25 +170,25 @@ export default {
         }
       }
     },
-    getData() {
+    getData () {
       return getDataByParams
     },
-    remoteMethod(val) {
+    remoteMethod (val) {
       if (val != this.value) {
         this.$emit('on-search-edit', val)
       }
     },
-    handleInput(val) {
+    handleInput (val) {
       this.$emit('input', val, this.params)
     },
-    startEdit() {
+    startEdit () {
       this.$emit('on-start-edit', this.params)
     },
-    saveEdit() {
+    saveEdit () {
       this.$emit('on-save-edit', this.params)
       // this.getSelectListText
     },
-    canceltEdit() {
+    canceltEdit () {
       this.$emit('on-cancel-edit', this.params)
     }
   }

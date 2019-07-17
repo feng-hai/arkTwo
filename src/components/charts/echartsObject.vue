@@ -18,11 +18,13 @@ export default {
       default () {
         var option = {
           tooltip: {
+
             trigger: 'axis',
             axisPointer: {
               type: 'shadow'
             }
           },
+
           grid: {
             left: '3%',
             right: '4%',
@@ -38,56 +40,53 @@ export default {
             data: ['出闸', '进闸']
           },
           series: [{
-              name: '',
-              type: 'bar',
-              data: [1000, 2000]
-            }
+            name: '',
+            type: 'bar',
+            data: [1000, 2000]
+          }
 
           ]
-        };
+        }
 
         return option
       }
     }
   },
-  data() {
+  data () {
     return {
       dom: null
     }
   },
   watch: {
     options: {
-      handler(n, o) {
-        this.setOption();
+      handler (n, o) {
+        this.setOption()
       },
       immediate: true,
       deep: true
     }
   },
   methods: {
-    cardClick() {
-
-      this.$emit("on-click")
+    cardClick () {
+      this.$emit('on-click')
     },
-    resize() {
-
+    resize () {
       this.dom.resize()
     },
-    setOption() {
+    setOption () {
       this.$nextTick(() => {
-
-        this.dom = echarts.init(this.$refs.dom, 'tdTheme');
-        this.dom.setOption(this.options);
-      });
+        this.dom = echarts.init(this.$refs.dom, 'tdTheme')
+        this.dom.setOption(this.options)
+      })
     }
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
-      this.setOption();
+      this.setOption()
       on(window, 'resize', this.resize)
     })
   },
-  beforeDestroy() {
+  beforeDestroy () {
     off(window, 'resize', this.resize)
   }
 }

@@ -10,7 +10,7 @@
 <script>
 import '../parent-view.less'
 import {
-  ChartObject,
+  ChartObject
 } from '_c/charts'
 import {
   mapActions,
@@ -23,14 +23,14 @@ export default {
     chartsHeight: {
       type: Number,
       default () {
-        return 200;
+        return 200
       }
-    },
+    }
   },
   components: {
-    ChartObject,
+    ChartObject
   },
-  data() {
+  data () {
     return {
       options: {
         // title: {
@@ -38,32 +38,78 @@ export default {
         //   subtext: '纯属虚构',
         //   x: 'center'
         // },
+        color: ['#EA6A76', '#27DAB3', '#009DFF', '#FEF85D'],
+
         tooltip: {
           trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         legend: {
           orient: 'vertical',
           left: 'right',
-          data: ['报警', '离线','正常']
+          data: ['报警', '离线', '正常']
         },
         series: [{
           name: '周界监控',
           type: 'pie',
-          radius: ['50%','70%'],
+          radius: ['50%', '70%'],
           center: ['50%', '60%'],
-          data: [{
-              value: 35,
-              name: '报警'
-            },
-            {
-              value: 310,
-              name: '正常'
-            },
-            {
-              value: 10,
-              name: '离线'
+          label: {
+            normal: {
+              formatter: ' {c}',
+              // backgroundColor: '#eee',
+              // borderColor: '#aaa',
+              borderWidth: 1,
+              borderRadius: 4,
+              // shadowBlur:3,
+              // shadowOffsetX: 2,
+              // shadowOffsetY: 2,
+              // shadowColor: '#999',
+              // padding: [0, 7],
+              rich: {
+                a: {
+                  color: '#999',
+                  lineHeight: 22,
+                  align: 'center'
+                },
+                // abg: {
+                //     backgroundColor: '#333',
+                //     width: '100%',
+                //     align: 'right',
+                //     height: 22,
+                //     borderRadius: [4, 4, 0, 0]
+                // },
+                hr: {
+                  borderColor: '#aaa',
+                  width: '100%',
+                  borderWidth: 0.5,
+                  height: 0
+                },
+                b: {
+                  fontSize: 12,
+                  lineHeight: 40
+                },
+                per: {
+                  color: '#eee',
+                  backgroundColor: '#334455',
+                  padding: [2, 4],
+                  borderRadius: 2
+                }
+              }
             }
+          },
+          data: [{
+            value: 35,
+            name: '报警'
+          },
+          {
+            value: 310,
+            name: '正常'
+          },
+          {
+            value: 10,
+            name: '离线'
+          }
           ],
           itemStyle: {
             emphasis: {
@@ -75,15 +121,14 @@ export default {
         }]
       }
     }
-
   },
   methods: {
     ...mapActions([
       'getBigInfoAction'
 
     ]),
-    cardClick() {
-      this.$emit("on-click", 'bigelectronicInfo')
+    cardClick () {
+      this.$emit('on-click', 'bigelectronicInfo')
     }
     // 在首页初始化公共数据
     // ...mapActions([
@@ -91,11 +136,11 @@ export default {
     //   'getMenuInfoAction'
     // ]),
   },
-  mounted() {
-    var that = this;
+  mounted () {
+    var that = this
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
-    //访问车辆状态数据
+    // 访问车辆状态数据
     this.getBigInfoAction({
       channel: 'BORDER',
       system_id: '157'
@@ -106,9 +151,8 @@ export default {
           name: item.name
         }
       })
-      that.options.series[0].data = temp;
+      that.options.series[0].data = temp
       console.log(that.options)
-
     })
   }
 }
@@ -129,11 +173,11 @@ export default {
         padding: 10px;
         // Border: 1px solid #000;
     }
-    .active {
-        color: #fff;
+      .active {
+        color: #00CEFF;
     }
     .noactive {
-        color: #bbb;
+        color: #CAF3F8;
     }
 }
 </style>

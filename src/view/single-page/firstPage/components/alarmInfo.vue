@@ -17,134 +17,133 @@
           </div>
       </div>
   </template>
-  <script>
-    const prefixCls = 'ivu-page';
-    export default {
-      data(){
-        return{
-          myBarOption:{
-              barColor:"#959595",   //滚动条颜色
-              barWidth:6,           //滚动条宽度
-              railColor:"#eee",     //导轨颜色
-              barMarginRight:0,     //垂直滚动条距离整个容器右侧距离单位（px）
-              barMaginBottom:0,     //水平滚动条距离底部距离单位（px)
-              barOpacityMin:0.3,      //滚动条非激活状态下的透明度
-              zIndex:"auto",        //滚动条z-Index
-              autohidemode:true,     //自动隐藏模式
-              horizrailenabled:true,//是否显示水平滚动条
-            },
-          scollRight:-17,
-          forceGemini:true,
-          title:'报警信息',
-          alarmArray:[
-            {
-              datetime:'2019-05-15 10:21:21',
-              domainName:'南京动车所',
-              area:'二次东区',
-              typeName:'烟感报警'
-            },
-            {
-              datetime:'2019-05-15 10:22:21',
-              domainName:'南京动车所',
-              area:'二次东区',
-              typeName:'烟感报警'
-            },
-            {
-              datetime:'2019-05-15 10:21:21',
-              domainName:'南京动车所',
-              area:'二次东区',
-              typeName:'烟感报警'
-            },
-            {
-              datetime:'2019-05-15 10:22:21',
-              domainName:'南京动车所',
-              area:'二次东区',
-              typeName:'烟感报警'
-            },
-            {
-              datetime:'2019-05-15 10:21:21',
-              domainName:'南京动车所',
-              area:'二次东区',
-              typeName:'烟感报警'
-            },
-            {
-              datetime:'2019-05-15 10:22:21',
-              domainName:'南京动车所',
-              area:'二次东区',
-              typeName:'烟感报警'
-            },  {
-                datetime:'2019-05-15 10:21:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:22:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:21:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:22:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:21:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:22:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:21:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },
-              {
-                datetime:'2019-05-15 10:22:21',
-                domainName:'南京动车所',
-                area:'二次东区',
-                typeName:'烟感报警'
-              },  {
-                  datetime:'2019-05-15 10:21:21',
-                  domainName:'南京动车所',
-                  area:'二次东区',
-                  typeName:'烟感报警'
-                },
-                {
-                  datetime:'2019-05-15 10:22:21',
-                  domainName:'南京动车所',
-                  area:'二次东区',
-                  typeName:'烟感报警'
-                }
-          ]
-        }
+<script>
+const prefixCls = 'ivu-page'
+export default {
+  data () {
+    return {
+      myBarOption: {
+        barColor: '#959595', // 滚动条颜色
+        barWidth: 6, // 滚动条宽度
+        railColor: '#eee', // 导轨颜色
+        barMarginRight: 0, // 垂直滚动条距离整个容器右侧距离单位（px）
+        barMaginBottom: 0, // 水平滚动条距离底部距离单位（px)
+        barOpacityMin: 0.3, // 滚动条非激活状态下的透明度
+        zIndex: 'auto', // 滚动条z-Index
+        autohidemode: true, // 自动隐藏模式
+        horizrailenabled: true// 是否显示水平滚动条
       },
-      methods:{
-          mouseover:function()
-          {
-           this.scollRight=0;
-          },
-          mouseout:function(){
-             this.scollRight=-17;
-          }
-      }
+      scollRight: -17,
+      forceGemini: true,
+      title: '报警信息',
+      alarmArray: [
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        }, {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        }, {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          area: '二次东区',
+          typeName: '烟感报警'
+        }
+      ]
     }
-  </script>
+  },
+  methods: {
+    mouseover: function () {
+      this.scollRight = 0
+    },
+    mouseout: function () {
+      this.scollRight = -17
+    }
+  }
+}
+</script>
   <style lang="scss">
   .big_table_cell{
     color:rgb(255, 80, 80);
@@ -163,7 +162,7 @@
           }
           span {
               font-size: 14px;
-              color: #fff;
+              color: #00ceff;
               padding-left: 8px;
           }
       }

@@ -1,0 +1,125 @@
+<template>
+  <div class="item videoShow">
+    <div class="player">
+      <video-player ref="videoPlayer"  class="vjs-custom-skin" :options="playerOptions"></video-player>
+    </div>
+    <div class="videoTitle" v-show="isShowTitle"  v-bind:class="[onLineStatus?'onLine':'offLine']" >
+      <span class="showTitleLeft"  v-text="name"></span>
+      <span class="showTitleRight ">
+        <Icon type="md-checkmark"/>
+        <span v-text="onLineStatusTitle"></span>
+      </span>
+    </div>
+  </div>
+</template>
+<script>
+import 'video.js/dist/video-js.css'
+import { videoPlayer } from 'vue-video-player'
+import 'videojs-flash'
+export default {
+  components: {
+    videoPlayer
+  },
+  props: {
+    isShowTitle: {
+      type: Boolean,
+      default: false
+    },
+    name: {
+      type: String,
+      default: '[1]測試'
+    },
+    onLineStatusTitle: {
+      type: String,
+      default: '在线'
+    },
+    onLineStatus: {
+      type: Boolean,
+      default: true
+    },
+    height: {
+      type: String,
+      default: '360'
+    },
+    sourcesType: {
+      type: String,
+      default: 'rtmp/mp4'
+    },
+    sourcesSrc: {
+      type: String,
+      default: 'rtmp://localhost/live/test123'
+    },
+    autoplay: {
+      type: Boolean,
+      default: true
+    },
+    poster: {
+      type: String,
+      default:
+        'https://surmon-china.github.io/vue-quill-editor/static/images/surmon-5.jpg'
+    }
+  },
+  watch: {
+    sourcesSrc: function (n, o) {
+      let myPlayer = this.$refs.videoPlayer.player
+      myPlayer.src('rtmp://localhost/live/test123') // 根据userType的不同展示不同的视频地址
+    }
+  },
+
+  data () {
+    return {
+      playerOptions: {
+        height: this.height,
+
+        sources: [
+          {
+            type: 'rtmp/mp4',
+            src: this.sourcesSrc
+          }
+        ],
+        techOrder: ['flash'],
+        autoplay: true,
+        controlBar: {
+          timeDivider: false,
+          durationDisplay: false
+        },
+        flash: { hls: { withCredentials: false } },
+        html5: { hls: { withCredentials: false } },
+        poster: this.poster
+      }
+    }
+  }
+}
+</script>
+<style>
+.showTitleLeft {
+  float: left;
+  line-height: 30px;
+  /* display: block; */
+  vertical-align: middle;
+}
+.showTitleRight {
+  float: right;
+  line-height: 30px;
+  /* display: block; */
+  vertical-align: middle;
+}
+.onLine {
+  color: green;
+}
+.offLine {
+  color: gray;
+}
+.videoTitle {
+  height: 30px;
+  background-color: #fff;
+  vertical-align: middle;
+  padding: 2px 5px;
+}
+.videoShow {
+  /* width: 460px; */
+  padding:5px;
+  background-color: #fff;
+  border: gray;
+}
+</style>

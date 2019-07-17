@@ -5,21 +5,13 @@ const USER01 = {
   token: 'super_admin',
   avator: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png',
   menus: [{
-      path: '',
-      name: 'doc',
-      meta: {
-        title: 'æ–‡æ¡£',
-        href: 'https://lison16.github.io/iview-admin-doc/#/',
-        icon: 'ios-book'
-      }
-    },
-    {
       path: '/bigerScreen',
       name: 'bigerScreen',
       component: 'parentView',
       meta: {
         icon: 'md-menu',
-        title: '多级菜单'
+        title: '多级菜单',
+        hideInMenu: true
       },
       children: [{
           path: 'homeForBigger',
@@ -30,7 +22,7 @@ const USER01 = {
           },
           component: 'single-page/home/home'
 
-        },  {
+        }, {
           path: 'tools_json',
           name: 'tools_json',
           meta: {
@@ -93,43 +85,35 @@ const USER01 = {
             notCache: false
           },
           component: 'single-page/home/components/videoShow'
-        },  {
-            path: 'bigdaozha',
-            name: 'bigdaozha',
-            meta: {
-              title: '道闸监控',
-              notCache: false
-            },
-            component: 'single-page/home/components/daozhaInfo'
-          },
-      ]
-    }, {
-      path: '/bigerScreenFirst',
-      name: 'bigerScreenFirst',
-      component: 'parentViewBig',
-      meta: {
-        icon: 'md-menu',
-        title: '多级菜单'
-      },
-      children: [ {
-          path: 'firstBigger',
-          name: 'firstBigger',
+        }, {
+          path: 'bigdaozha',
+          name: 'bigdaozha',
           meta: {
-            icon: '_qq',
-            title: '大屏展示'
+            title: '道闸监控',
+            notCache: false
           },
-          component: 'single-page/firstPage/first'
-        }
+          component: 'single-page/home/components/daozhaInfo'
+        },
       ]
-    },{
+    },
+    {
       path: '/tools',
       name: 'tools',
       meta: {
-        icon: 'md-menu',
+        icon: 'ios-construct',
         title: '工具箱'
       },
       component: 'main',
       children: [{
+          path: '',
+          name: 'doc',
+          meta: {
+            title: '文档',
+            href: 'https://lison16.github.io/iview-admin-doc/#/',
+
+          }
+        },
+        {
           path: 'echart01',
           name: 'editEcharts',
           meta: {
@@ -137,6 +121,33 @@ const USER01 = {
             notCache: false
           },
           component: 'tables/template'
+        },
+        {
+          path: 'customer',
+          name: 'customer',
+          meta: {
+            title: `可编辑图表`,
+            notCache: false
+          },
+          component: 'tools/CustomView/demo'
+        },
+        {
+          path: 'drag',
+          name: 'drag',
+          meta: {
+            title: `拖動示例`,
+            notCache: false
+          },
+          component: 'tools/drag/index'
+        },
+        {
+          path: 'drag2',
+          name: 'drag2',
+          meta: {
+            title: `拖動示例`,
+            notCache: false
+          },
+          component: 'tools/drag/vueGridLayout'
         },
         {
           path: 'viewManagement',
@@ -155,6 +166,24 @@ const USER01 = {
             notCache: false
           },
           component: 'tools/vedio/demo'
+        },
+        {
+          path: 'vedioDemo2',
+          name: 'vedioDemo2',
+          meta: {
+            title: `视频`,
+            notCache: false
+          },
+          component: 'tools/vedio/demo2'
+        },
+        {
+          path: 'vedioDemo3',
+          name: 'vedioDemo3',
+          meta: {
+            title: `视频`,
+            notCache: false
+          },
+          component: 'tools/vedio/demo3'
         },
         {
           path: 'zidiyiEcharts',
@@ -250,7 +279,7 @@ const USER01 = {
             title: '可拖拽抽屉'
           },
           component: () =>
-            import ('@/view/components/drag-drawer')
+            import('@/view/components/drag-drawer')
         }
       ]
     },
@@ -258,7 +287,7 @@ const USER01 = {
       path: '/systemManager',
       name: 'systemManager',
       meta: {
-        icon: 'md-menu',
+        icon: 'ios-keypad',
         title: '系统管理'
       },
       component: 'main',
@@ -288,6 +317,15 @@ const USER01 = {
             notCache: false
           },
           component: 'systemManagement/menuPage'
+        },
+        {
+          path: 'menu01',
+          name: 'menuPage01',
+          meta: {
+            title: '菜单管理',
+            notCache: false
+          },
+          component: 'systemManagement/menuPagelast'
         },
         {
           path: 'userManagement',
@@ -384,8 +422,9 @@ const USER01 = {
       path: '/troubleManagement',
       name: 'trouble',
       meta: {
-        icon: 'md-menu',
-        title: '隐患管理'
+        icon: 'ios-nuclear',
+        title: '隐患管理',
+        showAlways: true
       },
       component: 'main',
       children: [{
@@ -401,10 +440,52 @@ const USER01 = {
       ]
     },
     {
+      path: '/alarm',
+      name: 'alarmManagement',
+      meta: {
+        icon: 'md-notifications',
+        title: '报警管理',
+        showAlways: true
+      },
+      component: 'main',
+      children: [{
+          path: 'alarmManagement',
+          name: 'alarmManagement',
+          meta: {
+            title: '报警管理',
+            notCache: false
+          },
+          component: 'alarm/alarmManagement'
+        }
+
+      ]
+    },
+    {
+      path: '/patrol',
+      name: 'patrolManagement',
+      meta: {
+        icon: 'logo-steam',
+        title: '巡检管理',
+        showAlways: true
+      },
+      component: 'main',
+      children: [{
+          path: 'patrolManagement',
+          name: 'patrolManagement',
+          meta: {
+            title: '巡检列表',
+            notCache: false
+          },
+          component: 'patrolManagement/patrol'
+        }
+
+      ]
+    },
+    {
       path: '/contingencyManagement',
       name: 'contingencyManagement',
       meta: {
-        icon: 'md-menu',
+        icon: 'md-megaphone',
         title: '应急管理'
       },
       component: 'main',
@@ -432,7 +513,7 @@ const USER01 = {
       path: '/infoShow',
       name: 'infoShow',
       meta: {
-        icon: 'md-menu',
+        icon: 'ios-clipboard',
         title: '信息展示'
       },
       component: 'main',
@@ -460,7 +541,7 @@ const USER01 = {
       path: '/reportManagement',
       name: 'reportManagement',
       meta: {
-        icon: 'md-menu',
+        icon: 'md-analytics',
         title: '报表管理'
       },
       component: 'main',
@@ -520,6 +601,24 @@ const USER01 = {
         //   component: 'systemManagement/rolePage'
         // }
       ]
+    },
+    {
+      path: '/bigerScreenFirst',
+      name: 'bigerScreenFirst',
+      component: 'parentViewBig',
+      meta: {
+        icon: 'md-menu',
+        title: '多级菜单'
+      },
+      children: [{
+        path: 'firstBigger',
+        name: 'firstBigger',
+        meta: {
+          icon: '_qq',
+          title: '大屏展示'
+        },
+        component: 'single-page/firstPage/first'
+      }]
     }
   ]
 }

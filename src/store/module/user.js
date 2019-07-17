@@ -1,17 +1,30 @@
 import {
   login,
   // logout,
-  //  getUserInfo,
+  getUserInfo,
   getMessage,
   getContentByMsgId,
   hasRead,
   removeReaded,
   restoreTrash,
-  getUnreadCount
+  getUnreadCount,
+  getMenusByRoleId,
+  bindRoleAndMenus
 } from '@/api/user'
 import {
+  // getOrganizationInfo,
+  getMenuInfo
+  // getRolesInfo,
+  // getModelInfo,
+  // getMenuInfoData,
+  // getRoleInfoData,
+  // pustRolesInfo
+  // getAllRolesInfoData
+} from '@/api/publicResource'
+import {
   setToken,
-  getToken
+  getToken,
+  translateArraytoMenus
 } from '@/libs/util'
 import user from '@/assets/js/user'
 
@@ -31,47 +44,47 @@ export default {
     messageContentStore: {}
   },
   mutations: {
-    setAvator(state, avatorPath) {
+    setAvator (state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId(state, id) {
+    setUserId (state, id) {
       state.userId = id
     },
-    setUserName(state, name) {
+    setUserName (state, name) {
       state.userName = name
     },
-    setAccess(state, access) {
+    setAccess (state, access) {
       state.access = access
     },
-    setToken(state, token) {
+    setToken (state, token) {
       state.token = token
       setToken(token)
     },
-    setMenus(state, menus) {
+    setMenus (state, menus) {
       state.menus = menus
     },
-    setHasGetInfo(state, status) {
+    setHasGetInfo (state, status) {
       state.hasGetInfo = status
     },
-    setMessageCount(state, count) {
+    setMessageCount (state, count) {
       state.unreadCount = count
     },
-    setMessageUnreadList(state, list) {
+    setMessageUnreadList (state, list) {
       state.messageUnreadList = list
     },
-    setMessageReadedList(state, list) {
+    setMessageReadedList (state, list) {
       state.messageReadedList = list
     },
-    setMessageTrashList(state, list) {
+    setMessageTrashList (state, list) {
       state.messageTrashList = list
     },
-    updateMessageContentStore(state, {
+    updateMessageContentStore (state, {
       msg_id,
       content
     }) {
       state.messageContentStore[msg_id] = content
     },
-    moveMsg(state, {
+    moveMsg (state, {
       from,
       to,
       msg_id
@@ -90,7 +103,7 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin({
+    handleLogin ({
       commit
     }, {
       userName,
@@ -100,7 +113,7 @@ export default {
       userName = userName.trim()
       var client_id = '597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com'
       var option = qs.stringify({
-        scope: ' /aquaman /bigger /firemen /openid /firemen/security /firemen/grid /openid /firemen/device  /sensor/vehicle /firemen/model /firemen/domain /sensor/vehicle  /firemen/vehicle /firemen/vehicle/info /firemen/event /firemen/national_standard /sensor/hydra',
+        scope: '/legacy /aquaman /bigger /firemen /openid /firemen/security /firemen/grid /openid /firemen/device  /sensor/vehicle /firemen/model /firemen/domain /sensor/vehicle  /firemen/vehicle /firemen/vehicle/info /firemen/event /firemen/national_standard /sensor/hydra',
         client_secret: 'daf2333dd314xfd',
         client_id: client_id, // "597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.csrzic.com",//"597494481295-dd79sund7ef8kr338t87eqajl27spg7a.apps.cube.com",
         grant_type: 'password',
@@ -111,12 +124,16 @@ export default {
       return new Promise((resolve, reject) => {
         login(option).then(res => {
           const data = res.data
+
           commit('setToken', data.split('=')[1].split('&')[0])
+          // 用户id
+          sessionStorage.setItem('userid', data.split('=')[2].split('&')[0])
+          sessionStorage.setItem('userName', userName)
           // commit('setToken', data.token)
           resolve()
         }).catch(err => {
-          //commit('setToken', '222222222222222222')
-            //resolve()
+          // commit('setToken', '222222222222222222')
+          // resolve()
           reject(err)
         })
         // login({
@@ -131,8 +148,21 @@ export default {
         // })
       })
     },
+    bindRoleAndMenus ({
+      state,
+      commit
+    }, options) {
+      return new Promise((resolve, reject) => {
+        console.log('绑定请求', options)
+        bindRoleAndMenus(options).then(res => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     // 退出登录
-    handleLogOut({
+    handleLogOut ({
       state,
       commit
     }) {
@@ -154,31 +184,101 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo({
+    getUserInfo ({
       state,
       commit
     }) {
-
       return new Promise((resolve, reject) => {
         try {
-          const data = user.USER01
-          commit('setAvator', data.avator)
-          commit('setUserName', data.name)
-          commit('setUserId', data.user_id)
-          commit('setAccess', data.access)
-          commit('setMenus', data.menus)
-          commit('setHasGetInfo', true)
-          resolve(data)
+          var userId = sessionStorage.getItem('userid')
+          var username = sessionStorage.getItem('userName')
+          if (username == 'fh') {
+            console.log(userId, '用户信息id')
+            getMenuInfo({
+              offset: 0,
+              page_size: 1000
+            }).then((res) => {
+              var menus = translateArraytoMenus(res.data)
+              const data = user.USER01
+              // console.log(data.menus, "写死的数据")
+              data.menus = menus
+              commit('setAvator', data.avator)
+              commit('setUserName', username)
+              commit('setUserId', userId)
+              commit('setAccess', data.access)
+              // commit('setMenus', data.menus) //对菜单进行赋值
+              commit('setHasGetInfo', true)
+              // console.log(res.data, "后台数据传递");
+              commit('setMenus', data.menus)
+
+              // console.log(menus, "格式化");
+
+              resolve(data)
+              //  console.log(res.data.collection)
+              // resolve(res.data.collection)
+            }).catch(error => {
+              reject(error)
+            })
+          } else {
+            console.log('不知指定用戶')
+            // 通过角色查询菜单
+            // //TODO 根据用户id,动态菜单信息
+            getUserInfo(userId).then(res => {
+              // 获取用户角色信息
+              // 通过角色id，查询对应的菜单
+              console.log(res, '用户信息')
+              getMenusByRoleId(roleid).then(res => {
+                var menus = translateArraytoMenus(res.data)
+                const data = user.USER01
+                // console.log(data.menus, "写死的数据")
+                //  data.menus = menus;
+                commit('setAvator', data.avator)
+                commit('setUserName', username)
+                commit('setUserId', userId)
+                commit('setAccess', data.access)
+                // commit('setMenus', data.menus) //对菜单进行赋值
+                commit('setHasGetInfo', true)
+                // console.log(res.data, "后台数据传递");
+                commit('setMenus', data.menus)
+                // console.log(menus, "格式化");
+                resolve(data)
+              })
+            }).catch(err => {
+              console.log(err, '用户信息错误')
+              reject(err)
+            })
+          }
+
           // }).catch(err => {
           //   reject(err)
           // })
+          // } else {
+
+          // }
         } catch (error) {
           reject(error)
         }
       })
     },
+    getMenuInfoAction ({
+      commit
+    }) {
+      return new Promise((resolve, reject) => {
+        getMenuInfo({
+          offset: 0,
+          page_size: 1000
+        }).then((res) => {
+          commit('setMenusList', res.data)
+          //  console.log(res.data.collection)
+          resolve(res.data.collection)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
-    getUnreadMessageCount({
+    getUnreadMessageCount ({
       state,
       commit
     }) {
@@ -190,7 +290,7 @@ export default {
       // })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
-    getMessageList({
+    getMessageList ({
       state,
       commit
     }) {
@@ -216,8 +316,58 @@ export default {
         })
       })
     },
+    getAllMenus ({
+      state,
+      commit
+    }) {
+      return new Promise((resolve, reject) => {
+
+      })
+    },
+    getMenusByRoleId ({
+      state,
+      commit
+    },
+    option
+    ) {
+      console.log(option)
+      return new Promise((resolve, reject) => {
+        var username = sessionStorage.getItem('userName')
+        var menus = sessionStorage.getItem('menuData')
+        console.log(menus)
+
+        // 根据角色id，获取绑定的菜单集合
+        getMenusByRoleId(option).then(res => {
+          var temp = res.data.map(item => {
+            return item.unid
+          })
+
+          resolve({
+            menus: temp,
+            cmenus: JSON.parse(menus)
+          })
+        }).catch(err => {
+          console.log('没有绑定任务菜单')
+          resolve({
+            menus: [],
+            cmenus: JSON.parse(menus)
+          })
+        })
+
+        // if (username == "fh") {
+
+        // } else {
+        //   getMenusByRoleId(option).then(res => {
+        //     const content = res.data
+        //     resolve(content)
+        //   }).catch(err => {
+        //     reject(err)
+        //   })
+        // }
+      })
+    },
     // 根据当前点击的消息的id获取内容
-    getContentByMsgId({
+    getContentByMsgId ({
       state,
       commit
     }, {
@@ -240,7 +390,7 @@ export default {
       })
     },
     // 把一个未读消息标记为已读
-    hasRead({
+    hasRead ({
       state,
       commit
     }, {
@@ -261,7 +411,7 @@ export default {
       })
     },
     // 删除一个已读消息到回收站
-    removeReaded({
+    removeReaded ({
       commit
     }, {
       msg_id
@@ -279,8 +429,9 @@ export default {
         })
       })
     },
+
     // 还原一个已删除消息到已读消息
-    restoreTrash({
+    restoreTrash ({
       commit
     }, {
       msg_id

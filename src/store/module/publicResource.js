@@ -1,7 +1,16 @@
+
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: fh
+ * @Date: 2019-03-12 11:50:49
+ * @LastEditors: fh
+ * @LastEditTime: 2019-07-16 23:06:31
+ */
 import {
   getOrganizationInfo,
   getMenuInfo,
-  getRolesInfo,
+  getRolesInfo
   // getModelInfo,
   // getMenuInfoData,
   // getRoleInfoData,
@@ -25,20 +34,22 @@ export default {
   mutations: {
     setOrganization (state, orgInfo) {
       // TODO 当前用户的机构id
-      var rootId = 'C98D97238CA34F96A969BDA01DAB31FA'; // getCookiesValueByKey('domainId')
+      var rootId = 'C98D97238CA34F96A969BDA01DAB31FA' // getCookiesValueByKey('domainId')
       state.orgTree = translateDataToTree(orgInfo, rootId)
-      console.log(state.orgTree, "orgTree")
+      console.log(state.orgTree, 'orgTree')
       state.organizationList = orgInfo
     },
     setMenusList (state, menuInfo) {
-      console.log(menuInfo, "menuInfo")
       state.menusList = menuInfo.map(item => {
         return {
           label: item.name,
           value: item.unid
         }
       })
-      console.log(state.menusList, "menusList")
+      state.menusList.push({
+        label: '空',
+        value: ' '
+      })
     },
     setRolesList (state, rolesInfo) {
       state.roles = rolesInfo.map(item => {
@@ -57,6 +68,13 @@ export default {
       })
     }
   },
+  /**
+   * @name:
+   * @test: test font
+   * @msg:
+   * @param {type}
+   * @return:
+   */
   getters: {
     // getTableInfoById: (state, getters) => (id) => {
     //   return state.tablesInfo[id]
@@ -80,6 +98,13 @@ export default {
       }
     }
   },
+  /**
+   * @name:
+   * @test: test font
+   * @msg:
+   * @param {type}
+   * @return:
+   */
   actions: {
     updateData ({
       commit
@@ -94,9 +119,9 @@ export default {
       return new Promise((resolve, reject) => {
         getAllRolesInfoData(option).then((res) => {
           let data = res.data
-          resolve(data);
+          resolve(data)
         }).catch(error => {
-          reject(error);
+          reject(error)
         })
       })
     },
@@ -124,8 +149,8 @@ export default {
           offset: 0,
           page_size: 1000
         }).then((res) => {
-          commit('setModelList', res.data.collection)
-          resolve(res.data.collection)
+          commit('setModelList', res.data)
+          resolve(res.data)
         }).catch(error => {
           reject(error)
         })
@@ -137,11 +162,11 @@ export default {
     }, option) {
       return new Promise((resolve, reject) => {
         getMenuInfoData(option).then(res => {
-          let data = res.data;
+          let data = res.data
           // console.log(data, 'data');
-          resolve(data);
+          resolve(data)
         }).catch(error => {
-          reject(error);
+          reject(error)
         })
       })
     },
@@ -152,11 +177,11 @@ export default {
     }, option) {
       return new Promise((resolve, reject) => {
         pustRolesInfo(option).then(res => {
-          let data = res.data;
-          console.log(data, 'data');
-          resolve(res);
+          let data = res.data
+          console.log(data, 'data')
+          resolve(res)
         }).catch(error => {
-          reject(error);
+          reject(error)
         })
       })
     },
@@ -180,10 +205,10 @@ export default {
           offset: 0,
           page_size: 1000
         }).then((res) => {
-          // console.log("角色信息", res);
-          commit('setRolesList', res.data.collection)
+          console.log('角色信息', res)
+          commit('setRolesList', res.data)
 
-          resolve(res.data.collection)
+          resolve(res.data)
         }).catch(error => {
           reject(error)
         })

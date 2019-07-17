@@ -1,5 +1,5 @@
 <template>
-<div id="demo" class="tips" ref="tips" v-show="show" transition="fade" :style="styleObject">
+<div id="layer_tips" class="tips" ref="tips" v-show="show" transition="fade" :style="styleObject">
   <div class="tips-close" @click="closeTips">x</div>
   <div class="tips-header">
     <slot name="header">
@@ -55,7 +55,7 @@ export default {
     },
     yes: function () {
       this.show = false
-      console.log("show");
+      console.log('show')
       this.$emit('yes', {
         name: 'wenzi',
         age: 36
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style>
-.tips {
+#layer_tips {
   position: absolute;
   z-index: 1001;
   -webkit-overflow-scrolling: touch;
@@ -92,11 +92,11 @@ export default {
   color: #fff;
 }
 
-a {
+#layer_tips a {
   color: #fff;
 }
 
-.tips-close {
+#layer_tips .tips-close {
   position: absolute;
   top: 0;
   right: 0;
@@ -106,18 +106,18 @@ a {
   text-align: center;
 }
 
-.tips-header {
+#layer_tips .tips-header {
   text-align: center;
   font-size: 25px;
 }
 
-#demo {
+#layer_tips {
   width: 200px;
   height: 100px;
 
 }
 
-#demo:after {
+#layer_tips:after {
   border: solid transparent;
   content: ' ';
   height: 0;
@@ -126,7 +126,7 @@ a {
   width: 0;
 }
 
-#demo:after {
+#layer_tips:after {
   border: 10px solid transparent;
   border-top-color: #000;
   opacity: 0.8;

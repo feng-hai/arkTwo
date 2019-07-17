@@ -18,17 +18,17 @@ export default {
     electronicTable,
     electronicEcharts
   },
-  data() {
+  data () {
     return {
-    chartsHeight: (windowHeight() - 120) / 2-20-10,
-      scollHeight: (windowHeight() - 120) / 2-10-23
+      chartsHeight: (windowHeight() - 120) / 2 - 20 - 10,
+      scollHeight: (windowHeight() - 120) / 2 - 10 - 23
 
     }
   }
 
 }
 </script>
-<style>
+<style lang="less">
 .contentinfo{
   position: relative;
   height: calc(100vh - 104px);
