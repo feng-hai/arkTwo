@@ -56,12 +56,18 @@ export const getDataByParams = (option) => {
 }
 export const getDataByParamsCount = (option) => {
   var qs = require('qs')
-  return axios.request({
-    url: option.url.trimEnd('/') + '/count',
-    method: option.method,
-    params: option.params,
-    data: qs.stringify(option.data)
-  })
+  return new Promise((resolve, reject) => {
+    axios.request({
+      url: option.url.trimEnd('/') + '/count',
+      method: option.method,
+      params: option.params,
+      data: qs.stringify(option.data)
+    }).then(res=>{
+      resolve(res);
+    }).catch(err=>{
+      resolve(1)
+    })
+  });
 }
 export const getAllQuery = (functions) => {
   return axios.all(functions)

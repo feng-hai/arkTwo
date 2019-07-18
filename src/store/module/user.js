@@ -8,8 +8,11 @@ import {
   removeReaded,
   restoreTrash,
   getUnreadCount,
+  getCurrentRoles,
+  getRolesByUserid,
   getMenusByRoleId,
-  bindRoleAndMenus
+  bindRoleAndMenus,
+  unbindRoleAndMenus
 } from '@/api/user'
 import {
   // getOrganizationInfo,
@@ -44,47 +47,47 @@ export default {
     messageContentStore: {}
   },
   mutations: {
-    setAvator (state, avatorPath) {
+    setAvator(state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId (state, id) {
+    setUserId(state, id) {
       state.userId = id
     },
-    setUserName (state, name) {
+    setUserName(state, name) {
       state.userName = name
     },
-    setAccess (state, access) {
+    setAccess(state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setToken(state, token) {
       state.token = token
       setToken(token)
     },
-    setMenus (state, menus) {
+    setMenus(state, menus) {
       state.menus = menus
     },
-    setHasGetInfo (state, status) {
+    setHasGetInfo(state, status) {
       state.hasGetInfo = status
     },
-    setMessageCount (state, count) {
+    setMessageCount(state, count) {
       state.unreadCount = count
     },
-    setMessageUnreadList (state, list) {
+    setMessageUnreadList(state, list) {
       state.messageUnreadList = list
     },
-    setMessageReadedList (state, list) {
+    setMessageReadedList(state, list) {
       state.messageReadedList = list
     },
-    setMessageTrashList (state, list) {
+    setMessageTrashList(state, list) {
       state.messageTrashList = list
     },
-    updateMessageContentStore (state, {
+    updateMessageContentStore(state, {
       msg_id,
       content
     }) {
       state.messageContentStore[msg_id] = content
     },
-    moveMsg (state, {
+    moveMsg(state, {
       from,
       to,
       msg_id
@@ -103,7 +106,7 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({
+    handleLogin({
       commit
     }, {
       userName,
@@ -148,7 +151,27 @@ export default {
         // })
       })
     },
-    bindRoleAndMenus ({
+    getRolesByUserId({},userid){
+      return new Promise((resolve, reject) => {
+        getRolesByUserid(userid).then(res => {
+          resolve(res.data)
+        }).catch(err=>{
+          reject(err);
+        })
+      });
+    },
+
+    getCurrentRoles() {
+      return new Promise((resolve, reject) => {
+        getCurrentRoles().then(res => {
+          resolve(res.data)
+
+        }).catch(err=>{
+          reject(err);
+        })
+      });
+    },
+    bindRoleAndMenus({
       state,
       commit
     }, options) {
@@ -161,8 +184,21 @@ export default {
         })
       })
     },
+    unbindRoleAndMenus({
+      state,
+      commit
+    }, options) {
+      return new Promise((resolve, reject) => {
+       
+        unbindRoleAndMenus(options).then(res => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     // 退出登录
-    handleLogOut ({
+    handleLogOut({
       state,
       commit
     }) {
@@ -184,7 +220,7 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo ({
+    getUserInfo({
       state,
       commit
     }) {
@@ -260,7 +296,7 @@ export default {
         }
       })
     },
-    getMenuInfoAction ({
+    getMenuInfoAction({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -278,7 +314,7 @@ export default {
     },
 
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
-    getUnreadMessageCount ({
+    getUnreadMessageCount({
       state,
       commit
     }) {
@@ -290,7 +326,7 @@ export default {
       // })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
-    getMessageList ({
+    getMessageList({
       state,
       commit
     }) {
@@ -316,7 +352,7 @@ export default {
         })
       })
     },
-    getAllMenus ({
+    getAllMenus({
       state,
       commit
     }) {
@@ -324,11 +360,11 @@ export default {
 
       })
     },
-    getMenusByRoleId ({
-      state,
-      commit
-    },
-    option
+    getMenusByRoleId({
+        state,
+        commit
+      },
+      option
     ) {
       console.log(option)
       return new Promise((resolve, reject) => {
@@ -367,7 +403,7 @@ export default {
       })
     },
     // 根据当前点击的消息的id获取内容
-    getContentByMsgId ({
+    getContentByMsgId({
       state,
       commit
     }, {
@@ -390,7 +426,7 @@ export default {
       })
     },
     // 把一个未读消息标记为已读
-    hasRead ({
+    hasRead({
       state,
       commit
     }, {
@@ -411,7 +447,7 @@ export default {
       })
     },
     // 删除一个已读消息到回收站
-    removeReaded ({
+    removeReaded({
       commit
     }, {
       msg_id
@@ -431,7 +467,7 @@ export default {
     },
 
     // 还原一个已删除消息到已读消息
-    restoreTrash ({
+    restoreTrash({
       commit
     }, {
       msg_id

@@ -14,24 +14,24 @@
   </div>
 </template>
 <script>
-import tablesPage from '@/view/tables/template'
+import tablesPage from "@/view/tables/template";
 import {
   mapActions
   // mapGetters,
   // mapState
-} from 'vuex'
+} from "vuex";
 export default {
-  name: 'rolePage',
+  name: "rolePage",
   components: {
     tablesPage
   },
 
-  data () {
+  data() {
     return {
-      viewId: '93B1B06A08C448E0B423427C618E4BD0',
+      viewId: "93B1B06A08C448E0B423427C618E4BD0",
       model1: false,
-      searchword: '',
-      roleid: '',
+      searchword: "",
+      roleid: "",
       options: {
         showCheckbox: true,
         search: {
@@ -40,80 +40,81 @@ export default {
           customFilter: null
         }
       },
+      currentMenus:[],
       treeData1: [
         {
-          title: 'node1',
+          title: "node1",
           expanded: true,
           children: [
             {
-              title: 'node 1-1',
+              title: "node 1-1",
               expanded: true,
               children: [
                 {
                   checked: true,
-                  title: 'node 1-1-1'
+                  title: "node 1-1-1"
                 },
                 {
                   checked: true,
-                  title: 'node 1-1-2',
+                  title: "node 1-1-2",
                   children: [
                     {
                       checked: true,
-                      title: 'node 1-1-1',
+                      title: "node 1-1-1",
                       children: [
                         {
                           checked: true,
-                          title: 'node 1-1-1'
+                          title: "node 1-1-1"
                         },
                         {
                           checked: true,
-                          title: 'node 1-1-2',
+                          title: "node 1-1-2",
                           children: [
                             {
                               checked: true,
-                              title: 'node 1-1-1',
+                              title: "node 1-1-1",
                               children: [
                                 {
                                   checked: true,
-                                  title: 'node 1-1-1'
+                                  title: "node 1-1-1"
                                 },
                                 {
-                                  title: 'node 1-1-3'
+                                  title: "node 1-1-3"
                                 }
                               ]
                             },
                             {
                               checked: true,
-                              title: 'node 1-1-2'
+                              title: "node 1-1-2"
                             },
                             {
-                              title: 'node 1-1-3'
+                              title: "node 1-1-3"
                             }
                           ]
                         },
                         {
-                          title: 'node 1-1-3'
+                          title: "node 1-1-3"
                         }
                       ]
                     },
                     {
                       checked: true,
-                      title: 'node 1-1-2'
+                      title: "node 1-1-2"
                     },
                     {
-                      title: 'node 1-1-3'
+                      title: "node 1-1-3"
                     }
                   ]
                 },
                 {
-                  title: 'node 1-1-3'
+                  title: "node 1-1-3"
                 }
               ]
             }
           ]
         }
       ]
-    }
+    };
   },
   //   computed: {
   //   ...mapGetters([
@@ -121,74 +122,86 @@ export default {
   //   ])
   // },
   methods: {
-    ...mapActions(['getMenusByRoleId', 'bindRoleAndMenus']),
-    search () {
-      this.$refs.tree.searchNodes(this.searchword)
+    ...mapActions([
+      "getMenusByRoleId",
+      "bindRoleAndMenus",
+      "unbindRoleAndMenus"
+    ]),
+    search() {
+      this.$refs.tree.searchNodes(this.searchword);
     },
-    editPage (params, vm) {
-      var that = this
-      console.log('触发角色修改页面', params)
-      this.model1 = true
-      this.roleid = params.row.unid
+    editPage(params, vm) {
+      var that = this;
+     
+      this.model1 = true;
+      this.roleid = params.row.unid;
       this.getMenusByRoleId({
         roleid: params.row.unid
       })
         .then(res => {
-          console.log(res, '返回数据')
-          var cmenus = res.cmenus
-          var menus = res.menus
-          var tree = []
+          that.currentMenus=[];
+          var cmenus = res.cmenus;
+          var menus = res.menus;
+          var tree = [];
           for (var i = 0; i < cmenus.length; i++) {
-            var node = cmenus[i]
-            var isChecked = menus.indexOf(node.id) > -1
+            var node = cmenus[i];
+            var isChecked = menus.indexOf(node.id) > -1;
+            that.currentMenus.push(node.id);
             var newNode = {
               title: node.meta.title,
               id: node.id,
               checked: isChecked
               // expanded: true
-            }
+            };
             if (node.children) {
-              newNode.children = []
+              newNode.children = [];
 
               node.children.forEach(element => {
-                var isChecked = menus.indexOf(element.id) > -1
+                var isChecked = menus.indexOf(element.id) > -1;
+                that.currentMenus.push(element.id);
                 newNode.children.push({
                   title: element.meta.title,
                   id: element.id,
                   checked: isChecked
-                })
-              })
+                });
+              });
             }
-            tree.push(newNode)
+            tree.push(newNode);
           }
 
-          that.treeData1 = tree
+          that.treeData1 = tree;
         })
         .catch(err => {
-          console.log('获取角色失败', err)
-        })
+          console.log("获取角色失败", err);
+        });
     },
-    ok () {
-      console.log(this.$refs.tree.getCheckedNodes(), 'selected')
+    ok() {
+      console.log(this.$refs.tree.getCheckedNodes(), "selected");
 
-      var selecteds = this.$refs.tree.getCheckedNodes()
+      var selecteds = this.$refs.tree.getCheckedNodes();
       var temp = selecteds.map(item => {
-        return item.id
-      })
-
-      this.bindRoleAndMenus({
+        return item.id;
+      });
+      this.unbindRoleAndMenus({
         roleid: this.roleid,
-        menus: temp.join(',')
+        menus: this.currentMenus.join(",")
       }).then(res => {
-        this.$Message.info('Clicked ok')
-      })
+        this.bindRoleAndMenus({
+          roleid: this.roleid,
+          menus: temp.join(",")
+        }).then(res => {
+          this.$Message.success("绑定成功");
+        }).catch(err=>{
+ this.$Message.error("绑定失败");
+        });
+      });
     },
-    cancel () {
-      this.$Message.info('Clicked cancel')
+    cancel() {
+      this.$Message.info("Clicked cancel");
     }
   },
-  mounted () {
+  mounted() {
     // var menus=this.getMenusInfo;
   }
-}
+};
 </script>

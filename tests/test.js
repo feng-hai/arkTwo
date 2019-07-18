@@ -105,3 +105,18 @@ function(fun, params, callback, vm) {
     callback(params.row.checkpoint.name);
    }
  }
+
+ function(fun, params, callback, vm) {
+   console.log(params);
+  fun({
+    "url": "/legacy/security/openid_privilege_map/"+params.row.unid+"/privilege",
+    "method": "get"
+  }).then(function(res) {
+    var names=res.data.map(item=>{
+      return item.name;
+    });
+    callback(names.join(','));
+  }).catch(err=>{
+    callback("錯誤");
+  })
+}

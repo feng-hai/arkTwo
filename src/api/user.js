@@ -72,6 +72,19 @@ export const getMenusRoleId = id => {
     method: 'get'
   })
 }
+export const getCurrentRoles=()=>{
+  return axios.request({
+    url: '/legacy/security/privilege/current',
+    method: 'get'
+  })
+}
+export const getRolesByUserid=userid=>{
+  return axios.request({
+    url: '/legacy/security/openid_privilege_map/'+userid+'/privilege',
+    method: 'get'
+  })
+
+}
 export const getMenusCurrent = id => {
   console.log(id, 'getMenusCurrent')
   return axios.request({
@@ -90,7 +103,17 @@ export const bindRoleAndMenus = option => {
     })
   })
 }
-
+export const unbindRoleAndMenus = option => {
+  var qs = require('qs')
+  return axios.request({
+    url: 'legacy/security/privilege_menu_map/unbind',
+    method: 'put',
+    data: qs.stringify({
+      privilege_unid: option.roleid,
+      menu_unid: option.menus
+    })
+  })
+}
 export const getMenusByRoleId = option => {
   // return new Promise((resolve, reject) => {
   //   axios.all([getMenusCurrent(option.croleid), getMenusRoleId(option.roleid)]).then(
