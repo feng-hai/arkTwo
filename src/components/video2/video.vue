@@ -23,7 +23,7 @@ export default {
   props: {
     isShowTitle: {
       type: Boolean,
-      default: false
+      default: true
     },
     name: {
       type: String,
@@ -47,7 +47,7 @@ export default {
     },
     sourcesSrc: {
       type: String,
-      default: 'rtmp://localhost/live/test123'
+      default: 'rtmp://47.103.98.47/live/stream'
     },
     autoplay: {
       type: Boolean,
@@ -62,7 +62,7 @@ export default {
   watch: {
     sourcesSrc: function (n, o) {
       let myPlayer = this.$refs.videoPlayer.player
-      myPlayer.src('rtmp://localhost/live/test123') // 根据userType的不同展示不同的视频地址
+      myPlayer.src('rtmp://47.103.98.47/live/stream') // 根据userType的不同展示不同的视频地址
     }
   },
 
@@ -71,21 +71,32 @@ export default {
       playerOptions: {
         height: this.height,
 
-        sources: [
-          {
-            type: 'rtmp/mp4',
-            src: this.sourcesSrc
-          }
-        ],
-        techOrder: ['flash'],
-        autoplay: true,
-        controlBar: {
-          timeDivider: false,
-          durationDisplay: false
-        },
-        flash: { hls: { withCredentials: false } },
-        html5: { hls: { withCredentials: false } },
-        poster: this.poster
+        // sources: [
+        //   {
+        //     type: 'rtmp/mp4',
+        //     src: this.sourcesSrc
+        //   }
+        // ],
+        // techOrder: ['flash'],
+        // autoplay: true,
+        // controlBar: {
+        //   timeDivider: false,
+        //   durationDisplay: false
+        // },
+        // flash: { hls: { withCredentials: false } },
+        // html5: { hls: { withCredentials: false } },
+        // poster: this.poster
+      
+//      height: '300',
+          sources: [{
+            type: "rtmp/mp4",
+            src: "rtmp://47.103.98.47/live/stream"
+          }],
+          techOrder: ['flash'],
+          autoplay: false,
+          controls: true
+
+     
       }
     }
   }
@@ -112,14 +123,14 @@ export default {
 }
 .videoTitle {
   height: 30px;
-  background-color: #fff;
+  background-Color:rgba(0, 0, 0, 0.5);
   vertical-align: middle;
   padding: 2px 5px;
 }
 .videoShow {
   /* width: 460px; */
   padding:5px;
-  background-color: #fff;
+ background-Color:rgba(0, 0, 0, 0.1);
   border: gray;
 }
 </style>

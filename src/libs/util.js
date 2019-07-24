@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-02-28 15:37:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-16 17:20:19
+ * @LastEditTime: 2019-07-22 20:51:18
  */
 import Cookies from 'js-cookie'
 
@@ -88,7 +88,7 @@ export const getBreadCrumbList = (route, homeRoute) => {
   // console.log(homeRoute, "homeRoute")
   let homeItem = {
     ...homeRoute,
-    icon: homeRoute.meta.icon
+    icon: homeRoute.meta&&homeRoute.meta.icon
   }
   let routeMetched = route.matched
   if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]

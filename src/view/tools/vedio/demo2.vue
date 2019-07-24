@@ -2,7 +2,7 @@
   <div>
     <Row>
       <Col span="24" v-for="item in items">
-        <videos sourcesSrc="item.src" height="item.height"></videos>
+        <videos :sourcesSrc="item.src" :height="item.height"></videos>
       </Col>
     </Row>
 
@@ -25,7 +25,7 @@ export default {
     return {
       items: [
         {
-          src: 'rtmp://localhost/live/test124',
+          src: 'rtmp://localhost/live/test123',
           height: '300'
         }
       ]
@@ -34,7 +34,7 @@ export default {
   methods: {
     changeSrc () {
       console.log('changeSrc')
-      this.sourcesSrc = 'rtmp://localhost/live/test123'
+      this.sourcesSrc = 'rtmp://47.103.98.47/live/stream'
       console.log(this.sourcesSrc)
     }
   }

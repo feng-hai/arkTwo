@@ -47,8 +47,9 @@ export default {
         password
       }).then(res => {
         var that = this
-
+         console.log("登录成功")
         this.getUserInfo().then(res => {
+          console.log("获取用户信息成功",that.getMenus)
           if (that.getMenus) {
             that.add_Routes(that.getMenus) // 触发vuex里的增加路由
             sessionStorage.setItem('menuData', JSON.stringify(that.getMenus))

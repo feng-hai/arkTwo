@@ -13,7 +13,10 @@ function lazy(name) {
     }else if (name == 'parentViewBig') {
       return () =>
         import ("@/components/parent-view-big")
-    } else {
+    } else if (name == 'Nanjingnan_big') {
+      return () =>
+        import ("@/components/nanjingnan_big")
+    }else {
       //let file = name.split('_')[0]
       return () =>
         import (`@/view/${name}.vue`)

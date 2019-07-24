@@ -137,7 +137,14 @@ export default {
         }).catch(err => {
           // commit('setToken', '222222222222222222')
           // resolve()
-          reject(err)
+          //TODO 发生 错误时，也能正常登录，正式系统需要剔除
+          commit('setToken', "fffffff")
+          // 用户id
+          sessionStorage.setItem('userid',"ffffffffff")
+          sessionStorage.setItem('userName', userName)
+          resolve()
+
+         // reject(err)
         })
         // login({
         //   userName,
@@ -230,14 +237,15 @@ export default {
           var username = sessionStorage.getItem('userName')
           if (username == 'fh') {
             console.log(userId, '用户信息id')
-            getMenuInfo({
-              offset: 0,
-              page_size: 1000
-            }).then((res) => {
-              var menus = translateArraytoMenus(res.data)
+            //TODO //从数据库中获取动态菜单数据
+            // getMenuInfo({
+            //   offset: 0,
+            //   page_size: 1000
+            // }).then((res) => {
+            //   var menus = translateArraytoMenus(res.data)
               const data = user.USER01
               // console.log(data.menus, "写死的数据")
-              data.menus = menus
+              //data.menus = menus
               commit('setAvator', data.avator)
               commit('setUserName', username)
               commit('setUserId', userId)
@@ -252,9 +260,9 @@ export default {
               resolve(data)
               //  console.log(res.data.collection)
               // resolve(res.data.collection)
-            }).catch(error => {
-              reject(error)
-            })
+            // }).catch(error => {
+            //   reject(error)
+            // })
           } else {
             console.log('不知指定用戶')
             // 通过角色查询菜单

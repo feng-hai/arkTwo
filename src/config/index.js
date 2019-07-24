@@ -17,8 +17,8 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'https://121.41.42.184', //
-    // dev: 'https://api.renxingzuche.com',
+    //dev: 'https://121.41.42.184', //
+     dev: 'https://api.renxingzuche.com',
     pro: 'https://api.renxingzuche.com'
   },
   /**

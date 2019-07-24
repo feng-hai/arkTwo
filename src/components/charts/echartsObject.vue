@@ -77,6 +77,7 @@ export default {
       this.$nextTick(() => {
         this.dom = echarts.init(this.$refs.dom, 'tdTheme')
         this.dom.setOption(this.options)
+        this.dom.resize();
       })
     }
   },

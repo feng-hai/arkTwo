@@ -2,7 +2,7 @@
   <grid-layout
     :layout.sync="layout"
     :col-num="12"
-    :row-height="30"
+    :row-height="rowHeight"
     :is-draggable="true"
     :is-resizable="true"
     :is-mirrored="false"
@@ -10,6 +10,7 @@
     :autoSize="true"
     :margin="[10, 10]"
     :use-css-transforms="true"
+      @layout-before-mount="layoutBeforeMountEvent"
   >
     <Button type="dashed" @click="addWidgets" style="margin-left:10px;">新增</Button>
     <Button type="dashed" @click="saveWidgets" style="margin-left:10px;">保存</Button>
@@ -40,19 +41,7 @@ var testLayout = [
   { x: 8, y: 0, w: 2, h: 3, i: '4' },
   { x: 10, y: 0, w: 2, h: 3, i: '5' },
   { x: 0, y: 5, w: 2, h: 5, i: '6' },
-  { x: 2, y: 5, w: 2, h: 5, i: '7' },
-  { x: 4, y: 5, w: 2, h: 5, i: '8' },
-  { x: 6, y: 3, w: 2, h: 4, i: '9' },
-  { x: 8, y: 4, w: 2, h: 4, i: '10' },
-  { x: 10, y: 4, w: 2, h: 4, i: '11' },
-  { x: 0, y: 10, w: 2, h: 5, i: '12' },
-  { x: 2, y: 10, w: 2, h: 5, i: '13' },
-  { x: 4, y: 8, w: 2, h: 4, i: '14' },
-  { x: 6, y: 8, w: 2, h: 4, i: '15' },
-  { x: 8, y: 10, w: 2, h: 5, i: '16' },
-  { x: 10, y: 4, w: 2, h: 4, i: '17' },
-  { x: 0, y: 9, w: 2, h: 4, i: '18' },
-  { x: 2, y: 6, w: 2, h: 4, i: '19' }
+
 ]
 export default {
   components: {
@@ -63,6 +52,7 @@ export default {
   data () {
     return {
       layout: testLayout,
+      rowHeight:30,
       controls: [
         {
           id: 1,
@@ -78,6 +68,10 @@ export default {
     }
   },
   methods: {
+    layoutBeforeMountEvent: function(newLayout){
+     // this.rowHeight='100';
+      console.log("beforeMount layout: ", newLayout)
+    },
     saveWidgets () {
       console.log(this.layout)
       localStorage.setItem('layout', JSON.stringify(this.layout))
@@ -88,15 +82,15 @@ export default {
     },
     addWidgets () {
       var len = this.layout.length
-      this.layout.push({ x: 0, y: 0, w: 2, h: 4, i: this.layout.length })
-      console.log(this.layout)
-      this.$nextTick(function () {
-        this.createControl({
-          id: len,
-          controlId: 'panel' + len,
-          containId: 'containId' + len
-        })
-      })
+      this.layout.push({ x: 0, y: 0, w: 2, h: 4, i: this.layout.length,title: '自定义', component: 'demo' ,ltype:'' })
+      // console.log(this.layout)
+      // this.$nextTick(function () {
+      //   this.createControl({
+      //     id: len,
+      //     controlId: 'panel' + len,
+      //     containId: 'containId' + len
+      //   })
+      // })
     },
     remove (j) {
       // 删除控件
@@ -124,6 +118,7 @@ export default {
         if (this.layout[i].i == option.id) {
           this.layout[i].title = option.title
           this.layout[i].component = option.component
+          this.layout[i].lType=option.lType;
           break
         }
       }
@@ -139,7 +134,8 @@ export default {
           props: {
             containId: item.containId,
             title: item.title ? item.title : '自定义' + item.id,
-            component: item.component
+            component: item.component,
+            lType:item.lType
           },
           remove: that.remove,
           save: that.save
@@ -172,7 +168,8 @@ export default {
           controlId: 'panel' + value.i,
           containId: 'containId' + value.i,
           title: value.title,
-          component: value.component
+          component: value.component,
+          lType:value.lType
         }
         that.createControl(item)
       })

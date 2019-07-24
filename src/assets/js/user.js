@@ -122,6 +122,25 @@ const USER01 = {
           },
           component: 'tables/template'
         },
+        
+        {
+          path: 'threejs',
+          name: 'threejs',
+          meta: {
+            title: `可编辑图表`,
+            notCache: true
+          },
+          component: 'tools/threejs/demo'
+        },
+        {
+          path: 'threejs2',
+          name: 'threejs2',
+          meta: {
+            title: `可编辑图表`,
+            notCache: true
+          },
+          component: 'tools/threejs/demo2'
+        },
         {
           path: 'customer',
           name: 'customer',
@@ -136,7 +155,7 @@ const USER01 = {
           name: 'drag',
           meta: {
             title: `拖動示例`,
-            notCache: false
+            notCache: true
           },
           component: 'tools/drag/index'
         },
@@ -618,6 +637,24 @@ const USER01 = {
           title: '大屏展示'
         },
         component: 'single-page/firstPage/first'
+      }]
+    },
+    {
+      path: '/Nanjingnan_big',
+      name: 'Nanjingnan_big',
+      component: 'Nanjingnan_big',
+      meta: {
+        icon: 'md-menu',
+        title: '多级菜单'
+      },
+      children: [{
+        path: 'nanjingnan',
+        name: 'nanjingnan',
+        meta: {
+          icon: '_qq',
+          title: '大屏展示'
+        },
+        component: 'nanjingnan_big/nanjing'
       }]
     }
   ]

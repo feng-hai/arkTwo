@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-06-29 12:43:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-12 09:27:29
+ * @LastEditTime: 2019-07-21 11:32:18
  -->
  <template>
   <Card style="width:100%;height:100%" :title="formItem.title">
@@ -35,6 +35,9 @@
         <FormItem label="标题名称">
           <Input v-model="formItem.title" placeholder="标题"  />
         </FormItem>
+         <FormItem label="布局类型">
+          <Input v-model="formItem.lType" placeholder="布局类型"  />
+        </FormItem>
         <FormItem label="组件名称">
           <Select v-model="formItem.component"  @on-change="changeComponent">
             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -49,6 +52,7 @@
         <FormItem>
           <Button type="primary" @click="handleSubmit()">保存01</Button>
         </FormItem>
+
       </Form>
 
       <!-- <Button @click="changeComponent">change component</Button> -->
@@ -86,8 +90,9 @@ export default {
       model1: 'Message',
       formItem: {
         title: this.title,
-        component: 'Message',
-        radio: 'true'
+        component: this.component,
+        radio: 'true',
+        lType:this.lType
       },
       cityList: [
         {
@@ -123,6 +128,10 @@ export default {
     component: {
       type: String,
       default: 'message'
+    },
+    lType:{
+      type:String,
+      default:''
     }
   },
   created () {},
@@ -178,6 +187,8 @@ export default {
   },
   mounted() {
     this.$nextTick(function() {
+
+    
       var control=Message;
       if(this.component=="demo")
       {
