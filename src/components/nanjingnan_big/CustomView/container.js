@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-06-29 12:50:02
  * @LastEditors: fh
- * @LastEditTime: 2019-07-24 10:09:27
+ * @LastEditTime: 2019-07-24 21:20:11
  */
 
 import Vue from 'vue'
@@ -37,9 +37,9 @@ const createMessage = (options) => {
       return h(
         options.control, {
           props: options.props,
-          attrs: {
-            ref: 'ref-'+options.id
-          },
+          // attrs: {
+          //   ref: 'ref-'+options.id
+          // },
           on: {
             remove: function (event) { // 定义remove方法，用于调用删除功能
               console.log(options.id)

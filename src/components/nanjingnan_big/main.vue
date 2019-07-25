@@ -5,15 +5,23 @@
       <Col span="8">
         <show-current-time />
       </Col>
-       <Col span="8" offset="8" class="big_cente">
-       <!-- <span>
+      <Col span="8" offset="8" class="big_cente">
+        <!-- <span>
           <Icon style="margin-bottom:5px;margin-right:5px;" type="md-train" />
       </span> 
-        <span>南京动车段智慧消防安防平台</span> -->
-      </Col> 
+        <span>南京动车段智慧消防安防平台</span>-->
+      </Col>
       <Col span="8" style="float:right;">
         <div style="float:right;margin-right:50px;">
-          <user :message-unread-count="unreadCount" @startEdit="startEdit" @endEdit="endEdit" @addLayout="addWidgets" @saveLayout="saveWidgets" :user-avator="userAvator" style="float:right;" />
+          <user
+            :message-unread-count="unreadCount"
+            @startEdit="startEdit"
+            @endEdit="endEdit"
+            @addLayout="addWidgets"
+            @saveLayout="saveWidgets"
+            :user-avator="userAvator"
+            style="float:right;"
+          />
           <titles style="margin-right:70px;" name="动车段管理员" />
         </div>
       </Col>
@@ -30,10 +38,10 @@
       :margin="[10, 10]"
       :use-css-transforms="true"
       @layout-before-mount="layoutBeforeMountEvent"
-       @layout-mounted="layoutMountedEvent"
+      @layout-mounted="layoutMountedEvent"
     >
       <!-- <Button type="dashed" @click="addWidgets" style="margin-left:10px;">新增</Button>
-      <Button type="dashed" @click="saveWidgets" style="margin-left:10px;">保存</Button> -->
+      <Button type="dashed" @click="saveWidgets" style="margin-left:10px;">保存</Button>-->
 
       <grid-item
         v-for="item in layout"
@@ -59,28 +67,10 @@ import User from "./components/user/";
 import titles from "./components/titles";
 import { windowHeight } from "@/libs/util";
 import "./main.less";
-var testLayout = [
-  { x: 0, y: 0, w: 2, h: 4, i: "0", title: "自定义", component: "demo" },
-  { x: 2, y: 0, w: 2, h: 4, i: "1", title: "自定义" },
-  { x: 4, y: 0, w: 2, h: 5, i: "2" },
-  { x: 6, y: 0, w: 2, h: 3, i: "3" },
-  { x: 8, y: 0, w: 2, h: 3, i: "4" },
-  { x: 10, y: 0, w: 2, h: 3, i: "5" },
-  { x: 0, y: 5, w: 2, h: 5, i: "6" },
-  { x: 2, y: 5, w: 2, h: 5, i: "7" },
-  { x: 4, y: 5, w: 2, h: 5, i: "8" },
-  { x: 6, y: 3, w: 2, h: 4, i: "9" },
-  { x: 8, y: 4, w: 2, h: 4, i: "10" },
-  { x: 10, y: 4, w: 2, h: 4, i: "11" },
-  { x: 0, y: 10, w: 2, h: 5, i: "12" },
-  { x: 2, y: 10, w: 2, h: 5, i: "13" },
-  { x: 4, y: 8, w: 2, h: 4, i: "14" },
-  { x: 6, y: 8, w: 2, h: 4, i: "15" },
-  { x: 8, y: 10, w: 2, h: 5, i: "16" },
-  { x: 10, y: 4, w: 2, h: 4, i: "17" },
-  { x: 0, y: 9, w: 2, h: 4, i: "18" },
-  { x: 2, y: 6, w: 2, h: 4, i: "19" }
-];
+
+var temp =
+  '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"layer"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"message"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"message"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"message"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]';
+var testLayout = JSON.parse(temp);
 export default {
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -94,7 +84,7 @@ export default {
     return {
       layout: testLayout,
       rowHeight: 10,
-      isEdit:false,
+      isEdit: false,
       controls: [
         {
           id: 1,
@@ -111,11 +101,11 @@ export default {
   },
   methods: {
     layoutBeforeMountEvent: function(newLayout) {
-      console.log(newLayout,"newLayout")
+      console.log(newLayout, "newLayout");
       // var allheight = 0;
       // var type = "";
       // console.log(this.layout)
-      
+
       // this.layout.forEach(item => {
       //   console.log(item)
       //      console.log(item.lType)
@@ -129,13 +119,12 @@ export default {
       //     }
       //   }
       // });
-     
+
       // this.rowHeight = (windowHeight()-500) / allheight;
       // console.log(rowHeight)
-     
     },
-     layoutMountedEvent: function(newLayout){
-      console.log("Mounted layout: ", newLayout)
+    layoutMountedEvent: function(newLayout) {
+      console.log("Mounted layout: ", newLayout);
     },
     saveWidgets() {
       console.log(this.layout, "layout");
@@ -176,56 +165,60 @@ export default {
       // });
     },
     save(option) {
-     
       var that = this;
       for (var i = 0; i < this.layout.length; i++) {
         if (this.layout[i].i == option.id) {
           this.layout[i].title = option.title;
           this.layout[i].component = option.component;
-          this.layout[i].lType=option.lType;
-          this.layout[i].linkcomponent=option.linkcomponent;
+          this.layout[i].lType = option.lType;
+          this.layout[i].linkcomponent = option.linkcomponent;
           break;
         }
       }
       // console.log(this.layout,"布局")
-      this. saveWidgets();
-        //  var item = {
-        //   id: 3,
-        //   controlId: "panel" + 3,
-        //   containId: "containId" + 3,
-        //   title: 'value.title',
-        //   component: "map",
-        //   lType:''
-        // };
-        // that.createControl(item);
+      this.saveWidgets();
+      //  var item = {
+      //   id: 3,
+      //   controlId: "panel" + 3,
+      //   containId: "containId" + 3,
+      //   title: 'value.title',
+      //   component: "map",
+      //   lType:''
+      // };
+      // that.createControl(item);
     },
-    linkto(item)
-    {
-      if(item.linkcomponent)
-      {
-
-      var that =this;
+    linkto(item) {
+      if (item.linkcomponent) {
+        var that = this;
         var item = {
           id: 3,
           controlId: "panel" + 3,
           containId: "containId" + 3,
-          title: 'value.title',
+          title: "value.title",
           component: item.linkcomponent,
-          lType:'main'
+          lType: "main",
+          w: (this.main ? this.main.w : 12) + "",
+          h:
+            (this.main ? this.main.h * this.rowHeight : window.innerHeight) + ""
         };
-        that.createControl(item);
+         console.log("start destroy",that.vm)
+        if (that.vm) {
+          console.log("start destroy")
+          that.vm.$destroy();
+        }
+        that.vm = that.createControl(item);
       }
     },
-    startEdit(){
-      this.isEdit=true;
+    startEdit() {
+      this.isEdit = true;
     },
-    endEdit(){
-      this.isEdit=false;
+    endEdit() {
+      this.isEdit = false;
     },
     createControl(item) {
       var that = this;
-      this.$nextTick(function() {
-        createMessage({
+      //this.$nextTick(function() {
+       return createMessage({
           id: "page" + item.id,
           controlId: item.controlId,
           control: panel,
@@ -234,13 +227,15 @@ export default {
             title: item.title ? item.title : "自定义" + item.id,
             component: item.component,
             linkcomponent: item.linkcomponent,
-            lType:item.lType
+            lType: item.lType,
+            w: item.w,
+            h: item.h
           },
           remove: that.remove,
           save: that.save,
-          click:that.linkto
+          click: that.linkto
         });
-      });
+      //});
 
       // createMessage({
       //     id:'2',
@@ -255,11 +250,20 @@ export default {
   mounted() {
     var that = this;
     var tempLayout = localStorage.getItem("layout");
-    // console.log(tempLayout);
+    console.log(tempLayout);
 
     if (tempLayout) {
       this.layout = JSON.parse(tempLayout);
-      console.log("mounted",this.layout)
+
+      this.main = this.layout.find(item => {
+        if (item.lType == "main") {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      // console.log(this.main,"find result;1111111111111111");
+      // console.log("mounted", this.layout);
       // console.log("init", this.layout);
       //  var allheight = 0;
       //  var type = "";
@@ -277,7 +281,8 @@ export default {
       //  this.rowHeight = (windowHeight()-170) / allheight;
     }
     // this.rowHeight="100"
-     this.$nextTick(function() {
+    this.$nextTick(function() {
+      var that = this;
       this.layout.forEach(function(value, i) {
         var item = {
           id: value.i,
@@ -286,10 +291,12 @@ export default {
           title: value.title,
           component: value.component,
           linkcomponent: value.linkcomponent,
-          lType:value.lType
+          lType: value.lType,
+          w: value.w,
+          h: value.h * that.rowHeight + ""
         };
         that.createControl(item);
-       });
+      });
     });
   }
 };

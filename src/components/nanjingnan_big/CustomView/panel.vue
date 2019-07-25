@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-06-29 12:43:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-24 10:40:43
+ * @LastEditTime: 2019-07-24 22:39:00
  -->
  <template>
   <Card style="width:100%;height:100%" :bordered="false" :class="formItem.lType">
@@ -16,7 +16,7 @@
       <Icon type="md-settings" @click.prevent="setMessage" />
       <Icon type="md-remove" @click.prevent="setRemove" />
     </a>
-    <div :id="containId"  @click.prevent="click"></div>
+    <div :id="containId" @click.prevent="click"></div>
     <drag-drawer
       v-model="showWindowBDrawer"
       :width.sync="width1"
@@ -42,7 +42,7 @@
             <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
-          <FormItem label="连接组件">
+        <FormItem label="连接组件">
           <Select v-model="formItem.linkcomponent" @on-change="changeLinkComponent">
             <Option v-for="item in linksList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
@@ -74,18 +74,18 @@ import Message from "./message.vue";
 // 弹窗组件单文件
 import MessageTwo from "./messageTwo.vue";
 import safetyIndex from "./safetyIndex.vue";
-import alarm from "../components/alarmInfo/alarm"
-import water from "../components/waterNetwork/water"
-import video from "../components/videoInfo/video"
-import alarmTable from "../components/alarmInfo/alarmTable"
-import barrier from "../components/barrierInfo/barrierEcharts"
-import maintenance from "../components/maintenance/maintenance"
-import danger from "../components/hiddenDanger/danger"
-import layer from '@/view/single-page/home'
-import alarmInfo from '@/view/nanjingnan_big/alarm/alarmInfo'
-import videoInfo from '@/view/nanjingnan_big/videos/video'
-import barrierInfo from '@/view/single-page/home/components/barrierInfo'
-import waterInfo from '@/view/nanjingnan_big/water/water'
+import alarm from "../components/alarmInfo/alarm";
+import water from "../components/waterNetwork/water";
+import video from "../components/videoInfo/video";
+import alarmTable from "../components/alarmInfo/alarmTable";
+import barrier from "../components/barrierInfo/barrierEcharts";
+import maintenance from "../components/maintenance/maintenance";
+import danger from "../components/hiddenDanger/danger";
+import layer from "@/view/single-page/home";
+import alarmInfo from "@/view/nanjingnan_big/alarm/alarmInfo";
+import videoInfo from "@/view/nanjingnan_big/videos/video";
+import barrierInfo from "@/view/single-page/home/components/barrierInfo";
+import waterInfo from "@/view/nanjingnan_big/water/water";
 export default {
   name: "contain",
   components: {
@@ -119,15 +119,15 @@ export default {
       placement: false,
       draggable: true,
       model1: "Message",
-      
+
       formItem: {
         title: this.title,
         component: this.component,
         radio: "true",
         lType: this.lType,
-        linkcomponent:this.linkcomponent
+        linkcomponent: this.linkcomponent
       },
-      linksList:[
+      linksList: [
         {
           value: "layer",
           label: "图形标注"
@@ -139,8 +139,7 @@ export default {
         {
           value: "barrierInfo",
           label: "巡检管理-主"
-        }
-        ,
+        },
         {
           value: "videoInfo",
           label: "视频列表-主"
@@ -206,12 +205,11 @@ export default {
         {
           value: "alarmInfo",
           label: "报警信息"
-        }
-        ,
+        },
         {
           value: "barrierInfo",
           label: "巡检管理-主"
-        }  ,
+        },
         {
           value: "videoInfo",
           label: "视频列表-主"
@@ -245,6 +243,14 @@ export default {
     lType: {
       type: String,
       default: "menu"
+    },
+    w: {
+      type: String,
+      default: "1"
+    },
+    h: {
+      type: String,
+      default: '200'
     }
   },
   created() {},
@@ -255,11 +261,10 @@ export default {
   },
   methods: {
     click() {
-      if(this.lType!="main")
-      {
-        console.log(this.formItem,"点击事件")
-         this.$emit("click", this.formItem);
-      } 
+      if (this.lType != "main") {
+        console.log(this.formItem, "点击事件");
+        this.$emit("click", this.formItem);
+      }
     },
     handleSubmit() {
       console.log("handleSubmit");
@@ -283,10 +288,7 @@ export default {
       this.$emit("remove", this.containId.substring(9));
       console.log("setRemove");
     },
-    changeLinkComponent(){
-      
-
-    },
+    changeLinkComponent() {},
     changeComponent() {
       var control = Message;
       if (this.formItem.component == "demo") {
@@ -297,35 +299,36 @@ export default {
         control = map;
       } else if (this.formItem.component == "safetyIndex") {
         control = safetyIndex;
-      }else if (this.formItem.component == "alarm") {
+      } else if (this.formItem.component == "alarm") {
         control = alarm;
-      }
-      else if (this.formItem.component == "water") {
+      } else if (this.formItem.component == "water") {
         control = water;
-      }  else if (this.formItem.component == "video") {
+      } else if (this.formItem.component == "video") {
         control = video;
       } else if (this.formItem.component == "alarmTable") {
         control = alarmTable;
-      }else if (this.formItem.component == "barrier") {
+      } else if (this.formItem.component == "barrier") {
         control = barrier;
-      }else if (this.formItem.component == "maintenance") {
+      } else if (this.formItem.component == "maintenance") {
         control = maintenance;
-      }else if (this.formItem.component == "danger") {
+      } else if (this.formItem.component == "danger") {
         control = danger;
-      }else if (this.formItem.component == "layer") {
+      } else if (this.formItem.component == "layer") {
         control = layer;
-      }else if (this.formItem.component == "alarmInfo") {
+      } else if (this.formItem.component == "alarmInfo") {
         control = alarmInfo;
-      }else if (this.formItem.component == "barrierInfo") {
+      } else if (this.formItem.component == "barrierInfo") {
         control = barrierInfo;
-      }else if (this.formItem.component == "videoInfo") {
+      } else if (this.formItem.component == "videoInfo") {
         control = videoInfo;
-      }else if (this.formItem.component == "waterInfo") {
+      } else if (this.formItem.component == "waterInfo") {
         control = waterInfo;
       }
-      this.$destroy(alarm)
-      
-      createMessage({
+      if (this.vm) {
+        this.vm.$destroy();
+      }
+
+      this.vm = createMessage({
         id: this.containId,
         controlId: "control01",
         control: control,
@@ -336,7 +339,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.linkcomponent)
+    console.log(this.linkcomponent);
     this.$nextTick(function() {
       var control = Message;
       if (this.component == "demo") {
@@ -347,38 +350,42 @@ export default {
         control = map;
       } else if (this.formItem.component == "safetyIndex") {
         control = safetyIndex;
-      }else if (this.formItem.component == "alarm") {
+      } else if (this.formItem.component == "alarm") {
         control = alarm;
       } else if (this.formItem.component == "water") {
         control = water;
       } else if (this.formItem.component == "video") {
         control = video;
-      }else if (this.formItem.component == "alarmTable") {
+      } else if (this.formItem.component == "alarmTable") {
         control = alarmTable;
-      }else if (this.formItem.component == "barrier") {
+      } else if (this.formItem.component == "barrier") {
         control = barrier;
-      }else if (this.formItem.component == "maintenance") {
+      } else if (this.formItem.component == "maintenance") {
         control = maintenance;
-      }else if (this.formItem.component == "danger") {
+      } else if (this.formItem.component == "danger") {
         control = danger;
-      }else if (this.formItem.component == "layer") {
+      } else if (this.formItem.component == "layer") {
         control = layer;
-      }else if (this.formItem.component == "alarmInfo") {
+      } else if (this.formItem.component == "alarmInfo") {
         control = alarmInfo;
-      }else if (this.formItem.component == "barrierInfo") {
+      } else if (this.formItem.component == "barrierInfo") {
         control = barrierInfo;
-      }else if (this.formItem.component == "videoInfo") {
+      } else if (this.formItem.component == "videoInfo") {
         control = videoInfo;
-      }else if (this.formItem.component == "waterInfo") {
+      } else if (this.formItem.component == "waterInfo") {
         control = waterInfo;
       }
-      console.log(this.$refs["ref"-this.containId],"ddddddd")
-      createMessage({
+      if (this.vm) {
+        this.vm.$destroy();
+      }
+      this.vm = createMessage({
         id: this.containId,
         controlId: "control01",
         control: control,
         props: {
-          text: "这是一个弹窗"
+          text: "这是一个弹窗",
+          w: (this.w/ 12) * window.innerWidth,
+          h:this.h
         }
       });
       // createMessage({
