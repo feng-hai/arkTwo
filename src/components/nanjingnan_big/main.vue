@@ -22,7 +22,8 @@
             :user-avator="userAvator"
             style="float:right;"
           />
-          <titles style="margin-right:70px;" name="动车段管理员" />
+           <div style="color:red;font-size:25px; float:right;line-height: 1;margin-right:10px;" title="应急预案" @click="modal1=true"> <Icon type="ios-bookmark-outline" /></div>
+          <titles style="margin-right:10px; float:right;" name="动车段管理员" />
         </div>
       </Col>
     </Row>
@@ -56,6 +57,7 @@
         <div :id="'page'+item.i" style="height:100%"></div>
       </grid-item>
     </grid-layout>
+      <plan :isShow="modal1" @close="modal1=false"></plan>
   </div>
 </template>
 <script>
@@ -66,6 +68,7 @@ import showCurrentTime from "./components/times";
 import User from "./components/user/";
 import titles from "./components/titles";
 import { windowHeight } from "@/libs/util";
+import plan from '@/view/single-page/home/components/contingencyPlan.vue'
 import "./main.less";
 
 var temp =
@@ -78,13 +81,15 @@ export default {
     panel: panel,
     showCurrentTime,
     User,
-    titles
+    titles,
+    plan
   },
   data() {
     return {
       layout: testLayout,
       rowHeight: 10,
       isEdit: false,
+      modal1:false,
       controls: [
         {
           id: 1,

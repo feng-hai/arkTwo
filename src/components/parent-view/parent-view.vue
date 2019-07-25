@@ -11,8 +11,9 @@
     <Col span="8">
     <div style="float:right;margin-right:50px;">
       <user :message-unread-count="unreadCount" :user-avator="userAvator" style="float:right;" />
-      <titles style="margin-right:70px;" name="动车段管理员" />
-      <span style=" position:absolute; right:450px;top:-45px; color:#2db7f5;font-size:58px;" title="应急预案" @click="modal1=true"> <Icon type="ios-bookmark-outline" /></span>
+      <div style="color:red;font-size:25px; float:right;line-height: 1;margin-right:10px;" title="应急预案" @click="modal1=true"> <Icon type="ios-bookmark-outline" /></div>
+      <titles style="margin-right:10px;float:right" name="动车段管理员" />
+      
     </div>
     </Col>
   </Row>

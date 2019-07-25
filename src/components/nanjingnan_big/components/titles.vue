@@ -58,7 +58,7 @@ export default {
     font-size: 50px;
 }
 .title {
-    width: 300px;
+    width: 200px;
     color: white;
     // font-style: italic;
     font-weight: bold;

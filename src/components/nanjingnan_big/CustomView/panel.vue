@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-06-29 12:43:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-24 22:39:00
+ * @LastEditTime: 2019-07-25 22:06:25
  -->
  <template>
   <Card style="width:100%;height:100%" :bordered="false" :class="formItem.lType">
@@ -84,8 +84,10 @@ import danger from "../components/hiddenDanger/danger";
 import layer from "@/view/single-page/home";
 import alarmInfo from "@/view/nanjingnan_big/alarm/alarmInfo";
 import videoInfo from "@/view/nanjingnan_big/videos/video";
-import barrierInfo from "@/view/single-page/home/components/barrierInfo";
+import barrierInfo from "@/view/single-page/home/components/inspactionInfo";
 import waterInfo from "@/view/nanjingnan_big/water/water";
+import safetyIndexInfo from "@/view/nanjingnan_big/safety/safetyIndexInfo";
+import dangerInfo from "@/view/nanjingnan_big/hiddenDanger/dangerInfo";
 export default {
   name: "contain",
   components: {
@@ -105,7 +107,9 @@ export default {
     alarmInfo,
     barrierInfo,
     videoInfo,
-    waterInfo
+    waterInfo,
+    safetyIndexInfo,
+    dangerInfo
     // content
   },
 
@@ -147,6 +151,14 @@ export default {
         {
           value: "waterInfo",
           label: "水网-主"
+        },
+        {
+          value: "safetyIndexInfo",
+          label: "安全指数-主"
+        },
+          {
+          value: "dangerInfo",
+          label: "隐患检测-主"
         }
       ],
       cityList: [
@@ -217,6 +229,14 @@ export default {
         {
           value: "waterInfo",
           label: "水网-主"
+        },
+        {
+          value: "safetyIndexInfo",
+          label: "安全指数-主"
+        },
+          {
+          value: "dangerInfo",
+          label: "隐患检测-主"
         }
       ]
     };
@@ -250,7 +270,7 @@ export default {
     },
     h: {
       type: String,
-      default: '200'
+      default: "200"
     }
   },
   created() {},
@@ -323,6 +343,10 @@ export default {
         control = videoInfo;
       } else if (this.formItem.component == "waterInfo") {
         control = waterInfo;
+      } else if (this.formItem.component == "safetyIndexInfo") {
+        control = safetyIndexInfo;
+      }else if (this.formItem.component == "dangerInfo") {
+        control = dangerInfo;
       }
       if (this.vm) {
         this.vm.$destroy();
@@ -374,6 +398,10 @@ export default {
         control = videoInfo;
       } else if (this.formItem.component == "waterInfo") {
         control = waterInfo;
+      } else if (this.formItem.component == "safetyIndexInfo") {
+        control = safetyIndexInfo;
+      }else if (this.formItem.component == "dangerInfo") {
+        control = dangerInfo;
       }
       if (this.vm) {
         this.vm.$destroy();
@@ -384,8 +412,8 @@ export default {
         control: control,
         props: {
           text: "这是一个弹窗",
-          w: (this.w/ 12) * window.innerWidth,
-          h:this.h
+          w: (this.w / 12) * window.innerWidth,
+          h: this.h
         }
       });
       // createMessage({

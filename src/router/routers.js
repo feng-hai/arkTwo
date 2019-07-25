@@ -1,4 +1,5 @@
 import Main from '@/components/main'
+import parentView from'@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -194,6 +195,108 @@ export default [{
         component: () =>
           import ('@/view/components/icons/icons.vue')
       }
+    ]
+  },
+
+  {
+    path: '/bigerScreen',
+    name: 'bigerScreen',
+    component: parentView,
+    meta: {
+      icon: 'md-menu',
+      title: '多级菜单',
+      hideInMenu: true
+    },
+    children: [{
+        path: 'homeForBigger',
+        name: 'homeForBigger',
+        meta: {
+          icon: '_qq',
+          title: '大屏展示'
+        },
+     component: () =>
+        import ('@/view/single-page/home/home')
+
+      }, {
+        path: 'tools_json',
+        name: 'tools_json',
+        meta: {
+          icon: '_qq',
+          title: 'Json工具'
+        },
+        component: () =>
+        import ('@/view/tools/tools_json')
+
+      },
+      {
+        path: 'setIconInlayerforBig',
+        name: 'setIconInlayerforBig',
+        meta: {
+          title: '打点',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/layers/Icons_Annotation')
+      },
+      {
+        path: 'bigalarmInfo',
+        name: 'bigalarmInfo',
+        meta: {
+          title: '报警信息',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/single-page/home/components/alarmInfo')
+      },
+      {
+        path: 'biginspactionInfo',
+        name: 'biginspactionInfo',
+        meta: {
+          title: '巡检信息',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/single-page/home/components/inspactionInfo')
+      },
+      {
+        path: 'bigelectronicInfo',
+        name: 'bigelectronicInfo',
+        meta: {
+          title: '巡检管理',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/single-page/home/components/electronicInfo')
+      },
+      {
+        path: 'bigbarrierInfo',
+        name: 'bigbarrierInfo',
+        meta: {
+          title: '报警信息',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/single-page/home/components/barrierInfo')
+      },
+      {
+        path: 'bigvideo',
+        name: 'bigvideo',
+        meta: {
+          title: '视频信息',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/single-page/home/components/videoShow')
+      }, {
+        path: 'bigdaozha',
+        name: 'bigdaozha',
+        meta: {
+          title: '道闸监控',
+          notCache: false
+        },
+        component: () =>
+        import ('@/view/single-page/home/components/daozhaInfo')
+      },
     ]
   },
   {

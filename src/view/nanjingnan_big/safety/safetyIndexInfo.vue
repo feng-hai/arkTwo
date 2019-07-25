@@ -1,27 +1,28 @@
 <template>
 <div class="contentinfo">
-  <p class="pTitle"><span class="active">报警信息</span></p>
-  <alarmEcharts :chartsHeight="chartsHeight"></alarmEcharts>
-  <alarmTable :scollHeight="scollHeight" style="padding-bottom:10px"></alarmTable>
+  <p class="pTitle"><span class="active">安全指数</span></p>
+
+  <safetyIndexEcharts :chartsHeight="chartsHeight"></safetyIndexEcharts>
+  <safetyIndexTable :scollHeight="scollHeight" style="padding-bottom:10px"></safetyIndexTable>
+
 </div>
 </template>
 <script>
-import alarmTable from './alarmTable.vue'
-import alarmEcharts from './alarmEcharts.vue'
+import safetyIndexTable from './safetyIndexTable.vue'
+import safetyIndexEcharts from './safetyIndexEcharts.vue'
 import {
   windowHeight
 } from '@/libs/util'
 export default {
   name: 'alarmInfo',
   components: {
-    alarmTable,
-    alarmEcharts
+    safetyIndexTable,
+    safetyIndexEcharts
   },
   data () {
     return {
       chartsHeight: (windowHeight() - 120) / 2 - 20 - 10,
       scollHeight: (windowHeight() - 120) / 2 - 10 - 23
-
     }
   }
 
@@ -30,9 +31,8 @@ export default {
 <style lang="less">
 .contentinfo {
   position: relative;
-  //height: calc(100vh - 104px);
+//  height: calc(100vh - 104px);
   overflow: hidden;
-
 }
 
 .pTitle {

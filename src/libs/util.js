@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-02-28 15:37:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-22 20:51:18
+ * @LastEditTime: 2019-07-25 19:32:45
  */
 import Cookies from 'js-cookie'
 
@@ -633,7 +633,8 @@ export const translateArraytoMenus = (data) => {
       meta: {
         icon: item.icon_uri,
         title: item.name,
-        hideInMenu: item.flag_priv
+        hideInMenu: item.flag_priv,
+        //showAlways: true
       },
       title: item.name,
       parent: item.super_unid

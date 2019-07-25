@@ -62,144 +62,148 @@
   </div>
 </template>
 <script>
-import { windowHeight } from '@/libs/util'
+import { windowHeight } from "@/libs/util";
 export default {
   props: {
     isShow: {
       type: Boolean,
-      default () {
-        return false
+      default() {
+        return false;
       }
     }
   },
   components: {},
   watch: {
-    isShow (n, o) {
-      console.log(n, o, 'ddddddddddd')
-      var that = this
-      this.$nextTick(function () {
-        setTimeout(function () {
-          that.vheight = $('#tempcol').height()
-          that.vwidth = $('#tempcol').width()
-        }, 100)
+    isShow(n, o) {
+      console.log(n, o, "ddddddddddd");
+      var that = this;
+      this.$nextTick(function() {
+        setTimeout(function() {
+          that.vheight = $("#tempcol").height();
+          that.vwidth = $("#tempcol").width();
+        }, 100);
         //  that.$refs.videoTemplate.initVideo();
-      })
+      });
     }
   },
-  data () {
+  data() {
     return {
       vwidth: null,
       vheight: null,
       iChannelID: 2,
-      id1: 'divPlugin1',
+      id1: "divPlugin1",
       alarmArray: [
         {
-          role: '组长',
-          name: '张xx',
-          phone: '13xxxxxxxx'
+          role: "组长",
+          name: "张xx",
+          phone: "13xxxxxxxx"
         },
         {
-          role: '副组长',
-          name: '张xx',
-          phone: '13xxxxxxxx'
+          role: "副组长",
+          name: "张xx",
+          phone: "13xxxxxxxx"
         },
         {
-          role: '消防组',
-          name: '张xx',
-          phone: '13xxxxxxxx'
+          role: "消防组",
+          name: "张xx",
+          phone: "13xxxxxxxx"
         },
         {
-          role: '消防组',
-          name: '张xx',
-          phone: '13xxxxxxxx'
+          role: "消防组",
+          name: "张xx",
+          phone: "13xxxxxxxx"
         },
         {
-          role: '消防组',
-          name: '张xx',
-          phone: '13xxxxxxxx'
+          role: "消防组",
+          name: "张xx",
+          phone: "13xxxxxxxx"
         },
         {
-          role: '消防组',
-          name: '张xx',
-          phone: '13xxxxxxxx'
+          role: "消防组",
+          name: "张xx",
+          phone: "13xxxxxxxx"
         }
       ]
-    }
+    };
   },
   methods: {
-    closeModel () {
-      this.$emit('close')
+    closeModel() {
+      this.$emit("close");
     },
-    openModel () {},
-    layerPoint () {}
+    openModel() {},
+    layerPoint() {}
   }
-}
+};
 </script>
-<style>
-#contingencyPlan .yaTitle {
-  color: #5bf4fd;
-  font-size: 25px;
-  text-align: center;
-  padding: 20px 20px 20px 20px;
-}
-
-#contingencyPlan .yaname {
-  color: #5bf4fd;
-  font-size: 15px;
-  text-align: center;
-  padding: 20px 20px 20px 20px;
-}
-
-#contingencyPlan .yaContent {
-  font-size: 15px;
-  color: #5bf4fd;
-
-  padding: 10px 10px 10px 10px;
-}
-
-#contingencyPlan .yacenter {
-  text-align: center;
-}
-
-#contingencyPlan .tempShowModel {
-  position: fixed;
-  overflow: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  -webkit-overflow-scrolling: touch;
-  outline: 0;
-}
-
-#contingencyPlan .temp-ivu {
-  width: 80%;
-  margin: 0 auto;
-  position: relative;
-  outline: none;
-  top: 100px;
-}
-
-#contingencyPlan .temp-ivu-close {
-  z-index: 1;
-  font-size: 30px;
+<style lang="less">
+#contingencyPlan {
   position: absolute;
-  right: 5px;
-  top: -8px;
-  color: #fff;
-  overflow: hidden;
-  cursor: pointer;
-}
+  z-index: 1000;
+  top: 40px;
+  .yaTitle {
+    color: #5bf4fd;
+    font-size: 25px;
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+  }
 
-#contingencyPlan .content {
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.8);
-  border: 0;
-  padding: 25px 25px 25px 25px;
-  border-radius: 6px;
-  background-clip: padding-box;
-  -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  .yaname {
+    color: #5bf4fd;
+    font-size: 15px;
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+  }
+
+  .yaContent {
+    font-size: 15px;
+    color: #5bf4fd;
+
+    padding: 10px 10px 10px 10px;
+  }
+
+  .yacenter {
+    text-align: center;
+  }
+
+  .tempShowModel {
+    overflow: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+  }
+
+  .temp-ivu {
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+    outline: none;
+    top: 100px;
+  }
+
+  .temp-ivu-close {
+    z-index: 1;
+    font-size: 30px;
+    position: absolute;
+    right: 5px;
+    top: -8px;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .content {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 0;
+    padding: 25px 25px 25px 25px;
+    border-radius: 6px;
+    background-clip: padding-box;
+    -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 }
 </style>

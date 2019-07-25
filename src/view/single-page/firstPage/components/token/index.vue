@@ -30,9 +30,9 @@ export default {
       }
     },
     grade: {
-      type: Number,
+      type: String,
       default () {
-        return 98
+        return '98'
       }
     },
     list: {
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     turnToPage () {
-      console.log('turnToPage')
+      // console.log('turnToPage')
       this.$emit('on-click')
     }
   }

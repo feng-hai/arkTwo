@@ -30,7 +30,7 @@ export default {
 <style lang="less">
 .contentinfo{
   position: relative;
-  height: calc(100vh - 104px);
+  //height: calc(100vh - 104px);
     overflow:hidden;
 }
 .pTitle {

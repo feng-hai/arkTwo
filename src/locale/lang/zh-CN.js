@@ -77,6 +77,7 @@ export default {
   echartsTempateV: '自定义分析',
   bigerScreen: '大屏内容',
   alarmManagement: '报警管理',
-  patrolManagement: '巡检管理'
+  patrolManagement: '巡检管理',
+  nanjingnan:'南京南大屏'
 
 }
