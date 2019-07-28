@@ -63,16 +63,16 @@
   </Card>
 </template>
 <script>
-import createMessage from "./container.js";
-import DragDrawer from "_c/drag-drawer";
+import createMessage from './container.js'
+import DragDrawer from '_c/drag-drawer'
 
 export default {
-  name: "contain",
+  name: 'contain',
   components: {
     DragDrawer
   },
 
-  data() {
+  data () {
     return {
       showWindowBDrawer: false,
       showContainerBDrawer: false,
@@ -81,78 +81,77 @@ export default {
       width2: 200,
       placement: false,
       draggable: true,
-      model1: "Message",
+      model1: 'Message',
       controlMessage: [],
       formItem: {
         title: this.title,
         component: this.component,
-        radio: "true",
+        radio: 'true',
         lType: this.lType,
         linkcomponent: this.linkcomponent
       }
-    };
+    }
   },
   props: {
     title: {
       // 组件标题
       type: String,
-      default: "自定义标题"
+      default: '自定义标题'
     },
     containId: {
       // 组件唯一标识
       type: String,
-      default: "container"
+      default: 'container'
     },
     linkcomponent: {
       type: String,
-      default: "message"
+      default: 'message'
     },
     component: {
       type: String,
-      default: "message"
+      default: 'message'
     },
     lType: {
       type: String,
-      default: "menu"
+      default: 'menu'
     },
     w: {
       type: String | Number | Function,
-      default: "1"
+      default: '1'
     },
     h: {
       type: String,
-      default: "200"
+      default: '200'
     }
   },
-  created() {},
+  created () {},
   computed: {
-    placementComputed() {
-      return this.placement ? "left" : "right";
+    placementComputed () {
+      return this.placement ? 'left' : 'right'
     }
   },
   methods: {
-    click() {
-     // console.log("click");
-      if (this.lType != "main") {
-       // console.log(this.formItem, "点击事件");
-        this.$emit("click", this.formItem);
+    click () {
+      // console.log("click");
+      if (this.lType != 'main') {
+        // console.log(this.formItem, "点击事件");
+        this.$emit('click', this.formItem)
       }
     },
-    itemclick(item,type)
-    {
-      this.$emit("click",item,type);
+    itemclick (item, type) {
+      this.$emit('click', item, type)
     },
-    handleSubmit() {
-     // console.log("handleSubmit");
-      this.formItem.id = this.containId.substring(9);
-      this.$emit("save", this.formItem);
+    handleSubmit () {
+      // console.log("handleSubmit");
+      this.formItem.id = this.containId.substring(9)
+      this.$emit('save', this.formItem)
       this.$Notice.success({
-        title: "提示信息",
-        desc: "保存成功"
-      });
+        title: '提示信息',
+        desc: '保存成功'
+      })
     },
-    handleResize(event) {
-      const { atMin } = event;
+    handleResize (event) {
+      const { atMin } = event
       /* eslint-disable */
       console.log(atMin);
     },
@@ -175,7 +174,7 @@ export default {
         control: this._controls[this.formItem.component],
         props: {
           text: "这是一个弹窗02",
-          w: (this.w / 12) * window.innerWidth + "",
+          w: this.w,
           h: this.h
         }
       });
@@ -319,7 +318,7 @@ export default {
         control: this._controls[this.component],
         props: {
           text: "这是一个弹窗",
-          w: (this.w / 12) * window.innerWidth + "",
+          w: this.w,
           h: this.h
         },
         click:this.itemclick

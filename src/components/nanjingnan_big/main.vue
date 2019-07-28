@@ -8,7 +8,7 @@
       <Col span="8" offset="8" class="big_cente">
         <!-- <span>
           <Icon style="margin-bottom:5px;margin-right:5px;" type="md-train" />
-      </span> 
+      </span>
         <span>南京动车段智慧消防安防平台</span>-->
       </Col>
       <Col span="8" style="float:right;">
@@ -68,21 +68,21 @@
   </div>
 </template>
 <script>
-import VueGridLayout from "vue-grid-layout";
-import panel from "./CustomView/panel";
-import createMessage from "./CustomView/container.js";
-import showCurrentTime from "./components/times";
-import User from "./components/user/";
-import titles from "./components/titles";
-import { windowHeight } from "@/libs/util";
-import plan from "@/view/single-page/home/components/contingencyPlan.vue";
-import "./main.less";
-import Vuex from "vuex";
-import modelz from "@/view/nanjingnan_big/components/modelz.vue";
+import VueGridLayout from 'vue-grid-layout'
+import panel from './CustomView/panel'
+import createMessage from './CustomView/container.js'
+import showCurrentTime from './components/times'
+import User from './components/user/'
+import titles from './components/titles'
+import { windowHeight } from '@/libs/util'
+import plan from '@/view/single-page/home/components/contingencyPlan.vue'
+import './main.less'
+import Vuex from 'vuex'
+import modelz from '@/view/nanjingnan_big/components/modelz.vue'
 
 var temp =
-  '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"safetyIndexInfo"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"alarmInfo"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"barrierInfo"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"dangerInfo"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]';
-var testLayout = JSON.parse(temp);
+  '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"safetyIndexInfo"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"alarmInfo"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"barrierInfo"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"dangerInfo"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]'
+var testLayout = JSON.parse(temp)
 export default {
   components: {
     GridLayout: VueGridLayout.GridLayout,
@@ -95,34 +95,34 @@ export default {
     modelz
   },
   computed: {
-    userAvator() {
-      return this.$store.state.user.avatorImgPath;
+    userAvator () {
+      return this.$store.state.user.avatorImgPath
     }
   },
-  data() {
+  data () {
     return {
       layout: testLayout,
       rowHeight: 10,
       isEdit: false,
       modal1: false,
-      modal2: false, //设备明细页面
+      modal2: false, // 设备明细页面
       controls: [
         {
           id: 1,
-          controlId: "panel1",
-          containId: "containId1"
+          controlId: 'panel1',
+          containId: 'containId1'
         },
         {
           id: 2,
-          controlId: "panel2",
-          containId: "containId2"
+          controlId: 'panel2',
+          containId: 'containId2'
         }
       ]
-    };
+    }
   },
   methods: {
-    layoutBeforeMountEvent: function(newLayout) {
-      console.log(newLayout, "newLayout");
+    layoutBeforeMountEvent: function (newLayout) {
+      console.log(newLayout, 'newLayout')
       // var allheight = 0;
       // var type = "";
       // console.log(this.layout)
@@ -144,36 +144,36 @@ export default {
       // this.rowHeight = (windowHeight()-500) / allheight;
       // console.log(rowHeight)
     },
-    layoutMountedEvent: function(newLayout) {
-      console.log("Mounted layout: ", newLayout);
+    layoutMountedEvent: function (newLayout) {
+      console.log('Mounted layout: ', newLayout)
     },
-    saveWidgets() {
-      console.log(this.layout, "layout");
-      localStorage.setItem("layout", JSON.stringify(this.layout));
+    saveWidgets () {
+      console.log(this.layout, 'layout')
+      localStorage.setItem('layout', JSON.stringify(this.layout))
       // this.$Notice.success({
       //   title: "提示信息",
       //   desc: "保存成功"
       // });
     },
-    addWidgets() {
-      var len = this.layout.length;
-      this.layout.push({ x: 0, y: 0, w: 2, h: 4, i: this.layout.length });
-      console.log(this.layout);
-      this.$nextTick(function() {
+    addWidgets () {
+      var len = this.layout.length
+      this.layout.push({ x: 0, y: 0, w: 2, h: 4, i: this.layout.length })
+      console.log(this.layout)
+      this.$nextTick(function () {
         this.createControl({
           id: len,
-          controlId: "panel" + len,
-          containId: "containId" + len
-        });
-      });
+          controlId: 'panel' + len,
+          containId: 'containId' + len
+        })
+      })
     },
-    remove(j) {
+    remove (j) {
       // 删除控件
-      var index = -1;
+      var index = -1
       for (var i = 0; i < this.layout.length; i++) {
         if (this.layout[i].i == j) {
-          this.layout.splice(i, 1);
-          break;
+          this.layout.splice(i, 1)
+          break
         }
       }
       // this.layout.forEach(function(value, i) {
@@ -185,19 +185,19 @@ export default {
       // that.createControl(item);
       // });
     },
-    save(option) {
-      var that = this;
+    save (option) {
+      var that = this
       for (var i = 0; i < this.layout.length; i++) {
         if (this.layout[i].i == option.id) {
-          this.layout[i].title = option.title;
-          this.layout[i].component = option.component;
-          this.layout[i].lType = option.lType;
-          this.layout[i].linkcomponent = option.linkcomponent;
-          break;
+          this.layout[i].title = option.title
+          this.layout[i].component = option.component
+          this.layout[i].lType = option.lType
+          this.layout[i].linkcomponent = option.linkcomponent
+          break
         }
       }
       // console.log(this.layout,"布局")
-      this.saveWidgets();
+      this.saveWidgets()
       //  var item = {
       //   id: 3,
       //   controlId: "panel" + 3,
@@ -208,50 +208,51 @@ export default {
       // };
       // that.createControl(item);
     },
-    linkto(item, type) {
-      if (type && type === "detail") {
-        this.modal2=true;
-        console.log(item, "main page click");
+    linkto (item, type) {
+      console.log(this.main, 'main')
+      if (type && type === 'detail') {
+        this.modal2 = true
+        console.log(item, 'main page click')
       }
       if (item.linkcomponent) {
-        var that = this;
+        var that = this
         var item = {
           id: 3,
-          controlId: "panel" + 3,
-          containId: "containId" + 3,
-          title: "value.title",
+          controlId: 'panel' + 3,
+          containId: 'containId' + 3,
+          title: 'value.title',
           component: item.linkcomponent,
-          lType: "main",
-          w: (this.main ? this.main.w : 12) + "",
+          lType: 'main',
+          w: (this.main ? this.main.w / 12 * window.innerWidth : window.innerWidth) + '',
           h:
             (this.main
               ? (this.main.h * this.rowHeight * 4) / 3
-              : window.innerHeight) + ""
-        };
-        console.log("start destroy", that.vm);
-        if (that.vm) {
-          console.log("start destroy");
-          that.vm.$destroy();
+              : window.innerHeight) + ''
         }
-        that.vm = that.createControl(item);
+        console.log('start destroy', that.vm)
+        if (that.vm) {
+          console.log('start destroy')
+          that.vm.$destroy()
+        }
+        that.vm = that.createControl(item)
       }
     },
-    startEdit() {
-      this.isEdit = true;
+    startEdit () {
+      this.isEdit = true
     },
-    endEdit() {
-      this.isEdit = false;
+    endEdit () {
+      this.isEdit = false
     },
-    createControl(item) {
-      var that = this;
-      //this.$nextTick(function() {
+    createControl (item) {
+      var that = this
+      // this.$nextTick(function() {
       return createMessage({
-        id: "page" + item.id,
+        id: 'page' + item.id,
         controlId: item.controlId,
         control: panel,
         props: {
           containId: item.containId,
-          title: item.title ? item.title : "自定义" + item.id,
+          title: item.title ? item.title : '自定义' + item.id,
           component: item.component,
           linkcomponent: item.linkcomponent,
           lType: item.lType,
@@ -261,65 +262,55 @@ export default {
         remove: that.remove,
         save: that.save,
         click: that.linkto
-      });
+      })
     }
   },
-  beforeMount() {
-    this.unreadCount = 0;
-    //this.userAvator=""
+  beforeMount () {
+    this.unreadCount = 0
+    // this.userAvator=""
   },
-  mounted() {
-    var that = this;
+  mounted () {
+    var that = this
 
-    var tempLayout = localStorage.getItem("layout");
-    console.log(tempLayout);
-
+    var tempLayout = localStorage.getItem('layout')
     if (tempLayout) {
-      this.layout = JSON.parse(tempLayout);
-
-      this.main = this.layout.find(item => {
-        if (item.lType == "main") {
-          return true;
-        } else {
-          return false;
-        }
-      });
-      // console.log(this.main,"find result;1111111111111111");
-      // console.log("mounted", this.layout);
-      // console.log("init", this.layout);
-      //  var allheight = 0;
-      //  var type = "";
-      //  this.layout.forEach(item=>{
-      //   if (item.lType) {
-      //     if (type == "") {
-      //       type = item.lType;
-      //     }
-      //     if ("main" == item.lType) {
-      //       allheight += item.h;
-      //     }
-      //   }
-      //  })
-      //  console.log(allheight,"总高度")
-      //  this.rowHeight = (windowHeight()-170) / allheight;
+      this.layout = JSON.parse(tempLayout)
     }
-    // this.rowHeight="100"
-    this.$nextTick(function() {
-      var that = this;
-      this.layout.forEach(function(value, i) {
+    this.main = this.layout.find(item => {
+      if (item.lType == 'main') {
+        return true
+      } else {
+        return false
+      }
+    })
+    this.tempControls = []
+    this.$nextTick(function () {
+      var that = this
+      this.layout.forEach(function (value, i) {
         var item = {
           id: value.i,
-          controlId: "panel" + value.i,
-          containId: "containId" + value.i,
+          controlId: 'panel' + value.i,
+          containId: 'containId' + value.i,
           title: value.title,
           component: value.component,
           linkcomponent: value.linkcomponent,
           lType: value.lType,
-          w: value.w,
-          h: value.h * that.rowHeight + ""
-        };
-        that.createControl(item);
-      });
-    });
+          w: value.w / 12 * window.innerWidth,
+          h: value.h * that.rowHeight * 4 / 3 + ''
+        }
+        that.tempControls.push(that.createControl(item))
+      })
+    })
+  },
+  beforeDestroy () {
+    if (this.vm) {
+      this.vm.$destroy()
+    }
+    if (this.tempControls) {
+      this.tempControls.forEach(item => {
+        item.$destroy()
+      })
+    }
   }
-};
+}
 </script>

@@ -31,6 +31,7 @@ const createMessage = (options) => {
   // 给创建的div设置id=message，并且添加到body后
   bindPhone.setAttribute('id', options.controlId)
   body.appendChild(bindPhone)
+  console.log(options.props, '创建代码')
   // 这里我们return一个新的Vue实例并且将实例挂载到我们刚创建的DOM节点上
   return new Vue({
     store,
@@ -53,11 +54,9 @@ const createMessage = (options) => {
                 options.save(option)
               }
             },
-            click:function(option,type)
-            {
-              if(options.click)
-              {
-                options.click(option,type)
+            click: function (option, type) {
+              if (options.click) {
+                options.click(option, type)
               }
             }
           }
