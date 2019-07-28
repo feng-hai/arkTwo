@@ -18,17 +18,17 @@ export default {
     alarmEcharts
   },
   data() {
-    return {
-      chartsHeight: 400,
-      scollHeight: 400
-    };
+   return {
+      chartsHeight: (windowHeight() - 120) / 2 - 20 - 10,
+      scollHeight: (windowHeight() - 120) / 2 - 10 - 23
+    }
   },
   mounted() {
     this.$nextTick(function() {
-      this.chartsHeight = (windowHeight() - 120) / 2 - 20 - 10;
-      this.scollHeight = (windowHeight() - 120) / 2 - 10 - 23;
-      console.log("加载数据", this.chartsHeight, this.scollHeight);
-      console.log("触发报警列表");
+      // this.chartsHeight = (windowHeight() - 120) / 2 - 20 - 10;
+      // this.scollHeight = (windowHeight() - 120) / 2 - 10 - 23;
+      // console.log("加载数据", this.chartsHeight, this.scollHeight);
+      // console.log("触发报警列表");
     });
   }
 };

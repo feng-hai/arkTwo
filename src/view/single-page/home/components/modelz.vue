@@ -116,8 +116,12 @@ export default {
   }
 }
 </script>
-<style>
-#modelz .tempShowModel {
+<style lang="less">
+#modelz
+{
+
+
+ .tempShowModel {
   position: fixed;
   overflow: auto;
   top: 0;
@@ -129,7 +133,7 @@ export default {
   outline: 0;
 }
 
-#modelz .temp-ivu {
+ .temp-ivu {
   width: 80%;
   margin: 0 auto;
   position: relative;
@@ -137,7 +141,7 @@ export default {
   top: 100px;
 }
 
-#modelz .temp-ivu-close {
+ .temp-ivu-close {
   z-index: 1;
   font-size: 30px;
   position: absolute;
@@ -148,7 +152,7 @@ export default {
   cursor: pointer;
 }
 
-#modelz .content {
+.content {
   position: relative;
   background-color: rgba(0, 0, 0, 0.8);
   border: 0;
@@ -157,5 +161,6 @@ export default {
   background-clip: padding-box;
   -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 }
 </style>

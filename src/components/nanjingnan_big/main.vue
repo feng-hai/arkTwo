@@ -22,8 +22,14 @@
             :user-avator="userAvator"
             style="float:right;"
           />
-           <div style="color:red;font-size:25px; float:right;line-height: 1;margin-right:10px;" title="应急预案" @click="modal1=true"> <Icon type="ios-bookmark-outline" /></div>
-          <titles style="margin-right:10px; float:right;" name="动车段管理员" />
+          <div
+            style="color:red;font-size:25px; float:right;line-height: 1;margin-right:10px;"
+            title="应急预案"
+            @click="modal1=true"
+          >
+            <Icon type="ios-bookmark-outline" />
+          </div>
+          <titles style="margin-right:10px; float:right;" name="南京南管理员" />
         </div>
       </Col>
     </Row>
@@ -57,7 +63,8 @@
         <div :id="'page'+item.i" style="height:100%"></div>
       </grid-item>
     </grid-layout>
-      <plan :isShow="modal1" @close="modal1=false"></plan>
+    <plan :isShow="modal1" @close="modal1=false"></plan>
+    <modelz :isShow="modal2" @close="modal2=false"></modelz>
   </div>
 </template>
 <script>
@@ -68,11 +75,13 @@ import showCurrentTime from "./components/times";
 import User from "./components/user/";
 import titles from "./components/titles";
 import { windowHeight } from "@/libs/util";
-import plan from '@/view/single-page/home/components/contingencyPlan.vue'
+import plan from "@/view/single-page/home/components/contingencyPlan.vue";
 import "./main.less";
+import Vuex from "vuex";
+import modelz from "@/view/nanjingnan_big/components/modelz.vue";
 
 var temp =
-  '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"layer"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"message"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"message"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"message"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]';
+  '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"safetyIndexInfo"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"alarmInfo"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"barrierInfo"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"dangerInfo"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]';
 var testLayout = JSON.parse(temp);
 export default {
   components: {
@@ -82,14 +91,21 @@ export default {
     showCurrentTime,
     User,
     titles,
-    plan
+    plan,
+    modelz
+  },
+  computed: {
+    userAvator() {
+      return this.$store.state.user.avatorImgPath;
+    }
   },
   data() {
     return {
       layout: testLayout,
       rowHeight: 10,
       isEdit: false,
-      modal1:false,
+      modal1: false,
+      modal2: false, //设备明细页面
       controls: [
         {
           id: 1,
@@ -134,10 +150,10 @@ export default {
     saveWidgets() {
       console.log(this.layout, "layout");
       localStorage.setItem("layout", JSON.stringify(this.layout));
-      this.$Notice.success({
-        title: "提示信息",
-        desc: "保存成功"
-      });
+      // this.$Notice.success({
+      //   title: "提示信息",
+      //   desc: "保存成功"
+      // });
     },
     addWidgets() {
       var len = this.layout.length;
@@ -192,7 +208,11 @@ export default {
       // };
       // that.createControl(item);
     },
-    linkto(item) {
+    linkto(item, type) {
+      if (type && type === "detail") {
+        this.modal2=true;
+        console.log(item, "main page click");
+      }
       if (item.linkcomponent) {
         var that = this;
         var item = {
@@ -204,11 +224,13 @@ export default {
           lType: "main",
           w: (this.main ? this.main.w : 12) + "",
           h:
-            (this.main ? this.main.h * this.rowHeight : window.innerHeight) + ""
+            (this.main
+              ? (this.main.h * this.rowHeight * 4) / 3
+              : window.innerHeight) + ""
         };
-         console.log("start destroy",that.vm)
+        console.log("start destroy", that.vm);
         if (that.vm) {
-          console.log("start destroy")
+          console.log("start destroy");
           that.vm.$destroy();
         }
         that.vm = that.createControl(item);
@@ -223,37 +245,32 @@ export default {
     createControl(item) {
       var that = this;
       //this.$nextTick(function() {
-       return createMessage({
-          id: "page" + item.id,
-          controlId: item.controlId,
-          control: panel,
-          props: {
-            containId: item.containId,
-            title: item.title ? item.title : "自定义" + item.id,
-            component: item.component,
-            linkcomponent: item.linkcomponent,
-            lType: item.lType,
-            w: item.w,
-            h: item.h
-          },
-          remove: that.remove,
-          save: that.save,
-          click: that.linkto
-        });
-      //});
-
-      // createMessage({
-      //     id:'2',
-      //     controlId:'panel02',
-      //     control:panel,
-      //     props: {
-      //         containId:'contain01'
-      //     }
-      // });
+      return createMessage({
+        id: "page" + item.id,
+        controlId: item.controlId,
+        control: panel,
+        props: {
+          containId: item.containId,
+          title: item.title ? item.title : "自定义" + item.id,
+          component: item.component,
+          linkcomponent: item.linkcomponent,
+          lType: item.lType,
+          w: item.w,
+          h: item.h
+        },
+        remove: that.remove,
+        save: that.save,
+        click: that.linkto
+      });
     }
+  },
+  beforeMount() {
+    this.unreadCount = 0;
+    //this.userAvator=""
   },
   mounted() {
     var that = this;
+
     var tempLayout = localStorage.getItem("layout");
     console.log(tempLayout);
 

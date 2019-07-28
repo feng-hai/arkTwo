@@ -1,9 +1,13 @@
 <template>
   <div class="videoManage big_table" @mouseover="mouseover" @mouseout="mouseout">
-    <div class="scrollbar" :style="{height:scollHeight+'px',right:scollRight+'px'}" sytle="width:100%">
+    <div
+      class="scrollbar"
+      :style="{height:scollHeight+'px',right:scollRight+'px'}"
+      sytle="width:100%"
+    >
       <Row>
         <Col span="12" v-for="item in items">
-          <videos :sourcesSrc="item"></videos>
+          <videos :sourcesSrc="item.src" :height="item.height"></videos>
         </Col>
       </Row>
     </div>
@@ -27,35 +31,33 @@ export default {
   data() {
     return {
       scollHeight: windowHeight() - 120,
-      scollRight:0,
+      scollRight: 0,
       items: [
         {
-          src: 'rtmp://localhost/live/test123',
-          height: '300'
+          src: "rtmp://localhost/live/test123",
+          height: "300"
         },
         {
-          src: 'rtmp://localhost/live/test124',
-          height: '300'
-        },
-     {
-          src: 'rtmp://localhost/live/test124',
-          height: '300'
+          src: "rtmp://localhost/live/test124",
+          height: "300"
         },
         {
-          src: 'rtmp://47.103.98.47/live/stream',
-          height: '300'
+          src: "rtmp://localhost/live/test124",
+          height: "300"
+        },
+        {
+          src: "rtmp://47.103.98.47/live/stream",
+          height: "300"
         }
-       
-        
       ]
     };
   },
   methods: {
     mouseover: function() {
-        //this.scollRight=0;
+      //this.scollRight=0;
     },
     mouseout: function() {
-        //this.scollRight=-17;
+      //this.scollRight=-17;
     },
     changeSrc() {
       console.log("changeSrc");

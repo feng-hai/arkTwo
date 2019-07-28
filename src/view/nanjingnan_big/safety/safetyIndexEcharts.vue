@@ -24,16 +24,16 @@ export default {
   data() {
     return {
       options: {
-        title: {
-          text: "多雷达图"
-        },
+        // title: {
+        //   text: "多雷达图"
+        // },
         tooltip: {
           trigger: "axis"
         },
-        legend: {
-          x: "center",
-          data: ["某软件", "某主食手机", "某水果手机", "降水量", "蒸发量"]
-        },
+        // legend: {
+        //   x: "center",
+        //   data: ["某软件", "某主食手机", "某水果手机", "降水量", "蒸发量"]
+        // },
         radar: [
           {
             indicator: [

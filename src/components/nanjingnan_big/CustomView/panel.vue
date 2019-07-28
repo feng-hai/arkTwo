@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-06-29 12:43:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-25 22:06:25
+ * @LastEditTime: 2019-07-28 11:54:44
  -->
  <template>
   <Card style="width:100%;height:100%" :bordered="false" :class="formItem.lType">
@@ -39,12 +39,12 @@
         </FormItem>
         <FormItem label="组件名称">
           <Select v-model="formItem.component" @on-change="changeComponent">
-            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in controlMessage" :value="item.id" :key="item.id">{{ item.title }}</Option>
           </Select>
         </FormItem>
         <FormItem label="连接组件">
           <Select v-model="formItem.linkcomponent" @on-change="changeLinkComponent">
-            <Option v-for="item in linksList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in controlMessage" :value="item.id" :key="item.id">{{ item.title }}</Option>
           </Select>
         </FormItem>
         <FormItem label="是否显示头部信息">
@@ -65,52 +65,11 @@
 <script>
 import createMessage from "./container.js";
 import DragDrawer from "_c/drag-drawer";
-import demo from "@/view/tools/charts/editCharts";
-import demo2 from "@/view/tools/charts/demo";
-import map from "@/view/tools/charts/map";
-// import content from "../components/content";
-// 弹窗组件单文件
-import Message from "./message.vue";
-// 弹窗组件单文件
-import MessageTwo from "./messageTwo.vue";
-import safetyIndex from "./safetyIndex.vue";
-import alarm from "../components/alarmInfo/alarm";
-import water from "../components/waterNetwork/water";
-import video from "../components/videoInfo/video";
-import alarmTable from "../components/alarmInfo/alarmTable";
-import barrier from "../components/barrierInfo/barrierEcharts";
-import maintenance from "../components/maintenance/maintenance";
-import danger from "../components/hiddenDanger/danger";
-import layer from "@/view/single-page/home";
-import alarmInfo from "@/view/nanjingnan_big/alarm/alarmInfo";
-import videoInfo from "@/view/nanjingnan_big/videos/video";
-import barrierInfo from "@/view/single-page/home/components/inspactionInfo";
-import waterInfo from "@/view/nanjingnan_big/water/water";
-import safetyIndexInfo from "@/view/nanjingnan_big/safety/safetyIndexInfo";
-import dangerInfo from "@/view/nanjingnan_big/hiddenDanger/dangerInfo";
+
 export default {
   name: "contain",
   components: {
-    DragDrawer,
-    demo,
-    demo2,
-    map,
-    safetyIndex,
-    alarm,
-    water,
-    video,
-    alarmTable,
-    barrier,
-    maintenance,
-    danger,
-    layer,
-    alarmInfo,
-    barrierInfo,
-    videoInfo,
-    waterInfo,
-    safetyIndexInfo,
-    dangerInfo
-    // content
+    DragDrawer
   },
 
   data() {
@@ -123,122 +82,14 @@ export default {
       placement: false,
       draggable: true,
       model1: "Message",
-
+      controlMessage: [],
       formItem: {
         title: this.title,
         component: this.component,
         radio: "true",
         lType: this.lType,
         linkcomponent: this.linkcomponent
-      },
-      linksList: [
-        {
-          value: "layer",
-          label: "图形标注"
-        },
-        {
-          value: "alarmInfo",
-          label: "报警信息"
-        },
-        {
-          value: "barrierInfo",
-          label: "巡检管理-主"
-        },
-        {
-          value: "videoInfo",
-          label: "视频列表-主"
-        },
-        {
-          value: "waterInfo",
-          label: "水网-主"
-        },
-        {
-          value: "safetyIndexInfo",
-          label: "安全指数-主"
-        },
-          {
-          value: "dangerInfo",
-          label: "隐患检测-主"
-        }
-      ],
-      cityList: [
-        {
-          value: "Message",
-          label: "自定义信息"
-        },
-        {
-          value: "demo",
-          label: "图表"
-        },
-        {
-          value: "demo2",
-          label: "柱状图表"
-        },
-        {
-          value: "map",
-          label: "地图"
-        },
-        {
-          value: "safetyIndex",
-          label: "安全指数"
-        },
-        {
-          value: "alarm",
-          label: "报警"
-        },
-        {
-          value: "water",
-          label: "水网"
-        },
-        {
-          value: "video",
-          label: "视频"
-        },
-        {
-          value: "alarmTable",
-          label: "报警列表"
-        },
-        {
-          value: "barrier",
-          label: "巡检管理"
-        },
-        {
-          value: "maintenance",
-          label: "维护保养"
-        },
-        {
-          value: "danger",
-          label: "隐患检测"
-        },
-        {
-          value: "layer",
-          label: "图形标注"
-        },
-        {
-          value: "alarmInfo",
-          label: "报警信息"
-        },
-        {
-          value: "barrierInfo",
-          label: "巡检管理-主"
-        },
-        {
-          value: "videoInfo",
-          label: "视频列表-主"
-        },
-        {
-          value: "waterInfo",
-          label: "水网-主"
-        },
-        {
-          value: "safetyIndexInfo",
-          label: "安全指数-主"
-        },
-          {
-          value: "dangerInfo",
-          label: "隐患检测-主"
-        }
-      ]
+      }
     };
   },
   props: {
@@ -265,7 +116,7 @@ export default {
       default: "menu"
     },
     w: {
-      type: String,
+      type: String | Number | Function,
       default: "1"
     },
     h: {
@@ -281,13 +132,18 @@ export default {
   },
   methods: {
     click() {
+     // console.log("click");
       if (this.lType != "main") {
-        console.log(this.formItem, "点击事件");
+       // console.log(this.formItem, "点击事件");
         this.$emit("click", this.formItem);
       }
     },
+    itemclick(item,type)
+    {
+      this.$emit("click",item,type);
+    },
     handleSubmit() {
-      console.log("handleSubmit");
+     // console.log("handleSubmit");
       this.formItem.id = this.containId.substring(9);
       this.$emit("save", this.formItem);
       this.$Notice.success({
@@ -310,121 +166,172 @@ export default {
     },
     changeLinkComponent() {},
     changeComponent() {
-      var control = Message;
-      if (this.formItem.component == "demo") {
-        control = demo;
-      } else if (this.formItem.component == "demo2") {
-        control = demo2;
-      } else if (this.formItem.component == "map") {
-        control = map;
-      } else if (this.formItem.component == "safetyIndex") {
-        control = safetyIndex;
-      } else if (this.formItem.component == "alarm") {
-        control = alarm;
-      } else if (this.formItem.component == "water") {
-        control = water;
-      } else if (this.formItem.component == "video") {
-        control = video;
-      } else if (this.formItem.component == "alarmTable") {
-        control = alarmTable;
-      } else if (this.formItem.component == "barrier") {
-        control = barrier;
-      } else if (this.formItem.component == "maintenance") {
-        control = maintenance;
-      } else if (this.formItem.component == "danger") {
-        control = danger;
-      } else if (this.formItem.component == "layer") {
-        control = layer;
-      } else if (this.formItem.component == "alarmInfo") {
-        control = alarmInfo;
-      } else if (this.formItem.component == "barrierInfo") {
-        control = barrierInfo;
-      } else if (this.formItem.component == "videoInfo") {
-        control = videoInfo;
-      } else if (this.formItem.component == "waterInfo") {
-        control = waterInfo;
-      } else if (this.formItem.component == "safetyIndexInfo") {
-        control = safetyIndexInfo;
-      }else if (this.formItem.component == "dangerInfo") {
-        control = dangerInfo;
-      }
       if (this.vm) {
         this.vm.$destroy();
       }
-
       this.vm = createMessage({
         id: this.containId,
         controlId: "control01",
-        control: control,
+        control: this._controls[this.formItem.component],
         props: {
-          text: "这是一个弹窗02"
+          text: "这是一个弹窗02",
+          w: (this.w / 12) * window.innerWidth + "",
+          h: this.h
         }
       });
     }
   },
-  mounted() {
-    console.log(this.linkcomponent);
-    this.$nextTick(function() {
-      var control = Message;
-      if (this.component == "demo") {
-        control = demo;
-      } else if (this.component == "demo2") {
-        control = demo2;
-      } else if (this.component == "map") {
-        control = map;
-      } else if (this.formItem.component == "safetyIndex") {
-        control = safetyIndex;
-      } else if (this.formItem.component == "alarm") {
-        control = alarm;
-      } else if (this.formItem.component == "water") {
-        control = water;
-      } else if (this.formItem.component == "video") {
-        control = video;
-      } else if (this.formItem.component == "alarmTable") {
-        control = alarmTable;
-      } else if (this.formItem.component == "barrier") {
-        control = barrier;
-      } else if (this.formItem.component == "maintenance") {
-        control = maintenance;
-      } else if (this.formItem.component == "danger") {
-        control = danger;
-      } else if (this.formItem.component == "layer") {
-        control = layer;
-      } else if (this.formItem.component == "alarmInfo") {
-        control = alarmInfo;
-      } else if (this.formItem.component == "barrierInfo") {
-        control = barrierInfo;
-      } else if (this.formItem.component == "videoInfo") {
-        control = videoInfo;
-      } else if (this.formItem.component == "waterInfo") {
-        control = waterInfo;
-      } else if (this.formItem.component == "safetyIndexInfo") {
-        control = safetyIndexInfo;
-      }else if (this.formItem.component == "dangerInfo") {
-        control = dangerInfo;
+  beforeMount() {
+    //从数据库中获取组件数据
+    this.controlMessage = [
+      {
+        id: "Message",
+        title: "自定义信息",
+        component: () => import("./message.vue"),
+        islink: true
+      },
+      {
+        id: "demo",
+        title: "图表",
+        component: () => import("@/view/tools/charts/demo"),
+        islink: true
+      },
+      {
+        id: "demo2",
+        title: "柱状图表",
+        component: () => import("@/view/tools/charts/demo"),
+        islink: true
+      },
+      {
+        id: "map",
+        title: "地图",
+        component: () => import("@/view/tools/charts/map"),
+        islink: true
+      },
+      {
+        id: "safetyIndex",
+        title: "安全指数",
+        component: () => import("./safetyIndex.vue"),
+        islink: true
+      },
+      {
+        id: "alarm",
+        title: "报警",
+        component: () => import("../components/alarmInfo/alarm"),
+        islink: true
+      },
+      {
+        id: "water",
+        title: "水网",
+        component: () => import("../components/waterNetwork/water"),
+        islink: true
+      },
+      {
+        id: "video",
+        title: "视频",
+        component: () => import("../components/videoInfo/video"),
+        islink: true
+      },
+      {
+        id: "alarmTable",
+        title: "报警列表",
+        component: () => import("../components/alarmInfo/alarmTable"),
+        islink: true
+      },
+      {
+        id: "barrier",
+        title: "巡检管理",
+        component: () => import("../components/barrierInfo/barrierEcharts"),
+        islink: true
+      },
+      {
+        id: "maintenance",
+        title: "维护保养",
+        component: () => import("../components/maintenance/maintenance"),
+        islink: true
+      },
+      {
+        id: "danger",
+        title: "隐患检测",
+        component: () => import("../components/hiddenDanger/danger"),
+        islink: true
+      },
+      {
+        id: "layer",
+        title: "图形标注",
+        component: () => import("@/view/nanjingnan_big/home"),
+        islink: true
+      },
+      {
+        id: "alarmInfo",
+        title: "报警信息",
+        component: () => import("@/view/nanjingnan_big/alarm/alarmInfo"),
+        islink: true
+      },
+      {
+        id: "barrierInfo",
+        title: "巡检管理-主",
+        component: () =>
+          import("@/view/nanjingnan_big/components/inspactionInfo"),
+        islink: true
+      },
+      {
+        id: "videoInfo",
+        title: "视频列表-主",
+        component: () => import("@/view/nanjingnan_big/videos/video"),
+        islink: true
+      },
+      {
+        id: "waterInfo",
+        title: "水网-主",
+        component: () => import("@/view/nanjingnan_big/water/water"),
+        islink: true
+      },
+      {
+        id: "safetyIndexInfo",
+        title: "安全指数-主",
+        component: () => import("@/view/nanjingnan_big/safety/safetyIndexInfo"),
+        islink: true
+      },
+      {
+        id: "dangerInfo",
+        title: "隐患检测-主",
+        component: () =>
+          import("@/view/nanjingnan_big/hiddenDanger/dangerInfo"),
+        islink: true
       }
+    ];
+    this._controls = {};
+    var that = this;
+    this.controlMessage.forEach(element => {
+      that._controls[element.id] = element.component;
+    });
+  },
+  mounted() {
+    this.$nextTick(function() {
+      var that = this;
       if (this.vm) {
         this.vm.$destroy();
       }
       this.vm = createMessage({
         id: this.containId,
         controlId: "control01",
-        control: control,
+        control: this._controls[this.component],
         props: {
           text: "这是一个弹窗",
-          w: (this.w / 12) * window.innerWidth,
+          w: (this.w / 12) * window.innerWidth + "",
           h: this.h
-        }
+        },
+        click:this.itemclick
       });
-      // createMessage({
-      //     id:this.containId,
-      //     controlId:'control02',
-      //     control:demo,
-      //     props: {
-      //         text: '这是一个弹窗2'
-      //     }
-      // });
     });
+  },
+  beforeDestroy() {
+    if (this.vm) {
+      this.vm.$destroy();
+    }
+    this.controlMessage=[];
+    this._controls={};
   }
 };
 </script>

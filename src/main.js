@@ -33,12 +33,15 @@ Vue.use(VSelectTree)
 // import 'v-org-tree/dist/v-org-tree.css'
 // import ("babel-polyfill")
 // 实际打包时应该不引入mock
+//TODO 打开和关闭mock
 /* eslint-disable */
 //if (process.env.NODE_ENV !== 'production') require('@/mock')
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
 })
+
+
 import GeminiScrollbar from 'vue-gemini-scrollbar'
 
 Vue.use(GeminiScrollbar)

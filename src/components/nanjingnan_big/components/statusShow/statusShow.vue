@@ -1,5 +1,5 @@
 <template>
-<div class="template-page backImage" @click="turnToPage">
+<div class="template-page backImage" >
   <p>
     <i> 图标</i><span>{{title}}</span>
   </p>

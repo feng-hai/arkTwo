@@ -90,7 +90,7 @@ export default {
 //      height: '300',
           sources: [{
             type: "rtmp/mp4",
-            src: "rtmp://47.103.98.47/live/stream"
+            src: this.sourcesSrc
           }],
           techOrder: ['flash'],
           autoplay: false,

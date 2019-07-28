@@ -1,5 +1,5 @@
 <template>
-  <div class="template-page-danger backImage" @click="turnToPage">
+  <div class="template-page-danger backImage" >
     <p class="pTitle">
       <span class="active">隐患检测</span>
     </p>

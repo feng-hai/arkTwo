@@ -34,11 +34,11 @@ export default {
   },
   props:{
     w:{
-      type:Number,
+      type:Number|String,
       default:window.innerWidth
     },
     h:{
-      type:Number,
+      type:Number|String,
       default: window.innerHeight
     }
   },

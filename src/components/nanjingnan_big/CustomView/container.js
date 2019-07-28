@@ -4,10 +4,11 @@
  * @Author: fh
  * @Date: 2019-06-29 12:50:02
  * @LastEditors: fh
- * @LastEditTime: 2019-07-24 21:20:11
+ * @LastEditTime: 2019-07-28 08:37:46
  */
 
 import Vue from 'vue'
+import store from '@/store'
 
 const createMessage = (options) => {
   // var obj = document.getElementById(options.id);
@@ -32,7 +33,7 @@ const createMessage = (options) => {
   body.appendChild(bindPhone)
   // 这里我们return一个新的Vue实例并且将实例挂载到我们刚创建的DOM节点上
   return new Vue({
-
+    store,
     render: (h) => {
       return h(
         options.control, {
@@ -52,11 +53,11 @@ const createMessage = (options) => {
                 options.save(option)
               }
             },
-            click:function(option)
+            click:function(option,type)
             {
               if(options.click)
               {
-                options.click(option)
+                options.click(option,type)
               }
             }
           }

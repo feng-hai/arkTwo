@@ -1,5 +1,5 @@
 <template>
-  <div class="template-page backImage" @click="turnToPage">
+  <div class="template-page backImage" >
     <!-- <p>
       <i class="iconfont icon-jianzhu"></i>
       <span class="active">{{title}}</span>
@@ -31,14 +31,13 @@ export default {
       }
     },
     grade: {
-      type: Number,
+      type: Number|String,
       default () {
         return 98
       }
     },
     list: {
       type: Array,
-
       default () {
         return [
           {
@@ -71,10 +70,7 @@ export default {
     }
   },
   methods: {
-    turnToPage () {
-      console.log('turnToPage')
-      this.$emit('on-click')
-    }
+   
   }
 }
 </script>

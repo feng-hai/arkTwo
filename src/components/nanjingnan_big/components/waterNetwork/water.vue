@@ -1,5 +1,5 @@
 <template>
-    <div class="template-page-video backImage" @click="turnToPage">
+    <div class="template-page-video backImage" >
     <!-- <p>
       <i class="iconfont icon-jianzhu"></i>
       <span class="active">{{title}}</span>

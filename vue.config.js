@@ -12,9 +12,9 @@ const resolve = dir => {
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
 // iview-admin线上演示打包路径： https://file.iviewui.com/admin-dist/
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/firemen/'
-  : '/'
+const BASE_URL = process.env.NODE_ENV === 'production' ?
+  '/firemen/' :
+  '/'
 var webpack = require('webpack')
 module.exports = {
   assetsDir: 'static',
@@ -44,11 +44,11 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
-      .set('webVideoCtrl',resolve('src/assets/js/webVideoCtrl.js'))
+      .set('webVideoCtrl', resolve('src/assets/js/webVideoCtrl.js'))
     config.entry('index')
       .add('babel-polyfill')
-  //   config.externals({layer:'layer'})
-  // config.resolve.alias.set('vue$','vue/dist/vue.js')
+    //   config.externals({layer:'layer'})
+    // config.resolve.alias.set('vue$','vue/dist/vue.js')
   },
 
   // 设为false打包时不生成.map文件

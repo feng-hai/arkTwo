@@ -23,11 +23,14 @@
             <Col span="5" class="big_table_cell">{{item.area}}</Col>
             <Col span="10" class="big_table_cell">{{item.datetime}}</Col>
             <!-- <Col span="5" class="big_table_cell">{{item.datetime}}</Col> -->
-            <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
+            <Col span="5" class="big_table_cell">{{item.typeName}}</Col>
+
+             <Col span="4" class="big_table_cell"><Icon @click.stop="openModel(item)" type="md-contract" /></Col>
           </Row>
         </div>
       </div>
     </div>
+
   </div>
 </template>
   <script>
@@ -292,6 +295,12 @@ export default {
     },
     mouseout: function() {
       //  this.scollRight=-17;
+    },
+    openModel(item)
+    {
+      console.log(item,"报警click")
+
+      this.$emit("click",item,'detail')
     }
   }
 };

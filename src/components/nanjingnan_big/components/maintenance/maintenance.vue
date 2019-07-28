@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click="cardClick">
+  <div >
     <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
       <p class="pTitle">
         <span class="active">维护保养</span>
@@ -141,19 +141,19 @@ export default {
     // this.getOrgInfoAction();
     // this.getMenuInfoAction();
     // 访问车辆状态数据
-    this.getBigInfoAction({
-      channel: "PATROL_TODO",
-      system_id: "157"
-    }).then(res => {
-      var temp = res.data.map(item => {
-        return {
-          value: item.amount,
-          name: item.name
-        };
-      });
-      that.options.series[0].data = temp;
-      console.log(that.options);
-    });
+    // this.getBigInfoAction({
+    //   channel: "PATROL_TODO",
+    //   system_id: "157"
+    // }).then(res => {
+    //   var temp = res.data.map(item => {
+    //     return {
+    //       value: item.amount,
+    //       name: item.name
+    //     };
+    //   });
+    //   that.options.series[0].data = temp;
+    //   console.log(that.options);
+    // });
   }
 };
 </script>

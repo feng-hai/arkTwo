@@ -4,10 +4,10 @@
          <i class="iconfont icon-baojing"></i><span>{{title}}</span>
     </p>-->
     <Row>
-      <Col span="6" class="big_table_cell">扣分项</Col>
-      <Col span="6" class="big_table_cell">扣分值</Col>
-      <Col span="6" class="big_table_cell">扣分项</Col>
-      <Col span="6" class="big_table_cell">扣分值</Col>
+      <Col span="6" class="big_table_cell">巡检点位</Col>
+      <Col span="6" class="big_table_cell">位置</Col>
+      <Col span="6" class="big_table_cell">巡检人</Col>
+      <Col span="6" class="big_table_cell">巡检时间</Col>
     </Row>
     <div
       class="test test-1"
@@ -19,9 +19,8 @@
         <div>
           <Row v-for="(item , index) in alarmArray" :key="index">
             <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
-            
-            <Col span="6" class="big_table_cell">{{item.person}}</Col>
             <Col span="6" class="big_table_cell">{{item.domainName}}</Col>
+            <Col span="6" class="big_table_cell">{{item.person}}</Col>
             <Col span="6" class="big_table_cell">{{item.datetime}}</Col>
           </Row>
         </div>
@@ -59,153 +58,195 @@ export default {
       title: '报警信息',
       alarmArray: [
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-           datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-        datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-           datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-        datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-           datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         },
         {
-       datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:21:21',
+          domainName: '南京动车所',
+          person: '张工',
+          typeName: '烟感报警'
+        },
+        {
+          datetime: '2019-05-15 10:22:21',
+          domainName: '南京动车所',
+          person: '张工',
           typeName: '烟感报警'
         }
       ]
