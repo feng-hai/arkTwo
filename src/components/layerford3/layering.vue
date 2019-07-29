@@ -183,7 +183,7 @@ export default {
 
       that.dataParent.zoom = d3.behavior
         .zoom()
-        .scaleExtent([0, 10])
+        .scaleExtent([0, 100])
         .on("zoom", that.zoomed);
       that.dataParent.svg.call(that.dataParent.zoom);
       // 添加背景图
