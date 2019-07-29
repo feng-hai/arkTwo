@@ -6,43 +6,43 @@
   </div>
 </template>
 <script>
-import remoteLoad from "@/assets/js/remoteLoad.js";
-import WebVideoCtrl from "@/libs/webVideo.js";
+import remoteLoad from '@/assets/js/remoteLoad.js'
+import WebVideoCtrl from '@/libs/webVideo.js'
 
 export default {
-  name: "videoTemplate",
-  data() {
+  name: 'videoTemplate',
+  data () {
     return {
-      g_iWndIndex: 2, //激活窗口位置
+      g_iWndIndex: 2, // 激活窗口位置
       iStreamType: 1,
 
-      szInfo: ""
-    };
+      szInfo: ''
+    }
   },
   props: {
     id: {
       type: String,
-      default: "divPlugin"
+      default: 'divPlugin'
     },
     ip: {
       type: String,
-      default: "10.100.100.249"
+      default: '10.100.100.249'
     },
     port: {
       type: String,
-      default: "80"
+      default: '80'
     },
     userName: {
       type: String,
-      default: "admin"
+      default: 'admin'
     },
     password: {
       type: String,
-      default: "jms123456"
+      default: 'jms123456'
     },
     split: {
       type: String,
-      default: "4"
+      default: '4'
     },
     vwidth: {
       type: Number,
@@ -57,20 +57,20 @@ export default {
     //   default: 13
     // },
     iChannelID: {
-      //第几路摄像头
+      // 第几路摄像头
       type: Number,
       default: 2
     }
   },
   methods: {
     // 窗口分割数
-    changeWndNum(iType) {
-      iType = parseInt(iType, 10);
-      WebVideoCtrl.I_ChangeWndNum(iType);
+    changeWndNum (iType) {
+      iType = parseInt(iType, 10)
+      WebVideoCtrl.I_ChangeWndNum(iType)
     },
-    getChannelInfo() {
-      var that = this;
-      that.startRealPlay();
+    getChannelInfo () {
+      var that = this
+      that.startRealPlay()
       // 模拟通道
       // WebVideoCtrl.I_GetAnalogChannelInfo(this.ip, {
       //   async: false,
@@ -97,32 +97,32 @@ export default {
       // // 数字通道
       WebVideoCtrl.I_GetDigitalChannelInfo(that.ip, {
         async: false,
-        success: function(xmlDoc) {
+        success: function (xmlDoc) {
           // that.startRealPlay();
-          var oChannels = $(xmlDoc).find("InputProxyChannelStatus");
-          var temp = [];
-          $.each(oChannels, function(i) {
+          var oChannels = $(xmlDoc).find('InputProxyChannelStatus')
+          var temp = []
+          $.each(oChannels, function (i) {
             var id = parseInt(
                 $(this)
-                  .find("id")
+                  .find('id')
                   .eq(0)
                   .text(),
                 10
               ),
               name = $(this)
-                .find("name")
+                .find('name')
                 .eq(0)
                 .text(),
               online = $(this)
-                .find("online")
+                .find('online')
                 .eq(0)
-                .text();
+                .text()
             // if ("false" == online) { // 过滤禁用的数字通道
             //   return true;
             // }
-            if ("" == name) {
-              name = "IPCamera " + id < 9 ? "0" + id : id;
-              //name = "IPCamera " + ((id - nAnalogChannel) < 9 ? "0" + (id - nAnalogChannel) : (id - nAnalogChannel));
+            if (name == '') {
+              name = 'IPCamera ' + id < 9 ? '0' + id : id
+              // name = "IPCamera " + ((id - nAnalogChannel) < 9 ? "0" + (id - nAnalogChannel) : (id - nAnalogChannel));
             }
 
             temp.push({
@@ -130,17 +130,17 @@ export default {
               name: name,
               online: online,
               oChannels: id
-            });
-            //console.log("<option value='" + id + "' bZero='false'>" + name + "</option>")
+            })
+            // console.log("<option value='" + id + "' bZero='false'>" + name + "</option>")
             // oSel.append("<option value='" + id + "' bZero='false'>" + name + "</option>");
-          });
-          that.$emit("initVideo", temp);
+          })
+          that.$emit('initVideo', temp)
           // showOPInfo(szIP + " 获取数字通道成功！");
         },
-        error: function() {
-          //showOPInfo(szIP + " 获取数字通道失败！");
+        error: function () {
+          // showOPInfo(szIP + " 获取数字通道失败！");
         }
-      });
+      })
       // // 零通道
       // WebVideoCtrl.I_GetZeroChannelInfo(that.ip, {
       //   async: false,
@@ -165,74 +165,74 @@ export default {
       //   }
       // });
     },
-    startRealPlay() {
-      var that = this;
-      var oWndInfo = WebVideoCtrl.I_GetWindowStatus(that.g_iWndIndex);
+    startRealPlay () {
+      var that = this
+      var oWndInfo = WebVideoCtrl.I_GetWindowStatus(that.g_iWndIndex)
 
       if (oWndInfo != null) {
         // 已经在播放了，先停止
-        WebVideoCtrl.I_Stop();
+        WebVideoCtrl.I_Stop()
       }
       var iRet = WebVideoCtrl.I_StartRealPlay(that.ip, {
         iStreamType: that.iStreamType,
         iChannelID: that.iChannelID,
-        bZeroChannel: false //待修改
-      });
+        bZeroChannel: false // 待修改
+      })
 
-      if (0 == iRet) {
-        this.szInfo = "开始预览成功！";
+      if (iRet == 0) {
+        this.szInfo = '开始预览成功！'
       } else {
-        this.szInfo = "开始预览失败！";
+        this.szInfo = '开始预览失败！'
       }
 
-      //showOPInfo(szIP + " " + szInfo);
+      // showOPInfo(szIP + " " + szInfo);
     },
-    stopRealPlay() {
-      //停止预览
-      var that = this;
+    stopRealPlay () {
+      // 停止预览
+      var that = this
       var oWndInfo = WebVideoCtrl.I_GetWindowStatus(that.g_iWndIndex),
-        szInfo = "";
+        szInfo = ''
 
       if (oWndInfo != null) {
-        var iRet = WebVideoCtrl.I_Stop();
-        if (0 == iRet) {
-          szInfo = "停止预览成功！";
+        var iRet = WebVideoCtrl.I_Stop()
+        if (iRet == 0) {
+          szInfo = '停止预览成功！'
         } else {
-          szInfo = "停止预览失败！";
+          szInfo = '停止预览失败！'
         }
 
         // showOPInfo(oWndInfo.szIP + " " + szInfo);
       }
     },
-    initVideo() {
-      var that = this;
+    initVideo () {
+      var that = this
       // 检查插件是否已经安装过
-      if (-1 == WebVideoCtrl.I_CheckPluginInstall()) {
-        alert("您还未安装过插件，双击开发包目录里的WebComponents.exe安装！");
-        return;
+      if (WebVideoCtrl.I_CheckPluginInstall() == -1) {
+        alert('您还未安装过插件，双击开发包目录里的WebComponents.exe安装！')
+        return
       }
       if (this.vwidth == null) {
-        return;
+        return
       }
       // 初始化插件参数及插入插件
       WebVideoCtrl.I_InitPlugin(this.vwidth, this.vheight, {
         iWndowType: this.split,
-        cbSelWnd: function(xmlDoc) {
+        cbSelWnd: function (xmlDoc) {
           that.g_iWndIndex = $(xmlDoc)
-            .find("SelectWnd")
+            .find('SelectWnd')
             .eq(0)
-            .text();
+            .text()
           //  var szInfo = "当前选择的窗口编号：" + that.g_iWndIndex;
-          //showCBInfo(szInfo);
+          // showCBInfo(szInfo);
         }
-      });
-      WebVideoCtrl.I_InsertOBJECTPlugin(this.id);
+      })
+      WebVideoCtrl.I_InsertOBJECTPlugin(this.id)
       // 检查插件是否最新
-      if (-1 == WebVideoCtrl.I_CheckPluginVersion()) {
-        alert("检测到新的插件版本，双击开发包目录里的WebComponents.exe升级！");
-        return;
+      if (WebVideoCtrl.I_CheckPluginVersion() == -1) {
+        alert('检测到新的插件版本，双击开发包目录里的WebComponents.exe升级！')
+        return
       }
-      console.log("开始登陆");
+      console.log('开始登陆')
       var iRet = WebVideoCtrl.I_Login(
         this.ip,
         1,
@@ -240,36 +240,36 @@ export default {
         this.userName,
         this.password,
         {
-          success: function(xmlDoc) {
-            console.log(" 登录成功！", xmlDoc);
+          success: function (xmlDoc) {
+            console.log(' 登录成功！', xmlDoc)
 
             // $("#ip").prepend("<option value='" + szIP + "'>" + szIP + "</option>");
-            setTimeout(function() {
-              that.getChannelInfo();
-            }, 10);
+            setTimeout(function () {
+              that.getChannelInfo()
+            }, 10)
           },
-          error: function() {
-            console.log(" 登录失败！");
-            //showOPInfo(szIP + " 登录失败！");
+          error: function () {
+            console.log(' 登录失败！')
+            // showOPInfo(szIP + " 登录失败！");
           }
         }
-      );
-      if (-1 == iRet) {
-        console.log(" 已登录过！");
-        setTimeout(function() {
-          that.getChannelInfo();
-        }, 10);
+      )
+      if (iRet == -1) {
+        console.log(' 已登录过！')
+        setTimeout(function () {
+          that.getChannelInfo()
+        }, 10)
       }
     }
   },
-  mounted() {
-    console.log("mounted");
-    var that = this;
+  mounted () {
+    console.log('mounted')
+    var that = this
     //  await remoteLoad(`../../assets/js/webVideoCtrl.js`)
-    //await remoteLoad('http://webapi.amap.com/ui/1.0/main.js')
+    // await remoteLoad('http://webapi.amap.com/ui/1.0/main.js')
     this.$nextTick(() => {
-      that.initVideo();
-    });
+      that.initVideo()
+    })
 
     // // 已载入高德地图API，则直接初始化地图
     // if (window.WebVideoCtrl) {
@@ -287,33 +287,33 @@ export default {
     // }
   },
 
-  created() {
-    console.log("created");
+  created () {
+    console.log('created')
   },
   watch: {
-    vwidth(n, o) {
-      var that = this;
+    vwidth (n, o) {
+      var that = this
       if (n != o) {
-        that.initVideo();
+        that.initVideo()
       }
     }
   },
-  destoryed() {
-    console.log("destoryed");
-    var that = this;
-    that.stopRealPlay();
-    var iRet = WebVideoCtrl.I_Logout(this.ip);
-    if (0 == iRet) {
-      this.szInfo = "退出成功！";
+  destoryed () {
+    console.log('destoryed')
+    var that = this
+    that.stopRealPlay()
+    var iRet = WebVideoCtrl.I_Logout(this.ip)
+    if (iRet == 0) {
+      this.szInfo = '退出成功！'
       // $("#ip option[value='" + szIP + "']").remove();
       // getChannelInfo();
     } else {
-      this.szInfo = "退出失败！";
+      this.szInfo = '退出失败！'
     }
 
-    console.log(this.szInfo);
+    console.log(this.szInfo)
   }
-};
+}
 </script>
 <style lang="less">
 @charset "utf-8";

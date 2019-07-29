@@ -28,7 +28,8 @@ import {
 import {
   setToken,
   getToken,
-  translateArraytoMenus
+  translateArraytoMenus,
+  setCookies
 } from '@/libs/util'
 import user from '@/assets/js/user'
 
@@ -48,47 +49,47 @@ export default {
     messageContentStore: {}
   },
   mutations: {
-    setAvator(state, avatorPath) {
+    setAvator (state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId(state, id) {
+    setUserId (state, id) {
       state.userId = id
     },
-    setUserName(state, name) {
+    setUserName (state, name) {
       state.userName = name
     },
-    setAccess(state, access) {
+    setAccess (state, access) {
       state.access = access
     },
-    setToken(state, token) {
+    setToken (state, token) {
       state.token = token
       setToken(token)
     },
-    setMenus(state, menus) {
+    setMenus (state, menus) {
       state.menus = menus
     },
-    setHasGetInfo(state, status) {
+    setHasGetInfo (state, status) {
       state.hasGetInfo = status
     },
-    setMessageCount(state, count) {
+    setMessageCount (state, count) {
       state.unreadCount = count
     },
-    setMessageUnreadList(state, list) {
+    setMessageUnreadList (state, list) {
       state.messageUnreadList = list
     },
-    setMessageReadedList(state, list) {
+    setMessageReadedList (state, list) {
       state.messageReadedList = list
     },
-    setMessageTrashList(state, list) {
+    setMessageTrashList (state, list) {
       state.messageTrashList = list
     },
-    updateMessageContentStore(state, {
+    updateMessageContentStore (state, {
       msg_id,
       content
     }) {
       state.messageContentStore[msg_id] = content
     },
-    moveMsg(state, {
+    moveMsg (state, {
       from,
       to,
       msg_id
@@ -107,7 +108,7 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin({
+    handleLogin ({
       commit
     }, {
       userName,
@@ -138,7 +139,7 @@ export default {
         }).catch(err => {
           // commit('setToken', '222222222222222222')
           // resolve()
-          //TODO 发生 错误时，也能正常登录，正式系统需要剔除
+          // TODO 发生 错误时，也能正常登录，正式系统需要剔除
           // commit('setToken', "fffffff")
           // // 用户id
           // sessionStorage.setItem('userid',"ffffffffff")
@@ -159,27 +160,26 @@ export default {
         // })
       })
     },
-    getRolesByUserId({}, userid) {
+    getRolesByUserId ({}, userid) {
       return new Promise((resolve, reject) => {
         getRolesByUserid(userid).then(res => {
           resolve(res.data)
         }).catch(err => {
-          reject(err);
+          reject(err)
         })
-      });
+      })
     },
 
-    getCurrentRoles() {
+    getCurrentRoles () {
       return new Promise((resolve, reject) => {
         getCurrentRoles().then(res => {
           resolve(res.data)
-
         }).catch(err => {
-          reject(err);
+          reject(err)
         })
-      });
+      })
     },
-    bindRoleAndMenus({
+    bindRoleAndMenus ({
       state,
       commit
     }, options) {
@@ -192,12 +192,11 @@ export default {
         })
       })
     },
-    unbindRoleAndMenus({
+    unbindRoleAndMenus ({
       state,
       commit
     }, options) {
       return new Promise((resolve, reject) => {
-
         unbindRoleAndMenus(options).then(res => {
           resolve()
         }).catch(err => {
@@ -206,7 +205,7 @@ export default {
       })
     },
     // 退出登录
-    handleLogOut({
+    handleLogOut ({
       state,
       commit
     }) {
@@ -228,66 +227,67 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo({
+    getUserInfo ({
       state,
       commit
     }) {
       return new Promise((resolve, reject) => {
+
+        setCookies("domainId",'C98D97238CA34F96A969BDA01DAB31FA');
         try {
           var userId = sessionStorage.getItem('userid')
           var username = sessionStorage.getItem('userName')
           if (username == 'fh') {
             console.log(userId, '用户信息id')
-            //TODO //从数据库中获取动态菜单数据
-            // getMenuInfo({
-            //   offset: 0,
-            //   page_size: 1000
-            // }).then((res) => {
-            //   var menus = translateArraytoMenus(res.data)
-              const data = user.USER01
-              // console.log(data.menus, "写死的数据")
-             // data.menus = menus
-              commit('setAvator', data.avator)
-              commit('setUserName', username)
-              commit('setUserId', userId)
-              commit('setAccess', data.access)
-              // commit('setMenus', data.menus) //对菜单进行赋值
-              commit('setHasGetInfo', true)
-              // console.log(res.data, "后台数据传递");
-              commit('setMenus', data.menus)
+            // TODO //从数据库中获取动态菜单数据
+            getMenuInfo({
+              offset: 0,
+              page_size: 1000
+            }).then((res) => {
+              var menus = translateArraytoMenus(res.data)
+            const data = user.USER01
+            // console.log(data.menus, "写死的数据")
+             data.menus = menus
+            commit('setAvator', data.avator)
+            commit('setUserName', username)
+            commit('setUserId', userId)
+            commit('setAccess', data.access)
+            // commit('setMenus', data.menus) //对菜单进行赋值
+            commit('setHasGetInfo', true)
+            // console.log(res.data, "后台数据传递");
+            commit('setMenus', data.menus)
 
-              // console.log(menus, "格式化");
+            // console.log(menus, "格式化");
 
-              resolve(data)
-              //  console.log(res.data.collection)
-              // resolve(res.data.collection)
-            // }).catch(error => {
-            //   reject(error)
-            // })
+            resolve(data)
+            //  console.log(res.data.collection)
+            // resolve(res.data.collection)
+            }).catch(error => {
+              reject(error)
+            })
           } else {
             console.log('不知指定用戶')
-            getCurrentUserInfo().then(res=>{
-              console.log("獲取當前用戶信息成功")
-            }).catch(err=>{
-              console.log("獲取當前用戶信息失敗")
+            getCurrentUserInfo().then(res => {
+              console.log('獲取當前用戶信息成功')
+            }).catch(err => {
+              console.log('獲取當前用戶信息失敗')
             })
 
             // 通过角色查询菜单
             // //TODO 根据用户id,动态菜单信息
             getRolesByUserid(userId).then(res => {
-
-              var roles = res.data;
+              var roles = res.data
               roles.forEach(role => {
-                var roleid = role.unid;
+                var roleid = role.unid
                 // 获取用户角色信息
                 // 通过角色id，查询对应的菜单
-                console.log(res, '用户角色信息',roleid)
+                console.log(res, '用户角色信息', roleid)
                 getMenusByRoleId(roleid).then(res => {
-                  console.log('获取菜单信息',res)
+                  console.log('获取菜单信息', res)
                   var menus = translateArraytoMenus(res.data)
                   const data = user.USER01
                   // console.log(data.menus, "写死的数据")
-                  data.menus = menus;
+                  data.menus = menus
                   commit('setAvator', data.avator)
                   commit('setUserName', username)
                   commit('setUserId', userId)
@@ -296,20 +296,18 @@ export default {
                   commit('setHasGetInfo', true)
                   // console.log(res.data, "后台数据传递");
                   commit('setMenus', data.menus)
-                   console.log(menus, "格式化");
+                  console.log(menus, '格式化')
                   resolve(data)
-                }).catch(err=>{
+                }).catch(err => {
                   console.log(err, '角色信息获取失败')
                   reject(err)
                 })
               })
-
-            }).catch(err=>{
-              console.log(err,"根據用戶獲取角色失敗")
+            }).catch(err => {
+              console.log(err, '根據用戶獲取角色失敗')
 
               reject(err)
-            });
-
+            })
           }
 
           // }).catch(err => {
@@ -323,7 +321,7 @@ export default {
         }
       })
     },
-    getMenuInfoAction({
+    getMenuInfoAction ({
       commit
     }) {
       return new Promise((resolve, reject) => {
@@ -341,7 +339,7 @@ export default {
     },
 
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
-    getUnreadMessageCount({
+    getUnreadMessageCount ({
       state,
       commit
     }) {
@@ -353,7 +351,7 @@ export default {
       // })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
-    getMessageList({
+    getMessageList ({
       state,
       commit
     }) {
@@ -379,7 +377,7 @@ export default {
         })
       })
     },
-    getAllMenus({
+    getAllMenus ({
       state,
       commit
     }) {
@@ -387,11 +385,11 @@ export default {
 
       })
     },
-    getMenusByRoleId({
-        state,
-        commit
-      },
-      option
+    getMenusByRoleId ({
+      state,
+      commit
+    },
+    option
     ) {
       console.log(option)
       return new Promise((resolve, reject) => {
@@ -430,7 +428,7 @@ export default {
       })
     },
     // 根据当前点击的消息的id获取内容
-    getContentByMsgId({
+    getContentByMsgId ({
       state,
       commit
     }, {
@@ -453,7 +451,7 @@ export default {
       })
     },
     // 把一个未读消息标记为已读
-    hasRead({
+    hasRead ({
       state,
       commit
     }, {
@@ -474,7 +472,7 @@ export default {
       })
     },
     // 删除一个已读消息到回收站
-    removeReaded({
+    removeReaded ({
       commit
     }, {
       msg_id
@@ -494,7 +492,7 @@ export default {
     },
 
     // 还原一个已删除消息到已读消息
-    restoreTrash({
+    restoreTrash ({
       commit
     }, {
       msg_id

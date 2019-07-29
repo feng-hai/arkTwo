@@ -18,8 +18,8 @@ import {
   // getAllRolesInfoData
 } from '@/api/publicResource'
 import {
-  translateDataToTree
-  // getCookiesValueByKey
+  translateDataToTree,
+   getCookiesValueByKey
 
 } from '@/libs/util.js'
 
@@ -34,7 +34,7 @@ export default {
   mutations: {
     setOrganization (state, orgInfo) {
       // TODO 当前用户的机构id
-      var rootId = 'C98D97238CA34F96A969BDA01DAB31FA' // getCookiesValueByKey('domainId')
+      var rootId =  getCookiesValueByKey('domainId');//'C98D97238CA34F96A969BDA01DAB31FA' //
       state.orgTree = translateDataToTree(orgInfo, rootId)
       console.log(state.orgTree, 'orgTree')
       state.organizationList = orgInfo
@@ -84,7 +84,10 @@ export default {
     getRolesInfo: state => state.roles,
     getOrgTreeInfo: state => state.orgTree,
     getInfo: state => (type) => {
+
+      console.log(type)
       if (type == 'orgTree') {
+        console.log(state.orgTree,"company tree")
         return state.orgTree
       } else if (type == 'org') {
         return state.organizationList

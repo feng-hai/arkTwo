@@ -16,7 +16,7 @@ export default {
   computed: {
 
   },
-  data() {
+  data () {
     return {
       headers: {
         'Authorization': 'bearer ' + getToken(),
@@ -27,22 +27,22 @@ export default {
     }
   },
   methods: {
-    updateSuccess(res, file, fileList) {
-      this.$emit("updateClick",res);
+    updateSuccess (res, file, fileList) {
+      this.$emit('updateClick', res)
     },
-    handleRemove(file) {
-      //console.log(file, "删除信息")
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    handleRemove (file) {
+      // console.log(file, "删除信息")
+      const fileList = this.$refs.upload.fileList
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
     },
-    handleBeforeUpload() {
-      const check = this.uploadList.length < 1;
+    handleBeforeUpload () {
+      const check = this.uploadList.length < 1
       if (!check) {
         this.$Notice.warning({
           title: '请先删除，再上传图片！'
-        });
+        })
       }
-      return check;
+      return check
     }
   }
 
