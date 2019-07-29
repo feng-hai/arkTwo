@@ -12,7 +12,8 @@ import {
   getRolesByUserid,
   getMenusByRoleId,
   bindRoleAndMenus,
-  unbindRoleAndMenus
+  unbindRoleAndMenus,
+  getCurrentUserInfo
 } from '@/api/user'
 import {
   // getOrganizationInfo,
@@ -144,7 +145,7 @@ export default {
           // sessionStorage.setItem('userName', userName)
           // resolve()
 
-         reject(err)
+          reject(err)
         })
         // login({
         //   userName,
@@ -158,11 +159,11 @@ export default {
         // })
       })
     },
-    getRolesByUserId({},userid){
+    getRolesByUserId({}, userid) {
       return new Promise((resolve, reject) => {
         getRolesByUserid(userid).then(res => {
           resolve(res.data)
-        }).catch(err=>{
+        }).catch(err => {
           reject(err);
         })
       });
@@ -173,7 +174,7 @@ export default {
         getCurrentRoles().then(res => {
           resolve(res.data)
 
-        }).catch(err=>{
+        }).catch(err => {
           reject(err);
         })
       });
@@ -196,7 +197,7 @@ export default {
       commit
     }, options) {
       return new Promise((resolve, reject) => {
-       
+
         unbindRoleAndMenus(options).then(res => {
           resolve()
         }).catch(err => {
@@ -238,14 +239,14 @@ export default {
           if (username == 'fh') {
             console.log(userId, '用户信息id')
             //TODO //从数据库中获取动态菜单数据
-            getMenuInfo({
-              offset: 0,
-              page_size: 1000
-            }).then((res) => {
-              var menus = translateArraytoMenus(res.data)
+            // getMenuInfo({
+            //   offset: 0,
+            //   page_size: 1000
+            // }).then((res) => {
+            //   var menus = translateArraytoMenus(res.data)
               const data = user.USER01
               // console.log(data.menus, "写死的数据")
-              data.menus = menus
+             // data.menus = menus
               commit('setAvator', data.avator)
               commit('setUserName', username)
               commit('setUserId', userId)
@@ -260,37 +261,58 @@ export default {
               resolve(data)
               //  console.log(res.data.collection)
               // resolve(res.data.collection)
-            }).catch(error => {
-              reject(error)
-            })
+            // }).catch(error => {
+            //   reject(error)
+            // })
           } else {
             console.log('不知指定用戶')
+            getCurrentUserInfo().then(res=>{
+              console.log("獲取當前用戶信息成功")
+            }).catch(err=>{
+              console.log("獲取當前用戶信息失敗")
+            })
+
             // 通过角色查询菜单
             // //TODO 根据用户id,动态菜单信息
-            getUserInfo(userId).then(res => {
-              // 获取用户角色信息
-              // 通过角色id，查询对应的菜单
-              console.log(res, '用户信息')
-              getMenusByRoleId(roleid).then(res => {
-                var menus = translateArraytoMenus(res.data)
-                const data = user.USER01
-                // console.log(data.menus, "写死的数据")
-                //  data.menus = menus;
-                commit('setAvator', data.avator)
-                commit('setUserName', username)
-                commit('setUserId', userId)
-                commit('setAccess', data.access)
-                // commit('setMenus', data.menus) //对菜单进行赋值
-                commit('setHasGetInfo', true)
-                // console.log(res.data, "后台数据传递");
-                commit('setMenus', data.menus)
-                // console.log(menus, "格式化");
-                resolve(data)
+            getRolesByUserid(userId).then(res => {
+
+              var roles = res.data;
+              roles.forEach(role => {
+                var roleid = role.unid;
+                // 获取用户角色信息
+                // 通过角色id，查询对应的菜单
+                console.log(res, '用户角色信息',roleid)
+                getMenusByRoleId(roleid).then(res => {
+                  console.log('获取菜单信息',res)
+                  var menus = translateArraytoMenus(res.data)
+                  const data = user.USER01
+                  // console.log(data.menus, "写死的数据")
+                  data.menus = menus;
+                  commit('setAvator', data.avator)
+                  commit('setUserName', username)
+                  commit('setUserId', userId)
+                  commit('setAccess', data.access)
+                  // commit('setMenus', data.menus) //对菜单进行赋值
+                  commit('setHasGetInfo', true)
+                  // console.log(res.data, "后台数据传递");
+                  commit('setMenus', data.menus)
+                   console.log(menus, "格式化");
+                  resolve(data)
+                }).catch(err=>{
+                  console.log(err, '角色信息获取失败')
+                  reject(err)
+                })
+              }).catch(err => {
+                console.log(err, '用户信息错误')
+                reject(err)
               })
-            }).catch(err => {
-              console.log(err, '用户信息错误')
+
+            }).catch(err=>{
+              console.log(err,"根據用戶獲取角色失敗")
+
               reject(err)
-            })
+            });
+
           }
 
           // }).catch(err => {

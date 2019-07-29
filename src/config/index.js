@@ -19,7 +19,7 @@ export default {
   baseUrl: {
     dev: '', //https://121.41.42.184:6666
     // dev: 'https://api.renxingzuche.com',
-    pro: 'https://121.41.42.184:6666'
+    pro: 'https://121.41.42.184'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
