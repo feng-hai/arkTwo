@@ -1,5 +1,5 @@
 <template>
-<Upload ref="upload" type="drag" :on-remove="handleRemove" :default-file-list="defaultList" action="https://api.renxingzuche.com/aquaman/attachment" :headers="headers" :before-upload="handleBeforeUpload" :on-success="updateSuccess">
+<Upload ref="upload" type="drag" :on-remove="handleRemove" :default-file-list="defaultList" action="https://121.41.42.184/aquaman/attachment" :headers="headers" :before-upload="handleBeforeUpload" :on-success="updateSuccess">
   <div style="padding:20px 0">
     <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
     <p>Click or drag files here to upload</p>

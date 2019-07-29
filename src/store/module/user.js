@@ -302,9 +302,6 @@ export default {
                   console.log(err, '角色信息获取失败')
                   reject(err)
                 })
-              }).catch(err => {
-                console.log(err, '用户信息错误')
-                reject(err)
               })
 
             }).catch(err=>{
