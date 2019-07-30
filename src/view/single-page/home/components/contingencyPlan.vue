@@ -34,7 +34,7 @@
             </div>
           </Col>
           <Col span="12">
-            <div style="  height:693px;   border: 1px solid #5bf4fd;">
+            <div style="  height:715px;   border: 1px solid #5bf4fd;">
               <p class="yaTitle">应急预案</p>
               <p
                 class="yaContent"
