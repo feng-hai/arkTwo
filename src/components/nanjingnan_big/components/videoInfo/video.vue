@@ -71,7 +71,7 @@ export default {
   .tit{
       position: absolute;
       left: 0px;
-      top: 0px;
+      top: 8px;
       width:50px; 
       padding:10px;
       color:#fff;
