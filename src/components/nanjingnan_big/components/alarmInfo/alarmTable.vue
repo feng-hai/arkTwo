@@ -12,7 +12,7 @@
     </Row>-->
     <div
       class="test test-1"
-      :style="{height:scollHeight+'px'}"
+      :style="{height:h+'px'}"
       @mouseover="mouseover"
       @mouseout="mouseout"
     >
@@ -43,7 +43,16 @@ export default {
       default() {
         return 200;
       }
+    },
+    h:{
+      type:String|Number,
+      default(){
+        return 200;
+      
+
+      }
     }
+
   },
   data() {
     return {

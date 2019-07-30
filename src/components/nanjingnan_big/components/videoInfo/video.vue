@@ -45,12 +45,12 @@ export default {
           {
             color: "#5bf4fd",
             num: 123,
-            name: "正常"
+            name: "在线"
           },
           {
             color: "#ff5050",
             num: 123,
-            name: "报警"
+            name: "离线"
           }
         ];
       }

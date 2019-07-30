@@ -81,7 +81,7 @@ export default {
     //  right: -17px;
     bottom: 0;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .scrollbar::-webkit-scrollbar {

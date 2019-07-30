@@ -2,29 +2,41 @@
   <div class="contentinfo">
     <!-- <p class="pTitle">
       <span class="active">安全指数</span>
-    </p> -->
-    <Row >
+    </p>-->
+    <Row>
       <Col span="12">
         <safetyIndexEcharts :options="option1" title="消防设施(42/45)" :chartsHeight="chartsHeight"></safetyIndexEcharts>
       </Col>
       <Col span="12">
-        <safetyIndexTable  :dataTable="dataTable1" :scollHeight="scollHeight" style="padding-bottom:10px"></safetyIndexTable>
+        <safetyIndexTable
+          :dataTable="dataTable1"
+          :scollHeight="scollHeight"
+          style="padding-bottom:10px"
+        ></safetyIndexTable>
       </Col>
     </Row>
-      <Row>
+    <Row>
       <Col span="12">
         <safetyIndexEcharts :options="option2" title="消防管理(42/45)" :chartsHeight="chartsHeight"></safetyIndexEcharts>
       </Col>
       <Col span="12">
-        <safetyIndexTable :dataTable="dataTable2"  :scollHeight="scollHeight" style="padding-bottom:10px"></safetyIndexTable>
+        <safetyIndexTable
+          :dataTable="dataTable2"
+          :scollHeight="scollHeight"
+          style="padding-bottom:10px"
+        ></safetyIndexTable>
       </Col>
     </Row>
-      <Row>
+    <Row>
       <Col span="12">
-        <safetyIndexEcharts :options="option3"  title="客观情况(42/45)" :chartsHeight="chartsHeight"></safetyIndexEcharts>
+        <safetyIndexEcharts :options="option3" title="客观情况(42/45)" :chartsHeight="chartsHeight"></safetyIndexEcharts>
       </Col>
       <Col span="12">
-        <safetyIndexTable :dataTable="dataTable3" :scollHeight="scollHeight" style="padding-bottom:10px"></safetyIndexTable>
+        <safetyIndexTable
+          :dataTable="dataTable3"
+          :scollHeight="scollHeight"
+          style="padding-bottom:10px"
+        ></safetyIndexTable>
       </Col>
     </Row>
   </div>
@@ -41,24 +53,23 @@ export default {
   },
   data() {
     return {
-      chartsHeight: (windowHeight() - 120) /3,
-      scollHeight: (windowHeight() - 120) / 3 - 10 - 23,
-      dataTable1:[],
-      dataTable2:[ 
+      chartsHeight: (windowHeight() - 120) / 3 - 25,
+      scollHeight: (windowHeight() - 120) / 3 - 10 - 23-30,
+      dataTable1: [],
+      dataTable2: [
         {
-          number: '1',
-          typename: '人员值守',
-      
+          number: "1",
+          typename: "人员值守"
         },
         {
-         number: '3',
-          typename: '日常巡检',
-        
-        }],
-      dataTable3:[ ],
-      option1:{
+          number: "3",
+          typename: "日常巡检"
+        }
+      ],
+      dataTable3: [],
+      option1: {
         title: {
-          text: '消防设施(45/45)'
+          text: "消防设施(45/45)"
         },
         // tooltip: {},
         // legend: {
@@ -69,7 +80,7 @@ export default {
           name: {
             textStyle: {
               color: "#fff",
-             // backgroundColor: "#999",
+              // backgroundColor: "#999",
               borderRadius: 3,
               padding: [3, 5]
             }
@@ -92,14 +103,14 @@ export default {
               {
                 value: [8, 10, 3, 8, 2, 3],
                 name: "预算分配（Allocated Budget）"
-              } 
+              }
             ]
           }
         ]
       },
-      option2:{
+      option2: {
         title: {
-          text: '消防管理(41/45)'
+          text: "消防管理(41/45)"
         },
         // tooltip: {},
         // legend: {
@@ -118,9 +129,8 @@ export default {
           indicator: [
             { name: "人员值守", max: 5 },
             { name: "制度架构", max: 15 },
-            { name: "日常巡查", max: 15},
-            { name: "应急处置", max:5 },
-        
+            { name: "日常巡查", max: 15 },
+            { name: "应急处置", max: 5 }
           ]
         },
         series: [
@@ -132,14 +142,14 @@ export default {
               {
                 value: [4, 15, 12, 5],
                 name: "预算分配（Allocated Budget）"
-              } 
+              }
             ]
           }
         ]
       },
-      option3:{
+      option3: {
         title: {
-          text: '客观情况(10/10)'
+          text: "客观情况(10/10)"
         },
         // tooltip: {},
         // legend: {
@@ -150,7 +160,7 @@ export default {
           name: {
             textStyle: {
               color: "#fff",
-            //  backgroundColor: "#999",
+              //  backgroundColor: "#999",
               borderRadius: 3,
               padding: [3, 5]
             }
@@ -158,10 +168,9 @@ export default {
           indicator: [
             { name: "天气", max: 2 },
             { name: "雷电", max: 1 },
-            { name: "老化", max:2.5 },
+            { name: "老化", max: 2.5 },
             { name: "出租房", max: 2.5 },
-             { name: "危险品", max: 2 },
-         
+            { name: "危险品", max: 2 }
           ]
         },
         series: [
@@ -171,16 +180,13 @@ export default {
             // areaStyle: {normal: {}},
             data: [
               {
-                value: [2, 1, 2.5,2.5, 2],
+                value: [2, 1, 2.5, 2.5, 2],
                 name: "预算分配（Allocated Budget）"
-              } 
+              }
             ]
           }
         ]
       }
-    
-    
-    
     };
   }
 };

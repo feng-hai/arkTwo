@@ -35,7 +35,7 @@
     </Row>
     <grid-layout
       :layout.sync="layout"
-      :col-num="12"
+      :col-num="24"
       :row-height="rowHeight"
       :is-draggable="isEdit"
       :is-resizable="isEdit"
@@ -81,7 +81,8 @@ import Vuex from "vuex";
 import modelz from "@/view/nanjingnan_big/components/modelz.vue";
 
 var temp =
-  '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"safetyIndexInfo"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"alarmInfo"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"barrierInfo"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"dangerInfo"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]';
+'[{"x":0,"y":0,"w":4,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"safetyIndexInfo"},{"x":18,"y":0,"w":6,"h":6,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":6,"y":0,"w":12,"h":40,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":18,"y":28,"w":6,"h":12,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":6,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":23,"w":6,"h":17,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"alarmInfo"},{"x":18,"y":17,"w":6,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"dangerInfo"},{"x":0,"y":16,"w":6,"h":7,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"},{"x":4,"y":0,"w":2,"h":8,"i":9,"moved":false,"title":"自定义9","component":"contingencyPlan","lType":"menu","linkcomponent":"Message"},{"x":18,"y":6,"w":6,"h":11,"i":10,"moved":false,"title":"自定义10","component":"barrier","lType":"menu","linkcomponent":"barrierInfo"}]'
+ // '[{"x":0,"y":0,"w":3,"h":8,"i":"0","title":"自定义","component":"safetyIndex","moved":false,"lType":"menu","linkcomponent":"safetyIndexInfo"},{"x":0,"y":22,"w":3,"h":8,"i":"1","title":"自定义","moved":false,"component":"video","lType":"menu","linkcomponent":"videoInfo"},{"x":3,"y":0,"w":6,"h":42,"i":"3","moved":false,"title":"自定义3","component":"layer","lType":"main","linkcomponent":"message"},{"x":9,"y":24,"w":3,"h":18,"i":"5","moved":false,"title":"自定义5","component":"maintenance","lType":"menu","linkcomponent":"message"},{"x":0,"y":8,"w":3,"h":8,"i":"6","moved":false,"title":"自定义6","component":"alarm","lType":"menu","linkcomponent":"layer"},{"x":0,"y":30,"w":3,"h":12,"i":"7","moved":false,"title":"自定义7","component":"alarmTable","lType":"menu","linkcomponent":"alarmInfo"},{"x":9,"y":0,"w":3,"h":13,"i":"15","moved":false,"title":"自定义15","component":"barrier","lType":"menu","linkcomponent":"barrierInfo"},{"x":9,"y":13,"w":3,"h":11,"i":"17","moved":false,"title":"自定义17","component":"danger","lType":"menu","linkcomponent":"dangerInfo"},{"x":0,"y":16,"w":3,"h":6,"i":"18","moved":false,"title":"自定义18","component":"water","lType":"menu","linkcomponent":"waterInfo"}]';
 var testLayout = JSON.parse(temp);
 export default {
   components: {
@@ -226,7 +227,7 @@ export default {
           lType: "main",
           w:
             (this.main
-              ? (this.main.w / 12) * window.innerWidth
+              ? (this.main.w / 24) * window.innerWidth
               : window.innerWidth) + "",
           h:
             (this.main
@@ -277,6 +278,7 @@ export default {
     var that = this;
 
     var tempLayout = localStorage.getItem("layout");
+    console.log(tempLayout)
     if (tempLayout) {
       this.layout = JSON.parse(tempLayout);
     }
@@ -299,7 +301,7 @@ export default {
           component: value.component,
           linkcomponent: value.linkcomponent,
           lType: value.lType,
-          w: (value.w / 12) * window.innerWidth,
+          w: (value.w / 24) * window.innerWidth,
           h: (value.h * that.rowHeight ) *1.75 + ""
         };
         that.tempControls.push(that.createControl(item));
