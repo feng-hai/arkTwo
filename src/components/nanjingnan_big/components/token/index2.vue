@@ -129,33 +129,8 @@ export default {
 .active {
   color: #00ceff;
 }
-.conten-left {
-  width: 106px;
-  position: relative;
-
-  .shuliang {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -40px;
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    margin-left: -8px;
-  }
-  .shuliang span {
-    color: #00ceff;
-    font-size: 40px;
-  }
-}
 .icon-jianzhu {
   font-size: 1rem;
 }
 
-.icon-dunpai {
-  font-size: 5rem;
-  color: #5bf4fd;
-  // margin-left: 20px;
-  float: right;
-}
 </style>

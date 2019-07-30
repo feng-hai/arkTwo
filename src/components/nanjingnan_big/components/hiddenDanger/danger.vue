@@ -1,7 +1,7 @@
 <template>
   <div class="template-page-danger backImage" >
     <p class="pTitle">
-      <span class="active">隐患检测</span>
+      <span>隐患检测</span>
     </p>
     <!-- <p>
       <i class="iconfont icon-jianzhu"></i>
@@ -81,25 +81,34 @@ export default {
   background-color: rgba(24, 35, 50, 0.2);
   padding: 30px;
   padding-top:60px;
-  p {
-    padding-bottom: 10px;
-    text-align: left;
-    i {
-      color: #5bf4fd;
-    }
+  .pTitle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
     span {
-      font-size: 14px;
+      cursor: pointer;
+      cursor: hand;
+      padding: 10px;
+      font-size: 20px;
+      color: #fff;
+      // Border: 1px solid #000;
+    }
+    .active {
       color: #00ceff;
-      padding-left: 8px;
+    }
+    .noactive {
+      color: #caf3f8;
     }
   }
+
   .conten {
     display: flex;
     justify-content: center;
     align-items: center;
     span {
       color: #fff;
-      font-size: 21px;
+      font-size: 20px;
       display: inline-block;
     }
     ul.conten-rig {
@@ -129,53 +138,12 @@ export default {
   }
 }
 
-.conten-left {
-  width: 106px;
-  position: relative;
 
-  .shuliang {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -40px;
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    margin-left: -8px;
-  }
-  .shuliang span {
-    color: #00ceff;
-    font-size: 40px;
-  }
-  .pTitle {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-    span {
-      cursor: pointer;
-      cursor: hand;
-      padding: 10px;
-      // Border: 1px solid #000;
-    }
-    .active {
-      color: #00ceff;
-    }
-    .noactive {
-      color: #caf3f8;
-    }
-  }
-}
 .icon-jianzhu {
   font-size: 1rem;
 }
 
-.icon-dunpai {
-  font-size: 5rem;
-  color: #5bf4fd;
-  // margin-left: 20px;
-  float: right;
-}
+
 </style>
 
 

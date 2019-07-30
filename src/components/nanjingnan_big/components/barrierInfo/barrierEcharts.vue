@@ -1,7 +1,7 @@
 <template>
 <div >
   <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
-    <p class="pTitle"><span class="active">巡检管理</span></p>
+    <p class="pTitle"><span>巡检管理</span></p>
     <Chart-object v-bind:style="{height:h + 'px'}"  :options="options" text="巡检管理"></Chart-object>
     <!-- <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="巡检管理"></chart-pie> -->
   </Card>
@@ -177,8 +177,9 @@ export default {
     z-index: 100;
     span {
         cursor: pointer;
-        cursor: hand;
         padding: 10px;
+        font-size: 20px;
+        color: #fff;
         // Border: 1px solid #000;
     }
   .active {

@@ -55,7 +55,7 @@ export default {
     }
     .title1 {
       color: #fff;
-      font-size: 21px;
+      font-size: 20px;
       display: inline-block;
     }
   }

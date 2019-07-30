@@ -4,6 +4,7 @@
       <i class="iconfont icon-jianzhu"></i>
       <span class="active">{{title}}</span>
     </p> -->
+    <p class="panel-tit">监控点位</p>
     <div class="conten">
       <!-- <div><span>安全指数</span></div>
       <div class="conten-left">
@@ -12,11 +13,12 @@
           <span>{{grade}}</span>
         </div>
       </div> -->
-      <span style="width:10px; color:#fff;padding-right:40px;">报警</span>
+      
       <ul class="conten-rig">
         <li v-for="(item , index) in list" :key="index">
-          <span class="lef" :style="{color:item.color}">{{item.num}}</span><br/>
+          <span class="lef" :style="{color:item.color}">{{item.num}}</span>
           <span class="rig">{{item.name}}</span>
+
         </li>
       </ul>
     </div>
@@ -75,13 +77,11 @@ export default {
 }
 </script>
 <style lang="scss" >
-
+.panel-tit{ height: 40px; line-height: 40px; font-size: 20px; color: #fff; padding-left: 10px; }
 .template-page-alarm{
   background-color: rgba(24, 35, 50, 0.2);
   padding: 15px;
-   padding-top: 30px;
   p {
-    padding-bottom: 10px;
     text-align: left;
     i {
       color: #5bf4fd;
@@ -98,67 +98,41 @@ export default {
     align-items: center;
     span{
       color: #fff;
-          font-size: 21px;
-          display: inline-block;
+      font-size: 20px;
+      display: inline-block;
     }
     ul.conten-rig {
-      flex: 1;
       li {
         list-style-type: none;
+        height: 38px;
         line-height: 38px;
         float: left;
-        width:18%;
+        width:50%;
         span {
           color: #fff;
           font-size: 14px;
           display: inline-block;
         }
         .lef {
-        //   width: 60%;
+          width: 60%;
           text-align: right;
           font-size: 26px;
         }
         .rig {
           padding-left: 10px;
-        //   width: 40%;
+          width: 35%;
           text-align: left;
         }
       }
     }
   }
 }
-.active {
-  color: #00ceff;
-}
-.conten-left {
-  width: 106px;
-  position: relative;
 
-  .shuliang {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -40px;
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    margin-left: -8px;
-  }
-  .shuliang span {
-    color: #00ceff;
-    font-size: 40px;
-  }
-}
+
 .icon-jianzhu {
   font-size: 1rem;
 }
 
-.icon-dunpai {
-  font-size: 5rem;
-  color: #5bf4fd;
-  // margin-left: 20px;
-  float: right;
-}
 </style>
 
 

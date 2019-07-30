@@ -5,13 +5,13 @@
       <span class="active">{{title}}</span>
     </p> -->
     <div class="conten">
-      <div><span>安全指数</span></div>
       <div class="conten-left">
         <i class="iconfont icon-dunpai"></i>
         <div class="shuliang">
           <span>{{grade}}</span>
         </div>
       </div>
+      <p><span>安全指数</span></p>
       <!-- <ul class="conten-rig">
         <li v-for="(item , index) in list" :key="index">
           <span class="lef" :style="{color:item.color}">{{item.num}}</span>
@@ -80,8 +80,6 @@ export default {
   background-color: rgba(24, 35, 50, 0.2);
   padding: 15px;
   p {
-    padding-bottom: 10px;
-    text-align: left;
     i {
       color: #5bf4fd;
     }
@@ -95,32 +93,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction:column;
     span{
       color: #fff;
           font-size: 21px;
           display: inline-block;
-    }
-    ul.conten-rig {
-      flex: 1;
-      li {
-        list-style-type: none;
-        line-height: 38px;
-        span {
-          color: #fff;
-          font-size: 14px;
-          display: inline-block;
-        }
-        .lef {
-          width: 60%;
-          text-align: right;
-          font-size: 26px;
-        }
-        .rig {
-          padding-left: 10px;
-          width: 40%;
-          text-align: left;
-        }
-      }
     }
   }
 }
@@ -128,22 +105,22 @@ export default {
   color: #00ceff;
 }
 .conten-left {
-  width: 106px;
+  width: 74px;
+  height: 84px;
   position: relative;
 
   .shuliang {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-top: -40px;
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
-    margin-left: -8px;
+    margin-top: -19px;
+    width: 74px;
+    margin-left: -40px;
+    text-align: center;
   }
   .shuliang span {
     color: #00ceff;
-    font-size: 40px;
+    font-size: 34px;
   }
 }
 .icon-jianzhu {
@@ -151,9 +128,9 @@ export default {
 }
 
 .icon-dunpai {
-  font-size: 5rem;
+  font-size: 4.2rem;
   color: #5bf4fd;
+  height: 83px;
   // margin-left: 20px;
-  float: right;
 }
 </style>

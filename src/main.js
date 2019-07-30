@@ -24,7 +24,7 @@ import { VTree, VSelectTree } from 'vue-tree-halower'/* 全部引入，后续需
 Vue.use(VCharts)
 
 Vue.use(VTree)
-Vue.use(VSelectTree)
+Vue.use(VSelectTree)   
 
 // import layer from 'vue-layer'
 // Vue.prototype.$layer = layer(Vue);
