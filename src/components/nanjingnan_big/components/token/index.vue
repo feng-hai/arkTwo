@@ -86,7 +86,8 @@ export default {
     span {
       font-size: 14px;
       color: #00ceff;
-      padding-left: 8px;
+      // padding-left: 8px;
+  
     }
   }
   .conten {
@@ -108,6 +109,7 @@ export default {
   width: 74px;
   height: 84px;
   position: relative;
+      padding-left: 4px;
 
   .shuliang {
     position: absolute;
@@ -115,7 +117,7 @@ export default {
     top: 50%;
     margin-top: -19px;
     width: 74px;
-    margin-left: -40px;
+    margin-left: -36px;
     text-align: center;
   }
   .shuliang span {

@@ -57,6 +57,7 @@ export default {
       color: #fff;
       font-size: 20px;
       display: inline-block;
+      margin-left: -4px;
     }
   }
 }
