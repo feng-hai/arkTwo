@@ -34,19 +34,19 @@ export default {
       scollRight: 0,
       items: [
         {
-          src: "rtmp://live.hkstv.hk.lxdns.com/live/hks",
+          src: "rtmp://rtmp01open.ys7.com/openlive/4e8c595844484991994c01399c8b65f3",
           height: "300"
         },
         {
-          src: "rtmp://202.69.69.180:443/webcast/bshdlive-pc",
+          src: "rtmp://rtmp01open.ys7.com/openlive/4e8c595844484991994c01399c8b65f3",
           height: "300"
         },
         {
-          src: "rtmp://58.200.131.2:1935/livetv/hunantv",
+          src: "rtmp://rtmp01open.ys7.com/openlive/413f2d480a6347a0a28396646afc5ef5",
           height: "300"
         },
         {
-          src: "rtmp://47.103.98.47/live/stream",
+          src: "rtmp://rtmp01open.ys7.com/openlive/413f2d480a6347a0a28396646afc5ef5",
           height: "300"
         }
       ]

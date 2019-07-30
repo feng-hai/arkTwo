@@ -211,6 +211,10 @@ export default {
     },
     linkto(item, type) {
       console.log(this.main, "main");
+      if(type&&type=="liClick"){
+
+        this.vm.testEvent();
+      }else
       if (type && type == "contingencyPlan") {//如果是应急预案传来的信息
         this.modal1 = true;
       } else if (type && type === "detail") {//报警明细
