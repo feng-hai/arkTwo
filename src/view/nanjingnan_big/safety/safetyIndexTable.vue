@@ -4,10 +4,9 @@
          <i class="iconfont icon-baojing"></i><span>{{title}}</span>
     </p>-->
     <Row>
-      <Col span="6" class="big_table_cell">扣分项</Col>
-      <Col span="6" class="big_table_cell">扣分值</Col>
-      <Col span="6" class="big_table_cell">扣分项</Col>
-      <Col span="6" class="big_table_cell">扣分值</Col>
+      <Col span="12" class="big_table_cell">扣分项</Col>
+      <Col span="12" class="big_table_cell">扣分值</Col>
+    
     </Row>
     <div
       class="test test-1"
@@ -17,12 +16,9 @@
     >
       <div class="scrollbar" :style="{right:scollRight+'px'}">
         <div>
-          <Row v-for="(item , index) in alarmArray" :key="index">
-            <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
-            
-            <Col span="6" class="big_table_cell">{{item.person}}</Col>
-            <Col span="6" class="big_table_cell">{{item.domainName}}</Col>
-            <Col span="6" class="big_table_cell">{{item.datetime}}</Col>
+          <Row v-for="(item , index) in dataTable" :key="index">
+            <Col span="12" class="big_table_cell">{{item.typename}}</Col>
+            <Col span="12" class="big_table_cell">{{item.number}}</Col>
           </Row>
         </div>
       </div>
@@ -38,6 +34,22 @@ export default {
       type: Number,
       default () {
         return 300
+      }
+    },
+    dataTable:{
+      type:Array,
+      default(){
+        return  [
+        {
+  
+          number: '1',
+          typeName: '烟感报警'
+        },
+        {
+         number: '1',
+          typeName: '烟感报警'
+        }
+      ]
       }
     }
   },
@@ -76,134 +88,9 @@ export default {
           person: '1',
           typeName: '烟感报警'
         },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-           datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
+       
         {
         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-           datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-        datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-           datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
-        },
-        {
-       datetime: '1',
           domainName: '烟感报警',
           person: '1',
           typeName: '烟感报警'
@@ -294,7 +181,7 @@ export default {
   //  right: -17px;
   bottom: 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #alarmTable .scrollbar::-webkit-scrollbar {

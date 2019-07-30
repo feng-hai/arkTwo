@@ -7,11 +7,17 @@
     <div class="test test-1" @mouseover="mouseover" @mouseout="mouseout">
       <div class="scrollbar" :style="{right:scollRight+'px'}">
         <div>
+           <Row >
+            <Col span="6" class="big_table_cell">设备名称</Col>
+            <Col span="6" class="big_table_cell">所属区域</Col>
+            <Col span="6" class="big_table_cell">系统类型</Col>
+            <Col span="6" class="big_table_cell">设备类型</Col>
+          </Row>
           <Row v-for="(item , index) in alarmArray" :key="index">
-            <Col span="6" class="big_table_cell">{{item.datetime}}</Col>
+            <Col span="6" class="big_table_cell">{{item.name}}</Col>
             <Col span="6" class="big_table_cell">{{item.domainName}}</Col>
-            <Col span="6" class="big_table_cell">{{item.area}}</Col>
             <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
+            <Col span="6" class="big_table_cell">{{item.modelName}}</Col>
           </Row>
         </div>
       </div>
@@ -39,196 +45,100 @@ export default {
       title: '报警信息',
       alarmArray: [
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+          name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+      name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+        name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+       name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+         name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+        name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+       name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+         name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+       name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+         name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+         name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+       name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+        name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+        name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+         name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         },
         {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:21:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
-        },
-        {
-          datetime: '2019-05-15 10:22:21',
-          domainName: '南京动车所',
-          area: '二次东区',
-          typeName: '烟感报警'
+        name: '地下室-4-3-224-信号蝶阀',
+          domainName: '南京南站站房',
+          modelName: '',
+          typeName: ''
         }
       ]
     }

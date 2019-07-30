@@ -4,7 +4,7 @@
  * @Author: fh
  * @Date: 2019-06-29 12:43:50
  * @LastEditors: fh
- * @LastEditTime: 2019-07-28 11:54:44
+ * @LastEditTime: 2019-07-29 22:35:44
  -->
  <template>
   <Card style="width:100%;height:100%" :bordered="false" :class="formItem.lType">
@@ -207,10 +207,22 @@ export default {
         component: () => import("@/view/tools/charts/map"),
         islink: true
       },
+       {
+        id: "contingencyPlan",
+        title: "应急预案",
+        component: () => import("../components/contingencyPlan/contingency"),
+        islink: true
+      },
       {
         id: "safetyIndex",
         title: "安全指数",
         component: () => import("./safetyIndex.vue"),
+        islink: true
+      },
+        {
+        id: "safetyIndexV2",
+        title: "安全指数V2",
+        component: () => import("./safetyIndex2.vue"),
         islink: true
       },
       {

@@ -34,15 +34,15 @@ export default {
       scollRight: 0,
       items: [
         {
-          src: "rtmp://localhost/live/test123",
+          src: "rtmp://live.hkstv.hk.lxdns.com/live/hks",
           height: "300"
         },
         {
-          src: "rtmp://localhost/live/test124",
+          src: "rtmp://202.69.69.180:443/webcast/bshdlive-pc",
           height: "300"
         },
         {
-          src: "rtmp://localhost/live/test124",
+          src: "rtmp://58.200.131.2:1935/livetv/hunantv",
           height: "300"
         },
         {

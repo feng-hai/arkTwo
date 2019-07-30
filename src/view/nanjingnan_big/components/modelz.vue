@@ -21,15 +21,11 @@
               </div>
             </Col>
             <Col span="12">
-              <!-- <videoTemplate
-                v-if="isShow"
-                :vwidth="vwidth"
-                :vheight="vheight"
-                ref="videoTemplate"
-                split="3"
-                :iChannelID="iChannelID"
-                :id="id1"
-              ></videoTemplate>-->
+             <Row>
+        <Col span="12" v-for="item in items">
+          <videos :sourcesSrc="item.src" :height="item.height"></videos>
+        </Col>
+      </Row>
             </Col>
           </Row>
         </div>
@@ -42,6 +38,7 @@ import alarmTable from "@/view/single-page/home/components/alarmTable";
 // import videoTemplate from "_c/video/index.js";
 import layering from "_c/layerford3";
 import { windowHeight, windowWidth } from "@/libs/util";
+import videos from "_c/video2";
 export default {
   props: {
     isShow: {
@@ -53,7 +50,8 @@ export default {
   },
   components: {
     vueLayer: layering,
-    alarmTable
+    alarmTable,
+    videos
     // videoTemplate
   },
   watch: {
@@ -71,6 +69,24 @@ export default {
   },
   data() {
     return {
+       items: [
+        {
+          src: "rtmp://live.hkstv.hk.lxdns.com/live/hks",
+          height: "300"
+        },
+        {
+          src: "rtmp://202.69.69.180:443/webcast/bshdlive-pc",
+          height: "300"
+        },
+        {
+          src: "rtmp://58.200.131.2:1935/livetv/hunantv",
+          height: "300"
+        },
+        {
+          src: "rtmp://47.103.98.47/live/stream",
+          height: "300"
+        }
+      ],
       vwidth: null,
       vheight: null,
       iChannelID: 2,

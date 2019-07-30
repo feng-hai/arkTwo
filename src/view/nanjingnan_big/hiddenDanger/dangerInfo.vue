@@ -1,6 +1,6 @@
 <template>
 <div class="contentinfo">
-  <p class="pTitle"><span class="active">安全指数</span></p>
+  <!-- <span class="pTitle"><span class="active">安全指数</span></p> -->
 
   <dangerEcharts :chartsHeight="chartsHeight"></dangerEcharts>
   <dangerTable :scollHeight="scollHeight" style="padding-bottom:10px"></dangerTable>

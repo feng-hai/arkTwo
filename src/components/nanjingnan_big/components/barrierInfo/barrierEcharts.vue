@@ -2,7 +2,7 @@
 <div >
   <Card shadow style=" backgroundColor:rgba(0, 0, 0, 0.1); ">
     <p class="pTitle"><span class="active">巡检管理</span></p>
-    <Chart-object v-bind:style="{height:chartsHeight + 'px'}"  :options="options" text="巡检管理"></Chart-object>
+    <Chart-object v-bind:style="{height:h + 'px'}"  :options="options" text="巡检管理"></Chart-object>
     <!-- <chart-pie v-bind:style="{height:chartsHeight + 'px'}" :value="pieData" text="巡检管理"></chart-pie> -->
   </Card>
 </div>
@@ -25,6 +25,13 @@ export default {
       default () {
         return 200
       }
+    },
+    h:{
+      type:String|Number,
+      default(){
+        return 200
+      }
+
     }
   },
   components: {

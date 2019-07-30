@@ -12,7 +12,7 @@
             style="width:100%"
           />
         </p>
-        <p>图标类型</p>
+        <p>设备类型</p>
         <p class="editP">
           <Select style="width:100%" v-model="searchItem.type">
             <Option
