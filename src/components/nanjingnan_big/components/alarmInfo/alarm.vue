@@ -46,28 +46,34 @@ export default {
         return [
           {
             color: '#5bf4fd',
-            num: 123,
+            num: 345,
+            name: '接入'
+          },
+          {
+            color: '#5bf4fd',
+            num: 300,
             name: '正常'
           },
           {
-            color: '#ff5050',
-            num: 123,
-            name: '故障'
-          },
-          {
             color: '#ff9900',
-            num: 13,
+            num: 15,
             name: '报警'
           },
           {
+            color: '#ff5050',
+            num: 7,
+            name: '故障'
+          },
+          
+          {
             color: '#678af2',
-            num: 3,
+            num: 21,
             name: '屏蔽'
           }
           ,
           {
             color: '#6781f2',
-            num: 3,
+            num: 7,
             name: '联动'
           }
         ]
@@ -109,7 +115,7 @@ export default {
         float: left;
         width:50%;
         span {
-          color: #fff;
+          color: #ddd;
           font-size: 14px;
           display: inline-block;
         }

@@ -35,7 +35,7 @@ export default {
   beforeMount() {}
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .contingencyPlan {
     padding-top: 2em;
 

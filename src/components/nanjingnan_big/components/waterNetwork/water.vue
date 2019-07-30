@@ -61,7 +61,7 @@ export default {
   },
 }
 </script>
-<style lang="scss" >
+<style lang="scss" scoped >
 
 .template-page-video{
   background-color: rgba(24, 35, 50, 0.2);
@@ -94,22 +94,25 @@ export default {
         list-style-type: none;
         line-height: 38px;
         float: left;
-        width:40%;
+        width:50%;
         span {
           color: #fff;
           font-size: 14px;
           display: inline-block;
         }
         .lef {
-        //   width: 60%;
+          width: 60%;
           text-align: right;
           font-size: 26px;
         }
         .rig {
           padding-left: 10px;
-        //   width: 40%;
+          width: 40%;
           text-align: left;
         }
+      }
+      li:nth-child(2){
+        border-left:3px solid rgb(91, 244, 253);
       }
     }
   }

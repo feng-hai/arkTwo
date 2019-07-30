@@ -275,7 +275,7 @@ export default {
       },
       {
         id: "alarmInfo",
-        title: "报警信息",
+        title: "监控点位",
         component: () => import("@/view/nanjingnan_big/alarm/alarmInfo"),
         islink: true
       },

@@ -74,7 +74,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" >
+<style lang="scss" scoped >
 @import url("./iconfont/iconfont.css");
 .template-page {
   background-color: rgba(24, 35, 50, 0.2);
@@ -96,7 +96,7 @@ export default {
     flex-direction:column;
     span{
       color: #fff;
-          font-size: 21px;
+          font-size: 20px;
           display: inline-block;
     }
   }

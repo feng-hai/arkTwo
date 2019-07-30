@@ -166,7 +166,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .count-style {
     font-size: 50px;
 }
