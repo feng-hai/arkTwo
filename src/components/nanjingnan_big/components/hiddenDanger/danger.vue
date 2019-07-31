@@ -81,26 +81,26 @@ export default {
   background-color: rgba(24, 35, 50, 0.2);
   padding: 30px;
   padding-top:60px;
-  // .pTitle {
-  //   position: absolute;
-  //   top: 20px;
-  //   left: 20px;
-  //   z-index: 100;
-  //   span {
-  //     cursor: pointer;
-  //     cursor: hand;
-  //     padding: 10px;
-  //     font-size: 20px;
-  //     color: #fff;
-  //     // Border: 1px solid #000;
-  //   }
-  //   .active {
-  //     color: #00ceff;
-  //   }
-  //   .noactive {
-  //     color: #caf3f8;
-  //   }
-  // }
+  .pTitle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    span {
+      cursor: pointer;
+      cursor: hand;
+      padding: 10px;
+      font-size: 20px;
+      color: #fff;
+      // Border: 1px solid #000;
+    }
+    .active {
+      color: #00ceff;
+    }
+    .noactive {
+      color: #caf3f8;
+    }
+  }
 
   .conten {
     display: flex;
