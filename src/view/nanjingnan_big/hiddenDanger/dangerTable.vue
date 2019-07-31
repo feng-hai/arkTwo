@@ -19,7 +19,7 @@
         <div>
           <Row >
             <Col span="6" class="big_table_cell" v-for="(item , index) in alarmArray" :key="index">
-            <dangerDetail></dangerDetail>
+            <dangerDetail :option="item"></dangerDetail>
             </Col>
           </Row>
         </div>
@@ -61,28 +61,28 @@ dangerDetail
       title: '报警信息',
       alarmArray: [
         {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
+          url: require("@/assets/temp/a.jpg"),
+          name: "消防设施",
+          type: '一般隐患',
+          comment: '地灯不亮'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
+        url: require("@/assets/temp/b.jpg"),
+          name: "消防设备",
+          type: '一般隐患',
+          comment: '手动按钮脱落'
         },
          {
-          datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
+         url: require("@/assets/temp/c.jpg"),
+          name: "消防设备",
+          type: '一般隐患',
+          comment: '缺失水带'
         },
         {
-         datetime: '1',
-          domainName: '烟感报警',
-          person: '1',
-          typeName: '烟感报警'
+       url: require("@/assets/temp/d.jpg"),
+          name: "消防设备",
+          type: '重大隐患',
+          comment: '锈蚀漏水'
         }
       ]
     }
