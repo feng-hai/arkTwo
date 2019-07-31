@@ -1,34 +1,35 @@
 <template>
-  <div class="video-content" v-if="show">
-    <video
-      id="myPlayer"
-      controls
-      playsinline
-      webkit-playsinline
-      autoplay
-      :width="w"
-      :height="height"
-    >
-      <source :src="src" type="rtmp/flv" />
-    </video>
-    <div class="videoTitle" v-show="isShowTitle" v-bind:class="[onLineStatus?'onLine':'offLine']">
-      <span class="showTitleLeft" v-text="name"></span>
-      <span class="showTitleRight">
-        <Icon type="md-checkmark" />
+  <div class="item videoShow">
+    <div class="player" >
+      <video-player ref="videoPlayer" id="myPlayer"  class="vjs-custom-skin" :options="playerOptions"></video-player>
+    </div>
+    <div class="videoTitle" v-show="isShowTitle"  v-bind:class="[onLineStatus?'onLine':'offLine']" >
+      <span class="showTitleLeft"  v-text="name"></span>
+      <span class="showTitleRight ">
+        <Icon type="md-checkmark"/>
         <span v-text="onLineStatusTitle"></span>
       </span>
     </div>
   </div>
 </template>
 <script>
-import EZUIKit from "./ezuikit.js";
-export default {
-  data() {
-    return {
-      show: true
-    };
-  },
 
+import 'video.js/dist/video-js.css'
+import { videoPlayer } from 'vue-video-player'
+import 'videojs-flash'
+export default {
+  mounted(){
+      this.initPlayer();
+
+  },
+  methods:{
+    initPlayer(){
+      
+    }
+  },
+  components: {
+    videoPlayer
+  },
   props: {
     isShowTitle: {
       type: Boolean,
@@ -36,11 +37,11 @@ export default {
     },
     name: {
       type: String,
-      default: "[1]測試"
+      default: '[1]測試'
     },
     onLineStatusTitle: {
       type: String,
-      default: "在线"
+      default: '在线'
     },
     onLineStatus: {
       type: Boolean,
@@ -48,48 +49,54 @@ export default {
     },
     height: {
       type: String,
-      default: "360"
-    },
-    w: {
-      type: String | Number,
-      default: "360"
+      default: '360'
     },
     sourcesType: {
       type: String,
-      default: "rtmp/mp4"
+      default: 'rtmp/mp4'
     },
     sourcesSrc: {
       type: String,
-      default: "rtmp://47.103.98.47/live/stream"
+      default: 'rtmp://47.103.98.47/live/stream'
     },
     autoplay: {
       type: Boolean,
       default: true
     },
-
-    src: {
+    poster: {
       type: String,
-      default() {
-        return "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e";
+      default:
+        'https://surmon-china.github.io/vue-quill-editor/static/images/surmon-5.jpg'
+    }
+  },
+  watch: {
+    // sourcesSrc: function (n, o) {
+    //   let myPlayer = this.$refs.videoPlayer.player
+    //   myPlayer.src('rtmp://47.103.98.47/live/stream') // 根据userType的不同展示不同的视频地址
+    // }
+  },
+
+  data () {
+    return {
+      playerOptions: {
+        height: this.height,
+
+          sources: [{
+            type: "rtmp/flv",
+            src:this.sourcesSrc
+           // src: "rtmp://184.72.239.149/vod/&mp4:BigBuckBunny_115k.mov"
+          }],
+          techOrder: ['flash'],
+          autoplay: false,
+          controls: true,
+          poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-9.jpg"
+
+     
       }
     }
-  },
-  methods: {
-    initPlayer() {
-      this.player = new EZUIKit.EZUIPlayer("myPlayer"); // 直接使用EZUIKit 不会报错
-      this.player.play();
-    }
-  },
-  beforeMount() {},
-  mounted(){
-    this.initPlayer();
-  },
-  updated() {
-    this.initPlayer();
   }
-};
+}
 </script>
-
 <style>
 .showTitleLeft {
   float: left;
@@ -111,14 +118,14 @@ export default {
 }
 .videoTitle {
   height: 30px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-Color:rgba(0, 0, 0, 0.5);
   vertical-align: middle;
   padding: 2px 5px;
 }
 .videoShow {
   /* width: 460px; */
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
+  padding:5px;
+ background-Color:rgba(0, 0, 0, 0.1);
   border: gray;
 }
 </style>
