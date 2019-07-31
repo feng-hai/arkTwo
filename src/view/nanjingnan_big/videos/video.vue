@@ -57,7 +57,7 @@ w:{
           w:this.w/2-40
         },
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
+          src: "rtmp://47.103.98.47/live/stream",
           height: "300",
             id:'test03',
           w:this.w/2-40
