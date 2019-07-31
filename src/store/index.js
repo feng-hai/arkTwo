@@ -10,7 +10,7 @@ import biggerScreen from  './module/biggerScreen'
 import Icons_Annotation from './module/Icons_Annotation'
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+let store= new Vuex.Store({
   state: {
     //
   },
@@ -31,3 +31,8 @@ export default new Vuex.Store({
     Icons_Annotation
   }
 })
+//加载事件
+import vuexEvent from './vuexEvent/vuex-events'
+vuexEvent(store)
+
+export default store;

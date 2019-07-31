@@ -7,17 +7,18 @@
     <div class="test test-1" @mouseover="mouseover" @mouseout="mouseout">
       <div class="scrollbar" :style="{right:scollRight+'px'}">
         <div>
-           <Row >
+          <Row>
             <Col span="6" class="big_table_cell">设备名称</Col>
             <Col span="6" class="big_table_cell">所属区域</Col>
-            <Col span="6" class="big_table_cell">系统类型</Col>
+     
             <Col span="6" class="big_table_cell">设备类型</Col>
+            <Col span="6" class="big_table_cell">设备状态</Col>
           </Row>
-          <Row v-for="(item , index) in alarmArray" :key="index">
+          <Row v-for="(item, index) in alarmArray" :key="index">
             <Col span="6" class="big_table_cell">{{item.name}}</Col>
             <Col span="6" class="big_table_cell">{{item.domainName}}</Col>
             <Col span="6" class="big_table_cell">{{item.typeName}}</Col>
-            <Col span="6" class="big_table_cell">{{item.modelName}}</Col>
+            <Col span="6" class="big_table_cell">{{item.Status}}</Col>
           </Row>
         </div>
       </div>
@@ -25,133 +26,104 @@
   </div>
 </template>
 <script>
-const prefixCls = 'ivu-page'
+const prefixCls = "ivu-page";
 export default {
-  data () {
+  data() {
     return {
       myBarOption: {
-        barColor: '#959595', // 滚动条颜色
+        barColor: "#959595", // 滚动条颜色
         barWidth: 6, // 滚动条宽度
-        railColor: '#eee', // 导轨颜色
+        railColor: "#eee", // 导轨颜色
         barMarginRight: 0, // 垂直滚动条距离整个容器右侧距离单位（px）
         barMaginBottom: 0, // 水平滚动条距离底部距离单位（px)
         barOpacityMin: 0.3, // 滚动条非激活状态下的透明度
-        zIndex: 'auto', // 滚动条z-Index
+        zIndex: "auto", // 滚动条z-Index
         autohidemode: true, // 自动隐藏模式
         horizrailenabled: true // 是否显示水平滚动条
       },
       scollRight: 0,
       forceGemini: true,
-      title: '报警信息',
-      alarmArray: [
-        {
-          name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-      name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-        name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-       name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-         name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-        name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-       name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-         name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-       name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-         name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-         name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-       name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-        name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-        name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-         name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        },
-        {
-        name: '地下室-4-3-224-信号蝶阀',
-          domainName: '南京南站站房',
-          modelName: '',
-          typeName: ''
-        }
-      ]
-    }
+      title: "报警信息",
+      alarmArrayAll: [],
+      alarmArray: []
+    };
   },
   methods: {
-    mouseover: function () {
+    mouseover: function() {
       //  this.scollRight=0;
     },
-    mouseout: function () {
+    mouseout: function() {
       //  this.scollRight=-17;
     }
+  },
+  mounted() {
+      console.log("注册了alarmClick事件")
+      var that=this;
+     this.$store.on("alarmClick", function(inItem) {
+      if (inItem.status && inItem.status == "all") {
+        that.alarmArray = that.alarmArrayAll;
+      } else {
+      
+        that.alarmArray = that.alarmArrayAll.filter(item => {
+          if (inItem.status && item.Status == inItem.status) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        console.log(that.alarmArray,"筛选后的数据",inItem)
+      }
+    });
+    for (let i = 0; i < 300; i++) {
+      this.alarmArrayAll.push({
+        name: "地下室-4-3-" + i + "-信号蝶阀",
+        domainName: "南京南站站房",
+        modelName: "",
+        typeName: "",
+        Status: "正常"
+      });
+    }
+    for (let i = 300; i < 315; i++) {
+      this.alarmArrayAll.push({
+        name: "地下室-4-3-" + i + "-信号蝶阀",
+        domainName: "南京南站站房",
+        modelName: "",
+        typeName: "",
+        Status: "报警"
+      });
+    }
+    for (let i = 315; i < 322; i++) {
+      this.alarmArrayAll.push({
+        name: "地下室-4-3-" + i + "-信号蝶阀",
+        domainName: "南京南站站房",
+        modelName: "",
+        typeName: "",
+        Status: "故障"
+      });
+    }
+    for (let i = 322; i < 343; i++) {
+      this.alarmArrayAll.push({
+        name: "地下室-4-3-" + i + "-信号蝶阀",
+        domainName: "南京南站站房",
+        modelName: "",
+        typeName: "",
+        Status: "屏蔽"
+      });
+    }
+    for (let i = 343; i < 350; i++) {
+      this.alarmArrayAll.push({
+        name: "地下室-4-3-" + i + "-信号蝶阀",
+        domainName: "南京南站站房",
+        modelName: "",
+        typeName: "",
+        Status: "联动"
+      });
+    }
+    this.alarmArray = this.alarmArrayAll;
+    console.log(this.alarmArray,"数据加载")
+   
   }
-}
+};
 </script>
   <style lang="scss">
 // .scrollbar .conten-rig li{

@@ -74,6 +74,8 @@ if (sessionStorage.getItem('menuData') && sessionStorage.getItem('menuData').len
   }
 }
 
+
+
 /**
  * 
  * @msg: 加载video样式

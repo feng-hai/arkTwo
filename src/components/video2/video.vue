@@ -1,25 +1,34 @@
 <template>
-  <div class="item videoShow">
-    <div class="player">
-      <video-player ref="videoPlayer"  class="vjs-custom-skin" :options="playerOptions"></video-player>
-    </div>
-    <div class="videoTitle" v-show="isShowTitle"  v-bind:class="[onLineStatus?'onLine':'offLine']" >
-      <span class="showTitleLeft"  v-text="name"></span>
-      <span class="showTitleRight ">
-        <Icon type="md-checkmark"/>
+  <div class="video-content" v-if="show">
+    <video
+      id="myPlayer"
+      controls
+      playsinline
+      webkit-playsinline
+      autoplay
+      :width="w"
+      :height="height"
+    >
+      <source :src="src" type="rtmp/flv" />
+    </video>
+    <div class="videoTitle" v-show="isShowTitle" v-bind:class="[onLineStatus?'onLine':'offLine']">
+      <span class="showTitleLeft" v-text="name"></span>
+      <span class="showTitleRight">
+        <Icon type="md-checkmark" />
         <span v-text="onLineStatusTitle"></span>
       </span>
     </div>
   </div>
 </template>
 <script>
-import 'video.js/dist/video-js.css'
-import { videoPlayer } from 'vue-video-player'
-import 'videojs-flash'
+import EZUIKit from "./ezuikit.js";
 export default {
-  components: {
-    videoPlayer
+  data() {
+    return {
+      show: true
+    };
   },
+
   props: {
     isShowTitle: {
       type: Boolean,
@@ -27,11 +36,11 @@ export default {
     },
     name: {
       type: String,
-      default: '[1]測試'
+      default: "[1]測試"
     },
     onLineStatusTitle: {
       type: String,
-      default: '在线'
+      default: "在线"
     },
     onLineStatus: {
       type: Boolean,
@@ -39,69 +48,48 @@ export default {
     },
     height: {
       type: String,
-      default: '360'
+      default: "360"
+    },
+    w: {
+      type: String | Number,
+      default: "360"
     },
     sourcesType: {
       type: String,
-      default: 'rtmp/mp4'
+      default: "rtmp/mp4"
     },
     sourcesSrc: {
       type: String,
-      default: 'rtmp://47.103.98.47/live/stream'
+      default: "rtmp://47.103.98.47/live/stream"
     },
     autoplay: {
       type: Boolean,
       default: true
     },
-    poster: {
+
+    src: {
       type: String,
-      default:
-        'https://surmon-china.github.io/vue-quill-editor/static/images/surmon-5.jpg'
-    }
-  },
-  watch: {
-    sourcesSrc: function (n, o) {
-      let myPlayer = this.$refs.videoPlayer.player
-      myPlayer.src('rtmp://47.103.98.47/live/stream') // 根据userType的不同展示不同的视频地址
-    }
-  },
-
-  data () {
-    return {
-      playerOptions: {
-        height: this.height,
-
-        // sources: [
-        //   {
-        //     type: 'rtmp/mp4',
-        //     src: this.sourcesSrc
-        //   }
-        // ],
-        // techOrder: ['flash'],
-        // autoplay: true,
-        // controlBar: {
-        //   timeDivider: false,
-        //   durationDisplay: false
-        // },
-        // flash: { hls: { withCredentials: false } },
-        // html5: { hls: { withCredentials: false } },
-        // poster: this.poster
-      
-//      height: '300',
-          sources: [{
-            type: "rtmp/mp4",
-            src: this.sourcesSrc
-          }],
-          techOrder: ['flash'],
-          autoplay: false,
-          controls: true
-
-     
+      default() {
+        return "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e";
       }
     }
+  },
+  methods: {
+    initPlayer() {
+      this.player = new EZUIKit.EZUIPlayer("myPlayer"); // 直接使用EZUIKit 不会报错
+      this.player.play();
+    }
+  },
+  beforeMount() {},
+  mounted(){
+    this.initPlayer();
+  },
+  updated() {
+    this.initPlayer();
   }
-}
+};
 </script>
+
 <style>
 .showTitleLeft {
   float: left;
@@ -123,14 +111,14 @@ export default {
 }
 .videoTitle {
   height: 30px;
-  background-Color:rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   vertical-align: middle;
   padding: 2px 5px;
 }
 .videoShow {
   /* width: 460px; */
-  padding:5px;
- background-Color:rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
   border: gray;
 }
 </style>

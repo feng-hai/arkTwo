@@ -1,9 +1,9 @@
 <template>
-    <div class="template-page-alarm backImage" >
+  <div class="template-page-alarm backImage">
     <!-- <p>
       <i class="iconfont icon-jianzhu"></i>
       <span class="active">{{title}}</span>
-    </p> -->
+    </p>-->
     <p class="panel-tit">监控点位</p>
     <div class="conten">
       <!-- <div><span>安全指数</span></div>
@@ -12,13 +12,12 @@
         <div class="shuliang">
           <span>{{grade}}</span>
         </div>
-      </div> -->
-      
+      </div>-->
+
       <ul class="conten-rig">
-        <li v-for="(item , index) in list" :key="index">
+        <li v-for="(item , index) in list" :key="index" @click.stop="liclick(item)">
           <span class="lef" :style="{color:item.color}">{{item.num}}</span>
           <span class="rig">{{item.name}}</span>
-
         </li>
       </ul>
     </div>
@@ -26,65 +25,84 @@
 </template>
 <script>
 export default {
-    props: {
+  methods: {
+    liclick(item) {
+      console.log("触发了", item);
+      if (item.status) {
+        this.$store.$emit("alarmClick", item);
+      }
+    }
+  },
+  props: {
     title: {
       type: String,
-      default () {
-        return '文字标题'
+      default() {
+        return "文字标题";
       }
     },
     grade: {
       type: Number,
-      default () {
-        return 98
+      default() {
+        return 98;
       }
     },
     list: {
       type: Array,
 
-      default () {
+      default() {
         return [
           {
-            color: '#5bf4fd',
-            num: 345,
-            name: '接入'
+            color: "#5bf4fd",
+            num: 350,
+            name: "接入",
+            status: "all"
           },
           {
-            color: '#5bf4fd',
+            color: "#5bf4fd",
             num: 300,
-            name: '正常'
+            name: "正常",
+            status: "正常"
           },
           {
-            color: '#ff9900',
+            color: "#ff9900",
             num: 15,
-            name: '报警'
+            name: "报警",
+            status: "报警"
           },
           {
-            color: '#ff5050',
+            color: "#ff5050",
             num: 7,
-            name: '故障'
+            name: "故障",
+            status: "故障"
           },
-          
+
           {
-            color: '#678af2',
+            color: "#678af2",
             num: 21,
-            name: '屏蔽'
-          }
-          ,
+            name: "屏蔽",
+            status: "屏蔽"
+          },
           {
-            color: '#6781f2',
+            color: "#6781f2",
             num: 7,
-            name: '联动'
+            name: "联动",
+            status: "联动"
           }
-        ]
+        ];
       }
     }
-  },
-}
+  }
+};
 </script>
 <style lang="scss" >
-.panel-tit{ height: 40px; line-height: 40px; font-size: 20px; color: #fff; padding-left: 10px; }
-.template-page-alarm{
+.panel-tit {
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  color: #fff;
+  padding-left: 10px;
+}
+.template-page-alarm {
   background-color: rgba(24, 35, 50, 0.2);
   padding: 15px;
   p {
@@ -102,7 +120,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    span{
+    span {
       color: #fff;
       font-size: 20px;
       display: inline-block;
@@ -113,7 +131,7 @@ export default {
         height: 38px;
         line-height: 38px;
         float: left;
-        width:50%;
+        width: 50%;
         span {
           color: #ddd;
           font-size: 14px;
@@ -134,11 +152,9 @@ export default {
   }
 }
 
-
 .icon-jianzhu {
   font-size: 1rem;
 }
-
 </style>
 
 

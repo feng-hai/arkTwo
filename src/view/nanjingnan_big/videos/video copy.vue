@@ -7,8 +7,7 @@
     >
       <Row>
         <Col span="12" v-for="item in items">
-      
-          <videos :src="item.src" :w="item.w" :height="item.height"></videos>
+          <videos :sourcesSrc="item.src" :height="item.height"></videos>
         </Col>
       </Row>
     </div>
@@ -29,40 +28,27 @@ export default {
   components: {
     videos
   },
-  props:{
-
-w:{
-  type:String|Number,
-  default(){
-    return 600;
-  }
-}
-  },
   data() {
     return {
       scollHeight: windowHeight() - 120,
       scollRight: 0,
       items: [
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/a9abc279a8164653a3e23b3f365ebca0",
-          height: "300",
-          w:this.w/2-40
-
+          src: "rtmp://rtmp01open.ys7.com/openlive/4e8c595844484991994c01399c8b65f3",
+          height: "300"
         },
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/a9abc279a8164653a3e23b3f365ebca0",
-          height: "300",
-          w:this.w/2-40
+          src: "rtmp://rtmp01open.ys7.com/openlive/4e8c595844484991994c01399c8b65f3",
+          height: "300"
         },
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
-          height: "300",
-          w:this.w/2-40
+          src: "rtmp://rtmp01open.ys7.com/openlive/413f2d480a6347a0a28396646afc5ef5",
+          height: "300"
         },
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
-          height: "300",
-        w:this.w/2  -40      }
+          src: "rtmp://rtmp01open.ys7.com/openlive/413f2d480a6347a0a28396646afc5ef5",
+          height: "300"
+        }
       ]
     };
   },

@@ -9,6 +9,11 @@ export default {
   ],
   beforeDestroy(){
     console.log("destroyed")
+  }, mounted(){
+    console.log("订阅事件02")
+    this.$store.on("test",function(){
+      console.log("触发了test事件")
+    })
   }
 }
 </script>
