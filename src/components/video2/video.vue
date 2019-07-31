@@ -1,7 +1,7 @@
 <template>
   <div class="video-content" v-if="show">
     <video
-      id="myPlayer"
+      :id="id"
       controls
       playsinline
       webkit-playsinline
@@ -30,6 +30,12 @@ export default {
   },
 
   props: {
+    id:{
+      type:String,
+      default(){
+        return "myPlayer"
+      }
+    },
     isShowTitle: {
       type: Boolean,
       default: true
@@ -76,7 +82,7 @@ export default {
   },
   methods: {
     initPlayer() {
-      this.player = new EZUIKit.EZUIPlayer("myPlayer"); // 直接使用EZUIKit 不会报错
+      this.player = new EZUIKit.EZUIPlayer(this.id); // 直接使用EZUIKit 不会报错
       this.player.play();
     }
   },

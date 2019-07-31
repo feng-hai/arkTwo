@@ -8,7 +8,7 @@
       <Row>
         <Col span="12" v-for="item in items">
       
-          <videos :src="item.src" :w="item.w" :height="item.height"></videos>
+          <videos :src="item.src" :id="item.id" :w="item.w" :height="item.height"></videos>
         </Col>
       </Row>
     </div>
@@ -46,22 +46,26 @@ w:{
         {
           src: "rtmp://rtmp01open.ys7.com/openlive/a9abc279a8164653a3e23b3f365ebca0",
           height: "300",
+          id:'test01',
           w:this.w/2-40
 
         },
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/a9abc279a8164653a3e23b3f365ebca0",
+          src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
           height: "300",
+            id:'test02',
           w:this.w/2-40
         },
         {
           src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
           height: "300",
+            id:'test03',
           w:this.w/2-40
         },
         {
           src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
           height: "300",
+             id:'test04',
         w:this.w/2  -40      }
       ]
     };
