@@ -63,7 +63,7 @@ w:{
           w:this.w/2-40
         },
         {
-          src: "rtmp://rtmp01open.ys7.com/openlive/24eedd36b69243cba12d1e398d62713e",
+          src: "rtmp://rtmp01open.ys7.com/openlive/413f2d480a6347a0a28396646afc5ef5",
           height: "300",
              id:'test04',
         w:this.w/2  -40      }
