@@ -392,32 +392,14 @@ export default {
         backgroudImage: require("../../assets/img/521-4-B.png"), // 画布的备件图
         scrollTop: 0,
         type: 0, // 4是新增 5是修改
-        texts:[{
-          id:1,
-          cx:100,
-          cy:90,
-          text:'图标设计'
-        }],
-        dataContent: [
+        texts: [
           {
-            id: 1,
-            x: 100,
-            y: 79,
-            type: "1",
-            name: "test01",
-            content: "test Content",
-            pointImage: window.g.SERVICE_PATH + "/img/t3.png"
-          },
-          {
-            id: 1,
-            x: 100,
-            y: 99,
-            type: "1",
-            name: "test02",
-            content: "test Content",
-            pointImage: require("../../assets/img/t3.png")
+            cx: 100,
+            cy: 90,
+            text: "图标设计"
           }
-        ]
+        ],
+        dataContent: []
       }
     };
   },
@@ -439,9 +421,10 @@ export default {
       //  this.data.width=  $("#layering").width()
     }
 
-      // that.$store.on("text_big_screen_click",(d)=>{
-      //      console.log("获取文本点击事件",d)
-      // });
+    that.$store.on("text_big_screen_click", d => {
+      that.openModel(d);
+      console.log("获取文本点击事件", d);
+    });
     // 通过$refs获取dom元素
     // console.log(document.querySelectorAll(".el-main").length)
     // this.box = document.querySelectorAll(".el-main")[0];
@@ -525,6 +508,7 @@ export default {
       that.data.backgroudImage = "";
       this.layer_map_unid = "";
       that.data.dataContent = [];
+      that.data.texts = [];
       that.tempData = [];
       that.imageInfo = {
         unid: "",
@@ -707,6 +691,7 @@ export default {
     },
     getMarkers() {
       var that = this;
+      //
       this.getMarkersAction({
         unid: that.layer_map_unid
       })
@@ -817,7 +802,7 @@ export default {
       });
     },
     openModel(e) {
-      // console.log(e, "獲取車輛信息");
+      console.log(e, "獲取車輛信息");
       this.isLarge = false;
       this.value1 = "3";
       this.data.type = 4;
@@ -830,10 +815,10 @@ export default {
       this.data.slider = this.sliderNum / 100;
     },
     layerPoint: function(val) {
-     // console.log("父页面打印数据" + val);
+      // console.log("父页面打印数据" + val);
       //console.log(this.data.slider);
 
-    //  console.log(val[0], val[1]);
+      //  console.log(val[0], val[1]);
       if (this.value1 == "2") {
         this.addpointValue.x = val[0];
         this.addpointValue.y = val[1];

@@ -16,7 +16,27 @@
   "label": "未完成"
 }
 ]
-
+//类型管理 Chanel 类型
+[{
+  "value": "DOMAIN",
+  "label": "分组"
+},{
+  "value": "ALARM",
+  "label": "报警"
+},
+{
+  "value": "CAMERA",
+  "label": "摄像头"
+},
+{
+  "value": "FACILITY",
+  "label": "消防设施"
+},
+{
+  "value": "SYSTEM",
+  "label": "消防子系统"
+}
+]
 
 [{
 "value": true,

@@ -64,7 +64,7 @@ export default {
   },
   props: {
     dataParent: {},
-    isLargeScreen: { type: Boolean, default: true }//判断是否能够打开页面，默认为true
+    isLargeScreen: { type: Boolean, default: true } //判断是否能够打开页面，默认为true
   },
   handleScroll: function() {
     // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -102,6 +102,11 @@ export default {
           this.uri = val.backgroudImage;
           that.createBg();
         }
+        if (that.dataParent.texts) {
+          //设置文本内容
+          that.setText(that.dataParent.texts);
+        }
+
         that.initPoint(); // 重新初始化化
       },
       deep: true // 监控对象需要设置的属性
@@ -112,6 +117,31 @@ export default {
     }
   },
   methods: {
+    setText(textList) {
+      var that = this;
+      this.dataParent.container
+        .append("g")
+        .attr("class", "y axis")
+        .selectAll("div")
+        .data(textList)
+        .enter()
+        .append("text")
+        .attr("x", function(d) {
+          return d.cx;
+        })
+        .attr("y", function(d) {
+          return d.cy;
+        })
+        .text(function(d) {
+          return d.text;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "1px")
+        .attr("fill", "red")
+        .on("click", function(d, i) {
+          that.$store.$emit("text_big_screen_click",d);
+        });
+    },
     // 监听从组件内传递出来的事件
     yes(args) {
       //console.log("点击事件", args, this.dataContent)
@@ -186,6 +216,7 @@ export default {
         .scaleExtent([0, 100])
         .on("zoom", that.zoomed);
       that.dataParent.svg.call(that.dataParent.zoom);
+
       // 添加背景图
       that.createBg();
       that.drag = d3.behavior
@@ -275,7 +306,12 @@ export default {
       //   .attr('height', that.height)
       //   .style('fill', 'none')
       //   .style('pointer-events', 'all')
+      if (that.dataParent.texts) {
+        //设置文本内容
+        that.setText(that.dataParent.texts);
+      }
       that.initPoint();
+
       that.dataParent.zoom.scale(scale);
       that.dataParent.zoom.event(
         that.dataParent.svg.transition().duration(200)
@@ -348,6 +384,7 @@ export default {
           that.dataParent.bgObject.remove();
         }
         that.dataParent.bgObject = that.dataParent.container
+          .append("g")
           .attr("class", "dot12")
           .append("image")
           .attr("xlink:href", that.dataParent.backgroudImage)
@@ -416,11 +453,9 @@ export default {
         .attr("width", RECT_W)
         .attr("height", RECT_H)
         .on("click", function(d, i) {
-          if(that.isLargeScreen)
-          {
+          if (that.isLargeScreen) {
             that.openModel(d);
           }
-        
         });
       /* .on("mouseover", function(e) {
           TweenMax.to($(this).prev(), .1, {
